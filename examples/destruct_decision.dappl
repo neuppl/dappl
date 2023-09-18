@@ -1,0 +1,5 @@
+x <- [a1, a2, a3]; 
+choose x with
+| a1 -> flip 0.5 ;  reward 7
+| a2 -> flip 0.6 ; reward 3
+| a3 -> flip 0.7 ; reward 2
