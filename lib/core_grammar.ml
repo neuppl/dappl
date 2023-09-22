@@ -48,9 +48,9 @@ let rec from_external_expr (e: Syntax.eexpr) =
   | Ite(_, g, thn, els) -> Ite(f g, f thn, f els)
   | ChooseWith (_, d, l)   -> let fmap = fun (x,y) -> (x, f y) in 
                            let map : (string * expr) list= List.map fmap l in
-                           ChooseWith(f d,map)
+                           ChooseWith(f d , map)
   | Flip(_, n)          -> Flip(n)
-  | Reward(_, k)     -> Reward(k)
+  | Reward(_, k)        -> Reward(k)
   | Decision(_, l)      -> Decision(l)
   | Observe(_, e, e')   -> Observe(f e, f e')
   | Sequence(_, e, e')  -> Sequence(f e, f e')
