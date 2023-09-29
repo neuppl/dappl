@@ -3,45 +3,53 @@
   as shown in Section 4 of the paper
 *)
 
-(* open Rsdd
+open Rsdd
 open Core_grammar
 open Core
 open Rsdd_abstractions
 
-let rec bc (dappl : expr) (bdd : rsdd_bdd_builder) : cf * rsdd_var_label list = 
+(* We maintain an association list of strings and VarLabels 
+  to enforce exhaustive patternmatch in ChooseWith. *)
+
+let dlist : ((string * rsdd_var_label) list) ref = ref [];;
+
+let rec bc (dappl : expr) (bdd : rsdd_bdd_builder) : cf = 
   match dappl with 
-  | True                ->  (t bdd, [])
-  | False               ->  (f bdd, [])
-  | And (x,y)           ->  let (e1, l1) = bc x bdd in 
-                            let (e2, l2) = bc y bdd in 
-                            (cf_and bdd e1 e2, List.append l1 l2)
-  | Or (x,y)            ->  let (e1, l1) = bc x bdd in 
-                            let (e2, l2) = bc y bdd in 
-                            (cf_or bdd e1 e2, List.append l1 l2)
-  | Not x               ->  let (e, l) = bc x bdd in
-                            (cf_not bdd e, l)
-  | Ite (x,y,z)         ->  let (ex, lx) = bc x bdd in 
-                            let (ey, ly) = bc y bdd in
-                            let (ez, lz) = bc z bdd in
-                            (cf_ite bdd ex ey ez, List.append lx (List.append ly lz))
-  | ChooseWith (_d, _l) ->  failwith "todo"
+  | True                ->  t bdd
+  | False               ->  f bdd
+  | And (x,y)           ->  let e1 = bc x bdd in 
+                            let e2 = bc y bdd in 
+                            cf_and bdd e1 e2
+  | Or (x,y)            ->  let e1 = bc x bdd in 
+                            let e2 = bc y bdd in 
+                            cf_or bdd e1 e2
+  | Not x               ->  let e = bc x bdd in
+                            cf_not bdd e
+  | Ite (x,y,z)         ->  let ex = bc x bdd in 
+                            let ey = bc y bdd in
+                            let ez = bc z bdd in
+                            cf_ite bdd ex ey ez
+  | ChooseWith (d, l)   ->  let _ed = bc d bdd in 
+                            let _l_of_behaviors = List.map l ~f:(fun (a,b) -> (a, bc b bdd)) in 
+                            failwith "todo"
+                            (* for (a,b) in l_of_behaviors *)
   | Flip n              ->  let k = Bignum.to_float n in
-                            let e = mk_newvar bdd ((1.0 -. k, 0.0), (k, 0.0)) in
-                            
-                            (e, [])
+                            mk_newvar_prob bdd k
   | Reward k            ->  let k = Bignum.to_float k in
-                            let e = mk_newvar bdd ((1.0, 0.0), (1.0, k)) in
-                            (e, [])
-  | Decision l          ->  failwith "todo"
-  | Bind (_s, _e, _e')  -> failwith "todo"
-  | Observe (_e,_e')    -> failwith "todo"
-  | Ident _x            -> failwith "todo"
-  | Sequence(_e, _e')   -> failwith "todo"
+                            mk_newvar_rew bdd k
+  | Decision l          ->  let (e, l) = mk_newvar_dec bdd l in 
+                            let _ = dlist := List.append !dlist l in 
+                            e
+  | Bind (_s, _e, _e')  ->  failwith "todo"
+  | Observe (_e,_e')    ->  failwith "todo"
+  | Ident _x            ->  failwith "todo"
+  | Sequence(_e, _e')   ->  failwith "todo"
 
 let infer (prog :program) : float * float = 
   let new_bdd = mk_bdd_builder_default_order 0L in
-  let (cf, decisions) = bc prog.body new_bdd in 
-  let decisions_len :int64 = Int64.of_int(List.length (decisions)) in
+  let cf = bc prog.body new_bdd in 
+  let decisions_len :int64 = Int64.of_int(List.length (!dlist)) in
+  let decisions = List.map !dlist ~f:(fun (_,b) -> b) in
   (* I really dislike this hack I did to make the weight function into a 
     valid wmc parameter. But it works and it's decently fast...
     in hindsight I should have probably used a priority queue, but whatevs *)
@@ -50,4 +58,4 @@ let infer (prog :program) : float * float =
   let wmcparam = new_wmc_params_eu wmc_map in
   let unn_and_acc = bdd_and new_bdd cf.unn cf.acc in
   let (meu, _) = bdd_meu unn_and_acc cf.acc decisions decisions_len wmcparam in 
-  extract meu *)
+  extract meu

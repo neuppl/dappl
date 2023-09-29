@@ -5,6 +5,7 @@
 
 open Rsdd
 open Core
+(* open List *)
 (* open Core_grammar
 open Hashtbl
 open Set *)
@@ -44,7 +45,6 @@ let rec merge_weight_fns (l1 : weight_fn) (l2 : weight_fn) : weight_fn =
     match l2 with 
     | [] -> l1 
     | _ -> if lookup (fst x) l2 then merge_weight_fns xs l2 else merge_weight_fns xs (x::l2)
-
 
 (*
   Some constants to make the actual implementation look nicer.
@@ -130,9 +130,11 @@ let exactly_one (b : rsdd_bdd_builder) (l : int64 list) : cf =
     rw = Int64.Set.empty
   }
 
-let mk_newvar_dec (bdd : rsdd_bdd_builder) (decisions : string list) : cf * rsdd_var_label list  = 
+let mk_newvar_dec (bdd : rsdd_bdd_builder) (decisions : string list) : cf * (string * rsdd_var_label) list  = 
   let f : 'a -> int64 * rsdd_bdd_ptr = fun _ -> bdd_new_var bdd true in 
   let decisions_as_vars = List.map decisions ~f:f in
   let vars_as_int64 = List.map decisions_as_vars ~f:(fun (a,_) -> a ) in 
   let vars_as_varlabel = List.map vars_as_int64 ~f:(fun x -> mk_varlabel x) in 
-  (exactly_one bdd vars_as_int64, vars_as_varlabel)
+  let _ = assert(List.length decisions = List.length vars_as_varlabel) in
+  let list_final = List.zip_exn decisions vars_as_varlabel in
+  (exactly_one bdd vars_as_int64, list_final)
