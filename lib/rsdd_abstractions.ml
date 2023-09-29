@@ -66,8 +66,19 @@ let f (bdd : rsdd_bdd_builder) : cf =
     rw = Int64.Set.empty
   }
 
-let mk_newvar (bdd : rsdd_bdd_builder) (wt : eu * eu) : cf = 
+let mk_newvar_prob (bdd : rsdd_bdd_builder) (pr : float) : cf = 
   let (lbl, ptr) = bdd_new_var bdd true in 
+  let wt : eu * eu = ((1.0 -. pr, 0.0), (pr, 0.0)) in
+  {
+    unn = ptr;
+    acc = bdd_true bdd;
+    fn = [(lbl, wt)];
+    rw = Int64.Set.empty
+  }
+
+let mk_newvar_rew (bdd : rsdd_bdd_builder) (rw : float) : cf = 
+  let (lbl, ptr) = bdd_new_var bdd true in 
+  let wt : eu * eu = ((1.0 , 0.0), (1.0, rw)) in
   {
     unn = ptr;
     acc = bdd_true bdd;
@@ -118,3 +129,10 @@ let exactly_one (b : rsdd_bdd_builder) (l : int64 list) : cf =
     fn = List.map l ~f:make_unit;
     rw = Int64.Set.empty
   }
+
+let mk_newvar_dec (bdd : rsdd_bdd_builder) (decisions : string list) : cf * rsdd_var_label list  = 
+  let f : 'a -> int64 * rsdd_bdd_ptr = fun _ -> bdd_new_var bdd true in 
+  let decisions_as_vars = List.map decisions ~f:f in
+  let vars_as_int64 = List.map decisions_as_vars ~f:(fun (a,_) -> a ) in 
+  let vars_as_varlabel = List.map vars_as_int64 ~f:(fun x -> mk_varlabel x) in 
+  (exactly_one bdd vars_as_int64, vars_as_varlabel)

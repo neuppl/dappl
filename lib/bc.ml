@@ -3,7 +3,7 @@
   as shown in Section 4 of the paper
 *)
 
-open Rsdd
+(* open Rsdd
 open Core_grammar
 open Core
 open Rsdd_abstractions
@@ -18,12 +18,21 @@ let rec bc (dappl : expr) (bdd : rsdd_bdd_builder) : cf * rsdd_var_label list =
   | Or (x,y)            ->  let (e1, l1) = bc x bdd in 
                             let (e2, l2) = bc y bdd in 
                             (cf_or bdd e1 e2, List.append l1 l2)
-  | Not _x              ->  failwith "todo"
-  | Ite (_x,_y,_z)      ->failwith "todo"
-  | ChooseWith (_d, _l) ->failwith "todo"
-  | Flip _n             -> failwith "todo"
-  | Reward _k           -> failwith "todo"
-  | Decision _l         -> failwith "todo"
+  | Not x               ->  let (e, l) = bc x bdd in
+                            (cf_not bdd e, l)
+  | Ite (x,y,z)         ->  let (ex, lx) = bc x bdd in 
+                            let (ey, ly) = bc y bdd in
+                            let (ez, lz) = bc z bdd in
+                            (cf_ite bdd ex ey ez, List.append lx (List.append ly lz))
+  | ChooseWith (_d, _l) ->  failwith "todo"
+  | Flip n              ->  let k = Bignum.to_float n in
+                            let e = mk_newvar bdd ((1.0 -. k, 0.0), (k, 0.0)) in
+                            
+                            (e, [])
+  | Reward k            ->  let k = Bignum.to_float k in
+                            let e = mk_newvar bdd ((1.0, 0.0), (1.0, k)) in
+                            (e, [])
+  | Decision l          ->  failwith "todo"
   | Bind (_s, _e, _e')  -> failwith "todo"
   | Observe (_e,_e')    -> failwith "todo"
   | Ident _x            -> failwith "todo"
@@ -41,4 +50,4 @@ let infer (prog :program) : float * float =
   let wmcparam = new_wmc_params_eu wmc_map in
   let unn_and_acc = bdd_and new_bdd cf.unn cf.acc in
   let (meu, _) = bdd_meu unn_and_acc cf.acc decisions decisions_len wmcparam in 
-  extract meu
+  extract meu *)
