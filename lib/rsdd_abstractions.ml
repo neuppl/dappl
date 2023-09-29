@@ -26,7 +26,6 @@ let mk_eu (a :float) (b : float) : eu = (a,b)
 
 type cf = 
 {
-  builder : rsdd_bdd_builder;
   unn : rsdd_bdd_ptr;
   acc : rsdd_bdd_ptr;
   fn : weight_fn;
@@ -53,7 +52,6 @@ let rec merge_weight_fns (l1 : weight_fn) (l2 : weight_fn) : weight_fn =
 
 let t (bdd : rsdd_bdd_builder) : cf = 
   {
-    builder = bdd;
     unn = bdd_true bdd;
     acc = bdd_true bdd;
     fn = [];
@@ -62,7 +60,6 @@ let t (bdd : rsdd_bdd_builder) : cf =
 
 let f (bdd : rsdd_bdd_builder) : cf = 
   {
-    builder = bdd;
     unn = bdd_false bdd;
     acc = bdd_true bdd;
     fn = [];
@@ -72,7 +69,6 @@ let f (bdd : rsdd_bdd_builder) : cf =
 let mk_newvar (bdd : rsdd_bdd_builder) (wt : eu * eu) : cf = 
   let (lbl, ptr) = bdd_new_var bdd true in 
   {
-    builder = bdd;
     unn = ptr;
     acc = bdd_true bdd;
     fn = [(lbl, wt)];
@@ -81,50 +77,42 @@ let mk_newvar (bdd : rsdd_bdd_builder) (wt : eu * eu) : cf =
 
 (* Helper functions and their infix operations. *)
 
-let cf_not (x : cf) : cf = 
+let cf_not (bdd : rsdd_bdd_builder) (x : cf) : cf = 
   {
-    builder = x.builder;
-    unn = bdd_negate x.builder x.unn;
+    unn = bdd_negate bdd x.unn;
     acc = x.acc ; fn = x.fn ; rw = x.rw
   }
 
-let cf_and (a : cf) (b: cf): cf = 
+let cf_and (bdd : rsdd_bdd_builder) (a : cf) (b: cf): cf = 
   {
-    builder = b.builder;
-    unn = bdd_and b.builder a.unn b.unn;
-    acc = bdd_and b.builder a.acc b.acc;
+    unn = bdd_and bdd a.unn b.unn;
+    acc = bdd_and bdd a.acc b.acc;
     fn = merge_weight_fns a.fn b.fn;
     rw = Set.union a.rw b.rw
   }
 
-let cf_or (a : cf) (b: cf): cf = 
+let cf_or (bdd : rsdd_bdd_builder) (a : cf) (b: cf): cf = 
   {
-    builder = b.builder;
-    unn = bdd_or b.builder a.unn b.unn;
-    acc = bdd_or b.builder a.acc b.acc;
+    unn = bdd_or bdd a.unn b.unn;
+    acc = bdd_or bdd a.acc b.acc;
     fn = merge_weight_fns a.fn b.fn;
     rw = Set.union a.rw b.rw
   }
 
-let cf_ite (a : cf) (b : cf) (c : cf): cf =
+let cf_ite (bdd : rsdd_bdd_builder) (a : cf) (b : cf) (c : cf): cf =
   {
-    builder = c.builder;
-    unn = bdd_ite c.builder a.unn b.unn c.unn;
-    acc = bdd_ite c.builder a.unn b.acc c.acc;
+    unn = bdd_ite bdd a.unn b.unn c.unn;
+    acc = bdd_ite bdd a.unn b.acc c.acc;
     fn = merge_weight_fns (merge_weight_fns a.fn b.fn) c.fn;
     rw = Set.union (Set.union a.rw b.rw) c.rw
   }
 
-let (&&) a b = cf_and a b
-let (||) a b = cf_or a b
-let (!) a = cf_not a
 
 (* The ExactlyOne constraint *)
 let make_unit x = let p : eu * eu = ((1.0, 0.0), (1.0, 0.0)) in (x,p)
 
 let exactly_one (b : rsdd_bdd_builder) (l : int64 list) : cf = 
   {
-    builder = b;
     unn = bdd_exactlyone b l;
     acc = bdd_true b;
     fn = List.map l ~f:make_unit;
