@@ -7,11 +7,17 @@ open Rsdd
 open Core_grammar
 open Core
 open Rsdd_abstractions
+open List.Assoc
 
 (* We maintain an association list of strings and VarLabels 
   to enforce exhaustive patternmatch in ChooseWith. *)
 
 let dlist : ((string * rsdd_var_label) list) ref = ref [];;
+let lookup : string -> rsdd_var_label = fun x ->
+  let o = find !dlist ~equal:String.equal x in
+  match o with 
+  | None -> failwith "unbound decision error??"
+  | Some ptr -> ptr
 
 let rec bc (dappl : expr) (bdd : rsdd_bdd_builder) : cf = 
   match dappl with 
@@ -30,7 +36,7 @@ let rec bc (dappl : expr) (bdd : rsdd_bdd_builder) : cf =
                             let ez = bc z bdd in
                             cf_ite bdd ex ey ez
   | ChooseWith (d, l)   ->  let _ed = bc d bdd in 
-                            let _l_of_behaviors = List.map l ~f:(fun (a,b) -> (a, bc b bdd)) in 
+                            let _ir = List.map l ~f:(fun (a,b) -> (bdd_var bdd (lookup a) true, bc b bdd)) in
                             failwith "todo"
                             (* for (a,b) in l_of_behaviors *)
   | Flip n              ->  let k = Bignum.to_float n in
