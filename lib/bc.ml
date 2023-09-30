@@ -35,9 +35,14 @@ let rec bc (dappl : expr) (bdd : rsdd_bdd_builder) : cf =
                             let ey = bc y bdd in
                             let ez = bc z bdd in
                             cf_ite bdd ex ey ez
-  | ChooseWith (d, l)   ->  let _ed = bc d bdd in 
-                            let _ir = List.map l ~f:(fun (a,b) -> (bdd_var bdd (lookup a) true, bc b bdd)) in
-                            failwith "todo"
+  | ChooseWith (d, l)   ->  (* compile the decision *) 
+                            let ed = bc d bdd in
+                            (* l becomes a list of (ptr to name, pattern) *) 
+                            let ir = List.map l ~f:(fun (a,b) -> (bdd_var bdd (lookup a) true, bc b bdd)) in
+                            let ir2 = List.map ir ~f:(fun (a,b) -> cf_and bdd (mk_from_ptr bdd a) b) in
+                            (* which is then folded *)
+                            let l = List.fold ir2 ~init:(t bdd) ~f:(cf_or bdd) in
+                            cf_and bdd ed l
                             (* for (a,b) in l_of_behaviors *)
   | Flip n              ->  let k = Bignum.to_float n in
                             mk_newvar_prob bdd k
@@ -49,7 +54,7 @@ let rec bc (dappl : expr) (bdd : rsdd_bdd_builder) : cf =
   | Bind (_s, _e, _e')  ->  failwith "todo"
   | Observe (_e,_e')    ->  failwith "todo"
   | Ident _x            ->  failwith "todo"
-  | Sequence(_e, _e')   ->  failwith "todo"
+  | Sequence(e, e')     ->  bc (And(e, e') )bdd
 
 let infer (prog :program) : float * float = 
   let new_bdd = mk_bdd_builder_default_order 0L in

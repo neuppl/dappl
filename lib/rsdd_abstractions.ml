@@ -66,6 +66,14 @@ let f (bdd : rsdd_bdd_builder) : cf =
     rw = Int64.Set.empty
   }
 
+let mk_from_ptr (bdd : rsdd_bdd_builder) (ptr : rsdd_bdd_ptr) : cf =
+  {
+    unn = ptr; 
+    acc = bdd_true bdd;
+    fn = [];
+    rw = Int64.Set.empty
+  }
+
 let mk_newvar_prob (bdd : rsdd_bdd_builder) (pr : float) : cf = 
   let (lbl, ptr) = bdd_new_var bdd true in 
   let wt : eu * eu = ((1.0 -. pr, 0.0), (pr, 0.0)) in
