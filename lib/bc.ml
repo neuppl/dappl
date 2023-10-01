@@ -7,17 +7,24 @@ open Rsdd
 open Core_grammar
 open Core
 open Rsdd_abstractions
-open List.Assoc
+open Hashtbl
 
 (* We maintain an association list of strings and VarLabels 
   to enforce exhaustive patternmatch in ChooseWith. *)
 
 let dlist : ((string * rsdd_var_label) list) ref = ref [];;
 let lookup : string -> rsdd_var_label = fun x ->
-  let o = find !dlist ~equal:String.equal x in
+  let o = List.Assoc.find !dlist ~equal:String.equal x in
   match o with 
   | None -> failwith "unbound decision error??"
-  | Some ptr -> ptr
+  | Some ptr -> let _ = Printf.printf "found!\n" in ptr
+
+(*
+  We make a dictionary of identifiers --> BDDPtrs to avoid allocating
+  multiple newvars for the same flip (which will give us the wrong answer).
+*)
+
+let dictionary = create (module String);;
 
 let rec bc (dappl : expr) (bdd : rsdd_bdd_builder) : cf = 
   match dappl with 
@@ -51,22 +58,35 @@ let rec bc (dappl : expr) (bdd : rsdd_bdd_builder) : cf =
   | Decision l          ->  let (e, l) = mk_newvar_dec bdd l in 
                             let _ = dlist := List.append !dlist l in 
                             e
-  | Bind (_s, _e, _e')  ->  failwith "todo"
-  | Observe (_e,_e')    ->  failwith "todo"
-  | Ident _x            ->  failwith "todo"
-  | Sequence(e, e')     ->  bc (And(e, e') )bdd
+  | Bind (s, e, e')     ->  let cf_e = bc e bdd in
+                            let _ = Hashtbl.add dictionary ~key:s ~data:cf_e in 
+                            bc e' bdd
+  | Observe (e,e')      ->  let e = bc e bdd in 
+                            let e' = bc e' bdd in
+                            { unn = e'.unn;
+                              acc = bdd_and bdd e.unn e'.acc;
+                              fn = e'.fn ; rw = e'.rw
+                            }
+  | Sequence(e, e')     ->  bc (And(e, e')) bdd
+  | Ident x             ->  let ox = Hashtbl.find dictionary x in
+                            match ox with 
+                            | None -> failwith "unbound variable!"
+                            | Some x' -> x'
 
 let infer (prog :program) : float * float = 
+  (* compile first *)
   let new_bdd = mk_bdd_builder_default_order 0L in
   let cf = bc prog.body new_bdd in 
+  (* then remember decisions, store as varlabel list *)
   let decisions_len :int64 = Int64.of_int(List.length (!dlist)) in
   let decisions = List.map !dlist ~f:(fun (_,b) -> b) in
-  (* I really dislike this hack I did to make the weight function into a 
-    valid wmc parameter. But it works and it's decently fast...
-    in hindsight I should have probably used a priority queue, but whatevs *)
+  let _ = Printf.printf "%n\n" (Int64.to_int_exn decisions_len) in 
+  (* Then we make the WMC param. *)
+  (* L85 may be an unnecessary step, but I didn't do rigorous enough testing to make sure *)
   let sorted_weight_fn = List.sort cf.fn ~compare:(fun x y -> Int64.compare (fst x) (fst y))  in 
   let wmc_map = List.map sorted_weight_fn ~f:(fun x -> snd x) in
   let wmcparam = new_wmc_params_eu wmc_map in
+  (* Finally the actual MEU *)
   let unn_and_acc = bdd_and new_bdd cf.unn cf.acc in
   let (meu, _) = bdd_meu unn_and_acc cf.acc decisions decisions_len wmcparam in 
   extract meu

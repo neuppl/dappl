@@ -21,12 +21,14 @@ let command =
   Command.basic
     ~summary:"Perform inference an input file"
     ~readme:(fun () -> "")
-    (let open Command.Let_syntax in
+     (let open Command.Let_syntax in
      let open Command.Param in
      let%map filename = anon ("filename" %: string) in
      fun () ->
         let parsed = parse_from_file filename in
-        let _ = Core_grammar.from_external_program parsed in
-        Format.printf "program parses. yay!\n")
+        let internal = Core_grammar.from_external_program parsed in
+        let _ : unit = Format.printf ("program parses. yay!\n") in 
+        let (meu, pr) = Bc.infer internal in
+        Printf.printf  "MEU is %F with prob %F\n" pr meu)
 
 let () = Command_unix.run ~version:"1.0" ~build_info:"RWO" command

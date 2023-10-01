@@ -75,6 +75,7 @@ let mk_from_ptr (bdd : rsdd_bdd_builder) (ptr : rsdd_bdd_ptr) : cf =
   }
 
 let mk_newvar_prob (bdd : rsdd_bdd_builder) (pr : float) : cf = 
+  let _  = Printf.printf "allocating pr with value %F\n" pr in
   let (lbl, ptr) = bdd_new_var bdd true in 
   let wt : eu * eu = ((1.0 -. pr, 0.0), (pr, 0.0)) in
   {
@@ -85,6 +86,7 @@ let mk_newvar_prob (bdd : rsdd_bdd_builder) (pr : float) : cf =
   }
 
 let mk_newvar_rew (bdd : rsdd_bdd_builder) (rw : float) : cf = 
+  let _  = Printf.printf "allocating reward with value %F\n" rw in
   let (lbl, ptr) = bdd_new_var bdd true in 
   let wt : eu * eu = ((1.0 , 0.0), (1.0, rw)) in
   {
@@ -113,7 +115,7 @@ let cf_and (bdd : rsdd_bdd_builder) (a : cf) (b: cf): cf =
 let cf_or (bdd : rsdd_bdd_builder) (a : cf) (b: cf): cf = 
   {
     unn = bdd_or bdd a.unn b.unn;
-    acc = bdd_or bdd a.acc b.acc;
+    acc = bdd_and bdd a.acc b.acc;
     fn = merge_weight_fns a.fn b.fn;
     rw = Set.union a.rw b.rw
   }
@@ -131,6 +133,7 @@ let cf_ite (bdd : rsdd_bdd_builder) (a : cf) (b : cf) (c : cf): cf =
 let make_unit x = let p : eu * eu = ((1.0, 0.0), (1.0, 0.0)) in (x,p)
 
 let exactly_one (b : rsdd_bdd_builder) (l : int64 list) : cf = 
+  let _  = Printf.printf "allocating decisions with length  %n\n" (List.length l) in
   {
     unn = bdd_exactlyone b l;
     acc = bdd_true b;
