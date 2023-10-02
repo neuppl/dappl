@@ -65,7 +65,7 @@ let rec bc (dappl : expr) (bdd : rsdd_bdd_builder) : cf =
                             let e' = bc e' bdd in
                             { unn = e'.unn;
                               acc = bdd_and bdd e.unn e'.acc;
-                              fn = merge_weight_fns e.fn e'.fn ; rw = Set.union e.rw e'.rw
+                              fn = merge_weight_fns e.fn e'.fn ; rw = e'.rw
                             }
   | Sequence(e, e')     ->  bc (And(e, e')) bdd
   | Ident x             ->  let ox = Hashtbl.find dictionary x in
@@ -83,6 +83,7 @@ let infer (prog :program) : float * float =
   (* then remember decisions, store as varlabel list *)
   let decisions_len :int64 = Int64.of_int(List.length (!dlist)) in
   let decisions = List.map !dlist ~f:(fun (_,b) -> b) in
+  (* let _ = List.map !dlist ~f:(fun (a,_) -> Printf.printf "decision var: %s\n" a) in *)
   (* Then we make the WMC param. *)
   (* The below line may be an unnecessary step, but I didn't do rigorous enough testing to make sure *)
   let sorted_weight_fn = List.sort cf.fn ~compare:(fun x y -> Int64.compare (fst x) (fst y))  in 
@@ -92,5 +93,5 @@ let infer (prog :program) : float * float =
   let wmcparam = new_wmc_params_eu wmc_map in
   (* Finally the actual MEU *)
   let unn_and_acc = bdd_and new_bdd cf.unn cf.acc in
-  let (meu, _) = bdd_meu unn_and_acc cf.acc decisions decisions_len wmcparam in 
+  let (meu, _) = bdd_meu unn_and_acc cf.acc decisions (Int64.(+) decisions_len 3L) wmcparam in 
   extract meu
