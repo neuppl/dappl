@@ -27,8 +27,8 @@ let command =
      fun () ->
         let parsed = parse_from_file filename in
         let internal = Core_grammar.from_external_program parsed in
-        let _ : unit = Format.printf ("program parses. yay!\n") in 
-        let (meu, pr) = Bc.infer internal in
-        Printf.printf  "MEU is %F with prob %F\n" pr meu)
+        (* let _ : unit = Format.printf ("program parses. yay!\n") in  *)
+        let (_, meu) = Bc.infer internal in
+        Printf.printf  "MEU is %F.\n" meu)
 
 let () = Command_unix.run ~version:"1.0" ~build_info:"RWO" command

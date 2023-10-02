@@ -48,7 +48,7 @@ let rec bc (dappl : expr) (bdd : rsdd_bdd_builder) : cf =
                             let ir = List.map l ~f:(fun (a,b) -> (bdd_var bdd (lookup a) true, bc b bdd)) in
                             let ir2 = List.map ir ~f:(fun (a,b) -> cf_and bdd (mk_from_ptr bdd a) b) in
                             (* which is then folded *)
-                            let l = List.fold ir2 ~init:(t bdd) ~f:(cf_or bdd) in
+                            let l = List.fold ir2 ~init:(f bdd) ~f:(cf_or bdd) in
                             cf_and bdd ed l
                             (* for (a,b) in l_of_behaviors *)
   | Flip n              ->  let k = Bignum.to_float n in
@@ -80,13 +80,16 @@ let infer (prog :program) : float * float =
   (* then remember decisions, store as varlabel list *)
   let decisions_len :int64 = Int64.of_int(List.length (!dlist)) in
   let decisions = List.map !dlist ~f:(fun (_,b) -> b) in
-  let _ = Printf.printf "%n\n" (Int64.to_int_exn decisions_len) in 
+  let _ = Printf.printf "final num of decisions %n\n" (Int64.to_int_exn decisions_len) in 
   (* Then we make the WMC param. *)
   (* L85 may be an unnecessary step, but I didn't do rigorous enough testing to make sure *)
   let sorted_weight_fn = List.sort cf.fn ~compare:(fun x y -> Int64.compare (fst x) (fst y))  in 
   let wmc_map = List.map sorted_weight_fn ~f:(fun x -> snd x) in
+  let _ = Printf.printf "final num of weights %n\n" (List.length wmc_map) in  
   let wmcparam = new_wmc_params_eu wmc_map in
   (* Finally the actual MEU *)
   let unn_and_acc = bdd_and new_bdd cf.unn cf.acc in
   let (meu, _) = bdd_meu unn_and_acc cf.acc decisions decisions_len wmcparam in 
+  let (lbl, _) = bdd_new_var new_bdd true in 
+  let _ = Printf.printf "final num of variables %n\n" (Int64.to_int_exn lbl) in 
   extract meu
