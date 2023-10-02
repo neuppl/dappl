@@ -49,7 +49,6 @@ pattern_list :
 
 expr:
     | (* (e) *) delimited(LPAREN, expr, RPAREN) { $1 }
-    | expr SEMICOLON expr {Sequence({startpos=$startpos; endpos=$endpos}, $1, $3)}
     | (* [a1,...,an] *) 
       delimited(LBRACKET, separated_nonempty_list(COMMA, ID), RBRACKET) 
       { Decision({startpos=$startpos; endpos=$endpos}, $1) }
@@ -69,6 +68,7 @@ expr:
     | (* if e then e else e *) IF expr THEN expr ELSE expr { Ite({startpos=$startpos; endpos=$endpos}, $2, $4, $6) }
     | (* x <- e; e *)
       ID BIND expr SEMICOLON expr { Bind({startpos=$startpos; endpos=$endpos}, $1, $3, $5) }
+    | expr SEMICOLON expr {Sequence({startpos=$startpos; endpos=$endpos}, $1, $3)}
 
 program:
   body=expr; EOF { { body=body } }

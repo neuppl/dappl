@@ -1,5 +1,5 @@
 x <- [a1, a2, a3];
 choose x with
 | a1 -> if flip 0.5 then reward 10 else reward 0
-| a2 -> (choose [b1, b2] with | b1 -> reward 25 | b2 -> reward 0)
+| a2 -> reward 50
 | a3 -> reward 0
