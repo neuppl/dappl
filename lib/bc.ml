@@ -65,7 +65,7 @@ let rec bc (dappl : expr) (bdd : rsdd_bdd_builder) : cf =
                             let e' = bc e' bdd in
                             { unn = e'.unn;
                               acc = bdd_and bdd e.unn e'.acc;
-                              fn = e'.fn ; rw = e'.rw
+                              fn = merge_weight_fns e.fn e'.fn ; rw = Set.union e.rw e'.rw
                             }
   | Sequence(e, e')     ->  bc (And(e, e')) bdd
   | Ident x             ->  let ox = Hashtbl.find dictionary x in
@@ -83,15 +83,12 @@ let infer (prog :program) : float * float =
   (* then remember decisions, store as varlabel list *)
   let decisions_len :int64 = Int64.of_int(List.length (!dlist)) in
   let decisions = List.map !dlist ~f:(fun (_,b) -> b) in
-  let _ = assert(Int64.to_int_exn decisions_len = List.length decisions) in 
   (* Then we make the WMC param. *)
   (* The below line may be an unnecessary step, but I didn't do rigorous enough testing to make sure *)
   let sorted_weight_fn = List.sort cf.fn ~compare:(fun x y -> Int64.compare (fst x) (fst y))  in 
   let wmc_map = List.map sorted_weight_fn ~f:(fun x -> snd x) in
-  let _ = List.map wmc_map ~f:(fun ((a,b),(c,d)) -> Printf.printf "((%F, %F),(%F , %F))\n" a b c d) in  
   let (lbl, _) = bdd_new_var new_bdd true in 
-  let _ = Printf.printf "Number of variables allocated %n\n" (Int64.to_int_exn lbl) in 
-  let _ = Printf.printf "Number of things in weight map %n\n" (List.length wmc_map) in 
+  let _ = assert(Int64.to_int_exn lbl = (List.length wmc_map)) in 
   let wmcparam = new_wmc_params_eu wmc_map in
   (* Finally the actual MEU *)
   let unn_and_acc = bdd_and new_bdd cf.unn cf.acc in

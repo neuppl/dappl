@@ -36,15 +36,17 @@ type cf =
 let rec lookup (lbl : int64) (l : weight_fn) : bool =
   match l with 
   | [] -> false
-  | (lbl', _) :: xs -> if Int64.equal lbl lbl' then true else lookup lbl xs
+  | (lbl', _) :: xs ->  if Int64.equal lbl lbl' then true else lookup lbl xs
 
-let rec merge_weight_fns (l1 : weight_fn) (l2 : weight_fn) : weight_fn =
-  match l1 with
-  | [] -> l2
-  | x :: xs -> 
-    match l2 with 
-    | [] -> l1 
-    | _ -> if lookup (fst x) l2 then merge_weight_fns xs l2 else merge_weight_fns xs (x::l2)
+let rec dedup (l : weight_fn) : weight_fn = 
+  match l with 
+  | [] -> [] 
+  | [x] -> [x] 
+  | (lbl, eu)::(lbl', eu')::xs -> if Int64.equal lbl lbl' then dedup ((lbl, eu) :: xs) else (lbl, eu)::(dedup ((lbl',eu')::xs)) 
+
+let merge_weight_fns (l1 : weight_fn) (l2 : weight_fn) : weight_fn =
+  let l = List.sort (List.append l1 l2) ~compare:(fun x y -> Int64.compare (fst x) (fst y)) in 
+  dedup l
 
 (*
   Some constants to make the actual implementation look nicer.
@@ -75,8 +77,8 @@ let mk_from_ptr (bdd : rsdd_bdd_builder) (ptr : rsdd_bdd_ptr) : cf =
   }
 
 let mk_newvar_prob (bdd : rsdd_bdd_builder) (pr : float) : cf = 
-  let _  = Printf.printf "allocating pr with value %F\n" pr in
   let (lbl, ptr) = bdd_new_var bdd true in 
+  let _  = Printf.printf "allocating pr with value %F and label %n\n" pr (Int64.to_int_exn lbl) in
   let wt : eu * eu = ((1.0 -. pr, 0.0), (pr, 0.0)) in
   {
     unn = ptr;
@@ -86,8 +88,8 @@ let mk_newvar_prob (bdd : rsdd_bdd_builder) (pr : float) : cf =
   }
 
 let mk_newvar_rew (bdd : rsdd_bdd_builder) (rw : float) : cf = 
-  let _  = Printf.printf "allocating reward with value %F\n" rw in
   let (lbl, ptr) = bdd_new_var bdd true in 
+  let _  = Printf.printf "allocating reward with value %F and label %n\n" rw (Int64.to_int_exn lbl) in
   let wt : eu * eu = ((1.0 , 0.0), (1.0, rw)) in
   {
     unn = ptr;
@@ -124,7 +126,7 @@ let cf_ite (bdd : rsdd_bdd_builder) (a : cf) (b : cf) (c : cf): cf =
   {
     unn = bdd_ite bdd a.unn b.unn c.unn;
     acc = bdd_ite bdd a.unn b.acc c.acc;
-    fn = merge_weight_fns (merge_weight_fns a.fn b.fn) c.fn;
+    fn = merge_weight_fns a.fn (merge_weight_fns b.fn c.fn);
     rw = Set.union (Set.union a.rw b.rw) c.rw
   }
 
