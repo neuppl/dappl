@@ -74,24 +74,25 @@ let rec bc (dappl : expr) (bdd : rsdd_bdd_builder) : cf =
                             | Some x' -> x'
 
 (*Debug fn*)
-let rt_newest_lbl bdd = let (lbl, _) = bdd_new_var bdd true in Printf.printf "asdfasdf %n\n" (Int64.to_int_exn lbl )
+let rt_newest_lbl bdd = let (lbl, _) = bdd_new_var bdd true in 
+                        Printf.printf "asdfasdf %n\n" (Int64.to_int_exn lbl)
 
 let infer (prog :program) : float * float = 
   (* compile first *)
   let new_bdd = mk_bdd_builder_default_order 0L in
   let cf = bc prog.body new_bdd in 
   (* then remember decisions, store as varlabel list *)
-  let decisions_len :int64 = Int64.of_int(List.length (!dlist)) in
   let decisions = List.map !dlist ~f:(fun (_,b) -> b) in
-  (* let _ = List.map !dlist ~f:(fun (a,_) -> Printf.printf "decision var: %s\n" a) in *)
   (* Then we make the WMC param. *)
   (* The below line may be an unnecessary step, but I didn't do rigorous enough testing to make sure *)
   let sorted_weight_fn = List.sort cf.fn ~compare:(fun x y -> Int64.compare (fst x) (fst y))  in 
   let wmc_map = List.map sorted_weight_fn ~f:(fun x -> snd x) in
   let (lbl, _) = bdd_new_var new_bdd true in 
-  let _ = assert(Int64.to_int_exn lbl = (List.length wmc_map)) in 
+  let _ = if not(Int64.to_int_exn lbl = (List.length wmc_map)) 
+          then failwith "live variable-weight mismatch error: do you have any dead code?" 
+          else () in 
   let wmcparam = new_wmc_params_eu wmc_map in
   (* Finally the actual MEU *)
   let unn_and_acc = bdd_and new_bdd cf.unn cf.acc in
-  let (meu, _) = bdd_meu unn_and_acc cf.acc decisions (Int64.(+) decisions_len 3L) wmcparam in 
+  let (meu, _) = bdd_meu unn_and_acc cf.acc decisions lbl wmcparam in 
   extract meu

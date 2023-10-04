@@ -1,4 +1,4 @@
-door1 <- flip 0.333 ; 
+door1 <- flip 0.333333333333333 ; 
 door2 <- ((!door1) && (flip 0.5)) ;
 monty <- (if door1 then (flip 0.5) else door2);
 observe(monty);
