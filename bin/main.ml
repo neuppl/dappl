@@ -1,4 +1,5 @@
 open Dappl
+open Experiments
 open Util
 open Core
 
@@ -28,7 +29,10 @@ let command =
         let parsed = parse_from_file filename in
         let internal = Core_grammar.from_external_program parsed in
         (* let _ : unit = Format.printf ("program parses. yay!\n") in  *)
+        let t = Core_unix.gettimeofday() in
         let (_, meu) = Bc.infer internal in
-        Printf.printf  "MEU is %F\n" meu)
+        let t' = Core_unix.gettimeofday() in
+        let _ = Dappl_benchmarks.to_file_mdp 3 in
+        Printf.printf  "MEU is %F.\nTime elapsed: %F\n" meu (t' -. t))
 
 let () = Command_unix.run ~version:"1.0" ~build_info:"RWO" command

@@ -18,6 +18,7 @@ depends: [
   "ounit"
   "qcheck"
   "bignum"
+  "sys"
   "odoc" {with-doc}
 ]
 build: [

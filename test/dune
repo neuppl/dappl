@@ -1,2 +1,3 @@
 (test
- (name dappl))
+ (libraries ounit qcheck dappl bignum)
+ (name test))

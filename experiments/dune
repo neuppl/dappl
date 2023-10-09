@@ -1,0 +1,4 @@
+(library
+ (preprocess (pps ppx_jane))
+ (libraries dappl core bignum sexplib core_unix.command_unix ounit rsdd)
+ (name experiments))

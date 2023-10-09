@@ -20,5 +20,5 @@
  (name dappl)
  (synopsis "dappl")
  (description "dappl")
- (depends ocaml dune core core_unix menhir menhirlib ounit qcheck bignum)
+ (depends ocaml dune core core_unix menhir menhirlib ounit qcheck bignum sys)
  )
