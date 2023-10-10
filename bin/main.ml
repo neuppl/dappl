@@ -20,8 +20,8 @@ let _print_sexp fname =
 
 let only_filename =
   Command.basic
-    ~summary:"dappl solves your MEU problems."
-    ~readme:(fun () -> "")
+    ~summary:"dappl solves your meu problems."
+    ~readme:(fun () -> "put in a .dappl file to see the magic happen!")
      (let open Command.Let_syntax in
      let open Command.Param in
      let%map filename = anon ("filename" %: string) in
@@ -36,8 +36,8 @@ let only_filename =
 
 let gen_tests =
   Command.basic
-    ~summary:"dappl solves your MEU problems."
-    ~readme:(fun () -> "")
+    ~summary:"dappl test suite."
+    ~readme:(fun () -> "TEST = mdp, n = an integer.")
      (let%map_open.Command 
       test = anon ("test" %: string)
       and n = anon ("n" %: int) in
@@ -47,7 +47,7 @@ let gen_tests =
 
 let command =
   Command.group
-    ~summary:"dappl utilities"
+    ~summary:"Only the best for the people!"
     [ "run", only_filename; "test", gen_tests ]
 
-let () = Command_unix.run ~version:"1.0" ~build_info:"RWO" command
+let () = Command_unix.run ~version:"0.1" command
