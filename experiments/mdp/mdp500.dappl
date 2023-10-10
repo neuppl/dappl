@@ -1,0 +1,2780 @@
+f2775 <- ( flip 0.91629582066091342 );
+d2778 <- [ c2777, c2776 ];
+if f2775 then ( choose d2778 with
+| c2777 -> ( reward 8 )
+| c2776 -> ( reward 13 ) ) else ( f2771 <- ( flip 0.41401399553469 );
+d2774 <- [ c2773, c2772 ];
+if f2771 then ( choose d2774 with
+| c2773 -> ( reward 35 )
+| c2772 -> ( reward 22 ) ) else ( f2766 <- ( flip 0.40008826800438307 );
+d2770 <- [ c2769, c2768, c2767 ];
+if f2766 then ( choose d2770 with
+| c2769 -> ( reward 70 )
+| c2768 -> ( reward 25 )
+| c2767 -> ( reward 28 ) ) else ( f2762 <- ( flip 0.13024077910373452 );
+d2765 <- [ c2764, c2763 ];
+if f2762 then ( choose d2765 with
+| c2764 -> ( reward 17 )
+| c2763 -> ( reward 30 ) ) else ( f2755 <- ( flip 0.73833143003663237 );
+d2761 <- [ c2760, c2759, c2758, c2757, c2756 ];
+if f2755 then ( choose d2761 with
+| c2760 -> ( reward 33 )
+| c2759 -> ( reward 67 )
+| c2758 -> ( reward 93 )
+| c2757 -> ( reward 34 )
+| c2756 -> ( reward 82 ) ) else ( f2749 <- ( flip 0.17794943533719904 );
+d2754 <- [ c2753, c2752, c2751, c2750 ];
+if f2749 then ( choose d2754 with
+| c2753 -> ( reward 68 )
+| c2752 -> ( reward 43 )
+| c2751 -> ( reward 35 )
+| c2750 -> ( reward 70 ) ) else ( f2744 <- ( flip 0.96904477287249535 );
+d2748 <- [ c2747, c2746, c2745 ];
+if f2744 then ( choose d2748 with
+| c2747 -> ( reward 9 )
+| c2746 -> ( reward 29 )
+| c2745 -> ( reward 52 ) ) else ( f2737 <- ( flip 0.47790967020268571 );
+d2743 <- [ c2742, c2741, c2740, c2739, c2738 ];
+if f2737 then ( choose d2743 with
+| c2742 -> ( reward 89 )
+| c2741 -> ( reward 77 )
+| c2740 -> ( reward 34 )
+| c2739 -> ( reward 60 )
+| c2738 -> ( reward 79 ) ) else ( f2731 <- ( flip 0.096609964887960476 );
+d2736 <- [ c2735, c2734, c2733, c2732 ];
+if f2731 then ( choose d2736 with
+| c2735 -> ( reward 18 )
+| c2734 -> ( reward 75 )
+| c2733 -> ( reward 94 )
+| c2732 -> ( reward 73 ) ) else ( f2725 <- ( flip 0.034099802796815334 );
+d2730 <- [ c2729, c2728, c2727, c2726 ];
+if f2725 then ( choose d2730 with
+| c2729 -> ( reward 36 )
+| c2728 -> ( reward 19 )
+| c2727 -> ( reward 8 )
+| c2726 -> ( reward 15 ) ) else ( f2720 <- ( flip 0.11001890772017242 );
+d2724 <- [ c2723, c2722, c2721 ];
+if f2720 then ( choose d2724 with
+| c2723 -> ( reward 0 )
+| c2722 -> ( reward 9 )
+| c2721 -> ( reward 64 ) ) else ( f2714 <- ( flip 0.45117253945743596 );
+d2719 <- [ c2718, c2717, c2716, c2715 ];
+if f2714 then ( choose d2719 with
+| c2718 -> ( reward 70 )
+| c2717 -> ( reward 90 )
+| c2716 -> ( reward 95 )
+| c2715 -> ( reward 84 ) ) else ( f2707 <- ( flip 0.39931900098773021 );
+d2713 <- [ c2712, c2711, c2710, c2709, c2708 ];
+if f2707 then ( choose d2713 with
+| c2712 -> ( reward 39 )
+| c2711 -> ( reward 92 )
+| c2710 -> ( reward 42 )
+| c2709 -> ( reward 50 )
+| c2708 -> ( reward 84 ) ) else ( f2703 <- ( flip 0.6973486459847974 );
+d2706 <- [ c2705, c2704 ];
+if f2703 then ( choose d2706 with
+| c2705 -> ( reward 86 )
+| c2704 -> ( reward 14 ) ) else ( f2696 <- ( flip 0.37993655104628332 );
+d2702 <- [ c2701, c2700, c2699, c2698, c2697 ];
+if f2696 then ( choose d2702 with
+| c2701 -> ( reward 90 )
+| c2700 -> ( reward 59 )
+| c2699 -> ( reward 78 )
+| c2698 -> ( reward 89 )
+| c2697 -> ( reward 40 ) ) else ( f2691 <- ( flip 0.79741450617959886 );
+d2695 <- [ c2694, c2693, c2692 ];
+if f2691 then ( choose d2695 with
+| c2694 -> ( reward 68 )
+| c2693 -> ( reward 65 )
+| c2692 -> ( reward 89 ) ) else ( f2685 <- ( flip 0.0832455673207614 );
+d2690 <- [ c2689, c2688, c2687, c2686 ];
+if f2685 then ( choose d2690 with
+| c2689 -> ( reward 32 )
+| c2688 -> ( reward 39 )
+| c2687 -> ( reward 7 )
+| c2686 -> ( reward 60 ) ) else ( f2680 <- ( flip 0.3269241998276709 );
+d2684 <- [ c2683, c2682, c2681 ];
+if f2680 then ( choose d2684 with
+| c2683 -> ( reward 78 )
+| c2682 -> ( reward 63 )
+| c2681 -> ( reward 21 ) ) else ( f2675 <- ( flip 0.051563396366639258 );
+d2679 <- [ c2678, c2677, c2676 ];
+if f2675 then ( choose d2679 with
+| c2678 -> ( reward 26 )
+| c2677 -> ( reward 90 )
+| c2676 -> ( reward 24 ) ) else ( f2671 <- ( flip 0.01159205283808966 );
+d2674 <- [ c2673, c2672 ];
+if f2671 then ( choose d2674 with
+| c2673 -> ( reward 1 )
+| c2672 -> ( reward 1 ) ) else ( f2666 <- ( flip 0.074069701062203452 );
+d2670 <- [ c2669, c2668, c2667 ];
+if f2666 then ( choose d2670 with
+| c2669 -> ( reward 40 )
+| c2668 -> ( reward 83 )
+| c2667 -> ( reward 57 ) ) else ( f2662 <- ( flip 0.33098351864758335 );
+d2665 <- [ c2664, c2663 ];
+if f2662 then ( choose d2665 with
+| c2664 -> ( reward 40 )
+| c2663 -> ( reward 21 ) ) else ( f2658 <- ( flip 0.15948933308350485 );
+d2661 <- [ c2660, c2659 ];
+if f2658 then ( choose d2661 with
+| c2660 -> ( reward 83 )
+| c2659 -> ( reward 64 ) ) else ( f2652 <- ( flip 0.95651301632505625 );
+d2657 <- [ c2656, c2655, c2654, c2653 ];
+if f2652 then ( choose d2657 with
+| c2656 -> ( reward 77 )
+| c2655 -> ( reward 91 )
+| c2654 -> ( reward 14 )
+| c2653 -> ( reward 62 ) ) else ( f2647 <- ( flip 0.40445140253206308 );
+d2651 <- [ c2650, c2649, c2648 ];
+if f2647 then ( choose d2651 with
+| c2650 -> ( reward 62 )
+| c2649 -> ( reward 44 )
+| c2648 -> ( reward 22 ) ) else ( f2642 <- ( flip 0.013027286012848711 );
+d2646 <- [ c2645, c2644, c2643 ];
+if f2642 then ( choose d2646 with
+| c2645 -> ( reward 87 )
+| c2644 -> ( reward 39 )
+| c2643 -> ( reward 93 ) ) else ( f2637 <- ( flip 0.90050416051434334 );
+d2641 <- [ c2640, c2639, c2638 ];
+if f2637 then ( choose d2641 with
+| c2640 -> ( reward 82 )
+| c2639 -> ( reward 3 )
+| c2638 -> ( reward 2 ) ) else ( f2631 <- ( flip 0.043007971789524924 );
+d2636 <- [ c2635, c2634, c2633, c2632 ];
+if f2631 then ( choose d2636 with
+| c2635 -> ( reward 76 )
+| c2634 -> ( reward 14 )
+| c2633 -> ( reward 18 )
+| c2632 -> ( reward 64 ) ) else ( f2625 <- ( flip 0.015482863586725508 );
+d2630 <- [ c2629, c2628, c2627, c2626 ];
+if f2625 then ( choose d2630 with
+| c2629 -> ( reward 65 )
+| c2628 -> ( reward 96 )
+| c2627 -> ( reward 51 )
+| c2626 -> ( reward 84 ) ) else ( f2618 <- ( flip 0.69932119680994975 );
+d2624 <- [ c2623, c2622, c2621, c2620, c2619 ];
+if f2618 then ( choose d2624 with
+| c2623 -> ( reward 12 )
+| c2622 -> ( reward 38 )
+| c2621 -> ( reward 81 )
+| c2620 -> ( reward 77 )
+| c2619 -> ( reward 93 ) ) else ( f2613 <- ( flip 0.039897883297589531 );
+d2617 <- [ c2616, c2615, c2614 ];
+if f2613 then ( choose d2617 with
+| c2616 -> ( reward 24 )
+| c2615 -> ( reward 48 )
+| c2614 -> ( reward 26 ) ) else ( f2608 <- ( flip 0.19711417413199414 );
+d2612 <- [ c2611, c2610, c2609 ];
+if f2608 then ( choose d2612 with
+| c2611 -> ( reward 0 )
+| c2610 -> ( reward 60 )
+| c2609 -> ( reward 21 ) ) else ( f2603 <- ( flip 0.20873512672800654 );
+d2607 <- [ c2606, c2605, c2604 ];
+if f2603 then ( choose d2607 with
+| c2606 -> ( reward 9 )
+| c2605 -> ( reward 54 )
+| c2604 -> ( reward 1 ) ) else ( f2597 <- ( flip 0.25641397847999692 );
+d2602 <- [ c2601, c2600, c2599, c2598 ];
+if f2597 then ( choose d2602 with
+| c2601 -> ( reward 8 )
+| c2600 -> ( reward 38 )
+| c2599 -> ( reward 81 )
+| c2598 -> ( reward 10 ) ) else ( f2591 <- ( flip 0.81162973703163288 );
+d2596 <- [ c2595, c2594, c2593, c2592 ];
+if f2591 then ( choose d2596 with
+| c2595 -> ( reward 69 )
+| c2594 -> ( reward 10 )
+| c2593 -> ( reward 3 )
+| c2592 -> ( reward 27 ) ) else ( f2587 <- ( flip 0.80820830748518846 );
+d2590 <- [ c2589, c2588 ];
+if f2587 then ( choose d2590 with
+| c2589 -> ( reward 12 )
+| c2588 -> ( reward 5 ) ) else ( f2581 <- ( flip 0.75435905890838206 );
+d2586 <- [ c2585, c2584, c2583, c2582 ];
+if f2581 then ( choose d2586 with
+| c2585 -> ( reward 41 )
+| c2584 -> ( reward 87 )
+| c2583 -> ( reward 62 )
+| c2582 -> ( reward 52 ) ) else ( f2577 <- ( flip 0.0704000756023579 );
+d2580 <- [ c2579, c2578 ];
+if f2577 then ( choose d2580 with
+| c2579 -> ( reward 92 )
+| c2578 -> ( reward 58 ) ) else ( f2571 <- ( flip 0.48766077224945348 );
+d2576 <- [ c2575, c2574, c2573, c2572 ];
+if f2571 then ( choose d2576 with
+| c2575 -> ( reward 76 )
+| c2574 -> ( reward 85 )
+| c2573 -> ( reward 90 )
+| c2572 -> ( reward 19 ) ) else ( f2567 <- ( flip 0.29728575559541814 );
+d2570 <- [ c2569, c2568 ];
+if f2567 then ( choose d2570 with
+| c2569 -> ( reward 66 )
+| c2568 -> ( reward 31 ) ) else ( f2561 <- ( flip 0.89210333810531384 );
+d2566 <- [ c2565, c2564, c2563, c2562 ];
+if f2561 then ( choose d2566 with
+| c2565 -> ( reward 2 )
+| c2564 -> ( reward 56 )
+| c2563 -> ( reward 64 )
+| c2562 -> ( reward 45 ) ) else ( f2555 <- ( flip 0.87820681371195652 );
+d2560 <- [ c2559, c2558, c2557, c2556 ];
+if f2555 then ( choose d2560 with
+| c2559 -> ( reward 86 )
+| c2558 -> ( reward 77 )
+| c2557 -> ( reward 75 )
+| c2556 -> ( reward 10 ) ) else ( f2549 <- ( flip 0.754970523669818 );
+d2554 <- [ c2553, c2552, c2551, c2550 ];
+if f2549 then ( choose d2554 with
+| c2553 -> ( reward 74 )
+| c2552 -> ( reward 78 )
+| c2551 -> ( reward 91 )
+| c2550 -> ( reward 61 ) ) else ( f2543 <- ( flip 0.30235427502722306 );
+d2548 <- [ c2547, c2546, c2545, c2544 ];
+if f2543 then ( choose d2548 with
+| c2547 -> ( reward 64 )
+| c2546 -> ( reward 6 )
+| c2545 -> ( reward 99 )
+| c2544 -> ( reward 17 ) ) else ( f2536 <- ( flip 0.4664692506541448 );
+d2542 <- [ c2541, c2540, c2539, c2538, c2537 ];
+if f2536 then ( choose d2542 with
+| c2541 -> ( reward 1 )
+| c2540 -> ( reward 11 )
+| c2539 -> ( reward 8 )
+| c2538 -> ( reward 8 )
+| c2537 -> ( reward 62 ) ) else ( f2532 <- ( flip 0.075253281235689556 );
+d2535 <- [ c2534, c2533 ];
+if f2532 then ( choose d2535 with
+| c2534 -> ( reward 62 )
+| c2533 -> ( reward 9 ) ) else ( f2527 <- ( flip 0.43787337274021104 );
+d2531 <- [ c2530, c2529, c2528 ];
+if f2527 then ( choose d2531 with
+| c2530 -> ( reward 81 )
+| c2529 -> ( reward 12 )
+| c2528 -> ( reward 23 ) ) else ( f2521 <- ( flip 0.85825992490824188 );
+d2526 <- [ c2525, c2524, c2523, c2522 ];
+if f2521 then ( choose d2526 with
+| c2525 -> ( reward 97 )
+| c2524 -> ( reward 59 )
+| c2523 -> ( reward 87 )
+| c2522 -> ( reward 51 ) ) else ( f2516 <- ( flip 0.46279743927177924 );
+d2520 <- [ c2519, c2518, c2517 ];
+if f2516 then ( choose d2520 with
+| c2519 -> ( reward 65 )
+| c2518 -> ( reward 35 )
+| c2517 -> ( reward 35 ) ) else ( f2510 <- ( flip 0.465595622726539 );
+d2515 <- [ c2514, c2513, c2512, c2511 ];
+if f2510 then ( choose d2515 with
+| c2514 -> ( reward 81 )
+| c2513 -> ( reward 49 )
+| c2512 -> ( reward 16 )
+| c2511 -> ( reward 63 ) ) else ( f2505 <- ( flip 0.7820758363765381 );
+d2509 <- [ c2508, c2507, c2506 ];
+if f2505 then ( choose d2509 with
+| c2508 -> ( reward 81 )
+| c2507 -> ( reward 88 )
+| c2506 -> ( reward 79 ) ) else ( f2499 <- ( flip 0.91178854694076428 );
+d2504 <- [ c2503, c2502, c2501, c2500 ];
+if f2499 then ( choose d2504 with
+| c2503 -> ( reward 47 )
+| c2502 -> ( reward 1 )
+| c2501 -> ( reward 98 )
+| c2500 -> ( reward 32 ) ) else ( f2493 <- ( flip 0.66204425299012581 );
+d2498 <- [ c2497, c2496, c2495, c2494 ];
+if f2493 then ( choose d2498 with
+| c2497 -> ( reward 35 )
+| c2496 -> ( reward 17 )
+| c2495 -> ( reward 50 )
+| c2494 -> ( reward 60 ) ) else ( f2488 <- ( flip 0.0740025037454572 );
+d2492 <- [ c2491, c2490, c2489 ];
+if f2488 then ( choose d2492 with
+| c2491 -> ( reward 95 )
+| c2490 -> ( reward 52 )
+| c2489 -> ( reward 7 ) ) else ( f2483 <- ( flip 0.26929627529089611 );
+d2487 <- [ c2486, c2485, c2484 ];
+if f2483 then ( choose d2487 with
+| c2486 -> ( reward 42 )
+| c2485 -> ( reward 25 )
+| c2484 -> ( reward 13 ) ) else ( f2476 <- ( flip 0.25254458546016495 );
+d2482 <- [ c2481, c2480, c2479, c2478, c2477 ];
+if f2476 then ( choose d2482 with
+| c2481 -> ( reward 8 )
+| c2480 -> ( reward 65 )
+| c2479 -> ( reward 33 )
+| c2478 -> ( reward 92 )
+| c2477 -> ( reward 0 ) ) else ( f2470 <- ( flip 0.14057653481275895 );
+d2475 <- [ c2474, c2473, c2472, c2471 ];
+if f2470 then ( choose d2475 with
+| c2474 -> ( reward 52 )
+| c2473 -> ( reward 40 )
+| c2472 -> ( reward 5 )
+| c2471 -> ( reward 32 ) ) else ( f2463 <- ( flip 0.11226701746180275 );
+d2469 <- [ c2468, c2467, c2466, c2465, c2464 ];
+if f2463 then ( choose d2469 with
+| c2468 -> ( reward 99 )
+| c2467 -> ( reward 58 )
+| c2466 -> ( reward 91 )
+| c2465 -> ( reward 81 )
+| c2464 -> ( reward 47 ) ) else ( f2456 <- ( flip 0.70747196472700113 );
+d2462 <- [ c2461, c2460, c2459, c2458, c2457 ];
+if f2456 then ( choose d2462 with
+| c2461 -> ( reward 73 )
+| c2460 -> ( reward 89 )
+| c2459 -> ( reward 72 )
+| c2458 -> ( reward 60 )
+| c2457 -> ( reward 33 ) ) else ( f2450 <- ( flip 0.28769471904609445 );
+d2455 <- [ c2454, c2453, c2452, c2451 ];
+if f2450 then ( choose d2455 with
+| c2454 -> ( reward 10 )
+| c2453 -> ( reward 1 )
+| c2452 -> ( reward 20 )
+| c2451 -> ( reward 74 ) ) else ( f2443 <- ( flip 0.038049860839392415 );
+d2449 <- [ c2448, c2447, c2446, c2445, c2444 ];
+if f2443 then ( choose d2449 with
+| c2448 -> ( reward 72 )
+| c2447 -> ( reward 88 )
+| c2446 -> ( reward 48 )
+| c2445 -> ( reward 20 )
+| c2444 -> ( reward 37 ) ) else ( f2437 <- ( flip 0.45087735163992293 );
+d2442 <- [ c2441, c2440, c2439, c2438 ];
+if f2437 then ( choose d2442 with
+| c2441 -> ( reward 76 )
+| c2440 -> ( reward 80 )
+| c2439 -> ( reward 58 )
+| c2438 -> ( reward 55 ) ) else ( f2432 <- ( flip 0.86873996037916867 );
+d2436 <- [ c2435, c2434, c2433 ];
+if f2432 then ( choose d2436 with
+| c2435 -> ( reward 2 )
+| c2434 -> ( reward 71 )
+| c2433 -> ( reward 5 ) ) else ( f2427 <- ( flip 0.466910618582677 );
+d2431 <- [ c2430, c2429, c2428 ];
+if f2427 then ( choose d2431 with
+| c2430 -> ( reward 47 )
+| c2429 -> ( reward 70 )
+| c2428 -> ( reward 18 ) ) else ( f2421 <- ( flip 0.33187451170424193 );
+d2426 <- [ c2425, c2424, c2423, c2422 ];
+if f2421 then ( choose d2426 with
+| c2425 -> ( reward 15 )
+| c2424 -> ( reward 96 )
+| c2423 -> ( reward 49 )
+| c2422 -> ( reward 3 ) ) else ( f2414 <- ( flip 0.49822419672625512 );
+d2420 <- [ c2419, c2418, c2417, c2416, c2415 ];
+if f2414 then ( choose d2420 with
+| c2419 -> ( reward 98 )
+| c2418 -> ( reward 16 )
+| c2417 -> ( reward 30 )
+| c2416 -> ( reward 98 )
+| c2415 -> ( reward 41 ) ) else ( f2410 <- ( flip 0.22755861620229076 );
+d2413 <- [ c2412, c2411 ];
+if f2410 then ( choose d2413 with
+| c2412 -> ( reward 10 )
+| c2411 -> ( reward 54 ) ) else ( f2403 <- ( flip 0.49851492148067306 );
+d2409 <- [ c2408, c2407, c2406, c2405, c2404 ];
+if f2403 then ( choose d2409 with
+| c2408 -> ( reward 62 )
+| c2407 -> ( reward 54 )
+| c2406 -> ( reward 68 )
+| c2405 -> ( reward 3 )
+| c2404 -> ( reward 72 ) ) else ( f2399 <- ( flip 0.13059704732283994 );
+d2402 <- [ c2401, c2400 ];
+if f2399 then ( choose d2402 with
+| c2401 -> ( reward 71 )
+| c2400 -> ( reward 39 ) ) else ( f2395 <- ( flip 0.730043693409905 );
+d2398 <- [ c2397, c2396 ];
+if f2395 then ( choose d2398 with
+| c2397 -> ( reward 62 )
+| c2396 -> ( reward 71 ) ) else ( f2390 <- ( flip 0.94543254284451528 );
+d2394 <- [ c2393, c2392, c2391 ];
+if f2390 then ( choose d2394 with
+| c2393 -> ( reward 91 )
+| c2392 -> ( reward 98 )
+| c2391 -> ( reward 78 ) ) else ( f2385 <- ( flip 0.0666199930310907 );
+d2389 <- [ c2388, c2387, c2386 ];
+if f2385 then ( choose d2389 with
+| c2388 -> ( reward 13 )
+| c2387 -> ( reward 85 )
+| c2386 -> ( reward 31 ) ) else ( f2380 <- ( flip 0.44677363031811473 );
+d2384 <- [ c2383, c2382, c2381 ];
+if f2380 then ( choose d2384 with
+| c2383 -> ( reward 52 )
+| c2382 -> ( reward 75 )
+| c2381 -> ( reward 95 ) ) else ( f2375 <- ( flip 0.75449414411444271 );
+d2379 <- [ c2378, c2377, c2376 ];
+if f2375 then ( choose d2379 with
+| c2378 -> ( reward 51 )
+| c2377 -> ( reward 23 )
+| c2376 -> ( reward 11 ) ) else ( f2369 <- ( flip 0.42442448298690177 );
+d2374 <- [ c2373, c2372, c2371, c2370 ];
+if f2369 then ( choose d2374 with
+| c2373 -> ( reward 97 )
+| c2372 -> ( reward 76 )
+| c2371 -> ( reward 17 )
+| c2370 -> ( reward 72 ) ) else ( f2362 <- ( flip 0.8036522222965885 );
+d2368 <- [ c2367, c2366, c2365, c2364, c2363 ];
+if f2362 then ( choose d2368 with
+| c2367 -> ( reward 80 )
+| c2366 -> ( reward 55 )
+| c2365 -> ( reward 58 )
+| c2364 -> ( reward 11 )
+| c2363 -> ( reward 98 ) ) else ( f2356 <- ( flip 0.16299856259117973 );
+d2361 <- [ c2360, c2359, c2358, c2357 ];
+if f2356 then ( choose d2361 with
+| c2360 -> ( reward 63 )
+| c2359 -> ( reward 83 )
+| c2358 -> ( reward 32 )
+| c2357 -> ( reward 66 ) ) else ( f2349 <- ( flip 0.5427236643862412 );
+d2355 <- [ c2354, c2353, c2352, c2351, c2350 ];
+if f2349 then ( choose d2355 with
+| c2354 -> ( reward 73 )
+| c2353 -> ( reward 20 )
+| c2352 -> ( reward 40 )
+| c2351 -> ( reward 74 )
+| c2350 -> ( reward 74 ) ) else ( f2345 <- ( flip 0.24469933194594637 );
+d2348 <- [ c2347, c2346 ];
+if f2345 then ( choose d2348 with
+| c2347 -> ( reward 22 )
+| c2346 -> ( reward 43 ) ) else ( f2340 <- ( flip 0.55131498688720793 );
+d2344 <- [ c2343, c2342, c2341 ];
+if f2340 then ( choose d2344 with
+| c2343 -> ( reward 62 )
+| c2342 -> ( reward 65 )
+| c2341 -> ( reward 32 ) ) else ( f2335 <- ( flip 0.53650632885831007 );
+d2339 <- [ c2338, c2337, c2336 ];
+if f2335 then ( choose d2339 with
+| c2338 -> ( reward 47 )
+| c2337 -> ( reward 14 )
+| c2336 -> ( reward 93 ) ) else ( f2331 <- ( flip 0.030082106560608415 );
+d2334 <- [ c2333, c2332 ];
+if f2331 then ( choose d2334 with
+| c2333 -> ( reward 86 )
+| c2332 -> ( reward 76 ) ) else ( f2324 <- ( flip 0.37958668993717209 );
+d2330 <- [ c2329, c2328, c2327, c2326, c2325 ];
+if f2324 then ( choose d2330 with
+| c2329 -> ( reward 56 )
+| c2328 -> ( reward 89 )
+| c2327 -> ( reward 38 )
+| c2326 -> ( reward 46 )
+| c2325 -> ( reward 21 ) ) else ( f2317 <- ( flip 0.82128675139307217 );
+d2323 <- [ c2322, c2321, c2320, c2319, c2318 ];
+if f2317 then ( choose d2323 with
+| c2322 -> ( reward 92 )
+| c2321 -> ( reward 68 )
+| c2320 -> ( reward 27 )
+| c2319 -> ( reward 12 )
+| c2318 -> ( reward 24 ) ) else ( f2311 <- ( flip 0.78048447083824046 );
+d2316 <- [ c2315, c2314, c2313, c2312 ];
+if f2311 then ( choose d2316 with
+| c2315 -> ( reward 59 )
+| c2314 -> ( reward 77 )
+| c2313 -> ( reward 79 )
+| c2312 -> ( reward 7 ) ) else ( f2304 <- ( flip 0.77071843498616333 );
+d2310 <- [ c2309, c2308, c2307, c2306, c2305 ];
+if f2304 then ( choose d2310 with
+| c2309 -> ( reward 50 )
+| c2308 -> ( reward 87 )
+| c2307 -> ( reward 40 )
+| c2306 -> ( reward 47 )
+| c2305 -> ( reward 81 ) ) else ( f2299 <- ( flip 0.75797864153550487 );
+d2303 <- [ c2302, c2301, c2300 ];
+if f2299 then ( choose d2303 with
+| c2302 -> ( reward 50 )
+| c2301 -> ( reward 16 )
+| c2300 -> ( reward 73 ) ) else ( f2294 <- ( flip 0.88801958515424 );
+d2298 <- [ c2297, c2296, c2295 ];
+if f2294 then ( choose d2298 with
+| c2297 -> ( reward 69 )
+| c2296 -> ( reward 48 )
+| c2295 -> ( reward 89 ) ) else ( f2289 <- ( flip 0.97469955199357761 );
+d2293 <- [ c2292, c2291, c2290 ];
+if f2289 then ( choose d2293 with
+| c2292 -> ( reward 33 )
+| c2291 -> ( reward 87 )
+| c2290 -> ( reward 58 ) ) else ( f2282 <- ( flip 0.95967676872245034 );
+d2288 <- [ c2287, c2286, c2285, c2284, c2283 ];
+if f2282 then ( choose d2288 with
+| c2287 -> ( reward 71 )
+| c2286 -> ( reward 33 )
+| c2285 -> ( reward 40 )
+| c2284 -> ( reward 55 )
+| c2283 -> ( reward 36 ) ) else ( f2275 <- ( flip 0.16861616133480517 );
+d2281 <- [ c2280, c2279, c2278, c2277, c2276 ];
+if f2275 then ( choose d2281 with
+| c2280 -> ( reward 47 )
+| c2279 -> ( reward 61 )
+| c2278 -> ( reward 25 )
+| c2277 -> ( reward 92 )
+| c2276 -> ( reward 78 ) ) else ( f2269 <- ( flip 0.38102720238888854 );
+d2274 <- [ c2273, c2272, c2271, c2270 ];
+if f2269 then ( choose d2274 with
+| c2273 -> ( reward 71 )
+| c2272 -> ( reward 75 )
+| c2271 -> ( reward 35 )
+| c2270 -> ( reward 69 ) ) else ( f2264 <- ( flip 0.10935385907338686 );
+d2268 <- [ c2267, c2266, c2265 ];
+if f2264 then ( choose d2268 with
+| c2267 -> ( reward 2 )
+| c2266 -> ( reward 47 )
+| c2265 -> ( reward 78 ) ) else ( f2258 <- ( flip 0.81729072670562541 );
+d2263 <- [ c2262, c2261, c2260, c2259 ];
+if f2258 then ( choose d2263 with
+| c2262 -> ( reward 99 )
+| c2261 -> ( reward 22 )
+| c2260 -> ( reward 17 )
+| c2259 -> ( reward 64 ) ) else ( f2252 <- ( flip 0.34381934446061352 );
+d2257 <- [ c2256, c2255, c2254, c2253 ];
+if f2252 then ( choose d2257 with
+| c2256 -> ( reward 83 )
+| c2255 -> ( reward 81 )
+| c2254 -> ( reward 56 )
+| c2253 -> ( reward 13 ) ) else ( f2248 <- ( flip 0.50747969227981449 );
+d2251 <- [ c2250, c2249 ];
+if f2248 then ( choose d2251 with
+| c2250 -> ( reward 74 )
+| c2249 -> ( reward 38 ) ) else ( f2244 <- ( flip 0.89781555760198506 );
+d2247 <- [ c2246, c2245 ];
+if f2244 then ( choose d2247 with
+| c2246 -> ( reward 92 )
+| c2245 -> ( reward 54 ) ) else ( f2237 <- ( flip 0.031199780714553822 );
+d2243 <- [ c2242, c2241, c2240, c2239, c2238 ];
+if f2237 then ( choose d2243 with
+| c2242 -> ( reward 6 )
+| c2241 -> ( reward 15 )
+| c2240 -> ( reward 41 )
+| c2239 -> ( reward 14 )
+| c2238 -> ( reward 31 ) ) else ( f2231 <- ( flip 0.23332125964480854 );
+d2236 <- [ c2235, c2234, c2233, c2232 ];
+if f2231 then ( choose d2236 with
+| c2235 -> ( reward 63 )
+| c2234 -> ( reward 44 )
+| c2233 -> ( reward 90 )
+| c2232 -> ( reward 81 ) ) else ( f2225 <- ( flip 0.055875141865964768 );
+d2230 <- [ c2229, c2228, c2227, c2226 ];
+if f2225 then ( choose d2230 with
+| c2229 -> ( reward 78 )
+| c2228 -> ( reward 38 )
+| c2227 -> ( reward 42 )
+| c2226 -> ( reward 67 ) ) else ( f2218 <- ( flip 0.24273972239036981 );
+d2224 <- [ c2223, c2222, c2221, c2220, c2219 ];
+if f2218 then ( choose d2224 with
+| c2223 -> ( reward 71 )
+| c2222 -> ( reward 42 )
+| c2221 -> ( reward 86 )
+| c2220 -> ( reward 90 )
+| c2219 -> ( reward 14 ) ) else ( f2211 <- ( flip 0.13112215715470071 );
+d2217 <- [ c2216, c2215, c2214, c2213, c2212 ];
+if f2211 then ( choose d2217 with
+| c2216 -> ( reward 61 )
+| c2215 -> ( reward 6 )
+| c2214 -> ( reward 83 )
+| c2213 -> ( reward 35 )
+| c2212 -> ( reward 49 ) ) else ( f2207 <- ( flip 0.30816665080642425 );
+d2210 <- [ c2209, c2208 ];
+if f2207 then ( choose d2210 with
+| c2209 -> ( reward 79 )
+| c2208 -> ( reward 77 ) ) else ( f2201 <- ( flip 0.72498469645085906 );
+d2206 <- [ c2205, c2204, c2203, c2202 ];
+if f2201 then ( choose d2206 with
+| c2205 -> ( reward 57 )
+| c2204 -> ( reward 29 )
+| c2203 -> ( reward 34 )
+| c2202 -> ( reward 18 ) ) else ( f2196 <- ( flip 0.31154396601286355 );
+d2200 <- [ c2199, c2198, c2197 ];
+if f2196 then ( choose d2200 with
+| c2199 -> ( reward 43 )
+| c2198 -> ( reward 90 )
+| c2197 -> ( reward 64 ) ) else ( f2189 <- ( flip 0.77936413552162664 );
+d2195 <- [ c2194, c2193, c2192, c2191, c2190 ];
+if f2189 then ( choose d2195 with
+| c2194 -> ( reward 78 )
+| c2193 -> ( reward 56 )
+| c2192 -> ( reward 87 )
+| c2191 -> ( reward 38 )
+| c2190 -> ( reward 8 ) ) else ( f2182 <- ( flip 0.32638958568284776 );
+d2188 <- [ c2187, c2186, c2185, c2184, c2183 ];
+if f2182 then ( choose d2188 with
+| c2187 -> ( reward 26 )
+| c2186 -> ( reward 4 )
+| c2185 -> ( reward 93 )
+| c2184 -> ( reward 17 )
+| c2183 -> ( reward 49 ) ) else ( f2177 <- ( flip 0.5300504334422359 );
+d2181 <- [ c2180, c2179, c2178 ];
+if f2177 then ( choose d2181 with
+| c2180 -> ( reward 35 )
+| c2179 -> ( reward 45 )
+| c2178 -> ( reward 43 ) ) else ( f2171 <- ( flip 0.23723731645562393 );
+d2176 <- [ c2175, c2174, c2173, c2172 ];
+if f2171 then ( choose d2176 with
+| c2175 -> ( reward 16 )
+| c2174 -> ( reward 48 )
+| c2173 -> ( reward 19 )
+| c2172 -> ( reward 80 ) ) else ( f2164 <- ( flip 0.65333915333349646 );
+d2170 <- [ c2169, c2168, c2167, c2166, c2165 ];
+if f2164 then ( choose d2170 with
+| c2169 -> ( reward 9 )
+| c2168 -> ( reward 24 )
+| c2167 -> ( reward 46 )
+| c2166 -> ( reward 59 )
+| c2165 -> ( reward 87 ) ) else ( f2159 <- ( flip 0.53860796743677264 );
+d2163 <- [ c2162, c2161, c2160 ];
+if f2159 then ( choose d2163 with
+| c2162 -> ( reward 85 )
+| c2161 -> ( reward 37 )
+| c2160 -> ( reward 58 ) ) else ( f2155 <- ( flip 0.55516380209294991 );
+d2158 <- [ c2157, c2156 ];
+if f2155 then ( choose d2158 with
+| c2157 -> ( reward 91 )
+| c2156 -> ( reward 15 ) ) else ( f2149 <- ( flip 0.50948892535732426 );
+d2154 <- [ c2153, c2152, c2151, c2150 ];
+if f2149 then ( choose d2154 with
+| c2153 -> ( reward 99 )
+| c2152 -> ( reward 53 )
+| c2151 -> ( reward 65 )
+| c2150 -> ( reward 12 ) ) else ( f2144 <- ( flip 0.31610348268626737 );
+d2148 <- [ c2147, c2146, c2145 ];
+if f2144 then ( choose d2148 with
+| c2147 -> ( reward 32 )
+| c2146 -> ( reward 66 )
+| c2145 -> ( reward 87 ) ) else ( f2139 <- ( flip 0.43994604966799761 );
+d2143 <- [ c2142, c2141, c2140 ];
+if f2139 then ( choose d2143 with
+| c2142 -> ( reward 11 )
+| c2141 -> ( reward 50 )
+| c2140 -> ( reward 22 ) ) else ( f2134 <- ( flip 0.899245914830773 );
+d2138 <- [ c2137, c2136, c2135 ];
+if f2134 then ( choose d2138 with
+| c2137 -> ( reward 61 )
+| c2136 -> ( reward 59 )
+| c2135 -> ( reward 87 ) ) else ( f2130 <- ( flip 0.90159237975384521 );
+d2133 <- [ c2132, c2131 ];
+if f2130 then ( choose d2133 with
+| c2132 -> ( reward 52 )
+| c2131 -> ( reward 71 ) ) else ( f2126 <- ( flip 0.69806527240662919 );
+d2129 <- [ c2128, c2127 ];
+if f2126 then ( choose d2129 with
+| c2128 -> ( reward 68 )
+| c2127 -> ( reward 83 ) ) else ( f2119 <- ( flip 0.58276743522495678 );
+d2125 <- [ c2124, c2123, c2122, c2121, c2120 ];
+if f2119 then ( choose d2125 with
+| c2124 -> ( reward 77 )
+| c2123 -> ( reward 48 )
+| c2122 -> ( reward 25 )
+| c2121 -> ( reward 92 )
+| c2120 -> ( reward 5 ) ) else ( f2113 <- ( flip 0.98394930516654922 );
+d2118 <- [ c2117, c2116, c2115, c2114 ];
+if f2113 then ( choose d2118 with
+| c2117 -> ( reward 19 )
+| c2116 -> ( reward 23 )
+| c2115 -> ( reward 39 )
+| c2114 -> ( reward 66 ) ) else ( f2107 <- ( flip 0.13731003951951248 );
+d2112 <- [ c2111, c2110, c2109, c2108 ];
+if f2107 then ( choose d2112 with
+| c2111 -> ( reward 27 )
+| c2110 -> ( reward 71 )
+| c2109 -> ( reward 52 )
+| c2108 -> ( reward 33 ) ) else ( f2100 <- ( flip 0.90995602091092576 );
+d2106 <- [ c2105, c2104, c2103, c2102, c2101 ];
+if f2100 then ( choose d2106 with
+| c2105 -> ( reward 3 )
+| c2104 -> ( reward 29 )
+| c2103 -> ( reward 90 )
+| c2102 -> ( reward 0 )
+| c2101 -> ( reward 38 ) ) else ( f2095 <- ( flip 0.96618677534110253 );
+d2099 <- [ c2098, c2097, c2096 ];
+if f2095 then ( choose d2099 with
+| c2098 -> ( reward 34 )
+| c2097 -> ( reward 35 )
+| c2096 -> ( reward 96 ) ) else ( f2091 <- ( flip 0.78683287926430012 );
+d2094 <- [ c2093, c2092 ];
+if f2091 then ( choose d2094 with
+| c2093 -> ( reward 71 )
+| c2092 -> ( reward 64 ) ) else ( f2084 <- ( flip 0.07081486283335385 );
+d2090 <- [ c2089, c2088, c2087, c2086, c2085 ];
+if f2084 then ( choose d2090 with
+| c2089 -> ( reward 97 )
+| c2088 -> ( reward 43 )
+| c2087 -> ( reward 93 )
+| c2086 -> ( reward 38 )
+| c2085 -> ( reward 24 ) ) else ( f2080 <- ( flip 0.76009713082117913 );
+d2083 <- [ c2082, c2081 ];
+if f2080 then ( choose d2083 with
+| c2082 -> ( reward 7 )
+| c2081 -> ( reward 6 ) ) else ( f2075 <- ( flip 0.39432706159631759 );
+d2079 <- [ c2078, c2077, c2076 ];
+if f2075 then ( choose d2079 with
+| c2078 -> ( reward 14 )
+| c2077 -> ( reward 54 )
+| c2076 -> ( reward 64 ) ) else ( f2068 <- ( flip 0.10444955248411369 );
+d2074 <- [ c2073, c2072, c2071, c2070, c2069 ];
+if f2068 then ( choose d2074 with
+| c2073 -> ( reward 56 )
+| c2072 -> ( reward 2 )
+| c2071 -> ( reward 11 )
+| c2070 -> ( reward 76 )
+| c2069 -> ( reward 21 ) ) else ( f2062 <- ( flip 0.5025533151360364 );
+d2067 <- [ c2066, c2065, c2064, c2063 ];
+if f2062 then ( choose d2067 with
+| c2066 -> ( reward 10 )
+| c2065 -> ( reward 77 )
+| c2064 -> ( reward 78 )
+| c2063 -> ( reward 82 ) ) else ( f2058 <- ( flip 0.966881869269986 );
+d2061 <- [ c2060, c2059 ];
+if f2058 then ( choose d2061 with
+| c2060 -> ( reward 13 )
+| c2059 -> ( reward 29 ) ) else ( f2052 <- ( flip 0.25886416065511786 );
+d2057 <- [ c2056, c2055, c2054, c2053 ];
+if f2052 then ( choose d2057 with
+| c2056 -> ( reward 19 )
+| c2055 -> ( reward 44 )
+| c2054 -> ( reward 20 )
+| c2053 -> ( reward 37 ) ) else ( f2045 <- ( flip 0.57471174127578939 );
+d2051 <- [ c2050, c2049, c2048, c2047, c2046 ];
+if f2045 then ( choose d2051 with
+| c2050 -> ( reward 57 )
+| c2049 -> ( reward 46 )
+| c2048 -> ( reward 45 )
+| c2047 -> ( reward 30 )
+| c2046 -> ( reward 63 ) ) else ( f2038 <- ( flip 0.38826461737505241 );
+d2044 <- [ c2043, c2042, c2041, c2040, c2039 ];
+if f2038 then ( choose d2044 with
+| c2043 -> ( reward 1 )
+| c2042 -> ( reward 64 )
+| c2041 -> ( reward 41 )
+| c2040 -> ( reward 33 )
+| c2039 -> ( reward 60 ) ) else ( f2031 <- ( flip 0.21687299034944404 );
+d2037 <- [ c2036, c2035, c2034, c2033, c2032 ];
+if f2031 then ( choose d2037 with
+| c2036 -> ( reward 77 )
+| c2035 -> ( reward 6 )
+| c2034 -> ( reward 37 )
+| c2033 -> ( reward 1 )
+| c2032 -> ( reward 25 ) ) else ( f2024 <- ( flip 0.0814234842831287 );
+d2030 <- [ c2029, c2028, c2027, c2026, c2025 ];
+if f2024 then ( choose d2030 with
+| c2029 -> ( reward 3 )
+| c2028 -> ( reward 66 )
+| c2027 -> ( reward 7 )
+| c2026 -> ( reward 41 )
+| c2025 -> ( reward 92 ) ) else ( f2020 <- ( flip 0.71614588210153329 );
+d2023 <- [ c2022, c2021 ];
+if f2020 then ( choose d2023 with
+| c2022 -> ( reward 30 )
+| c2021 -> ( reward 84 ) ) else ( f2016 <- ( flip 0.60100310792341172 );
+d2019 <- [ c2018, c2017 ];
+if f2016 then ( choose d2019 with
+| c2018 -> ( reward 71 )
+| c2017 -> ( reward 96 ) ) else ( f2011 <- ( flip 0.43296958886223386 );
+d2015 <- [ c2014, c2013, c2012 ];
+if f2011 then ( choose d2015 with
+| c2014 -> ( reward 23 )
+| c2013 -> ( reward 84 )
+| c2012 -> ( reward 6 ) ) else ( f2006 <- ( flip 0.70618791143154236 );
+d2010 <- [ c2009, c2008, c2007 ];
+if f2006 then ( choose d2010 with
+| c2009 -> ( reward 84 )
+| c2008 -> ( reward 23 )
+| c2007 -> ( reward 9 ) ) else ( f2002 <- ( flip 0.79660466272223174 );
+d2005 <- [ c2004, c2003 ];
+if f2002 then ( choose d2005 with
+| c2004 -> ( reward 41 )
+| c2003 -> ( reward 23 ) ) else ( f1997 <- ( flip 0.49188762205767994 );
+d2001 <- [ c2000, c1999, c1998 ];
+if f1997 then ( choose d2001 with
+| c2000 -> ( reward 91 )
+| c1999 -> ( reward 93 )
+| c1998 -> ( reward 59 ) ) else ( f1990 <- ( flip 0.12900301493023189 );
+d1996 <- [ c1995, c1994, c1993, c1992, c1991 ];
+if f1990 then ( choose d1996 with
+| c1995 -> ( reward 47 )
+| c1994 -> ( reward 56 )
+| c1993 -> ( reward 8 )
+| c1992 -> ( reward 43 )
+| c1991 -> ( reward 58 ) ) else ( f1985 <- ( flip 0.87800050856565393 );
+d1989 <- [ c1988, c1987, c1986 ];
+if f1985 then ( choose d1989 with
+| c1988 -> ( reward 0 )
+| c1987 -> ( reward 94 )
+| c1986 -> ( reward 97 ) ) else ( f1981 <- ( flip 0.52896391140511989 );
+d1984 <- [ c1983, c1982 ];
+if f1981 then ( choose d1984 with
+| c1983 -> ( reward 18 )
+| c1982 -> ( reward 97 ) ) else ( f1977 <- ( flip 0.51169749355220628 );
+d1980 <- [ c1979, c1978 ];
+if f1977 then ( choose d1980 with
+| c1979 -> ( reward 28 )
+| c1978 -> ( reward 14 ) ) else ( f1973 <- ( flip 0.059105804211445609 );
+d1976 <- [ c1975, c1974 ];
+if f1973 then ( choose d1976 with
+| c1975 -> ( reward 77 )
+| c1974 -> ( reward 69 ) ) else ( f1968 <- ( flip 0.5196842163757408 );
+d1972 <- [ c1971, c1970, c1969 ];
+if f1968 then ( choose d1972 with
+| c1971 -> ( reward 10 )
+| c1970 -> ( reward 62 )
+| c1969 -> ( reward 37 ) ) else ( f1961 <- ( flip 0.20857179854866859 );
+d1967 <- [ c1966, c1965, c1964, c1963, c1962 ];
+if f1961 then ( choose d1967 with
+| c1966 -> ( reward 25 )
+| c1965 -> ( reward 15 )
+| c1964 -> ( reward 7 )
+| c1963 -> ( reward 39 )
+| c1962 -> ( reward 51 ) ) else ( f1955 <- ( flip 0.10601912601630042 );
+d1960 <- [ c1959, c1958, c1957, c1956 ];
+if f1955 then ( choose d1960 with
+| c1959 -> ( reward 84 )
+| c1958 -> ( reward 81 )
+| c1957 -> ( reward 24 )
+| c1956 -> ( reward 64 ) ) else ( f1948 <- ( flip 0.54609418103660023 );
+d1954 <- [ c1953, c1952, c1951, c1950, c1949 ];
+if f1948 then ( choose d1954 with
+| c1953 -> ( reward 55 )
+| c1952 -> ( reward 98 )
+| c1951 -> ( reward 57 )
+| c1950 -> ( reward 62 )
+| c1949 -> ( reward 85 ) ) else ( f1942 <- ( flip 0.23488064096127792 );
+d1947 <- [ c1946, c1945, c1944, c1943 ];
+if f1942 then ( choose d1947 with
+| c1946 -> ( reward 52 )
+| c1945 -> ( reward 47 )
+| c1944 -> ( reward 12 )
+| c1943 -> ( reward 95 ) ) else ( f1937 <- ( flip 0.058036659988169717 );
+d1941 <- [ c1940, c1939, c1938 ];
+if f1937 then ( choose d1941 with
+| c1940 -> ( reward 40 )
+| c1939 -> ( reward 85 )
+| c1938 -> ( reward 66 ) ) else ( f1932 <- ( flip 0.19054472913821166 );
+d1936 <- [ c1935, c1934, c1933 ];
+if f1932 then ( choose d1936 with
+| c1935 -> ( reward 24 )
+| c1934 -> ( reward 29 )
+| c1933 -> ( reward 93 ) ) else ( f1927 <- ( flip 0.79021320463452616 );
+d1931 <- [ c1930, c1929, c1928 ];
+if f1927 then ( choose d1931 with
+| c1930 -> ( reward 87 )
+| c1929 -> ( reward 77 )
+| c1928 -> ( reward 90 ) ) else ( f1920 <- ( flip 0.11939458661312659 );
+d1926 <- [ c1925, c1924, c1923, c1922, c1921 ];
+if f1920 then ( choose d1926 with
+| c1925 -> ( reward 88 )
+| c1924 -> ( reward 62 )
+| c1923 -> ( reward 14 )
+| c1922 -> ( reward 3 )
+| c1921 -> ( reward 84 ) ) else ( f1914 <- ( flip 0.652498653181234 );
+d1919 <- [ c1918, c1917, c1916, c1915 ];
+if f1914 then ( choose d1919 with
+| c1918 -> ( reward 73 )
+| c1917 -> ( reward 87 )
+| c1916 -> ( reward 21 )
+| c1915 -> ( reward 39 ) ) else ( f1910 <- ( flip 0.94913732536002959 );
+d1913 <- [ c1912, c1911 ];
+if f1910 then ( choose d1913 with
+| c1912 -> ( reward 55 )
+| c1911 -> ( reward 79 ) ) else ( f1905 <- ( flip 0.066002008295226261 );
+d1909 <- [ c1908, c1907, c1906 ];
+if f1905 then ( choose d1909 with
+| c1908 -> ( reward 94 )
+| c1907 -> ( reward 17 )
+| c1906 -> ( reward 9 ) ) else ( f1901 <- ( flip 0.30491774868577343 );
+d1904 <- [ c1903, c1902 ];
+if f1901 then ( choose d1904 with
+| c1903 -> ( reward 63 )
+| c1902 -> ( reward 35 ) ) else ( f1897 <- ( flip 0.83439641164097733 );
+d1900 <- [ c1899, c1898 ];
+if f1897 then ( choose d1900 with
+| c1899 -> ( reward 97 )
+| c1898 -> ( reward 49 ) ) else ( f1891 <- ( flip 0.071634395848541685 );
+d1896 <- [ c1895, c1894, c1893, c1892 ];
+if f1891 then ( choose d1896 with
+| c1895 -> ( reward 81 )
+| c1894 -> ( reward 11 )
+| c1893 -> ( reward 90 )
+| c1892 -> ( reward 35 ) ) else ( f1885 <- ( flip 0.3454629395490536 );
+d1890 <- [ c1889, c1888, c1887, c1886 ];
+if f1885 then ( choose d1890 with
+| c1889 -> ( reward 54 )
+| c1888 -> ( reward 84 )
+| c1887 -> ( reward 80 )
+| c1886 -> ( reward 64 ) ) else ( f1879 <- ( flip 0.90662609255499482 );
+d1884 <- [ c1883, c1882, c1881, c1880 ];
+if f1879 then ( choose d1884 with
+| c1883 -> ( reward 41 )
+| c1882 -> ( reward 23 )
+| c1881 -> ( reward 44 )
+| c1880 -> ( reward 61 ) ) else ( f1875 <- ( flip 0.85742136187361939 );
+d1878 <- [ c1877, c1876 ];
+if f1875 then ( choose d1878 with
+| c1877 -> ( reward 30 )
+| c1876 -> ( reward 18 ) ) else ( f1870 <- ( flip 0.99598221160576172 );
+d1874 <- [ c1873, c1872, c1871 ];
+if f1870 then ( choose d1874 with
+| c1873 -> ( reward 35 )
+| c1872 -> ( reward 69 )
+| c1871 -> ( reward 2 ) ) else ( f1864 <- ( flip 0.57331634446419066 );
+d1869 <- [ c1868, c1867, c1866, c1865 ];
+if f1864 then ( choose d1869 with
+| c1868 -> ( reward 65 )
+| c1867 -> ( reward 35 )
+| c1866 -> ( reward 84 )
+| c1865 -> ( reward 26 ) ) else ( f1857 <- ( flip 0.057768119929528967 );
+d1863 <- [ c1862, c1861, c1860, c1859, c1858 ];
+if f1857 then ( choose d1863 with
+| c1862 -> ( reward 14 )
+| c1861 -> ( reward 5 )
+| c1860 -> ( reward 36 )
+| c1859 -> ( reward 58 )
+| c1858 -> ( reward 73 ) ) else ( f1850 <- ( flip 0.30322580651534381 );
+d1856 <- [ c1855, c1854, c1853, c1852, c1851 ];
+if f1850 then ( choose d1856 with
+| c1855 -> ( reward 75 )
+| c1854 -> ( reward 48 )
+| c1853 -> ( reward 87 )
+| c1852 -> ( reward 1 )
+| c1851 -> ( reward 92 ) ) else ( f1846 <- ( flip 0.017868623487026874 );
+d1849 <- [ c1848, c1847 ];
+if f1846 then ( choose d1849 with
+| c1848 -> ( reward 66 )
+| c1847 -> ( reward 37 ) ) else ( f1842 <- ( flip 0.97381178310349037 );
+d1845 <- [ c1844, c1843 ];
+if f1842 then ( choose d1845 with
+| c1844 -> ( reward 0 )
+| c1843 -> ( reward 77 ) ) else ( f1835 <- ( flip 0.30149967492050656 );
+d1841 <- [ c1840, c1839, c1838, c1837, c1836 ];
+if f1835 then ( choose d1841 with
+| c1840 -> ( reward 22 )
+| c1839 -> ( reward 93 )
+| c1838 -> ( reward 53 )
+| c1837 -> ( reward 36 )
+| c1836 -> ( reward 90 ) ) else ( f1828 <- ( flip 0.16326059564526105 );
+d1834 <- [ c1833, c1832, c1831, c1830, c1829 ];
+if f1828 then ( choose d1834 with
+| c1833 -> ( reward 46 )
+| c1832 -> ( reward 20 )
+| c1831 -> ( reward 41 )
+| c1830 -> ( reward 28 )
+| c1829 -> ( reward 8 ) ) else ( f1822 <- ( flip 0.75668758112776091 );
+d1827 <- [ c1826, c1825, c1824, c1823 ];
+if f1822 then ( choose d1827 with
+| c1826 -> ( reward 4 )
+| c1825 -> ( reward 42 )
+| c1824 -> ( reward 39 )
+| c1823 -> ( reward 47 ) ) else ( f1817 <- ( flip 0.11871818287158965 );
+d1821 <- [ c1820, c1819, c1818 ];
+if f1817 then ( choose d1821 with
+| c1820 -> ( reward 87 )
+| c1819 -> ( reward 69 )
+| c1818 -> ( reward 12 ) ) else ( f1811 <- ( flip 0.66101104345820294 );
+d1816 <- [ c1815, c1814, c1813, c1812 ];
+if f1811 then ( choose d1816 with
+| c1815 -> ( reward 47 )
+| c1814 -> ( reward 13 )
+| c1813 -> ( reward 59 )
+| c1812 -> ( reward 6 ) ) else ( f1806 <- ( flip 0.66640670457328266 );
+d1810 <- [ c1809, c1808, c1807 ];
+if f1806 then ( choose d1810 with
+| c1809 -> ( reward 71 )
+| c1808 -> ( reward 82 )
+| c1807 -> ( reward 97 ) ) else ( f1799 <- ( flip 0.4509022561177502 );
+d1805 <- [ c1804, c1803, c1802, c1801, c1800 ];
+if f1799 then ( choose d1805 with
+| c1804 -> ( reward 45 )
+| c1803 -> ( reward 21 )
+| c1802 -> ( reward 46 )
+| c1801 -> ( reward 28 )
+| c1800 -> ( reward 58 ) ) else ( f1793 <- ( flip 0.21814939250439619 );
+d1798 <- [ c1797, c1796, c1795, c1794 ];
+if f1793 then ( choose d1798 with
+| c1797 -> ( reward 83 )
+| c1796 -> ( reward 37 )
+| c1795 -> ( reward 19 )
+| c1794 -> ( reward 17 ) ) else ( f1787 <- ( flip 0.043061004194507986 );
+d1792 <- [ c1791, c1790, c1789, c1788 ];
+if f1787 then ( choose d1792 with
+| c1791 -> ( reward 23 )
+| c1790 -> ( reward 70 )
+| c1789 -> ( reward 35 )
+| c1788 -> ( reward 84 ) ) else ( f1781 <- ( flip 0.35627037900499431 );
+d1786 <- [ c1785, c1784, c1783, c1782 ];
+if f1781 then ( choose d1786 with
+| c1785 -> ( reward 25 )
+| c1784 -> ( reward 49 )
+| c1783 -> ( reward 13 )
+| c1782 -> ( reward 51 ) ) else ( f1775 <- ( flip 0.552950496178452 );
+d1780 <- [ c1779, c1778, c1777, c1776 ];
+if f1775 then ( choose d1780 with
+| c1779 -> ( reward 67 )
+| c1778 -> ( reward 6 )
+| c1777 -> ( reward 99 )
+| c1776 -> ( reward 56 ) ) else ( f1768 <- ( flip 0.25222146011787944 );
+d1774 <- [ c1773, c1772, c1771, c1770, c1769 ];
+if f1768 then ( choose d1774 with
+| c1773 -> ( reward 37 )
+| c1772 -> ( reward 4 )
+| c1771 -> ( reward 51 )
+| c1770 -> ( reward 46 )
+| c1769 -> ( reward 86 ) ) else ( f1762 <- ( flip 0.64319427917620919 );
+d1767 <- [ c1766, c1765, c1764, c1763 ];
+if f1762 then ( choose d1767 with
+| c1766 -> ( reward 35 )
+| c1765 -> ( reward 32 )
+| c1764 -> ( reward 72 )
+| c1763 -> ( reward 61 ) ) else ( f1755 <- ( flip 0.75925935812198619 );
+d1761 <- [ c1760, c1759, c1758, c1757, c1756 ];
+if f1755 then ( choose d1761 with
+| c1760 -> ( reward 41 )
+| c1759 -> ( reward 29 )
+| c1758 -> ( reward 14 )
+| c1757 -> ( reward 24 )
+| c1756 -> ( reward 63 ) ) else ( f1750 <- ( flip 0.48893483553843559 );
+d1754 <- [ c1753, c1752, c1751 ];
+if f1750 then ( choose d1754 with
+| c1753 -> ( reward 64 )
+| c1752 -> ( reward 50 )
+| c1751 -> ( reward 83 ) ) else ( f1745 <- ( flip 0.33751770452695296 );
+d1749 <- [ c1748, c1747, c1746 ];
+if f1745 then ( choose d1749 with
+| c1748 -> ( reward 98 )
+| c1747 -> ( reward 51 )
+| c1746 -> ( reward 63 ) ) else ( f1738 <- ( flip 0.634403668186428 );
+d1744 <- [ c1743, c1742, c1741, c1740, c1739 ];
+if f1738 then ( choose d1744 with
+| c1743 -> ( reward 57 )
+| c1742 -> ( reward 53 )
+| c1741 -> ( reward 38 )
+| c1740 -> ( reward 92 )
+| c1739 -> ( reward 97 ) ) else ( f1731 <- ( flip 0.97225033993257015 );
+d1737 <- [ c1736, c1735, c1734, c1733, c1732 ];
+if f1731 then ( choose d1737 with
+| c1736 -> ( reward 64 )
+| c1735 -> ( reward 55 )
+| c1734 -> ( reward 10 )
+| c1733 -> ( reward 41 )
+| c1732 -> ( reward 69 ) ) else ( f1725 <- ( flip 0.29197664275126867 );
+d1730 <- [ c1729, c1728, c1727, c1726 ];
+if f1725 then ( choose d1730 with
+| c1729 -> ( reward 72 )
+| c1728 -> ( reward 86 )
+| c1727 -> ( reward 25 )
+| c1726 -> ( reward 73 ) ) else ( f1720 <- ( flip 0.3952882266830145 );
+d1724 <- [ c1723, c1722, c1721 ];
+if f1720 then ( choose d1724 with
+| c1723 -> ( reward 62 )
+| c1722 -> ( reward 43 )
+| c1721 -> ( reward 16 ) ) else ( f1714 <- ( flip 0.74576178868083232 );
+d1719 <- [ c1718, c1717, c1716, c1715 ];
+if f1714 then ( choose d1719 with
+| c1718 -> ( reward 99 )
+| c1717 -> ( reward 92 )
+| c1716 -> ( reward 35 )
+| c1715 -> ( reward 63 ) ) else ( f1710 <- ( flip 0.020779141261938517 );
+d1713 <- [ c1712, c1711 ];
+if f1710 then ( choose d1713 with
+| c1712 -> ( reward 97 )
+| c1711 -> ( reward 61 ) ) else ( f1705 <- ( flip 0.59558971927764937 );
+d1709 <- [ c1708, c1707, c1706 ];
+if f1705 then ( choose d1709 with
+| c1708 -> ( reward 58 )
+| c1707 -> ( reward 8 )
+| c1706 -> ( reward 24 ) ) else ( f1700 <- ( flip 0.06537486331103666 );
+d1704 <- [ c1703, c1702, c1701 ];
+if f1700 then ( choose d1704 with
+| c1703 -> ( reward 99 )
+| c1702 -> ( reward 34 )
+| c1701 -> ( reward 73 ) ) else ( f1694 <- ( flip 0.462711060997207 );
+d1699 <- [ c1698, c1697, c1696, c1695 ];
+if f1694 then ( choose d1699 with
+| c1698 -> ( reward 73 )
+| c1697 -> ( reward 6 )
+| c1696 -> ( reward 68 )
+| c1695 -> ( reward 66 ) ) else ( f1687 <- ( flip 0.34306493013569295 );
+d1693 <- [ c1692, c1691, c1690, c1689, c1688 ];
+if f1687 then ( choose d1693 with
+| c1692 -> ( reward 31 )
+| c1691 -> ( reward 85 )
+| c1690 -> ( reward 49 )
+| c1689 -> ( reward 78 )
+| c1688 -> ( reward 88 ) ) else ( f1680 <- ( flip 0.83753408499985693 );
+d1686 <- [ c1685, c1684, c1683, c1682, c1681 ];
+if f1680 then ( choose d1686 with
+| c1685 -> ( reward 29 )
+| c1684 -> ( reward 33 )
+| c1683 -> ( reward 21 )
+| c1682 -> ( reward 66 )
+| c1681 -> ( reward 77 ) ) else ( f1675 <- ( flip 0.81675329788767259 );
+d1679 <- [ c1678, c1677, c1676 ];
+if f1675 then ( choose d1679 with
+| c1678 -> ( reward 27 )
+| c1677 -> ( reward 94 )
+| c1676 -> ( reward 38 ) ) else ( f1671 <- ( flip 0.70108469697208242 );
+d1674 <- [ c1673, c1672 ];
+if f1671 then ( choose d1674 with
+| c1673 -> ( reward 67 )
+| c1672 -> ( reward 61 ) ) else ( f1665 <- ( flip 0.50517532808005239 );
+d1670 <- [ c1669, c1668, c1667, c1666 ];
+if f1665 then ( choose d1670 with
+| c1669 -> ( reward 87 )
+| c1668 -> ( reward 48 )
+| c1667 -> ( reward 84 )
+| c1666 -> ( reward 57 ) ) else ( f1659 <- ( flip 0.35462992276098865 );
+d1664 <- [ c1663, c1662, c1661, c1660 ];
+if f1659 then ( choose d1664 with
+| c1663 -> ( reward 24 )
+| c1662 -> ( reward 77 )
+| c1661 -> ( reward 69 )
+| c1660 -> ( reward 87 ) ) else ( f1653 <- ( flip 0.092857153884988469 );
+d1658 <- [ c1657, c1656, c1655, c1654 ];
+if f1653 then ( choose d1658 with
+| c1657 -> ( reward 90 )
+| c1656 -> ( reward 2 )
+| c1655 -> ( reward 1 )
+| c1654 -> ( reward 57 ) ) else ( f1646 <- ( flip 0.87416661984177169 );
+d1652 <- [ c1651, c1650, c1649, c1648, c1647 ];
+if f1646 then ( choose d1652 with
+| c1651 -> ( reward 86 )
+| c1650 -> ( reward 56 )
+| c1649 -> ( reward 24 )
+| c1648 -> ( reward 92 )
+| c1647 -> ( reward 46 ) ) else ( f1640 <- ( flip 0.80380297405941992 );
+d1645 <- [ c1644, c1643, c1642, c1641 ];
+if f1640 then ( choose d1645 with
+| c1644 -> ( reward 8 )
+| c1643 -> ( reward 25 )
+| c1642 -> ( reward 96 )
+| c1641 -> ( reward 10 ) ) else ( f1635 <- ( flip 0.60461148670361031 );
+d1639 <- [ c1638, c1637, c1636 ];
+if f1635 then ( choose d1639 with
+| c1638 -> ( reward 16 )
+| c1637 -> ( reward 81 )
+| c1636 -> ( reward 72 ) ) else ( f1630 <- ( flip 0.34653469467565923 );
+d1634 <- [ c1633, c1632, c1631 ];
+if f1630 then ( choose d1634 with
+| c1633 -> ( reward 30 )
+| c1632 -> ( reward 53 )
+| c1631 -> ( reward 80 ) ) else ( f1624 <- ( flip 0.074302937823054957 );
+d1629 <- [ c1628, c1627, c1626, c1625 ];
+if f1624 then ( choose d1629 with
+| c1628 -> ( reward 6 )
+| c1627 -> ( reward 62 )
+| c1626 -> ( reward 19 )
+| c1625 -> ( reward 99 ) ) else ( f1618 <- ( flip 0.85342194902041391 );
+d1623 <- [ c1622, c1621, c1620, c1619 ];
+if f1618 then ( choose d1623 with
+| c1622 -> ( reward 2 )
+| c1621 -> ( reward 58 )
+| c1620 -> ( reward 10 )
+| c1619 -> ( reward 76 ) ) else ( f1614 <- ( flip 0.45061949327159556 );
+d1617 <- [ c1616, c1615 ];
+if f1614 then ( choose d1617 with
+| c1616 -> ( reward 51 )
+| c1615 -> ( reward 95 ) ) else ( f1610 <- ( flip 0.30718082397884033 );
+d1613 <- [ c1612, c1611 ];
+if f1610 then ( choose d1613 with
+| c1612 -> ( reward 44 )
+| c1611 -> ( reward 52 ) ) else ( f1605 <- ( flip 0.0074619480658054058 );
+d1609 <- [ c1608, c1607, c1606 ];
+if f1605 then ( choose d1609 with
+| c1608 -> ( reward 81 )
+| c1607 -> ( reward 27 )
+| c1606 -> ( reward 11 ) ) else ( f1600 <- ( flip 0.53628324676508887 );
+d1604 <- [ c1603, c1602, c1601 ];
+if f1600 then ( choose d1604 with
+| c1603 -> ( reward 33 )
+| c1602 -> ( reward 8 )
+| c1601 -> ( reward 83 ) ) else ( f1594 <- ( flip 0.44758861969991104 );
+d1599 <- [ c1598, c1597, c1596, c1595 ];
+if f1594 then ( choose d1599 with
+| c1598 -> ( reward 0 )
+| c1597 -> ( reward 97 )
+| c1596 -> ( reward 46 )
+| c1595 -> ( reward 37 ) ) else ( f1589 <- ( flip 0.41976563371973069 );
+d1593 <- [ c1592, c1591, c1590 ];
+if f1589 then ( choose d1593 with
+| c1592 -> ( reward 35 )
+| c1591 -> ( reward 73 )
+| c1590 -> ( reward 3 ) ) else ( f1583 <- ( flip 0.76247171764341037 );
+d1588 <- [ c1587, c1586, c1585, c1584 ];
+if f1583 then ( choose d1588 with
+| c1587 -> ( reward 75 )
+| c1586 -> ( reward 43 )
+| c1585 -> ( reward 58 )
+| c1584 -> ( reward 25 ) ) else ( f1576 <- ( flip 0.97506343073578461 );
+d1582 <- [ c1581, c1580, c1579, c1578, c1577 ];
+if f1576 then ( choose d1582 with
+| c1581 -> ( reward 22 )
+| c1580 -> ( reward 77 )
+| c1579 -> ( reward 15 )
+| c1578 -> ( reward 16 )
+| c1577 -> ( reward 80 ) ) else ( f1572 <- ( flip 0.33412497683026449 );
+d1575 <- [ c1574, c1573 ];
+if f1572 then ( choose d1575 with
+| c1574 -> ( reward 12 )
+| c1573 -> ( reward 46 ) ) else ( f1568 <- ( flip 0.64113729099585892 );
+d1571 <- [ c1570, c1569 ];
+if f1568 then ( choose d1571 with
+| c1570 -> ( reward 51 )
+| c1569 -> ( reward 81 ) ) else ( f1563 <- ( flip 0.7498245971536811 );
+d1567 <- [ c1566, c1565, c1564 ];
+if f1563 then ( choose d1567 with
+| c1566 -> ( reward 21 )
+| c1565 -> ( reward 16 )
+| c1564 -> ( reward 95 ) ) else ( f1559 <- ( flip 0.6326586376229939 );
+d1562 <- [ c1561, c1560 ];
+if f1559 then ( choose d1562 with
+| c1561 -> ( reward 11 )
+| c1560 -> ( reward 23 ) ) else ( f1555 <- ( flip 0.57918195608625356 );
+d1558 <- [ c1557, c1556 ];
+if f1555 then ( choose d1558 with
+| c1557 -> ( reward 25 )
+| c1556 -> ( reward 31 ) ) else ( f1548 <- ( flip 0.94211389832297665 );
+d1554 <- [ c1553, c1552, c1551, c1550, c1549 ];
+if f1548 then ( choose d1554 with
+| c1553 -> ( reward 22 )
+| c1552 -> ( reward 11 )
+| c1551 -> ( reward 36 )
+| c1550 -> ( reward 5 )
+| c1549 -> ( reward 57 ) ) else ( f1542 <- ( flip 0.091817147800478172 );
+d1547 <- [ c1546, c1545, c1544, c1543 ];
+if f1542 then ( choose d1547 with
+| c1546 -> ( reward 47 )
+| c1545 -> ( reward 28 )
+| c1544 -> ( reward 4 )
+| c1543 -> ( reward 62 ) ) else ( f1538 <- ( flip 0.027237172902185192 );
+d1541 <- [ c1540, c1539 ];
+if f1538 then ( choose d1541 with
+| c1540 -> ( reward 16 )
+| c1539 -> ( reward 26 ) ) else ( f1533 <- ( flip 0.26494845376221182 );
+d1537 <- [ c1536, c1535, c1534 ];
+if f1533 then ( choose d1537 with
+| c1536 -> ( reward 47 )
+| c1535 -> ( reward 47 )
+| c1534 -> ( reward 82 ) ) else ( f1527 <- ( flip 0.36368821336432322 );
+d1532 <- [ c1531, c1530, c1529, c1528 ];
+if f1527 then ( choose d1532 with
+| c1531 -> ( reward 57 )
+| c1530 -> ( reward 9 )
+| c1529 -> ( reward 33 )
+| c1528 -> ( reward 54 ) ) else ( f1523 <- ( flip 0.017234309411384853 );
+d1526 <- [ c1525, c1524 ];
+if f1523 then ( choose d1526 with
+| c1525 -> ( reward 32 )
+| c1524 -> ( reward 38 ) ) else ( f1517 <- ( flip 0.44605895856070549 );
+d1522 <- [ c1521, c1520, c1519, c1518 ];
+if f1517 then ( choose d1522 with
+| c1521 -> ( reward 46 )
+| c1520 -> ( reward 28 )
+| c1519 -> ( reward 56 )
+| c1518 -> ( reward 99 ) ) else ( f1510 <- ( flip 0.43379501351296917 );
+d1516 <- [ c1515, c1514, c1513, c1512, c1511 ];
+if f1510 then ( choose d1516 with
+| c1515 -> ( reward 24 )
+| c1514 -> ( reward 26 )
+| c1513 -> ( reward 91 )
+| c1512 -> ( reward 60 )
+| c1511 -> ( reward 47 ) ) else ( f1504 <- ( flip 0.22883780108319579 );
+d1509 <- [ c1508, c1507, c1506, c1505 ];
+if f1504 then ( choose d1509 with
+| c1508 -> ( reward 41 )
+| c1507 -> ( reward 23 )
+| c1506 -> ( reward 9 )
+| c1505 -> ( reward 91 ) ) else ( f1498 <- ( flip 0.029237169487239409 );
+d1503 <- [ c1502, c1501, c1500, c1499 ];
+if f1498 then ( choose d1503 with
+| c1502 -> ( reward 66 )
+| c1501 -> ( reward 76 )
+| c1500 -> ( reward 9 )
+| c1499 -> ( reward 98 ) ) else ( f1492 <- ( flip 0.59057848966416893 );
+d1497 <- [ c1496, c1495, c1494, c1493 ];
+if f1492 then ( choose d1497 with
+| c1496 -> ( reward 75 )
+| c1495 -> ( reward 75 )
+| c1494 -> ( reward 99 )
+| c1493 -> ( reward 46 ) ) else ( f1487 <- ( flip 0.97030962794446829 );
+d1491 <- [ c1490, c1489, c1488 ];
+if f1487 then ( choose d1491 with
+| c1490 -> ( reward 52 )
+| c1489 -> ( reward 70 )
+| c1488 -> ( reward 70 ) ) else ( f1482 <- ( flip 0.72140369321215325 );
+d1486 <- [ c1485, c1484, c1483 ];
+if f1482 then ( choose d1486 with
+| c1485 -> ( reward 60 )
+| c1484 -> ( reward 98 )
+| c1483 -> ( reward 93 ) ) else ( f1475 <- ( flip 0.047631706587378142 );
+d1481 <- [ c1480, c1479, c1478, c1477, c1476 ];
+if f1475 then ( choose d1481 with
+| c1480 -> ( reward 93 )
+| c1479 -> ( reward 3 )
+| c1478 -> ( reward 29 )
+| c1477 -> ( reward 2 )
+| c1476 -> ( reward 47 ) ) else ( f1469 <- ( flip 0.7805145027717808 );
+d1474 <- [ c1473, c1472, c1471, c1470 ];
+if f1469 then ( choose d1474 with
+| c1473 -> ( reward 70 )
+| c1472 -> ( reward 75 )
+| c1471 -> ( reward 2 )
+| c1470 -> ( reward 9 ) ) else ( f1465 <- ( flip 0.76570197632378378 );
+d1468 <- [ c1467, c1466 ];
+if f1465 then ( choose d1468 with
+| c1467 -> ( reward 22 )
+| c1466 -> ( reward 86 ) ) else ( f1459 <- ( flip 0.71057352954283248 );
+d1464 <- [ c1463, c1462, c1461, c1460 ];
+if f1459 then ( choose d1464 with
+| c1463 -> ( reward 29 )
+| c1462 -> ( reward 83 )
+| c1461 -> ( reward 46 )
+| c1460 -> ( reward 71 ) ) else ( f1454 <- ( flip 0.63362471189848746 );
+d1458 <- [ c1457, c1456, c1455 ];
+if f1454 then ( choose d1458 with
+| c1457 -> ( reward 39 )
+| c1456 -> ( reward 56 )
+| c1455 -> ( reward 87 ) ) else ( f1447 <- ( flip 0.66042441710358857 );
+d1453 <- [ c1452, c1451, c1450, c1449, c1448 ];
+if f1447 then ( choose d1453 with
+| c1452 -> ( reward 70 )
+| c1451 -> ( reward 14 )
+| c1450 -> ( reward 73 )
+| c1449 -> ( reward 48 )
+| c1448 -> ( reward 94 ) ) else ( f1441 <- ( flip 0.29761851610426082 );
+d1446 <- [ c1445, c1444, c1443, c1442 ];
+if f1441 then ( choose d1446 with
+| c1445 -> ( reward 35 )
+| c1444 -> ( reward 85 )
+| c1443 -> ( reward 88 )
+| c1442 -> ( reward 36 ) ) else ( f1434 <- ( flip 0.73799064814791393 );
+d1440 <- [ c1439, c1438, c1437, c1436, c1435 ];
+if f1434 then ( choose d1440 with
+| c1439 -> ( reward 20 )
+| c1438 -> ( reward 4 )
+| c1437 -> ( reward 60 )
+| c1436 -> ( reward 73 )
+| c1435 -> ( reward 13 ) ) else ( f1428 <- ( flip 0.027827693851277424 );
+d1433 <- [ c1432, c1431, c1430, c1429 ];
+if f1428 then ( choose d1433 with
+| c1432 -> ( reward 23 )
+| c1431 -> ( reward 21 )
+| c1430 -> ( reward 38 )
+| c1429 -> ( reward 45 ) ) else ( f1422 <- ( flip 0.979597671422235 );
+d1427 <- [ c1426, c1425, c1424, c1423 ];
+if f1422 then ( choose d1427 with
+| c1426 -> ( reward 81 )
+| c1425 -> ( reward 99 )
+| c1424 -> ( reward 94 )
+| c1423 -> ( reward 64 ) ) else ( f1417 <- ( flip 0.21761536441643708 );
+d1421 <- [ c1420, c1419, c1418 ];
+if f1417 then ( choose d1421 with
+| c1420 -> ( reward 48 )
+| c1419 -> ( reward 10 )
+| c1418 -> ( reward 51 ) ) else ( f1412 <- ( flip 0.98541387426538407 );
+d1416 <- [ c1415, c1414, c1413 ];
+if f1412 then ( choose d1416 with
+| c1415 -> ( reward 98 )
+| c1414 -> ( reward 31 )
+| c1413 -> ( reward 27 ) ) else ( f1408 <- ( flip 0.94037633440311874 );
+d1411 <- [ c1410, c1409 ];
+if f1408 then ( choose d1411 with
+| c1410 -> ( reward 83 )
+| c1409 -> ( reward 62 ) ) else ( f1402 <- ( flip 0.8153438037204499 );
+d1407 <- [ c1406, c1405, c1404, c1403 ];
+if f1402 then ( choose d1407 with
+| c1406 -> ( reward 88 )
+| c1405 -> ( reward 9 )
+| c1404 -> ( reward 32 )
+| c1403 -> ( reward 57 ) ) else ( f1398 <- ( flip 0.99664198392189551 );
+d1401 <- [ c1400, c1399 ];
+if f1398 then ( choose d1401 with
+| c1400 -> ( reward 43 )
+| c1399 -> ( reward 91 ) ) else ( f1394 <- ( flip 0.72083977046729542 );
+d1397 <- [ c1396, c1395 ];
+if f1394 then ( choose d1397 with
+| c1396 -> ( reward 37 )
+| c1395 -> ( reward 18 ) ) else ( f1387 <- ( flip 0.099452421270986482 );
+d1393 <- [ c1392, c1391, c1390, c1389, c1388 ];
+if f1387 then ( choose d1393 with
+| c1392 -> ( reward 85 )
+| c1391 -> ( reward 10 )
+| c1390 -> ( reward 75 )
+| c1389 -> ( reward 40 )
+| c1388 -> ( reward 28 ) ) else ( f1382 <- ( flip 0.11113858988726555 );
+d1386 <- [ c1385, c1384, c1383 ];
+if f1382 then ( choose d1386 with
+| c1385 -> ( reward 70 )
+| c1384 -> ( reward 15 )
+| c1383 -> ( reward 99 ) ) else ( f1375 <- ( flip 0.43300628729975027 );
+d1381 <- [ c1380, c1379, c1378, c1377, c1376 ];
+if f1375 then ( choose d1381 with
+| c1380 -> ( reward 85 )
+| c1379 -> ( reward 22 )
+| c1378 -> ( reward 8 )
+| c1377 -> ( reward 4 )
+| c1376 -> ( reward 30 ) ) else ( f1370 <- ( flip 0.38428471240391432 );
+d1374 <- [ c1373, c1372, c1371 ];
+if f1370 then ( choose d1374 with
+| c1373 -> ( reward 61 )
+| c1372 -> ( reward 72 )
+| c1371 -> ( reward 94 ) ) else ( f1363 <- ( flip 0.75393501316873668 );
+d1369 <- [ c1368, c1367, c1366, c1365, c1364 ];
+if f1363 then ( choose d1369 with
+| c1368 -> ( reward 3 )
+| c1367 -> ( reward 75 )
+| c1366 -> ( reward 95 )
+| c1365 -> ( reward 24 )
+| c1364 -> ( reward 46 ) ) else ( f1359 <- ( flip 0.33674668401170493 );
+d1362 <- [ c1361, c1360 ];
+if f1359 then ( choose d1362 with
+| c1361 -> ( reward 12 )
+| c1360 -> ( reward 44 ) ) else ( f1353 <- ( flip 0.23976602772469632 );
+d1358 <- [ c1357, c1356, c1355, c1354 ];
+if f1353 then ( choose d1358 with
+| c1357 -> ( reward 17 )
+| c1356 -> ( reward 14 )
+| c1355 -> ( reward 23 )
+| c1354 -> ( reward 40 ) ) else ( f1348 <- ( flip 0.77627158789628126 );
+d1352 <- [ c1351, c1350, c1349 ];
+if f1348 then ( choose d1352 with
+| c1351 -> ( reward 80 )
+| c1350 -> ( reward 29 )
+| c1349 -> ( reward 29 ) ) else ( f1344 <- ( flip 0.3743309053414437 );
+d1347 <- [ c1346, c1345 ];
+if f1344 then ( choose d1347 with
+| c1346 -> ( reward 99 )
+| c1345 -> ( reward 42 ) ) else ( f1337 <- ( flip 0.55188817392629586 );
+d1343 <- [ c1342, c1341, c1340, c1339, c1338 ];
+if f1337 then ( choose d1343 with
+| c1342 -> ( reward 37 )
+| c1341 -> ( reward 20 )
+| c1340 -> ( reward 42 )
+| c1339 -> ( reward 26 )
+| c1338 -> ( reward 18 ) ) else ( f1330 <- ( flip 0.62896773805760386 );
+d1336 <- [ c1335, c1334, c1333, c1332, c1331 ];
+if f1330 then ( choose d1336 with
+| c1335 -> ( reward 32 )
+| c1334 -> ( reward 30 )
+| c1333 -> ( reward 36 )
+| c1332 -> ( reward 26 )
+| c1331 -> ( reward 98 ) ) else ( f1324 <- ( flip 0.25463367528068209 );
+d1329 <- [ c1328, c1327, c1326, c1325 ];
+if f1324 then ( choose d1329 with
+| c1328 -> ( reward 3 )
+| c1327 -> ( reward 2 )
+| c1326 -> ( reward 16 )
+| c1325 -> ( reward 9 ) ) else ( f1319 <- ( flip 0.13686322886529567 );
+d1323 <- [ c1322, c1321, c1320 ];
+if f1319 then ( choose d1323 with
+| c1322 -> ( reward 33 )
+| c1321 -> ( reward 89 )
+| c1320 -> ( reward 87 ) ) else ( f1312 <- ( flip 0.33392356454276872 );
+d1318 <- [ c1317, c1316, c1315, c1314, c1313 ];
+if f1312 then ( choose d1318 with
+| c1317 -> ( reward 12 )
+| c1316 -> ( reward 55 )
+| c1315 -> ( reward 61 )
+| c1314 -> ( reward 70 )
+| c1313 -> ( reward 51 ) ) else ( f1305 <- ( flip 0.30033825058306224 );
+d1311 <- [ c1310, c1309, c1308, c1307, c1306 ];
+if f1305 then ( choose d1311 with
+| c1310 -> ( reward 6 )
+| c1309 -> ( reward 72 )
+| c1308 -> ( reward 73 )
+| c1307 -> ( reward 57 )
+| c1306 -> ( reward 5 ) ) else ( f1298 <- ( flip 0.77813718478029081 );
+d1304 <- [ c1303, c1302, c1301, c1300, c1299 ];
+if f1298 then ( choose d1304 with
+| c1303 -> ( reward 15 )
+| c1302 -> ( reward 75 )
+| c1301 -> ( reward 1 )
+| c1300 -> ( reward 66 )
+| c1299 -> ( reward 60 ) ) else ( f1291 <- ( flip 0.087105577733133807 );
+d1297 <- [ c1296, c1295, c1294, c1293, c1292 ];
+if f1291 then ( choose d1297 with
+| c1296 -> ( reward 97 )
+| c1295 -> ( reward 22 )
+| c1294 -> ( reward 29 )
+| c1293 -> ( reward 31 )
+| c1292 -> ( reward 41 ) ) else ( f1284 <- ( flip 0.47891062982863708 );
+d1290 <- [ c1289, c1288, c1287, c1286, c1285 ];
+if f1284 then ( choose d1290 with
+| c1289 -> ( reward 74 )
+| c1288 -> ( reward 97 )
+| c1287 -> ( reward 59 )
+| c1286 -> ( reward 86 )
+| c1285 -> ( reward 15 ) ) else ( f1277 <- ( flip 0.016228182055360259 );
+d1283 <- [ c1282, c1281, c1280, c1279, c1278 ];
+if f1277 then ( choose d1283 with
+| c1282 -> ( reward 68 )
+| c1281 -> ( reward 85 )
+| c1280 -> ( reward 53 )
+| c1279 -> ( reward 90 )
+| c1278 -> ( reward 18 ) ) else ( f1273 <- ( flip 0.86030266449175341 );
+d1276 <- [ c1275, c1274 ];
+if f1273 then ( choose d1276 with
+| c1275 -> ( reward 48 )
+| c1274 -> ( reward 55 ) ) else ( f1268 <- ( flip 0.36229236929924624 );
+d1272 <- [ c1271, c1270, c1269 ];
+if f1268 then ( choose d1272 with
+| c1271 -> ( reward 85 )
+| c1270 -> ( reward 70 )
+| c1269 -> ( reward 54 ) ) else ( f1262 <- ( flip 0.50677037994894247 );
+d1267 <- [ c1266, c1265, c1264, c1263 ];
+if f1262 then ( choose d1267 with
+| c1266 -> ( reward 48 )
+| c1265 -> ( reward 29 )
+| c1264 -> ( reward 78 )
+| c1263 -> ( reward 5 ) ) else ( f1256 <- ( flip 0.024182460974816862 );
+d1261 <- [ c1260, c1259, c1258, c1257 ];
+if f1256 then ( choose d1261 with
+| c1260 -> ( reward 21 )
+| c1259 -> ( reward 71 )
+| c1258 -> ( reward 95 )
+| c1257 -> ( reward 96 ) ) else ( f1251 <- ( flip 0.36575852262650821 );
+d1255 <- [ c1254, c1253, c1252 ];
+if f1251 then ( choose d1255 with
+| c1254 -> ( reward 34 )
+| c1253 -> ( reward 88 )
+| c1252 -> ( reward 42 ) ) else ( f1244 <- ( flip 0.14889674011992027 );
+d1250 <- [ c1249, c1248, c1247, c1246, c1245 ];
+if f1244 then ( choose d1250 with
+| c1249 -> ( reward 76 )
+| c1248 -> ( reward 28 )
+| c1247 -> ( reward 20 )
+| c1246 -> ( reward 41 )
+| c1245 -> ( reward 43 ) ) else ( f1237 <- ( flip 0.37564697542328573 );
+d1243 <- [ c1242, c1241, c1240, c1239, c1238 ];
+if f1237 then ( choose d1243 with
+| c1242 -> ( reward 74 )
+| c1241 -> ( reward 39 )
+| c1240 -> ( reward 67 )
+| c1239 -> ( reward 42 )
+| c1238 -> ( reward 65 ) ) else ( f1232 <- ( flip 0.57351987583004338 );
+d1236 <- [ c1235, c1234, c1233 ];
+if f1232 then ( choose d1236 with
+| c1235 -> ( reward 62 )
+| c1234 -> ( reward 79 )
+| c1233 -> ( reward 15 ) ) else ( f1225 <- ( flip 0.36272340676603176 );
+d1231 <- [ c1230, c1229, c1228, c1227, c1226 ];
+if f1225 then ( choose d1231 with
+| c1230 -> ( reward 99 )
+| c1229 -> ( reward 68 )
+| c1228 -> ( reward 86 )
+| c1227 -> ( reward 19 )
+| c1226 -> ( reward 32 ) ) else ( f1221 <- ( flip 0.77583537455304852 );
+d1224 <- [ c1223, c1222 ];
+if f1221 then ( choose d1224 with
+| c1223 -> ( reward 45 )
+| c1222 -> ( reward 58 ) ) else ( f1217 <- ( flip 0.40611986642618025 );
+d1220 <- [ c1219, c1218 ];
+if f1217 then ( choose d1220 with
+| c1219 -> ( reward 88 )
+| c1218 -> ( reward 15 ) ) else ( f1213 <- ( flip 0.15036006493582815 );
+d1216 <- [ c1215, c1214 ];
+if f1213 then ( choose d1216 with
+| c1215 -> ( reward 97 )
+| c1214 -> ( reward 69 ) ) else ( f1207 <- ( flip 0.80927560208867433 );
+d1212 <- [ c1211, c1210, c1209, c1208 ];
+if f1207 then ( choose d1212 with
+| c1211 -> ( reward 47 )
+| c1210 -> ( reward 25 )
+| c1209 -> ( reward 29 )
+| c1208 -> ( reward 93 ) ) else ( f1202 <- ( flip 0.36372107823968036 );
+d1206 <- [ c1205, c1204, c1203 ];
+if f1202 then ( choose d1206 with
+| c1205 -> ( reward 17 )
+| c1204 -> ( reward 2 )
+| c1203 -> ( reward 74 ) ) else ( f1195 <- ( flip 0.31823408343554954 );
+d1201 <- [ c1200, c1199, c1198, c1197, c1196 ];
+if f1195 then ( choose d1201 with
+| c1200 -> ( reward 77 )
+| c1199 -> ( reward 45 )
+| c1198 -> ( reward 34 )
+| c1197 -> ( reward 23 )
+| c1196 -> ( reward 94 ) ) else ( f1189 <- ( flip 0.83062594804270318 );
+d1194 <- [ c1193, c1192, c1191, c1190 ];
+if f1189 then ( choose d1194 with
+| c1193 -> ( reward 33 )
+| c1192 -> ( reward 89 )
+| c1191 -> ( reward 85 )
+| c1190 -> ( reward 60 ) ) else ( f1185 <- ( flip 0.10552526273807303 );
+d1188 <- [ c1187, c1186 ];
+if f1185 then ( choose d1188 with
+| c1187 -> ( reward 77 )
+| c1186 -> ( reward 52 ) ) else ( f1178 <- ( flip 0.039331969637344318 );
+d1184 <- [ c1183, c1182, c1181, c1180, c1179 ];
+if f1178 then ( choose d1184 with
+| c1183 -> ( reward 36 )
+| c1182 -> ( reward 97 )
+| c1181 -> ( reward 74 )
+| c1180 -> ( reward 52 )
+| c1179 -> ( reward 22 ) ) else ( f1171 <- ( flip 0.89771530658120247 );
+d1177 <- [ c1176, c1175, c1174, c1173, c1172 ];
+if f1171 then ( choose d1177 with
+| c1176 -> ( reward 64 )
+| c1175 -> ( reward 74 )
+| c1174 -> ( reward 73 )
+| c1173 -> ( reward 56 )
+| c1172 -> ( reward 27 ) ) else ( f1164 <- ( flip 0.89743784440805929 );
+d1170 <- [ c1169, c1168, c1167, c1166, c1165 ];
+if f1164 then ( choose d1170 with
+| c1169 -> ( reward 20 )
+| c1168 -> ( reward 99 )
+| c1167 -> ( reward 81 )
+| c1166 -> ( reward 93 )
+| c1165 -> ( reward 93 ) ) else ( f1157 <- ( flip 0.74439212903508822 );
+d1163 <- [ c1162, c1161, c1160, c1159, c1158 ];
+if f1157 then ( choose d1163 with
+| c1162 -> ( reward 2 )
+| c1161 -> ( reward 16 )
+| c1160 -> ( reward 41 )
+| c1159 -> ( reward 50 )
+| c1158 -> ( reward 48 ) ) else ( f1152 <- ( flip 0.15555545040207111 );
+d1156 <- [ c1155, c1154, c1153 ];
+if f1152 then ( choose d1156 with
+| c1155 -> ( reward 3 )
+| c1154 -> ( reward 12 )
+| c1153 -> ( reward 34 ) ) else ( f1148 <- ( flip 0.20514819227038261 );
+d1151 <- [ c1150, c1149 ];
+if f1148 then ( choose d1151 with
+| c1150 -> ( reward 4 )
+| c1149 -> ( reward 61 ) ) else ( f1144 <- ( flip 0.48190791964139368 );
+d1147 <- [ c1146, c1145 ];
+if f1144 then ( choose d1147 with
+| c1146 -> ( reward 55 )
+| c1145 -> ( reward 55 ) ) else ( f1137 <- ( flip 0.36857605379558095 );
+d1143 <- [ c1142, c1141, c1140, c1139, c1138 ];
+if f1137 then ( choose d1143 with
+| c1142 -> ( reward 31 )
+| c1141 -> ( reward 60 )
+| c1140 -> ( reward 73 )
+| c1139 -> ( reward 65 )
+| c1138 -> ( reward 12 ) ) else ( f1130 <- ( flip 0.85263000312597037 );
+d1136 <- [ c1135, c1134, c1133, c1132, c1131 ];
+if f1130 then ( choose d1136 with
+| c1135 -> ( reward 9 )
+| c1134 -> ( reward 98 )
+| c1133 -> ( reward 0 )
+| c1132 -> ( reward 99 )
+| c1131 -> ( reward 6 ) ) else ( f1124 <- ( flip 0.87934260595729941 );
+d1129 <- [ c1128, c1127, c1126, c1125 ];
+if f1124 then ( choose d1129 with
+| c1128 -> ( reward 90 )
+| c1127 -> ( reward 28 )
+| c1126 -> ( reward 56 )
+| c1125 -> ( reward 81 ) ) else ( f1117 <- ( flip 0.570414449828209 );
+d1123 <- [ c1122, c1121, c1120, c1119, c1118 ];
+if f1117 then ( choose d1123 with
+| c1122 -> ( reward 83 )
+| c1121 -> ( reward 59 )
+| c1120 -> ( reward 39 )
+| c1119 -> ( reward 81 )
+| c1118 -> ( reward 47 ) ) else ( f1112 <- ( flip 0.0010659080042884333 );
+d1116 <- [ c1115, c1114, c1113 ];
+if f1112 then ( choose d1116 with
+| c1115 -> ( reward 17 )
+| c1114 -> ( reward 25 )
+| c1113 -> ( reward 28 ) ) else ( f1105 <- ( flip 0.27287131091812505 );
+d1111 <- [ c1110, c1109, c1108, c1107, c1106 ];
+if f1105 then ( choose d1111 with
+| c1110 -> ( reward 76 )
+| c1109 -> ( reward 65 )
+| c1108 -> ( reward 62 )
+| c1107 -> ( reward 89 )
+| c1106 -> ( reward 54 ) ) else ( f1098 <- ( flip 0.2718215553560967 );
+d1104 <- [ c1103, c1102, c1101, c1100, c1099 ];
+if f1098 then ( choose d1104 with
+| c1103 -> ( reward 90 )
+| c1102 -> ( reward 21 )
+| c1101 -> ( reward 94 )
+| c1100 -> ( reward 82 )
+| c1099 -> ( reward 50 ) ) else ( f1092 <- ( flip 0.47429240749024376 );
+d1097 <- [ c1096, c1095, c1094, c1093 ];
+if f1092 then ( choose d1097 with
+| c1096 -> ( reward 37 )
+| c1095 -> ( reward 96 )
+| c1094 -> ( reward 12 )
+| c1093 -> ( reward 55 ) ) else ( f1085 <- ( flip 0.15534895568438328 );
+d1091 <- [ c1090, c1089, c1088, c1087, c1086 ];
+if f1085 then ( choose d1091 with
+| c1090 -> ( reward 30 )
+| c1089 -> ( reward 29 )
+| c1088 -> ( reward 43 )
+| c1087 -> ( reward 46 )
+| c1086 -> ( reward 42 ) ) else ( f1081 <- ( flip 0.36362250435819921 );
+d1084 <- [ c1083, c1082 ];
+if f1081 then ( choose d1084 with
+| c1083 -> ( reward 14 )
+| c1082 -> ( reward 46 ) ) else ( f1076 <- ( flip 0.25934837336095179 );
+d1080 <- [ c1079, c1078, c1077 ];
+if f1076 then ( choose d1080 with
+| c1079 -> ( reward 82 )
+| c1078 -> ( reward 39 )
+| c1077 -> ( reward 46 ) ) else ( f1069 <- ( flip 0.16692282747927528 );
+d1075 <- [ c1074, c1073, c1072, c1071, c1070 ];
+if f1069 then ( choose d1075 with
+| c1074 -> ( reward 66 )
+| c1073 -> ( reward 0 )
+| c1072 -> ( reward 37 )
+| c1071 -> ( reward 27 )
+| c1070 -> ( reward 76 ) ) else ( f1062 <- ( flip 0.0538026475282148 );
+d1068 <- [ c1067, c1066, c1065, c1064, c1063 ];
+if f1062 then ( choose d1068 with
+| c1067 -> ( reward 54 )
+| c1066 -> ( reward 41 )
+| c1065 -> ( reward 6 )
+| c1064 -> ( reward 78 )
+| c1063 -> ( reward 65 ) ) else ( f1056 <- ( flip 0.4621372286183193 );
+d1061 <- [ c1060, c1059, c1058, c1057 ];
+if f1056 then ( choose d1061 with
+| c1060 -> ( reward 53 )
+| c1059 -> ( reward 73 )
+| c1058 -> ( reward 66 )
+| c1057 -> ( reward 60 ) ) else ( f1052 <- ( flip 0.68386297867989154 );
+d1055 <- [ c1054, c1053 ];
+if f1052 then ( choose d1055 with
+| c1054 -> ( reward 30 )
+| c1053 -> ( reward 65 ) ) else ( f1045 <- ( flip 0.6850577689964602 );
+d1051 <- [ c1050, c1049, c1048, c1047, c1046 ];
+if f1045 then ( choose d1051 with
+| c1050 -> ( reward 60 )
+| c1049 -> ( reward 55 )
+| c1048 -> ( reward 50 )
+| c1047 -> ( reward 93 )
+| c1046 -> ( reward 10 ) ) else ( f1041 <- ( flip 0.076634708020932349 );
+d1044 <- [ c1043, c1042 ];
+if f1041 then ( choose d1044 with
+| c1043 -> ( reward 2 )
+| c1042 -> ( reward 73 ) ) else ( f1036 <- ( flip 0.648657200303755 );
+d1040 <- [ c1039, c1038, c1037 ];
+if f1036 then ( choose d1040 with
+| c1039 -> ( reward 41 )
+| c1038 -> ( reward 7 )
+| c1037 -> ( reward 33 ) ) else ( f1032 <- ( flip 0.92597779808990166 );
+d1035 <- [ c1034, c1033 ];
+if f1032 then ( choose d1035 with
+| c1034 -> ( reward 67 )
+| c1033 -> ( reward 97 ) ) else ( f1028 <- ( flip 0.66682194509338177 );
+d1031 <- [ c1030, c1029 ];
+if f1028 then ( choose d1031 with
+| c1030 -> ( reward 68 )
+| c1029 -> ( reward 18 ) ) else ( f1023 <- ( flip 0.46533308270049112 );
+d1027 <- [ c1026, c1025, c1024 ];
+if f1023 then ( choose d1027 with
+| c1026 -> ( reward 92 )
+| c1025 -> ( reward 92 )
+| c1024 -> ( reward 16 ) ) else ( f1017 <- ( flip 0.19130710864018211 );
+d1022 <- [ c1021, c1020, c1019, c1018 ];
+if f1017 then ( choose d1022 with
+| c1021 -> ( reward 45 )
+| c1020 -> ( reward 31 )
+| c1019 -> ( reward 68 )
+| c1018 -> ( reward 38 ) ) else ( f1011 <- ( flip 0.55676595392380468 );
+d1016 <- [ c1015, c1014, c1013, c1012 ];
+if f1011 then ( choose d1016 with
+| c1015 -> ( reward 98 )
+| c1014 -> ( reward 5 )
+| c1013 -> ( reward 19 )
+| c1012 -> ( reward 91 ) ) else ( f1006 <- ( flip 0.29467522431653126 );
+d1010 <- [ c1009, c1008, c1007 ];
+if f1006 then ( choose d1010 with
+| c1009 -> ( reward 25 )
+| c1008 -> ( reward 46 )
+| c1007 -> ( reward 17 ) ) else ( f999 <- ( flip 0.072336195129638736 );
+d1005 <- [ c1004, c1003, c1002, c1001, c1000 ];
+if f999 then ( choose d1005 with
+| c1004 -> ( reward 40 )
+| c1003 -> ( reward 69 )
+| c1002 -> ( reward 63 )
+| c1001 -> ( reward 32 )
+| c1000 -> ( reward 40 ) ) else ( f992 <- ( flip 0.44445448654648406 );
+d998 <- [ c997, c996, c995, c994, c993 ];
+if f992 then ( choose d998 with
+| c997 -> ( reward 43 )
+| c996 -> ( reward 84 )
+| c995 -> ( reward 47 )
+| c994 -> ( reward 15 )
+| c993 -> ( reward 74 ) ) else ( f987 <- ( flip 0.86501709115765457 );
+d991 <- [ c990, c989, c988 ];
+if f987 then ( choose d991 with
+| c990 -> ( reward 73 )
+| c989 -> ( reward 76 )
+| c988 -> ( reward 19 ) ) else ( f980 <- ( flip 0.70648848242669071 );
+d986 <- [ c985, c984, c983, c982, c981 ];
+if f980 then ( choose d986 with
+| c985 -> ( reward 96 )
+| c984 -> ( reward 96 )
+| c983 -> ( reward 6 )
+| c982 -> ( reward 50 )
+| c981 -> ( reward 74 ) ) else ( f974 <- ( flip 0.52863249673785662 );
+d979 <- [ c978, c977, c976, c975 ];
+if f974 then ( choose d979 with
+| c978 -> ( reward 91 )
+| c977 -> ( reward 62 )
+| c976 -> ( reward 60 )
+| c975 -> ( reward 62 ) ) else ( f968 <- ( flip 0.24570632669278189 );
+d973 <- [ c972, c971, c970, c969 ];
+if f968 then ( choose d973 with
+| c972 -> ( reward 23 )
+| c971 -> ( reward 52 )
+| c970 -> ( reward 19 )
+| c969 -> ( reward 70 ) ) else ( f964 <- ( flip 0.02251979442923949 );
+d967 <- [ c966, c965 ];
+if f964 then ( choose d967 with
+| c966 -> ( reward 38 )
+| c965 -> ( reward 31 ) ) else ( f959 <- ( flip 0.44681125936740618 );
+d963 <- [ c962, c961, c960 ];
+if f959 then ( choose d963 with
+| c962 -> ( reward 4 )
+| c961 -> ( reward 39 )
+| c960 -> ( reward 47 ) ) else ( f954 <- ( flip 0.76003069298727877 );
+d958 <- [ c957, c956, c955 ];
+if f954 then ( choose d958 with
+| c957 -> ( reward 89 )
+| c956 -> ( reward 61 )
+| c955 -> ( reward 11 ) ) else ( f950 <- ( flip 0.86381281131473608 );
+d953 <- [ c952, c951 ];
+if f950 then ( choose d953 with
+| c952 -> ( reward 80 )
+| c951 -> ( reward 39 ) ) else ( f946 <- ( flip 0.39184935747258404 );
+d949 <- [ c948, c947 ];
+if f946 then ( choose d949 with
+| c948 -> ( reward 28 )
+| c947 -> ( reward 61 ) ) else ( f941 <- ( flip 0.078904432144789358 );
+d945 <- [ c944, c943, c942 ];
+if f941 then ( choose d945 with
+| c944 -> ( reward 1 )
+| c943 -> ( reward 40 )
+| c942 -> ( reward 98 ) ) else ( f934 <- ( flip 0.11319736079592033 );
+d940 <- [ c939, c938, c937, c936, c935 ];
+if f934 then ( choose d940 with
+| c939 -> ( reward 0 )
+| c938 -> ( reward 37 )
+| c937 -> ( reward 4 )
+| c936 -> ( reward 76 )
+| c935 -> ( reward 68 ) ) else ( f928 <- ( flip 0.60246942776755841 );
+d933 <- [ c932, c931, c930, c929 ];
+if f928 then ( choose d933 with
+| c932 -> ( reward 60 )
+| c931 -> ( reward 2 )
+| c930 -> ( reward 80 )
+| c929 -> ( reward 30 ) ) else ( f922 <- ( flip 0.15179962694530974 );
+d927 <- [ c926, c925, c924, c923 ];
+if f922 then ( choose d927 with
+| c926 -> ( reward 8 )
+| c925 -> ( reward 90 )
+| c924 -> ( reward 33 )
+| c923 -> ( reward 39 ) ) else ( f918 <- ( flip 0.45320613363237244 );
+d921 <- [ c920, c919 ];
+if f918 then ( choose d921 with
+| c920 -> ( reward 1 )
+| c919 -> ( reward 52 ) ) else ( f912 <- ( flip 0.20210003757162134 );
+d917 <- [ c916, c915, c914, c913 ];
+if f912 then ( choose d917 with
+| c916 -> ( reward 14 )
+| c915 -> ( reward 55 )
+| c914 -> ( reward 49 )
+| c913 -> ( reward 98 ) ) else ( f908 <- ( flip 0.83266075018702324 );
+d911 <- [ c910, c909 ];
+if f908 then ( choose d911 with
+| c910 -> ( reward 40 )
+| c909 -> ( reward 31 ) ) else ( f901 <- ( flip 0.45378289208421091 );
+d907 <- [ c906, c905, c904, c903, c902 ];
+if f901 then ( choose d907 with
+| c906 -> ( reward 19 )
+| c905 -> ( reward 4 )
+| c904 -> ( reward 77 )
+| c903 -> ( reward 93 )
+| c902 -> ( reward 77 ) ) else ( f897 <- ( flip 0.78627485274488484 );
+d900 <- [ c899, c898 ];
+if f897 then ( choose d900 with
+| c899 -> ( reward 50 )
+| c898 -> ( reward 22 ) ) else ( f891 <- ( flip 0.97289837357776188 );
+d896 <- [ c895, c894, c893, c892 ];
+if f891 then ( choose d896 with
+| c895 -> ( reward 43 )
+| c894 -> ( reward 90 )
+| c893 -> ( reward 58 )
+| c892 -> ( reward 43 ) ) else ( f885 <- ( flip 0.58239965087837919 );
+d890 <- [ c889, c888, c887, c886 ];
+if f885 then ( choose d890 with
+| c889 -> ( reward 53 )
+| c888 -> ( reward 65 )
+| c887 -> ( reward 78 )
+| c886 -> ( reward 75 ) ) else ( f881 <- ( flip 0.7509017421024442 );
+d884 <- [ c883, c882 ];
+if f881 then ( choose d884 with
+| c883 -> ( reward 36 )
+| c882 -> ( reward 65 ) ) else ( f875 <- ( flip 0.1107978650101414 );
+d880 <- [ c879, c878, c877, c876 ];
+if f875 then ( choose d880 with
+| c879 -> ( reward 83 )
+| c878 -> ( reward 92 )
+| c877 -> ( reward 82 )
+| c876 -> ( reward 24 ) ) else ( f871 <- ( flip 0.0806035995948115 );
+d874 <- [ c873, c872 ];
+if f871 then ( choose d874 with
+| c873 -> ( reward 10 )
+| c872 -> ( reward 47 ) ) else ( f866 <- ( flip 0.36384016160647248 );
+d870 <- [ c869, c868, c867 ];
+if f866 then ( choose d870 with
+| c869 -> ( reward 30 )
+| c868 -> ( reward 10 )
+| c867 -> ( reward 46 ) ) else ( f860 <- ( flip 0.49552398967885869 );
+d865 <- [ c864, c863, c862, c861 ];
+if f860 then ( choose d865 with
+| c864 -> ( reward 41 )
+| c863 -> ( reward 27 )
+| c862 -> ( reward 72 )
+| c861 -> ( reward 74 ) ) else ( f853 <- ( flip 0.44236572488414933 );
+d859 <- [ c858, c857, c856, c855, c854 ];
+if f853 then ( choose d859 with
+| c858 -> ( reward 56 )
+| c857 -> ( reward 91 )
+| c856 -> ( reward 51 )
+| c855 -> ( reward 59 )
+| c854 -> ( reward 5 ) ) else ( f846 <- ( flip 0.36863575240581281 );
+d852 <- [ c851, c850, c849, c848, c847 ];
+if f846 then ( choose d852 with
+| c851 -> ( reward 95 )
+| c850 -> ( reward 41 )
+| c849 -> ( reward 99 )
+| c848 -> ( reward 10 )
+| c847 -> ( reward 29 ) ) else ( f839 <- ( flip 0.40483460821936873 );
+d845 <- [ c844, c843, c842, c841, c840 ];
+if f839 then ( choose d845 with
+| c844 -> ( reward 43 )
+| c843 -> ( reward 2 )
+| c842 -> ( reward 47 )
+| c841 -> ( reward 22 )
+| c840 -> ( reward 98 ) ) else ( f835 <- ( flip 0.75128405345915006 );
+d838 <- [ c837, c836 ];
+if f835 then ( choose d838 with
+| c837 -> ( reward 7 )
+| c836 -> ( reward 7 ) ) else ( f828 <- ( flip 0.22975280781385898 );
+d834 <- [ c833, c832, c831, c830, c829 ];
+if f828 then ( choose d834 with
+| c833 -> ( reward 67 )
+| c832 -> ( reward 29 )
+| c831 -> ( reward 75 )
+| c830 -> ( reward 9 )
+| c829 -> ( reward 35 ) ) else ( f823 <- ( flip 0.24448841167790913 );
+d827 <- [ c826, c825, c824 ];
+if f823 then ( choose d827 with
+| c826 -> ( reward 34 )
+| c825 -> ( reward 48 )
+| c824 -> ( reward 23 ) ) else ( f818 <- ( flip 0.42602710396555954 );
+d822 <- [ c821, c820, c819 ];
+if f818 then ( choose d822 with
+| c821 -> ( reward 48 )
+| c820 -> ( reward 44 )
+| c819 -> ( reward 55 ) ) else ( f813 <- ( flip 0.33064440701954545 );
+d817 <- [ c816, c815, c814 ];
+if f813 then ( choose d817 with
+| c816 -> ( reward 92 )
+| c815 -> ( reward 76 )
+| c814 -> ( reward 15 ) ) else ( f807 <- ( flip 0.23623969733759023 );
+d812 <- [ c811, c810, c809, c808 ];
+if f807 then ( choose d812 with
+| c811 -> ( reward 98 )
+| c810 -> ( reward 21 )
+| c809 -> ( reward 90 )
+| c808 -> ( reward 19 ) ) else ( f801 <- ( flip 0.13507155168238377 );
+d806 <- [ c805, c804, c803, c802 ];
+if f801 then ( choose d806 with
+| c805 -> ( reward 27 )
+| c804 -> ( reward 8 )
+| c803 -> ( reward 57 )
+| c802 -> ( reward 79 ) ) else ( f797 <- ( flip 0.707649368921746 );
+d800 <- [ c799, c798 ];
+if f797 then ( choose d800 with
+| c799 -> ( reward 66 )
+| c798 -> ( reward 25 ) ) else ( f791 <- ( flip 0.81593546184669907 );
+d796 <- [ c795, c794, c793, c792 ];
+if f791 then ( choose d796 with
+| c795 -> ( reward 95 )
+| c794 -> ( reward 71 )
+| c793 -> ( reward 28 )
+| c792 -> ( reward 12 ) ) else ( f786 <- ( flip 0.68049080451133215 );
+d790 <- [ c789, c788, c787 ];
+if f786 then ( choose d790 with
+| c789 -> ( reward 4 )
+| c788 -> ( reward 87 )
+| c787 -> ( reward 94 ) ) else ( f779 <- ( flip 0.18624640875402904 );
+d785 <- [ c784, c783, c782, c781, c780 ];
+if f779 then ( choose d785 with
+| c784 -> ( reward 9 )
+| c783 -> ( reward 66 )
+| c782 -> ( reward 96 )
+| c781 -> ( reward 80 )
+| c780 -> ( reward 24 ) ) else ( f775 <- ( flip 0.0570858367023806 );
+d778 <- [ c777, c776 ];
+if f775 then ( choose d778 with
+| c777 -> ( reward 87 )
+| c776 -> ( reward 53 ) ) else ( f771 <- ( flip 0.23463474157456168 );
+d774 <- [ c773, c772 ];
+if f771 then ( choose d774 with
+| c773 -> ( reward 60 )
+| c772 -> ( reward 6 ) ) else ( f765 <- ( flip 0.23171154208794992 );
+d770 <- [ c769, c768, c767, c766 ];
+if f765 then ( choose d770 with
+| c769 -> ( reward 87 )
+| c768 -> ( reward 47 )
+| c767 -> ( reward 80 )
+| c766 -> ( reward 98 ) ) else ( f760 <- ( flip 0.97811690272909679 );
+d764 <- [ c763, c762, c761 ];
+if f760 then ( choose d764 with
+| c763 -> ( reward 95 )
+| c762 -> ( reward 45 )
+| c761 -> ( reward 41 ) ) else ( f756 <- ( flip 0.764011438287684 );
+d759 <- [ c758, c757 ];
+if f756 then ( choose d759 with
+| c758 -> ( reward 13 )
+| c757 -> ( reward 49 ) ) else ( f749 <- ( flip 0.23249756852079059 );
+d755 <- [ c754, c753, c752, c751, c750 ];
+if f749 then ( choose d755 with
+| c754 -> ( reward 57 )
+| c753 -> ( reward 15 )
+| c752 -> ( reward 16 )
+| c751 -> ( reward 97 )
+| c750 -> ( reward 24 ) ) else ( f745 <- ( flip 0.23510599672199164 );
+d748 <- [ c747, c746 ];
+if f745 then ( choose d748 with
+| c747 -> ( reward 23 )
+| c746 -> ( reward 76 ) ) else ( f740 <- ( flip 0.27584912078667745 );
+d744 <- [ c743, c742, c741 ];
+if f740 then ( choose d744 with
+| c743 -> ( reward 69 )
+| c742 -> ( reward 78 )
+| c741 -> ( reward 68 ) ) else ( f735 <- ( flip 0.1127988126169634 );
+d739 <- [ c738, c737, c736 ];
+if f735 then ( choose d739 with
+| c738 -> ( reward 10 )
+| c737 -> ( reward 46 )
+| c736 -> ( reward 99 ) ) else ( f730 <- ( flip 0.47546052732733068 );
+d734 <- [ c733, c732, c731 ];
+if f730 then ( choose d734 with
+| c733 -> ( reward 62 )
+| c732 -> ( reward 77 )
+| c731 -> ( reward 63 ) ) else ( f723 <- ( flip 0.61911367586130184 );
+d729 <- [ c728, c727, c726, c725, c724 ];
+if f723 then ( choose d729 with
+| c728 -> ( reward 53 )
+| c727 -> ( reward 66 )
+| c726 -> ( reward 87 )
+| c725 -> ( reward 62 )
+| c724 -> ( reward 74 ) ) else ( f717 <- ( flip 0.48310593991454082 );
+d722 <- [ c721, c720, c719, c718 ];
+if f717 then ( choose d722 with
+| c721 -> ( reward 87 )
+| c720 -> ( reward 91 )
+| c719 -> ( reward 69 )
+| c718 -> ( reward 69 ) ) else ( f710 <- ( flip 0.73694899765062938 );
+d716 <- [ c715, c714, c713, c712, c711 ];
+if f710 then ( choose d716 with
+| c715 -> ( reward 11 )
+| c714 -> ( reward 70 )
+| c713 -> ( reward 90 )
+| c712 -> ( reward 75 )
+| c711 -> ( reward 0 ) ) else ( f704 <- ( flip 0.39809210210665397 );
+d709 <- [ c708, c707, c706, c705 ];
+if f704 then ( choose d709 with
+| c708 -> ( reward 37 )
+| c707 -> ( reward 96 )
+| c706 -> ( reward 38 )
+| c705 -> ( reward 44 ) ) else ( f699 <- ( flip 0.095792979890517924 );
+d703 <- [ c702, c701, c700 ];
+if f699 then ( choose d703 with
+| c702 -> ( reward 89 )
+| c701 -> ( reward 59 )
+| c700 -> ( reward 42 ) ) else ( f695 <- ( flip 0.81367947413926212 );
+d698 <- [ c697, c696 ];
+if f695 then ( choose d698 with
+| c697 -> ( reward 51 )
+| c696 -> ( reward 85 ) ) else ( f688 <- ( flip 0.92933601408835342 );
+d694 <- [ c693, c692, c691, c690, c689 ];
+if f688 then ( choose d694 with
+| c693 -> ( reward 70 )
+| c692 -> ( reward 27 )
+| c691 -> ( reward 95 )
+| c690 -> ( reward 54 )
+| c689 -> ( reward 28 ) ) else ( f683 <- ( flip 0.24555827056411328 );
+d687 <- [ c686, c685, c684 ];
+if f683 then ( choose d687 with
+| c686 -> ( reward 4 )
+| c685 -> ( reward 98 )
+| c684 -> ( reward 16 ) ) else ( f679 <- ( flip 0.739917161384995 );
+d682 <- [ c681, c680 ];
+if f679 then ( choose d682 with
+| c681 -> ( reward 90 )
+| c680 -> ( reward 9 ) ) else ( f673 <- ( flip 0.72696620982658233 );
+d678 <- [ c677, c676, c675, c674 ];
+if f673 then ( choose d678 with
+| c677 -> ( reward 85 )
+| c676 -> ( reward 34 )
+| c675 -> ( reward 55 )
+| c674 -> ( reward 65 ) ) else ( f667 <- ( flip 0.81198912421181157 );
+d672 <- [ c671, c670, c669, c668 ];
+if f667 then ( choose d672 with
+| c671 -> ( reward 11 )
+| c670 -> ( reward 38 )
+| c669 -> ( reward 53 )
+| c668 -> ( reward 25 ) ) else ( f662 <- ( flip 0.73910679029498627 );
+d666 <- [ c665, c664, c663 ];
+if f662 then ( choose d666 with
+| c665 -> ( reward 90 )
+| c664 -> ( reward 7 )
+| c663 -> ( reward 59 ) ) else ( f657 <- ( flip 0.086842949325192181 );
+d661 <- [ c660, c659, c658 ];
+if f657 then ( choose d661 with
+| c660 -> ( reward 20 )
+| c659 -> ( reward 59 )
+| c658 -> ( reward 81 ) ) else ( f651 <- ( flip 0.40898064944785595 );
+d656 <- [ c655, c654, c653, c652 ];
+if f651 then ( choose d656 with
+| c655 -> ( reward 33 )
+| c654 -> ( reward 57 )
+| c653 -> ( reward 20 )
+| c652 -> ( reward 18 ) ) else ( f646 <- ( flip 0.20835898850018872 );
+d650 <- [ c649, c648, c647 ];
+if f646 then ( choose d650 with
+| c649 -> ( reward 70 )
+| c648 -> ( reward 81 )
+| c647 -> ( reward 78 ) ) else ( f640 <- ( flip 0.68121330620912146 );
+d645 <- [ c644, c643, c642, c641 ];
+if f640 then ( choose d645 with
+| c644 -> ( reward 77 )
+| c643 -> ( reward 79 )
+| c642 -> ( reward 34 )
+| c641 -> ( reward 4 ) ) else ( f636 <- ( flip 0.80439327902940283 );
+d639 <- [ c638, c637 ];
+if f636 then ( choose d639 with
+| c638 -> ( reward 26 )
+| c637 -> ( reward 36 ) ) else ( f632 <- ( flip 0.99413598175151208 );
+d635 <- [ c634, c633 ];
+if f632 then ( choose d635 with
+| c634 -> ( reward 37 )
+| c633 -> ( reward 95 ) ) else ( f625 <- ( flip 0.74097380351252906 );
+d631 <- [ c630, c629, c628, c627, c626 ];
+if f625 then ( choose d631 with
+| c630 -> ( reward 31 )
+| c629 -> ( reward 67 )
+| c628 -> ( reward 87 )
+| c627 -> ( reward 69 )
+| c626 -> ( reward 82 ) ) else ( f618 <- ( flip 0.80911191212104816 );
+d624 <- [ c623, c622, c621, c620, c619 ];
+if f618 then ( choose d624 with
+| c623 -> ( reward 14 )
+| c622 -> ( reward 88 )
+| c621 -> ( reward 93 )
+| c620 -> ( reward 47 )
+| c619 -> ( reward 99 ) ) else ( f612 <- ( flip 0.41908621874356417 );
+d617 <- [ c616, c615, c614, c613 ];
+if f612 then ( choose d617 with
+| c616 -> ( reward 12 )
+| c615 -> ( reward 70 )
+| c614 -> ( reward 46 )
+| c613 -> ( reward 72 ) ) else ( f606 <- ( flip 0.88883130893041062 );
+d611 <- [ c610, c609, c608, c607 ];
+if f606 then ( choose d611 with
+| c610 -> ( reward 78 )
+| c609 -> ( reward 5 )
+| c608 -> ( reward 89 )
+| c607 -> ( reward 88 ) ) else ( f600 <- ( flip 0.92789900371507306 );
+d605 <- [ c604, c603, c602, c601 ];
+if f600 then ( choose d605 with
+| c604 -> ( reward 3 )
+| c603 -> ( reward 66 )
+| c602 -> ( reward 38 )
+| c601 -> ( reward 23 ) ) else ( f593 <- ( flip 0.53049959230388222 );
+d599 <- [ c598, c597, c596, c595, c594 ];
+if f593 then ( choose d599 with
+| c598 -> ( reward 55 )
+| c597 -> ( reward 33 )
+| c596 -> ( reward 63 )
+| c595 -> ( reward 61 )
+| c594 -> ( reward 31 ) ) else ( f586 <- ( flip 0.72085333456375078 );
+d592 <- [ c591, c590, c589, c588, c587 ];
+if f586 then ( choose d592 with
+| c591 -> ( reward 71 )
+| c590 -> ( reward 54 )
+| c589 -> ( reward 46 )
+| c588 -> ( reward 58 )
+| c587 -> ( reward 74 ) ) else ( f582 <- ( flip 0.93598702819613644 );
+d585 <- [ c584, c583 ];
+if f582 then ( choose d585 with
+| c584 -> ( reward 17 )
+| c583 -> ( reward 28 ) ) else ( f577 <- ( flip 0.35506395848482525 );
+d581 <- [ c580, c579, c578 ];
+if f577 then ( choose d581 with
+| c580 -> ( reward 77 )
+| c579 -> ( reward 54 )
+| c578 -> ( reward 46 ) ) else ( f573 <- ( flip 0.068049706878125921 );
+d576 <- [ c575, c574 ];
+if f573 then ( choose d576 with
+| c575 -> ( reward 65 )
+| c574 -> ( reward 23 ) ) else ( f568 <- ( flip 0.46702307917644409 );
+d572 <- [ c571, c570, c569 ];
+if f568 then ( choose d572 with
+| c571 -> ( reward 86 )
+| c570 -> ( reward 49 )
+| c569 -> ( reward 69 ) ) else ( f562 <- ( flip 0.65672485424192639 );
+d567 <- [ c566, c565, c564, c563 ];
+if f562 then ( choose d567 with
+| c566 -> ( reward 16 )
+| c565 -> ( reward 62 )
+| c564 -> ( reward 36 )
+| c563 -> ( reward 81 ) ) else ( f555 <- ( flip 0.15741394120272026 );
+d561 <- [ c560, c559, c558, c557, c556 ];
+if f555 then ( choose d561 with
+| c560 -> ( reward 56 )
+| c559 -> ( reward 81 )
+| c558 -> ( reward 20 )
+| c557 -> ( reward 90 )
+| c556 -> ( reward 76 ) ) else ( f550 <- ( flip 0.56166873363531555 );
+d554 <- [ c553, c552, c551 ];
+if f550 then ( choose d554 with
+| c553 -> ( reward 63 )
+| c552 -> ( reward 85 )
+| c551 -> ( reward 26 ) ) else ( f544 <- ( flip 0.052978693430679839 );
+d549 <- [ c548, c547, c546, c545 ];
+if f544 then ( choose d549 with
+| c548 -> ( reward 36 )
+| c547 -> ( reward 97 )
+| c546 -> ( reward 46 )
+| c545 -> ( reward 48 ) ) else ( f539 <- ( flip 0.88749927355493818 );
+d543 <- [ c542, c541, c540 ];
+if f539 then ( choose d543 with
+| c542 -> ( reward 1 )
+| c541 -> ( reward 34 )
+| c540 -> ( reward 71 ) ) else ( f535 <- ( flip 0.65118165908775916 );
+d538 <- [ c537, c536 ];
+if f535 then ( choose d538 with
+| c537 -> ( reward 24 )
+| c536 -> ( reward 71 ) ) else ( f531 <- ( flip 0.85916119032367289 );
+d534 <- [ c533, c532 ];
+if f531 then ( choose d534 with
+| c533 -> ( reward 67 )
+| c532 -> ( reward 62 ) ) else ( f525 <- ( flip 0.49931748291101524 );
+d530 <- [ c529, c528, c527, c526 ];
+if f525 then ( choose d530 with
+| c529 -> ( reward 45 )
+| c528 -> ( reward 44 )
+| c527 -> ( reward 89 )
+| c526 -> ( reward 55 ) ) else ( f519 <- ( flip 0.38037795009953129 );
+d524 <- [ c523, c522, c521, c520 ];
+if f519 then ( choose d524 with
+| c523 -> ( reward 17 )
+| c522 -> ( reward 82 )
+| c521 -> ( reward 30 )
+| c520 -> ( reward 63 ) ) else ( f514 <- ( flip 0.86634654278778345 );
+d518 <- [ c517, c516, c515 ];
+if f514 then ( choose d518 with
+| c517 -> ( reward 58 )
+| c516 -> ( reward 80 )
+| c515 -> ( reward 19 ) ) else ( f510 <- ( flip 0.27852140027235961 );
+d513 <- [ c512, c511 ];
+if f510 then ( choose d513 with
+| c512 -> ( reward 25 )
+| c511 -> ( reward 65 ) ) else ( f505 <- ( flip 0.00918217749381812 );
+d509 <- [ c508, c507, c506 ];
+if f505 then ( choose d509 with
+| c508 -> ( reward 98 )
+| c507 -> ( reward 65 )
+| c506 -> ( reward 12 ) ) else ( f501 <- ( flip 0.2430544390761715 );
+d504 <- [ c503, c502 ];
+if f501 then ( choose d504 with
+| c503 -> ( reward 18 )
+| c502 -> ( reward 7 ) ) else ( f496 <- ( flip 0.05622488291619028 );
+d500 <- [ c499, c498, c497 ];
+if f496 then ( choose d500 with
+| c499 -> ( reward 21 )
+| c498 -> ( reward 81 )
+| c497 -> ( reward 68 ) ) else ( f489 <- ( flip 0.089746269702758008 );
+d495 <- [ c494, c493, c492, c491, c490 ];
+if f489 then ( choose d495 with
+| c494 -> ( reward 98 )
+| c493 -> ( reward 51 )
+| c492 -> ( reward 67 )
+| c491 -> ( reward 68 )
+| c490 -> ( reward 51 ) ) else ( f484 <- ( flip 0.868138442280797 );
+d488 <- [ c487, c486, c485 ];
+if f484 then ( choose d488 with
+| c487 -> ( reward 84 )
+| c486 -> ( reward 47 )
+| c485 -> ( reward 59 ) ) else ( f479 <- ( flip 0.056946074700726185 );
+d483 <- [ c482, c481, c480 ];
+if f479 then ( choose d483 with
+| c482 -> ( reward 51 )
+| c481 -> ( reward 5 )
+| c480 -> ( reward 42 ) ) else ( f475 <- ( flip 0.23545424584110683 );
+d478 <- [ c477, c476 ];
+if f475 then ( choose d478 with
+| c477 -> ( reward 80 )
+| c476 -> ( reward 85 ) ) else ( f468 <- ( flip 0.18064156855013908 );
+d474 <- [ c473, c472, c471, c470, c469 ];
+if f468 then ( choose d474 with
+| c473 -> ( reward 46 )
+| c472 -> ( reward 84 )
+| c471 -> ( reward 88 )
+| c470 -> ( reward 89 )
+| c469 -> ( reward 71 ) ) else ( f461 <- ( flip 0.070780952597884389 );
+d467 <- [ c466, c465, c464, c463, c462 ];
+if f461 then ( choose d467 with
+| c466 -> ( reward 81 )
+| c465 -> ( reward 77 )
+| c464 -> ( reward 59 )
+| c463 -> ( reward 62 )
+| c462 -> ( reward 86 ) ) else ( f457 <- ( flip 0.43636328803070212 );
+d460 <- [ c459, c458 ];
+if f457 then ( choose d460 with
+| c459 -> ( reward 71 )
+| c458 -> ( reward 97 ) ) else ( f450 <- ( flip 0.75521403804082621 );
+d456 <- [ c455, c454, c453, c452, c451 ];
+if f450 then ( choose d456 with
+| c455 -> ( reward 85 )
+| c454 -> ( reward 72 )
+| c453 -> ( reward 37 )
+| c452 -> ( reward 78 )
+| c451 -> ( reward 14 ) ) else ( f445 <- ( flip 0.320333935841605 );
+d449 <- [ c448, c447, c446 ];
+if f445 then ( choose d449 with
+| c448 -> ( reward 87 )
+| c447 -> ( reward 40 )
+| c446 -> ( reward 54 ) ) else ( f439 <- ( flip 0.70645821853734558 );
+d444 <- [ c443, c442, c441, c440 ];
+if f439 then ( choose d444 with
+| c443 -> ( reward 92 )
+| c442 -> ( reward 34 )
+| c441 -> ( reward 56 )
+| c440 -> ( reward 25 ) ) else ( f434 <- ( flip 0.14410189421881286 );
+d438 <- [ c437, c436, c435 ];
+if f434 then ( choose d438 with
+| c437 -> ( reward 94 )
+| c436 -> ( reward 41 )
+| c435 -> ( reward 13 ) ) else ( f428 <- ( flip 0.012644223031907355 );
+d433 <- [ c432, c431, c430, c429 ];
+if f428 then ( choose d433 with
+| c432 -> ( reward 69 )
+| c431 -> ( reward 95 )
+| c430 -> ( reward 82 )
+| c429 -> ( reward 1 ) ) else ( f422 <- ( flip 0.67995606556081267 );
+d427 <- [ c426, c425, c424, c423 ];
+if f422 then ( choose d427 with
+| c426 -> ( reward 61 )
+| c425 -> ( reward 47 )
+| c424 -> ( reward 71 )
+| c423 -> ( reward 27 ) ) else ( f417 <- ( flip 0.19023785248346309 );
+d421 <- [ c420, c419, c418 ];
+if f417 then ( choose d421 with
+| c420 -> ( reward 60 )
+| c419 -> ( reward 11 )
+| c418 -> ( reward 66 ) ) else ( f410 <- ( flip 0.81119657071474749 );
+d416 <- [ c415, c414, c413, c412, c411 ];
+if f410 then ( choose d416 with
+| c415 -> ( reward 62 )
+| c414 -> ( reward 72 )
+| c413 -> ( reward 79 )
+| c412 -> ( reward 69 )
+| c411 -> ( reward 67 ) ) else ( f406 <- ( flip 0.312593643826265 );
+d409 <- [ c408, c407 ];
+if f406 then ( choose d409 with
+| c408 -> ( reward 38 )
+| c407 -> ( reward 4 ) ) else ( f402 <- ( flip 0.0063912129806266054 );
+d405 <- [ c404, c403 ];
+if f402 then ( choose d405 with
+| c404 -> ( reward 32 )
+| c403 -> ( reward 27 ) ) else ( f396 <- ( flip 0.5905719622076907 );
+d401 <- [ c400, c399, c398, c397 ];
+if f396 then ( choose d401 with
+| c400 -> ( reward 60 )
+| c399 -> ( reward 55 )
+| c398 -> ( reward 38 )
+| c397 -> ( reward 54 ) ) else ( f389 <- ( flip 0.94581413953507609 );
+d395 <- [ c394, c393, c392, c391, c390 ];
+if f389 then ( choose d395 with
+| c394 -> ( reward 46 )
+| c393 -> ( reward 30 )
+| c392 -> ( reward 12 )
+| c391 -> ( reward 88 )
+| c390 -> ( reward 91 ) ) else ( f383 <- ( flip 0.6349163155693518 );
+d388 <- [ c387, c386, c385, c384 ];
+if f383 then ( choose d388 with
+| c387 -> ( reward 86 )
+| c386 -> ( reward 34 )
+| c385 -> ( reward 36 )
+| c384 -> ( reward 20 ) ) else ( f377 <- ( flip 0.87960290907119909 );
+d382 <- [ c381, c380, c379, c378 ];
+if f377 then ( choose d382 with
+| c381 -> ( reward 64 )
+| c380 -> ( reward 16 )
+| c379 -> ( reward 15 )
+| c378 -> ( reward 4 ) ) else ( f370 <- ( flip 0.93472763478385068 );
+d376 <- [ c375, c374, c373, c372, c371 ];
+if f370 then ( choose d376 with
+| c375 -> ( reward 0 )
+| c374 -> ( reward 4 )
+| c373 -> ( reward 63 )
+| c372 -> ( reward 88 )
+| c371 -> ( reward 73 ) ) else ( f366 <- ( flip 0.826255050225969 );
+d369 <- [ c368, c367 ];
+if f366 then ( choose d369 with
+| c368 -> ( reward 36 )
+| c367 -> ( reward 87 ) ) else ( f359 <- ( flip 0.47945886643413538 );
+d365 <- [ c364, c363, c362, c361, c360 ];
+if f359 then ( choose d365 with
+| c364 -> ( reward 88 )
+| c363 -> ( reward 24 )
+| c362 -> ( reward 42 )
+| c361 -> ( reward 5 )
+| c360 -> ( reward 53 ) ) else ( f355 <- ( flip 0.016921252713513368 );
+d358 <- [ c357, c356 ];
+if f355 then ( choose d358 with
+| c357 -> ( reward 96 )
+| c356 -> ( reward 97 ) ) else ( f350 <- ( flip 0.649751716154692 );
+d354 <- [ c353, c352, c351 ];
+if f350 then ( choose d354 with
+| c353 -> ( reward 20 )
+| c352 -> ( reward 91 )
+| c351 -> ( reward 66 ) ) else ( f343 <- ( flip 0.88166480788118284 );
+d349 <- [ c348, c347, c346, c345, c344 ];
+if f343 then ( choose d349 with
+| c348 -> ( reward 91 )
+| c347 -> ( reward 40 )
+| c346 -> ( reward 80 )
+| c345 -> ( reward 18 )
+| c344 -> ( reward 14 ) ) else ( f339 <- ( flip 0.503077418487205 );
+d342 <- [ c341, c340 ];
+if f339 then ( choose d342 with
+| c341 -> ( reward 80 )
+| c340 -> ( reward 38 ) ) else ( f332 <- ( flip 0.9450748713335827 );
+d338 <- [ c337, c336, c335, c334, c333 ];
+if f332 then ( choose d338 with
+| c337 -> ( reward 2 )
+| c336 -> ( reward 38 )
+| c335 -> ( reward 10 )
+| c334 -> ( reward 54 )
+| c333 -> ( reward 7 ) ) else ( f325 <- ( flip 0.54845863068162148 );
+d331 <- [ c330, c329, c328, c327, c326 ];
+if f325 then ( choose d331 with
+| c330 -> ( reward 52 )
+| c329 -> ( reward 90 )
+| c328 -> ( reward 25 )
+| c327 -> ( reward 41 )
+| c326 -> ( reward 56 ) ) else ( f319 <- ( flip 0.39225568525596755 );
+d324 <- [ c323, c322, c321, c320 ];
+if f319 then ( choose d324 with
+| c323 -> ( reward 36 )
+| c322 -> ( reward 51 )
+| c321 -> ( reward 22 )
+| c320 -> ( reward 29 ) ) else ( f312 <- ( flip 0.677740336779763 );
+d318 <- [ c317, c316, c315, c314, c313 ];
+if f312 then ( choose d318 with
+| c317 -> ( reward 46 )
+| c316 -> ( reward 69 )
+| c315 -> ( reward 70 )
+| c314 -> ( reward 7 )
+| c313 -> ( reward 6 ) ) else ( f308 <- ( flip 0.028814892338797245 );
+d311 <- [ c310, c309 ];
+if f308 then ( choose d311 with
+| c310 -> ( reward 47 )
+| c309 -> ( reward 68 ) ) else ( f304 <- ( flip 0.46140211677320719 );
+d307 <- [ c306, c305 ];
+if f304 then ( choose d307 with
+| c306 -> ( reward 87 )
+| c305 -> ( reward 11 ) ) else ( f300 <- ( flip 0.30136027097277374 );
+d303 <- [ c302, c301 ];
+if f300 then ( choose d303 with
+| c302 -> ( reward 29 )
+| c301 -> ( reward 42 ) ) else ( f293 <- ( flip 0.10387408887120821 );
+d299 <- [ c298, c297, c296, c295, c294 ];
+if f293 then ( choose d299 with
+| c298 -> ( reward 83 )
+| c297 -> ( reward 18 )
+| c296 -> ( reward 31 )
+| c295 -> ( reward 60 )
+| c294 -> ( reward 67 ) ) else ( f287 <- ( flip 0.56686397062943106 );
+d292 <- [ c291, c290, c289, c288 ];
+if f287 then ( choose d292 with
+| c291 -> ( reward 13 )
+| c290 -> ( reward 66 )
+| c289 -> ( reward 45 )
+| c288 -> ( reward 0 ) ) else ( f282 <- ( flip 0.29619043798957928 );
+d286 <- [ c285, c284, c283 ];
+if f282 then ( choose d286 with
+| c285 -> ( reward 54 )
+| c284 -> ( reward 51 )
+| c283 -> ( reward 17 ) ) else ( f275 <- ( flip 0.88833520274468736 );
+d281 <- [ c280, c279, c278, c277, c276 ];
+if f275 then ( choose d281 with
+| c280 -> ( reward 66 )
+| c279 -> ( reward 45 )
+| c278 -> ( reward 60 )
+| c277 -> ( reward 65 )
+| c276 -> ( reward 7 ) ) else ( f268 <- ( flip 0.28385844409694028 );
+d274 <- [ c273, c272, c271, c270, c269 ];
+if f268 then ( choose d274 with
+| c273 -> ( reward 53 )
+| c272 -> ( reward 83 )
+| c271 -> ( reward 31 )
+| c270 -> ( reward 82 )
+| c269 -> ( reward 92 ) ) else ( f261 <- ( flip 0.32342343010756308 );
+d267 <- [ c266, c265, c264, c263, c262 ];
+if f261 then ( choose d267 with
+| c266 -> ( reward 53 )
+| c265 -> ( reward 32 )
+| c264 -> ( reward 57 )
+| c263 -> ( reward 61 )
+| c262 -> ( reward 93 ) ) else ( f254 <- ( flip 0.73269146496237669 );
+d260 <- [ c259, c258, c257, c256, c255 ];
+if f254 then ( choose d260 with
+| c259 -> ( reward 95 )
+| c258 -> ( reward 4 )
+| c257 -> ( reward 43 )
+| c256 -> ( reward 51 )
+| c255 -> ( reward 7 ) ) else ( f248 <- ( flip 0.66252456324312925 );
+d253 <- [ c252, c251, c250, c249 ];
+if f248 then ( choose d253 with
+| c252 -> ( reward 10 )
+| c251 -> ( reward 90 )
+| c250 -> ( reward 88 )
+| c249 -> ( reward 37 ) ) else ( f243 <- ( flip 0.10589785128724066 );
+d247 <- [ c246, c245, c244 ];
+if f243 then ( choose d247 with
+| c246 -> ( reward 55 )
+| c245 -> ( reward 70 )
+| c244 -> ( reward 20 ) ) else ( f236 <- ( flip 0.63755930037995523 );
+d242 <- [ c241, c240, c239, c238, c237 ];
+if f236 then ( choose d242 with
+| c241 -> ( reward 76 )
+| c240 -> ( reward 38 )
+| c239 -> ( reward 11 )
+| c238 -> ( reward 40 )
+| c237 -> ( reward 23 ) ) else ( f232 <- ( flip 0.41882449236213015 );
+d235 <- [ c234, c233 ];
+if f232 then ( choose d235 with
+| c234 -> ( reward 98 )
+| c233 -> ( reward 77 ) ) else ( f225 <- ( flip 0.98315393182130939 );
+d231 <- [ c230, c229, c228, c227, c226 ];
+if f225 then ( choose d231 with
+| c230 -> ( reward 36 )
+| c229 -> ( reward 73 )
+| c228 -> ( reward 62 )
+| c227 -> ( reward 63 )
+| c226 -> ( reward 68 ) ) else ( f219 <- ( flip 0.49490595518239583 );
+d224 <- [ c223, c222, c221, c220 ];
+if f219 then ( choose d224 with
+| c223 -> ( reward 95 )
+| c222 -> ( reward 93 )
+| c221 -> ( reward 76 )
+| c220 -> ( reward 21 ) ) else ( f212 <- ( flip 0.42568125075122748 );
+d218 <- [ c217, c216, c215, c214, c213 ];
+if f212 then ( choose d218 with
+| c217 -> ( reward 26 )
+| c216 -> ( reward 99 )
+| c215 -> ( reward 87 )
+| c214 -> ( reward 68 )
+| c213 -> ( reward 67 ) ) else ( f205 <- ( flip 0.14834555020537782 );
+d211 <- [ c210, c209, c208, c207, c206 ];
+if f205 then ( choose d211 with
+| c210 -> ( reward 89 )
+| c209 -> ( reward 14 )
+| c208 -> ( reward 24 )
+| c207 -> ( reward 39 )
+| c206 -> ( reward 54 ) ) else ( f199 <- ( flip 0.093027165203666287 );
+d204 <- [ c203, c202, c201, c200 ];
+if f199 then ( choose d204 with
+| c203 -> ( reward 31 )
+| c202 -> ( reward 30 )
+| c201 -> ( reward 76 )
+| c200 -> ( reward 83 ) ) else ( f193 <- ( flip 0.14612817900493702 );
+d198 <- [ c197, c196, c195, c194 ];
+if f193 then ( choose d198 with
+| c197 -> ( reward 97 )
+| c196 -> ( reward 81 )
+| c195 -> ( reward 29 )
+| c194 -> ( reward 21 ) ) else ( f188 <- ( flip 0.45083747823091525 );
+d192 <- [ c191, c190, c189 ];
+if f188 then ( choose d192 with
+| c191 -> ( reward 61 )
+| c190 -> ( reward 9 )
+| c189 -> ( reward 96 ) ) else ( f182 <- ( flip 0.54955108160067945 );
+d187 <- [ c186, c185, c184, c183 ];
+if f182 then ( choose d187 with
+| c186 -> ( reward 1 )
+| c185 -> ( reward 83 )
+| c184 -> ( reward 12 )
+| c183 -> ( reward 58 ) ) else ( f178 <- ( flip 0.049501832146457876 );
+d181 <- [ c180, c179 ];
+if f178 then ( choose d181 with
+| c180 -> ( reward 69 )
+| c179 -> ( reward 50 ) ) else ( f173 <- ( flip 0.0757127108705998 );
+d177 <- [ c176, c175, c174 ];
+if f173 then ( choose d177 with
+| c176 -> ( reward 31 )
+| c175 -> ( reward 49 )
+| c174 -> ( reward 65 ) ) else ( f169 <- ( flip 0.59200949525843449 );
+d172 <- [ c171, c170 ];
+if f169 then ( choose d172 with
+| c171 -> ( reward 32 )
+| c170 -> ( reward 71 ) ) else ( f162 <- ( flip 0.952432942226578 );
+d168 <- [ c167, c166, c165, c164, c163 ];
+if f162 then ( choose d168 with
+| c167 -> ( reward 11 )
+| c166 -> ( reward 36 )
+| c165 -> ( reward 48 )
+| c164 -> ( reward 24 )
+| c163 -> ( reward 71 ) ) else ( f155 <- ( flip 0.66743875693165644 );
+d161 <- [ c160, c159, c158, c157, c156 ];
+if f155 then ( choose d161 with
+| c160 -> ( reward 86 )
+| c159 -> ( reward 17 )
+| c158 -> ( reward 0 )
+| c157 -> ( reward 13 )
+| c156 -> ( reward 29 ) ) else ( f151 <- ( flip 0.32068937296991412 );
+d154 <- [ c153, c152 ];
+if f151 then ( choose d154 with
+| c153 -> ( reward 13 )
+| c152 -> ( reward 56 ) ) else ( f144 <- ( flip 0.23872660236368082 );
+d150 <- [ c149, c148, c147, c146, c145 ];
+if f144 then ( choose d150 with
+| c149 -> ( reward 1 )
+| c148 -> ( reward 93 )
+| c147 -> ( reward 58 )
+| c146 -> ( reward 95 )
+| c145 -> ( reward 89 ) ) else ( f140 <- ( flip 0.23504611325153285 );
+d143 <- [ c142, c141 ];
+if f140 then ( choose d143 with
+| c142 -> ( reward 88 )
+| c141 -> ( reward 33 ) ) else ( f135 <- ( flip 0.76891157412648181 );
+d139 <- [ c138, c137, c136 ];
+if f135 then ( choose d139 with
+| c138 -> ( reward 78 )
+| c137 -> ( reward 46 )
+| c136 -> ( reward 24 ) ) else ( f131 <- ( flip 0.32461948147848435 );
+d134 <- [ c133, c132 ];
+if f131 then ( choose d134 with
+| c133 -> ( reward 92 )
+| c132 -> ( reward 57 ) ) else ( f127 <- ( flip 0.32996254667550612 );
+d130 <- [ c129, c128 ];
+if f127 then ( choose d130 with
+| c129 -> ( reward 95 )
+| c128 -> ( reward 69 ) ) else ( f120 <- ( flip 0.10907495196056873 );
+d126 <- [ c125, c124, c123, c122, c121 ];
+if f120 then ( choose d126 with
+| c125 -> ( reward 71 )
+| c124 -> ( reward 53 )
+| c123 -> ( reward 33 )
+| c122 -> ( reward 36 )
+| c121 -> ( reward 28 ) ) else ( f116 <- ( flip 0.068721898970745321 );
+d119 <- [ c118, c117 ];
+if f116 then ( choose d119 with
+| c118 -> ( reward 35 )
+| c117 -> ( reward 56 ) ) else ( f110 <- ( flip 0.17360558256340552 );
+d115 <- [ c114, c113, c112, c111 ];
+if f110 then ( choose d115 with
+| c114 -> ( reward 22 )
+| c113 -> ( reward 24 )
+| c112 -> ( reward 68 )
+| c111 -> ( reward 91 ) ) else ( f103 <- ( flip 0.48398624978375226 );
+d109 <- [ c108, c107, c106, c105, c104 ];
+if f103 then ( choose d109 with
+| c108 -> ( reward 36 )
+| c107 -> ( reward 35 )
+| c106 -> ( reward 70 )
+| c105 -> ( reward 40 )
+| c104 -> ( reward 82 ) ) else ( f98 <- ( flip 0.038580478894819234 );
+d102 <- [ c101, c100, c99 ];
+if f98 then ( choose d102 with
+| c101 -> ( reward 83 )
+| c100 -> ( reward 19 )
+| c99 -> ( reward 52 ) ) else ( f94 <- ( flip 0.87419947455968494 );
+d97 <- [ c96, c95 ];
+if f94 then ( choose d97 with
+| c96 -> ( reward 65 )
+| c95 -> ( reward 22 ) ) else ( f88 <- ( flip 0.31048868354494596 );
+d93 <- [ c92, c91, c90, c89 ];
+if f88 then ( choose d93 with
+| c92 -> ( reward 38 )
+| c91 -> ( reward 86 )
+| c90 -> ( reward 76 )
+| c89 -> ( reward 69 ) ) else ( f84 <- ( flip 0.39897460707506049 );
+d87 <- [ c86, c85 ];
+if f84 then ( choose d87 with
+| c86 -> ( reward 9 )
+| c85 -> ( reward 51 ) ) else ( f78 <- ( flip 0.612944900249 );
+d83 <- [ c82, c81, c80, c79 ];
+if f78 then ( choose d83 with
+| c82 -> ( reward 24 )
+| c81 -> ( reward 58 )
+| c80 -> ( reward 88 )
+| c79 -> ( reward 18 ) ) else ( f72 <- ( flip 0.33340717986451246 );
+d77 <- [ c76, c75, c74, c73 ];
+if f72 then ( choose d77 with
+| c76 -> ( reward 54 )
+| c75 -> ( reward 46 )
+| c74 -> ( reward 20 )
+| c73 -> ( reward 43 ) ) else ( f68 <- ( flip 0.25058990071920612 );
+d71 <- [ c70, c69 ];
+if f68 then ( choose d71 with
+| c70 -> ( reward 84 )
+| c69 -> ( reward 70 ) ) else ( f64 <- ( flip 0.3157515479565719 );
+d67 <- [ c66, c65 ];
+if f64 then ( choose d67 with
+| c66 -> ( reward 59 )
+| c65 -> ( reward 99 ) ) else ( f59 <- ( flip 0.45582419777416872 );
+d63 <- [ c62, c61, c60 ];
+if f59 then ( choose d63 with
+| c62 -> ( reward 20 )
+| c61 -> ( reward 63 )
+| c60 -> ( reward 83 ) ) else ( f54 <- ( flip 0.500623928276048 );
+d58 <- [ c57, c56, c55 ];
+if f54 then ( choose d58 with
+| c57 -> ( reward 60 )
+| c56 -> ( reward 97 )
+| c55 -> ( reward 97 ) ) else ( f50 <- ( flip 0.035884070055686917 );
+d53 <- [ c52, c51 ];
+if f50 then ( choose d53 with
+| c52 -> ( reward 57 )
+| c51 -> ( reward 11 ) ) else ( f44 <- ( flip 0.87093078758423481 );
+d49 <- [ c48, c47, c46, c45 ];
+if f44 then ( choose d49 with
+| c48 -> ( reward 55 )
+| c47 -> ( reward 12 )
+| c46 -> ( reward 49 )
+| c45 -> ( reward 70 ) ) else ( f37 <- ( flip 0.76317234441615656 );
+d43 <- [ c42, c41, c40, c39, c38 ];
+if f37 then ( choose d43 with
+| c42 -> ( reward 0 )
+| c41 -> ( reward 3 )
+| c40 -> ( reward 96 )
+| c39 -> ( reward 44 )
+| c38 -> ( reward 23 ) ) else ( f31 <- ( flip 0.62925143901961378 );
+d36 <- [ c35, c34, c33, c32 ];
+if f31 then ( choose d36 with
+| c35 -> ( reward 23 )
+| c34 -> ( reward 14 )
+| c33 -> ( reward 93 )
+| c32 -> ( reward 89 ) ) else ( f24 <- ( flip 0.35179904572186588 );
+d30 <- [ c29, c28, c27, c26, c25 ];
+if f24 then ( choose d30 with
+| c29 -> ( reward 69 )
+| c28 -> ( reward 28 )
+| c27 -> ( reward 6 )
+| c26 -> ( reward 1 )
+| c25 -> ( reward 12 ) ) else ( f20 <- ( flip 0.91051862764638747 );
+d23 <- [ c22, c21 ];
+if f20 then ( choose d23 with
+| c22 -> ( reward 15 )
+| c21 -> ( reward 78 ) ) else ( f13 <- ( flip 0.67399547680489058 );
+d19 <- [ c18, c17, c16, c15, c14 ];
+if f13 then ( choose d19 with
+| c18 -> ( reward 49 )
+| c17 -> ( reward 85 )
+| c16 -> ( reward 17 )
+| c15 -> ( reward 70 )
+| c14 -> ( reward 21 ) ) else ( f9 <- ( flip 0.78435865007230765 );
+d12 <- [ c11, c10 ];
+if f9 then ( choose d12 with
+| c11 -> ( reward 20 )
+| c10 -> ( reward 4 ) ) else ( f5 <- ( flip 0.66507712584402734 );
+d8 <- [ c7, c6 ];
+if f5 then ( choose d8 with
+| c7 -> ( reward 0 )
+| c6 -> ( reward 39 ) ) else ( f0 <- ( flip 0.32172344106784706 );
+d4 <- [ c3, c2, c1 ];
+if f0 then ( choose d4 with
+| c3 -> ( reward 41 )
+| c2 -> ( reward 82 )
+| c1 -> ( reward 85 ) ) else ( reward 44 ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) ) )

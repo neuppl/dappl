@@ -18,9 +18,9 @@ let _print_sexp fname =
   Format.printf "%s" (Sexplib0__Sexp.to_string_hum (Syntax.sexp_of_program parsed_program));
   ()
 
-let command =
+let only_filename =
   Command.basic
-    ~summary:"Perform inference an input file"
+    ~summary:"dappl solves your MEU problems."
     ~readme:(fun () -> "")
      (let open Command.Let_syntax in
      let open Command.Param in
@@ -32,7 +32,22 @@ let command =
         let t = Core_unix.gettimeofday() in
         let (_, meu) = Bc.infer internal in
         let t' = Core_unix.gettimeofday() in
-        let _ = Dappl_benchmarks.to_file_mdp 3 in
-        Printf.printf  "MEU is %F.\nTime elapsed: %F\n" meu (t' -. t))
+        Printf.printf  "MEU is %F\nTime elapsed: %F\n" meu (t' -. t))
+
+let gen_tests =
+  Command.basic
+    ~summary:"dappl solves your MEU problems."
+    ~readme:(fun () -> "")
+     (let%map_open.Command 
+      test = anon ("test" %: string)
+      and n = anon ("n" %: int) in
+      fun () -> match test with 
+      | "mdp" -> Dappl_benchmarks.to_file_mdp n
+      | _ -> failwith "invalid test!")
+
+let command =
+  Command.group
+    ~summary:"dappl utilities"
+    [ "run", only_filename; "test", gen_tests ]
 
 let () = Command_unix.run ~version:"1.0" ~build_info:"RWO" command
