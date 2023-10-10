@@ -1,3 +1,0 @@
-(test
- (libraries oUnit qcheck dappl bignum)
- (name test))
