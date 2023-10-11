@@ -69,4 +69,9 @@ let mk_ite (f : varname) (e : string list) : string =
 let mk_ite_print (f : varname) (e : string list) =
   Printf.printf "%s\n" (mk_ite f e)
 
-  
+(* Produces an observe *)
+let mk_observe (event : varname) : string = 
+  String.concat ~sep:" " ["observe(" ; event ; ");"]
+
+let mk_observe_print (event : varname) = 
+  Printf.printf "%s\n" (mk_observe event)

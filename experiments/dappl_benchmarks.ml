@@ -77,3 +77,17 @@ let to_file_mdp (cols : int) =
   let oc = Out_channel.create filename in 
   Printf.fprintf oc "%s\n" dt_program; Out_channel.close oc;
   Printf.printf "Generated DTProblog benchmark with %n columns at %s, run\ndappl run %s to see MEU\n" cols filename filename;
+
+
+(* 
+  Benchmark 2: Network reliability. We consider a network of type
+    O - O - O ... O
+  S   X   X   ...   E
+    O - O - O ... O
+  where each O is a router. 
+  We observe a packet failed to go from S to E. 
+  We have n tries to diagnose which of the routers O was faulty. We cannot investigate the same router twice. 
+  This is done via gen_network(m,n) where:
+  m is the number of ROUTER COLUMNS, so there are 2m+2 routers in total;
+  n is the number of tries. It must be the case that n <= 2m.
+*)

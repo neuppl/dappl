@@ -6,7 +6,7 @@ open Random
 open Core
 open OUnit2
 
-(* We make variable names via a ref count. *)
+(* We make variable names via a count. *)
 type var = Flip | Choice | Reward
 type varname = string
 
@@ -32,10 +32,11 @@ let flip_lit (l : literal) =
   | Not s -> Var s
 
 (* There are four types of clauses: 
-  1. variable declarations 0.5 :: fliphalf
-  2. choice declarations ? :: decision 
+  1. variable declarations 0.5 :: fliphalf .
+  2. choice declarations ? :: decision .
   3. rule declarations x :- y, z, a, b, c.
   4. utility declarations utility(rewvar, 12).
+  5. evidence (observe) declarations evidence(var, bool).
   
   A Problog program is a list of clauses.
 *)
@@ -45,6 +46,7 @@ type clause = Flip of float * literal
               | Rule of literal * literal list
               | Utility of literal * int
               | Query of literal
+              | Evidence of literal * bool
 type problog_program = clause list
 
 (* Print utilities for clauses. *)
@@ -55,13 +57,15 @@ let print_lit (l : literal) : string =
 
 let print_clause (c : clause) : string =
   match c with
-  | Flip(f, v)    -> String.concat ~sep:" " [Float.to_string f ; "::" ;  print_lit v ; "."]
-  | Choice v      ->  String.concat ~sep:" " ["?" ; "::" ;  print_lit v; "."]
-  | Rule(v, l)    -> let s = String.concat ~sep:", " (List.map ~f:print_lit l) in 
-                     String.concat ~sep:" " [print_lit v; ":-"; s ; "."]
-  | Utility(v,n)  -> String.concat ~sep:" " 
-                     ["utility("; print_lit v ; "," ; Int.to_string n ; ")."]
-  | Query v       -> String.concat ~sep:" " ["query("; print_lit v ; ")."]
+  | Flip(f, v)      -> String.concat ~sep:" " [Float.to_string f ; "::" ;  print_lit v ; "."]
+  | Choice v        ->  String.concat ~sep:" " ["?" ; "::" ;  print_lit v; "."]
+  | Rule(v, l)      -> let s = String.concat ~sep:", " (List.map ~f:print_lit l) in 
+                      String.concat ~sep:" " [print_lit v; ":-"; s ; "."]
+  | Utility(v,n)    -> String.concat ~sep:" " 
+                      ["utility("; print_lit v ; "," ; Int.to_string n ; ")."]
+  | Query v         -> String.concat ~sep:" " ["query("; print_lit v ; ")."]
+  | Evidence (l, b) -> String.concat ~sep: " " 
+                      ["evidence(" ; print_lit l ; "," ; Bool.to_string b ; ")."]
 
 let print_program (p : problog_program) : string =
   let m = List.map p ~f:print_clause in
@@ -131,6 +135,12 @@ let mk_ite (c: clause) (e : problog_program list) : problog_program =
   let p2' = propagate_literal (flip_lit v) p2 in
   c :: (List.append p1' p2')
 
+(* Produces an observe (evidence) *)
+
+let mk_observe (l : literal) (b: bool): problog_program =
+  match l with 
+  | Var _ -> [Evidence (l, b)]
+  | Not _ -> failwith "tried to make evidence with negative literal!"
 
 
 

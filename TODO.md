@@ -1,9 +1,5 @@
 High priority:
 
-* Find bug in MEU function declaration. Hard because Ocaml-rust FFI is weird.
-
-Medium priority:
-
 * Dead code elimination. Currently things like this error:
 ```
 x <- flip 0.5;
@@ -11,8 +7,7 @@ y <- flip 0.7;
 if x then reward 5 else reward 2
 ```
 
-
-because of some array length mismatch (ironically, an identical error to above.)
+because of some array length mismatch.
 
 * Deambiguating ambiguous grammar 
 

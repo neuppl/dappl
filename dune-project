@@ -8,9 +8,9 @@
 (source
  (github username/reponame))
 
-(authors "Minsung Cho")
+(authors "Minsung Cho <minsung@ccs.neu.edu>")
 
-(maintainers "Minsung Cho")
+(maintainers "Minsung Cho <minsung@ccs.neu.edu>")
 
 (license LICENSE)
 

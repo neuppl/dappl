@@ -26,5 +26,6 @@ setup.log
 # Dune generated files
 *.install
 
-# Local OPAM switch
+# Local OPAM/LSP switches
 _opam/
+.vscode/

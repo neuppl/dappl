@@ -2,8 +2,8 @@
 opam-version: "2.0"
 synopsis: "dappl"
 description: "dappl"
-maintainer: ["Minsung Cho"]
-authors: ["Minsung Cho"]
+maintainer: ["Minsung Cho <minsung@ccs.neu.edu>"]
+authors: ["Minsung Cho <minsung@ccs.neu.edu>"]
 license: "LICENSE"
 homepage: "https://github.com/username/reponame"
 doc: "https://url/to/documentation"
