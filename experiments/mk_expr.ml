@@ -11,7 +11,7 @@ let ct = ref 0 ;;
 
 let mk_varname (x : var) : varname = 
   let v = Int.to_string !ct in
-  let _ = ct := !ct + 1 in
+  let _ : unit = ct := !ct + 1 in
   match x with
   | Flip -> "f" ^ v 
   | Choice -> "c" ^ v
@@ -45,7 +45,7 @@ let mk_dec_print (i : int) : unit =
 
 (* Produces a choosewith *)
 let mk_choosewith (d : varname) (l : varname list) (e : string list) : string =
-  let _ = assert_bool "dude. length mismatch in choosewith."
+  let _ : unit = assert_bool "dude. length mismatch in choosewith."
           (List.length l = List.length e) in
   let s = String.concat ~sep:" " ["choose" ; d ; "with"] in
   let fn = fun (a,b) -> String.concat ~sep:" " ["|" ; a ; "->" ; "("; b; ")"] in
@@ -60,7 +60,7 @@ let mk_choosewith_print (d : varname) (l : varname list) (e : string list) =
 (* Produces an ite *)
 
 let mk_ite (f : varname) (e : string list) : string = 
-  let _ = assert_bool "dude, have two conditions for an ite. cmon that's CS0 shit"
+  let _ : unit = assert_bool "dude, have two conditions for an ite. cmon that's CS0 shit"
           (List.length e = 2) in
   let parenthesize = fun s -> String.concat ~sep:" " ["(" ; s ; ")"] in
   let l' = List.map e ~f:parenthesize in 

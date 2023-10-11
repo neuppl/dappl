@@ -148,6 +148,6 @@ let mk_newvar_dec (bdd : rsdd_bdd_builder) (decisions : string list) : cf * (str
   let decisions_as_vars = List.map decisions ~f:f in
   let vars_as_int64 = List.map decisions_as_vars ~f:(fun (a,_) -> a ) in 
   let vars_as_varlabel = List.map vars_as_int64 ~f:(fun x -> mk_varlabel x) in 
-  let _ = assert(List.length decisions = List.length vars_as_varlabel) in
+  let _ : unit = assert(List.length decisions = List.length vars_as_varlabel) in
   let list_final = List.zip_exn decisions vars_as_varlabel in
   (exactly_one bdd vars_as_int64, list_final)

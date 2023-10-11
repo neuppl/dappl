@@ -16,7 +16,7 @@ let ct = ref 0 ;;
 
 let mk_varname (x : var) : varname = 
   let v = Int.to_string !ct in
-  let _ = ct := !ct + 1 in
+  let _ : unit = ct := !ct + 1 in
   match x with
   | Flip -> "f" ^ v 
   | Choice -> "c" ^ v
@@ -112,7 +112,7 @@ let mk_choosewith_h (l : literal list) (e : problog_program list) =
   !mute
 
 let mk_choosewith (d : problog_program) (e: problog_program list) : problog_program = 
-  let _ = assert_bool "length mismatch in choosewith!"
+  let _ : unit = assert_bool "length mismatch in choosewith!"
           (List.length d = List.length e) in
   let extract_lit = fun c -> match c with 
                             | Choice l -> l 
@@ -123,7 +123,7 @@ let mk_choosewith (d : problog_program) (e: problog_program list) : problog_prog
   List.append (List.concat (d :: with_props)) queries
 
 let mk_ite (c: clause) (e : problog_program list) : problog_program =
-  let _ = assert_bool "dude, have two conditions for an ite. cmon that's CS0 shit"
+  let _ : unit = assert_bool "dude, have two conditions for an ite. cmon that's CS0 shit"
           (List.length e = 2) in
   let v = match c with | Flip (_,v) -> v | _ -> failwith "clause in mk_ite not flip" in
   let p1, p2 = List.nth_exn e 0 , List.nth_exn e 1 in

@@ -56,10 +56,10 @@ let rec bc (dappl : expr) (bdd : rsdd_bdd_builder) : cf =
   | Reward k            ->  let k = Bignum.to_float k in
                             mk_newvar_rew bdd k
   | Decision l          ->  let (e, l) = mk_newvar_dec bdd l in 
-                            let _ = dlist := List.append !dlist l in 
+                            let _ : unit = dlist := List.append !dlist l in 
                             e
   | Bind (s, e, e')     ->  let cf_e = bc e bdd in
-                            let _ = Hashtbl.add dictionary ~key:s ~data:cf_e in 
+                            let _ : unit= Hashtbl.add_exn dictionary ~key:s ~data:cf_e in 
                             bc e' bdd
   | Observe (e,e')      ->  let e = bc e bdd in 
                             let e' = bc e' bdd in
@@ -88,7 +88,7 @@ let infer (prog :program) : float * float =
   let sorted_weight_fn = List.sort cf.fn ~compare:(fun x y -> Int64.compare (fst x) (fst y))  in 
   let wmc_map = List.map sorted_weight_fn ~f:(fun x -> snd x) in
   let (lbl, _) = bdd_new_var new_bdd true in 
-  let _ = if not(Int64.to_int_exn lbl = (List.length wmc_map)) 
+  let _ : unit = if not(Int64.to_int_exn lbl = (List.length wmc_map)) 
           then failwith "live variable-weight mismatch error: do you have any dead code?" 
           else () in 
   let wmcparam = new_wmc_params_eu wmc_map in

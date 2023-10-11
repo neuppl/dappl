@@ -11,8 +11,8 @@ let kc_program (s : string) =
   let t = Core_unix.gettimeofday() in
   let (_, b) = Bc.infer internal in 
   let t' = Core_unix.gettimeofday() in
-  let _ = Printf.printf "MEU is: %F\n" b in
-  let _ = Printf.printf  "Time elapsed: %F\n" (t' -. t) in 
+  let _ : unit = Printf.printf "MEU is: %F\n" b in
+  let _ : unit = Printf.printf  "Time elapsed: %F\n" (t' -. t) in 
   ()
 
 (* 
@@ -42,7 +42,7 @@ let _mk_column_print (e : string) =
   Printf.printf "%s\n" (mk_column e)
 
 let gen_mdp (cols : int) = 
-  let _ = Random.init 234 in
+  let _ : unit = Random.init 234 in
   let l = List.init cols ~f:(fun i -> i) in
   let rw = Mk_expr.mk_reward () in
   let fold_fn = fun _ -> fun b -> mk_column b in
@@ -60,7 +60,7 @@ let mk_column_dt (e : problog_program) =
   Mk_expr_dt.mk_ite f [dec;e]
 
 let gen_mdp_dt (cols : int) = 
-  let _ = Random.init 234 in
+  let _ : unit = Random.init 234 in
   let l = List.init cols ~f:(fun i -> i) in
   let (_, c) = Mk_expr_dt.mk_reward () in
   let fold_fn = fun _ -> fun b -> mk_column_dt b in
