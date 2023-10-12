@@ -142,12 +142,24 @@ let exactly_one (b : rsdd_bdd_builder) (l : int64 list) : cf =
     rw = Int64.Set.empty
   }
 
+let mk_singleton (b : rsdd_bdd_builder) (a : int64) (l : rsdd_bdd_ptr) : cf = 
+  {
+    unn = l;
+    acc = bdd_true b;
+    fn = [a,((1.0, 0.0), (1.0, 0.0))];
+    rw = Int64.Set.empty
+  }
+
 let mk_newvar_dec (bdd : rsdd_bdd_builder) (decisions : string list) : cf * (string * rsdd_var_label) list  = 
   (* let _ = Printf.printf "Allocating a decision with %n many choices \n" (List.length decisions) in *)
-  let f : 'a -> int64 * rsdd_bdd_ptr = fun _ -> bdd_new_var bdd true in 
-  let decisions_as_vars = List.map decisions ~f:f in
-  let vars_as_int64 = List.map decisions_as_vars ~f:(fun (a,_) -> a ) in 
-  let vars_as_varlabel = List.map vars_as_int64 ~f:(fun x -> mk_varlabel x) in 
-  let _ : unit = assert(List.length decisions = List.length vars_as_varlabel) in
-  let list_final = List.zip_exn decisions vars_as_varlabel in
-  (exactly_one bdd vars_as_int64, list_final)
+  (* match decisions with
+  | [] -> failwith "empty decisions!"
+  | [x] -> let (a,b) = bdd_new_var bdd true in ((mk_singleton bdd a b), [(x, mk_varlabel a)])
+  | _ -> *)
+    let f : 'a -> int64 * rsdd_bdd_ptr = fun _ -> bdd_new_var bdd true in 
+    let decisions_as_vars = List.map decisions ~f:f in
+    let vars_as_int64 = List.map decisions_as_vars ~f:(fun (a,_) -> a ) in 
+    let vars_as_varlabel = List.map vars_as_int64 ~f:(fun x -> mk_varlabel x) in 
+    let _ : unit = assert(List.length decisions = List.length vars_as_varlabel) in
+    let list_final = List.zip_exn decisions vars_as_varlabel in
+    (exactly_one bdd vars_as_int64, list_final)

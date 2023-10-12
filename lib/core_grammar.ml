@@ -5,6 +5,7 @@ open Sexplib.Std
 type expr =
     And         of expr * expr
   | Or          of expr * expr
+  | Xor         of expr * expr
   | Not         of expr
   | Ite         of expr * expr * expr
   | ChooseWith  of expr * (string * expr) list
@@ -44,6 +45,7 @@ let rec from_external_expr (e: Syntax.eexpr) =
   match e with
   | And(_, e1, e2)      -> And(f e1, f e2)
   | Or(_, e1, e2)       -> Or(f e1, f e2)
+  | Xor(_, e1, e2)      -> Xor(f e1, f e2)
   | Not(_, e)           -> Not(f e)
   | Ite(_, g, thn, els) -> Ite(f g, f thn, f els)
   | ChooseWith (_, d, l)   -> let fmap = fun (x,y) -> (x, f y) in 

@@ -24,6 +24,7 @@ type source = {startpos: lexing_position; endpos: lexing_position}
 type eexpr =
     And of source * eexpr * eexpr
   | Or of source * eexpr * eexpr
+  | Xor of source * eexpr * eexpr
   | Not of source * eexpr
   | Ite of source * eexpr * eexpr * eexpr
   | ChooseWith of source * eexpr * ((string * eexpr) list)

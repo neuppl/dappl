@@ -60,6 +60,7 @@ expr:
     | (* x *)ID { Ident({startpos=$startpos; endpos=$endpos}, $1) }
     | (* e && e *) expr AND expr { And({startpos=$startpos; endpos=$endpos}, $1, $3) }
     | (* e || e *) expr OR expr { Or({startpos=$startpos; endpos=$endpos}, $1, $3) }
+    | (* e ^ e *) expr XOR expr { Xor({startpos=$startpos; endpos=$endpos}, $1, $3) }
     | (* !e *) NOT expr { Not({startpos=$startpos; endpos=$endpos}, $2) }
     | (* flip num *) FLIP num { Flip({startpos=$startpos; endpos=$endpos}, $2) }
     | (* reward k *)

@@ -9,6 +9,7 @@ open Core
 open Rsdd_abstractions
 open Hashtbl
 
+
 (* We maintain an association list of strings and VarLabels 
   to enforce exhaustive patternmatch in ChooseWith. *)
 
@@ -36,8 +37,10 @@ let rec bc (dappl : expr) (bdd : rsdd_bdd_builder) : cf =
   | Or (x,y)            ->  let e1 = bc x bdd in 
                             let e2 = bc y bdd in 
                             cf_or bdd e1 e2
-  | Not x               ->  let e = bc x bdd in
-                            cf_not bdd e
+  | Xor (x,y)           ->  let e1 = bc (Not (And (x,y))) bdd in 
+                            let e2 = bc (Or(x,y)) bdd in 
+                            cf_and bdd e1 e2
+  | Not x               ->  cf_not bdd (bc x bdd)
   | Ite (x,y,z)         ->  let ex = bc x bdd in 
                             let ey = bc y bdd in
                             let ez = bc z bdd in

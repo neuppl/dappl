@@ -1,0 +1,21 @@
+// this is without syntactic sugar for boolean choices.
+rain <- flip 0.3;
+wind <- flip 0.5;
+d1 <- [um, no_um];
+d2 <- [rc, no_rc];
+if rain then (
+choose d1 with 
+| um -> (reward -2; 
+  if wind then (
+    choose d2 with | rc -> (reward 0) | no_rc -> reward -40 
+  ) else (
+    choose d2 with | rc -> (reward -20; reward 60) | no_rc -> (reward 60) ) 
+  )
+| no_um -> (choose d2 with | rc -> (reward -20; reward 60) | no_rc -> reward 0)  
+)
+else (
+reward 60;
+choose d1 with 
+| um -> (reward -2; choose d2 with | rc -> reward -20 | no_rc -> reward 0)
+| no_um -> (choose d2 with | rc -> reward -20 | no_rc -> reward 0)
+)
