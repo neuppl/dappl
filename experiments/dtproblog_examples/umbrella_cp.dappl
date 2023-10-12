@@ -1,24 +1,14 @@
-// this is WITH syntactic sugar for boolean choices.
+// this is an alternate implementation of umbrella,
+// more closely resembling the DTProblog implementation.
+
 rain <- flip 0.3;
 wind <- flip 0.5;
 d1 <- [um];
 d2 <- [rc];
-if rain then (
-  if d1 then ( reward -2;
-    if wind then ( reward -40;
-      if d2 then ( reward -20;
-        reward 60
-      ) else (reward 0)
-    ) else (
-      if d2 then (reward -20; reward 60) else (reward 60)
-    )
-  ) else (
-    if d2 then (reward -20; reward 60) else (reward 0)
-  )
-)
-else (
-reward 60;
-if d1 then ( reward -2;
- if d2 then (reward -20) else (reward 0)
-) else (if d2 then (reward -20) else (reward 0))
-)
+broken_umbrella <- (rain && wind && d1) ;
+dry <- (!rain || (rain && d2) || (rain && d1 && !broken_umbrella));
+r1 <- (if dry then reward 60 else true);
+r2 <- (if d1 then reward -2 else true);
+r3 <- (if d2 then reward -20 else true);
+r4 <- (if broken_umbrella then reward -40 else true);
+r1 && r2 && r3 && r4

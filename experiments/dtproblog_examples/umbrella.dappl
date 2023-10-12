@@ -1,21 +1,29 @@
-// this is without syntactic sugar for boolean choices.
+// This is a dappl implementation of the "umbrella" example
+// in the original DTProblog paper. 
+// It's purposely verbose to show off the sequencing ";" syntax
+// and also the ability to overload ITE with not just flips, but 
+// boolean decisions. 
+
 rain <- flip 0.3;
 wind <- flip 0.5;
-d1 <- [um, no_um];
-d2 <- [rc, no_rc];
+d1 <- [um];
+d2 <- [rc];
 if rain then (
-choose d1 with 
-| um -> (reward -2; 
-  if wind then (
-    choose d2 with | rc -> (reward 0) | no_rc -> reward -40 
+  if d1 then ( reward -2;
+    if wind then ( reward -40;
+      if d2 then ( reward -20;
+        reward 60
+      ) else (reward 0)
+    ) else (
+      if d2 then (reward -20; reward 60) else (reward 60)
+    )
   ) else (
-    choose d2 with | rc -> (reward -20; reward 60) | no_rc -> (reward 60) ) 
+    if d2 then (reward -20; reward 60) else true
   )
-| no_um -> (choose d2 with | rc -> (reward -20; reward 60) | no_rc -> reward 0)  
 )
 else (
 reward 60;
-choose d1 with 
-| um -> (reward -2; choose d2 with | rc -> reward -20 | no_rc -> reward 0)
-| no_um -> (choose d2 with | rc -> reward -20 | no_rc -> reward 0)
+if d1 then ( reward -2;
+ if d2 then (reward -20) else true
+) else (if d2 then (reward -20) else true)
 )
