@@ -1,57 +1,69 @@
-%% ProbLog program: PGM 1
-%% Created on 2019-11-15 10:04:06.682088
-
-?::asia.
-?::smoke.
-0.1::lung :- smoke.
-0.01::lung :- \+smoke.
-0.05::tub :- asia.
-0.01::tub :- \+asia.
-0.6::bronc :- smoke.
-0.3::bronc :- \+smoke.
+body_5(4,lung) :- smoke.
+body_15(13,lung) :- \+smoke.
+body_23(22,tub) :- asia.
+body_33(31,tub) :- \+asia.
+body_41(40,bronc) :- smoke.
+body_51(49,bronc) :- \+smoke.
 either :- lung, tub.
 either :- lung, \+tub.
 either :- \+lung, tub.
-0.0::either :- \+lung, \+tub.
-0.98::xray :- either.
-0.05::xray :- \+either.
-0.9::dysp :- bronc, either.
-0.8::dysp :- bronc, \+either.
-0.7::dysp :- \+bronc, either.
-0.1::dysp :- \+bronc, \+either.
-utility(util_node(0),-42).
-utility(\+(util_node(0)),25).
-util_node(0) :- either, \+asia, \+tub, \+dysp, \+bronc, lung, xray, smoke.
-util_node(0) :- \+either, \+asia, \+tub, dysp, bronc, \+lung, \+xray, smoke.
-util_node(0) :- \+either, \+asia, \+tub, \+dysp, \+bronc, \+lung, \+xray, smoke.
-util_node(0) :- \+either, \+asia, \+tub, dysp, bronc, \+lung, \+xray, \+smoke.
-util_node(0) :- \+either, \+asia, \+tub, \+dysp, bronc, \+lung, \+xray, \+smoke.
-utility(util_node(1),-3).
-utility(\+(util_node(1)),28).
-util_node(1) :- \+either, \+asia, \+tub, \+dysp, \+bronc, \+lung, \+xray, \+smoke.
-util_node(1) :- \+either, \+asia, \+tub, \+dysp, \+bronc, \+lung, \+xray, \+smoke.
-util_node(1) :- \+either, asia, \+tub, dysp, \+bronc, \+lung, \+xray, \+smoke.
-util_node(1) :- \+either, \+asia, \+tub, dysp, \+bronc, \+lung, \+xray, \+smoke.
-util_node(1) :- \+either, \+asia, \+tub, \+dysp, \+bronc, \+lung, xray, smoke.
-utility(util_node(2),-11).
-utility(\+(util_node(2)),-14).
-util_node(2) :- \+either, \+asia, \+tub, \+dysp, \+bronc, \+lung, \+xray, smoke.
-util_node(2) :- \+either, \+asia, \+tub, dysp, bronc, \+lung, \+xray, smoke.
-util_node(2) :- \+either, \+asia, \+tub, \+dysp, \+bronc, \+lung, \+xray, \+smoke.
-util_node(2) :- \+either, \+asia, \+tub, \+dysp, \+bronc, \+lung, \+xray, \+smoke.
-util_node(2) :- \+either, \+asia, \+tub, \+dysp, \+bronc, \+lung, \+xray, \+smoke.
-utility(util_node(3),39).
-utility(\+(util_node(3)),-47).
-util_node(3) :- \+either, \+asia, \+tub, \+dysp, \+bronc, \+lung, \+xray, smoke.
-util_node(3) :- \+either, \+asia, \+tub, dysp, bronc, \+lung, \+xray, smoke.
-util_node(3) :- \+either, \+asia, \+tub, \+dysp, \+bronc, \+lung, \+xray, smoke.
-util_node(3) :- \+either, \+asia, \+tub, dysp, \+bronc, \+lung, \+xray, \+smoke.
-util_node(3) :- \+either, \+asia, \+tub, \+dysp, \+bronc, \+lung, \+xray, \+smoke.
-utility(util_node(4),-27).
-utility(\+(util_node(4)),-47).
-util_node(4) :- \+either, \+asia, \+tub, \+dysp, \+bronc, \+lung, \+xray, \+smoke.
-util_node(4) :- \+either, \+asia, \+tub, \+dysp, \+bronc, \+lung, \+xray, \+smoke.
-util_node(4) :- \+either, \+asia, \+tub, dysp, bronc, \+lung, \+xray, smoke.
-util_node(4) :- \+either, \+asia, \+tub, \+dysp, \+bronc, \+lung, \+xray, \+smoke.
-util_node(4) :- \+either, \+asia, \+tub, \+dysp, \+bronc, \+lung, \+xray, \+smoke.
-
+body_78(73,either) :- \+lung, \+tub.
+body_86(85,xray) :- either.
+body_96(94,xray) :- \+either.
+body_106(103,dysp) :- bronc, either.
+body_118(114,dysp) :- bronc, \+either.
+body_129(125,dysp) :- \+bronc, either.
+body_141(136,dysp) :- \+bronc, \+either.
+query(tub).
+query(lung).
+query(dysp).
+query(xray).
+query(bronc).
+query(asia).
+query(smoke).
+query(either).
+body_89(88,lung) :- body_5(4,lung).
+body_97(96,lung) :- body_15(13,lung).
+body_105(104,tub) :- body_23(22,tub).
+body_113(112,tub) :- body_33(31,tub).
+body_121(120,bronc) :- body_41(40,bronc).
+body_129(128,bronc) :- body_51(49,bronc).
+body_136(135,either) :- body_78(73,either).
+body_144(143,xray) :- body_86(85,xray).
+body_153(152,xray) :- body_96(94,xray).
+body_161(160,dysp) :- body_106(103,dysp).
+body_170(169,dysp) :- body_118(114,dysp).
+body_178(177,dysp) :- body_129(125,dysp).
+body_186(185,dysp) :- body_141(136,dysp).
+?::asia.
+?::smoke.
+?::dec_2.
+body_198(197,xray) :- dec_2.
+?::dec_3.
+body_208(207,dysp) :- dec_3.
+utility(tub,3).
+utility(\+(tub),-6).
+utility(lung,-8).
+utility(\+(lung),-27).
+utility(dysp,7).
+utility(\+(dysp),44).
+utility(\+(xray),-27).
+utility(\+(bronc),32).
+utility(asia,2).
+utility(smoke,39).
+utility(\+(either),-10).
+0.1::lung :- body_89(88,lung).
+0.01::lung :- body_97(96,lung).
+0.05::tub :- body_105(104,tub).
+0.01::tub :- body_113(112,tub).
+0.6::bronc :- body_121(120,bronc).
+0.3::bronc :- body_129(128,bronc).
+0.0::either :- body_136(135,either).
+0.98::xray :- body_144(143,xray).
+0.05::xray :- body_153(152,xray).
+0.9::dysp :- body_161(160,dysp).
+0.8::dysp :- body_170(169,dysp).
+0.7::dysp :- body_178(177,dysp).
+0.1::dysp :- body_186(185,dysp).
+0.05::xray :- body_198(197,xray).
+0.7::dysp :- body_208(207,dysp).

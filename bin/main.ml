@@ -42,7 +42,7 @@ let gen_tests =
       test = anon ("test" %: string)
       and n = anon ("n" %: int) in
       fun () -> match test with 
-      | "mdp" -> Dappl_benchmarks.to_file_mdp n
+      | "mdp" -> Dappl_benchmarks.to_file_mdp n ; Bn_gen.mk_earthquake_to_file ()
       | _ -> failwith "invalid test!")
 
 let command =

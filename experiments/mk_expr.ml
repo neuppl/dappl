@@ -5,7 +5,7 @@ open Core
 open OUnit2
 
 (* We make variable names via a ref count. *)
-type var = Flip | Choice | Decision
+type var = Flip | Choice | Decision | Else
 type varname = string
 let ct = ref 0 ;;
 
@@ -13,9 +13,10 @@ let mk_varname (x : var) : varname =
   let v = Int.to_string !ct in
   let _ : unit = ct := !ct + 1 in
   match x with
-  | Flip -> "f" ^ v 
-  | Choice -> "c" ^ v
-  | Decision -> "d" ^ v
+  | Flip      -> "f" ^ v 
+  | Choice    -> "c" ^ v
+  | Decision  -> "d" ^ v
+  | Else      -> "e" ^ v    
 
 (* Produces an expression reward k. IS LAZY FOR A REASON!!! *)
 let mk_reward (_ : unit) : string = 
@@ -27,7 +28,6 @@ let mk_flip (_ : unit): string * varname =
   let v = mk_varname Flip in
   let f = Float.to_string (Random.float 1.) in
   (String.concat ~sep:" " [v; "<-"; "("; "flip"; f ; ");"], v)
-
 let mk_flip_print (_ : unit): unit =
   let (s,_) = mk_flip () in 
   Printf.printf "%s\n" s
@@ -75,3 +75,9 @@ let mk_observe (event : varname) : string =
 
 let mk_observe_print (event : varname) = 
   Printf.printf "%s\n" (mk_observe event)
+
+(* Produces an expression x <- expr *)
+let mk_bind (e : string) : (string * varname) = 
+  let x = mk_varname Else in
+  let expr = String.concat ~sep:" " [x ; "<-" ;"("; e ; ");"] in
+  (expr, x)
