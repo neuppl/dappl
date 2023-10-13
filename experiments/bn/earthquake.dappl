@@ -1,0 +1,9 @@
+earthquake <- flip 0.02 ;
+burglary <- flip 0.01 ;
+alarm <- (if burglary then (
+    if earthquake then flip 0.95 else flip 0.94
+) else (
+    if earthquake then flip 0.29 else flip 0.001
+)) ;
+maryCalls <- (if alarm then flip 0.7 else flip 0.01);
+johnCalls <- (if alarm then flip 0.9 else flip 0.05);

@@ -1,0 +1,14 @@
+aadult <- flip 0.5;
+ayoung <- (!aadult && flip 0.6);
+aold <- !aadult && !aayoung;
+sm <- flip 0.6 ;
+sf <- !sm ;
+ehigh <- (if (aadult && sm) then flip 0.72 else (
+if (aadult && sf) then flip 0.7 else (
+if (ayoung && sm) then flip 0.75 else (
+if (ayoung && sf) then flip 0.64 else (
+if (aold && sm) then flip 0.88 else (
+if (aold && sf) then flip 0.9 else true
+))))));
+oemp <- (if ehigh then flip 0.96 else flip 0.92);
+rsmall <- (if ehigh then flip 0.25 else flip 0.2);

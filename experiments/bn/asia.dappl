@@ -1,0 +1,13 @@
+asia <- flip 0.01 ;
+smoke <- flip 0.5 ;
+lung <- (if smoke then (flip 0.1) else flip 0.01);
+tub <- (if asia then flip 0.05 else flip 0.01);
+bronc <- (if smoke then flip 0.6 else flip 0.3);
+either <- (lung || tub);
+// xray <- (if either then flip 0.98 else flip 0.05);
+dysp <- (if bronc then (
+            if either then flip 0.9 else flip 0.8
+        ) else (
+            if either then flip 0.7 else flip 0.1
+        ));
+if dysp then reward 1 else reward 0
