@@ -1,0 +1,19 @@
+// d49 is variable earthquake
+d49 <- [ c48 ];
+// d51 is variable burglary
+d51 <- [ c50 ];
+// b52 is variable alarm
+b52 <- ( if d51 then ( if d49 then ( flip 0.95 ) else ( flip 0.94 ) ) else ( if d49 then ( flip 0.29 ) else ( flip 0.001 ) ) );
+// b57 is variable maryCalls
+d54 <- [ c53 ];
+b55 <- ( if b52 then ( flip 0.7 ) else ( flip 0.01 ) );
+b56 <- ( if d54 then ( flip 0.7 ) else ( false ) );
+b57 <- ( b55 || b56 );
+// b58 is variable johnCalls
+b58 <- ( if b52 then ( flip 0.9 ) else ( flip 0.05 ) );
+b59 <- ( if d49 then ( reward 6 ) else ( true ) );
+b60 <- ( if d51 then ( reward 69 ) else ( reward 28 ) );
+b61 <- ( if b52 then ( true ) else ( reward 89 ) );
+b62 <- ( if b57 then ( reward 14 ) else ( reward 93 ) );
+b63 <- ( if b58 then ( reward 23 ) else ( true ) );
+b59 && b60 && b61 && b62 && b63

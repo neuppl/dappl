@@ -16,7 +16,7 @@ let mk_varname (x : var) : varname =
   | Flip      -> "f" ^ v 
   | Choice    -> "c" ^ v
   | Decision  -> "d" ^ v
-  | Else      -> "e" ^ v    
+  | Else      -> "b" ^ v    
 
 (* Produces an expression reward k. IS LAZY FOR A REASON!!! *)
 let mk_reward (_ : unit) : string = 

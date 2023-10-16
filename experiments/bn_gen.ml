@@ -36,11 +36,13 @@ let introduce_new_dec (e : string) (f : float): string * varname =
   (String.concat ~sep:"\n" [s;b1;b2;b3], x)
 
 (* Benchmark 1: Earthquake *)
-let mk_earthquake () : string * varname list =
+let mk_earthquake_vars () : string * varname list =
   (* Creates earthquake variable *)
   let (earthquake, ed, _) = mk_dec 1 in
+  let earthquake = "// " ^ ed ^ " is variable earthquake\n" ^ earthquake in
   (* Creates burglary variable *)
   let (burglary, bd, _) = mk_dec 1 in
+  let burglary = "// " ^ bd ^ " is variable burglary\n" ^ burglary in
   (* We introduce a count to make four decisions. *)
   let ct : int ref = ref 1 in
   (* Creates alarm variable *)
@@ -56,6 +58,7 @@ let mk_earthquake () : string * varname list =
       introduce_new_dec expr 0.95
     else
       mk_bind expr in
+  let alarm = "// " ^ var ^ " is variable alarm\n" ^ alarm in
   (* Creates maryCalls variable *)
   let new_dec' = if (!ct < 4) then 
                   let _ : unit = ct := !ct +1 in
@@ -64,17 +67,68 @@ let mk_earthquake () : string * varname list =
   let (maryCalls, mc) = 
     let expr = mk_ite var ["flip 0.7"; "flip 0.01"] in
     if new_dec' then introduce_new_dec expr 0.7 else mk_bind expr in
+  let maryCalls = "// " ^ mc ^ " is variable maryCalls\n" ^ maryCalls in
+  (* Creates johnCalls variable *)
   let (johnCalls, jc) = 
     let expr = mk_ite var ["flip 0.9"; "flip 0.05"] in
     if new_dec then introduce_new_dec expr 0.9 else mk_bind expr in
+  let johnCalls = "// " ^ jc ^ " is variable johnCalls\n" ^ johnCalls in
   let prog = String.concat ~sep:"\n" [earthquake; burglary; alarm ; maryCalls ; johnCalls] in 
-  let relevant_vars = [ed; bd; var ; mc ; jc] in 
-  (prog, relevant_vars)
+  let bound_vars = [ed; bd; var ; mc ; jc] in 
+  (prog, bound_vars)
+
+(* Does method 1 for adding rewards 
+  For each x in bound_vars, we create the clause
+  var <- if x then [REWARD?] else [REWARD?]
+  where [REWARD?] is described in the head of the file.
+  all variables are conjoined to make the final expression. *)
+let generate_clause (bv : varname) : string * varname = 
+  let b1 = Random.int 100 in
+  let b2 = Random.int 100 in
+  match (b1 < 80, b2 < 30) with
+  | (true, true) -> 
+    let r1, r2 = mk_reward (), mk_reward () in
+    let ite = mk_ite bv [r1; r2] in
+    mk_bind ite
+  | (true, false) -> 
+    let r1, r2 = mk_reward (), "true" in
+    let ite = mk_ite bv [r1; r2] in
+    mk_bind ite
+  | (false, true) ->
+    let r1, r2 = "true", mk_reward () in
+    let ite = mk_ite bv [r1; r2] in
+    mk_bind ite
+  | (false, false) ->
+    ("", bv)
+let earthquake_method_1 (bound_vars : varname list) : string =
+  let x = List.map bound_vars ~f:generate_clause in
+  let clauses, bvs = List.unzip x in
+  let final = String.concat ~sep:" && " bvs in
+  String.concat ~sep:"\n" (List.append clauses [final])
+  
+(* Does method 2 for adding rewards
+  We sample a random interpretation of the bound vars.
+  We conjoin them together. Do this five times, then disjoin all.*)
+(* let create_literal (v: varname) (b : bool) : varname = 
+  if b then v else "!"^v
+let generate_clause (bv : varname list) : string =
+  let x = List.map bv ~f:(fun _ -> Random.bool) in
+  let z = List.map () *)
+
+
+let mk_earthquake (m :methodology) =
+  let (program, bv) = mk_earthquake_vars () in
+  match m with
+  | Select -> 
+    let s = earthquake_method_1 bv in 
+    String.concat ~sep:"\n" [program; s]
+  | New -> failwith "not yet implemented!"
+
 
 let mk_earthquake_to_file () : unit =
   for i = 0 to 5 do
-    let filename = "experiments/mdp/earthquake_" ^(Int.to_string i) ^ ".dappl" in
+    let filename = "experiments/bn/processed/earthquake_" ^(Int.to_string i) ^ ".dappl" in
     let oc = Out_channel.create filename in   
-    let (earthquake, _) = mk_earthquake () in
+    let earthquake = mk_earthquake (Select) in
     Printf.fprintf oc "%s\n" earthquake; Out_channel.close oc;
   done
