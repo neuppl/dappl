@@ -1,0 +1,16 @@
+// d142 is variable earthquake
+d142 <- [ c141 ];
+// d144 is variable burglary
+d144 <- [ c143 ];
+// b145 is variable alarm
+b145 <- ( if d144 then ( if d142 then ( flip 0.95 ) else ( flip 0.94 ) ) else ( if d142 then ( flip 0.29 ) else ( flip 0.001 ) ) );
+// b146 is variable maryCalls
+b146 <- ( if b145 then ( flip 0.7 ) else ( flip 0.01 ) );
+// b147 is variable johnCalls
+b147 <- ( if b145 then ( flip 0.9 ) else ( flip 0.05 ) );
+
+b148 <- ( if d144 then ( true ) else ( reward 83 ) );
+b149 <- ( if b145 then ( reward 82 ) else ( true ) );
+
+b150 <- ( if b147 then ( reward 70 ) else ( reward 40 ) );
+d142 && b148 && b149 && b146 && b150

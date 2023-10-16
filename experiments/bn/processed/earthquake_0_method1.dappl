@@ -5,12 +5,12 @@ d8 <- [ c7 ];
 // b13 is variable alarm
 d10 <- [ c9 ];
 b11 <- ( if d8 then ( if d6 then ( flip 0.95 ) else ( flip 0.94 ) ) else ( if d6 then ( flip 0.29 ) else ( flip 0.001 ) ) );
-b12 <- ( if d10 then ( flip 0.95 ) else ( true ) );
+b12 <- ( if d10 then ( flip 0.95 ) else ( false ) );
 b13 <- ( b11 || b12 );
 // b18 is variable maryCalls
 d15 <- [ c14 ];
 b16 <- ( if b13 then ( flip 0.7 ) else ( flip 0.01 ) );
-b17 <- ( if d15 then ( flip 0.7 ) else ( true ) );
+b17 <- ( if d15 then ( flip 0.7 ) else ( false ) );
 b18 <- ( b16 || b17 );
 // b23 is variable johnCalls
 d20 <- [ c19 ];
@@ -19,6 +19,7 @@ b22 <- ( if d20 then ( flip 0.9 ) else ( false ) );
 b23 <- ( b21 || b22 );
 b24 <- ( if d6 then ( reward 21 ) else ( true ) );
 b25 <- ( if d8 then ( true ) else ( reward 70 ) );
+
 b26 <- ( if b18 then ( reward 17 ) else ( true ) );
 b27 <- ( if b23 then ( reward 85 ) else ( true ) );
 b24 && b25 && b13 && b26 && b27

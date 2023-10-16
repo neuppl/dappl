@@ -109,12 +109,31 @@ let earthquake_method_1 (bound_vars : varname list) : string =
 (* Does method 2 for adding rewards
   We sample a random interpretation of the bound vars.
   We conjoin them together. Do this five times, then disjoin all.*)
-(* let create_literal (v: varname) (b : bool) : varname = 
+let create_literal (v: varname) (b : bool) : varname = 
   if b then v else "!"^v
 let generate_clause (bv : varname list) : string =
-  let x = List.map bv ~f:(fun _ -> Random.bool) in
-  let z = List.map () *)
+  let final : string list ref = ref [] in
+  for _ = 0 to 5 do
+    let x = List.map bv ~f:(fun _ -> Random.bool ()) in
+    let z = List.zip_exn bv x in
+    let y = List.map z ~f:(fun (a,b) -> create_literal a b) in
+    let s = "( " ^ (String.concat ~sep:" && " y) ^ " )" in
+    final := s :: !final
+  done;
+  String.concat ~sep:" || " !final
 
+let earthquake_method_2 (bound_vars : varname list) : string =
+  let final : string ref = ref "" in
+  let vnl = ref [] in
+  for _ = 0 to 5 do
+    let x = generate_clause bound_vars in
+    let (str,var) = mk_bind x in
+    let str' = mk_ite var [mk_reward () ; mk_reward()] in 
+    let (str'', v) = mk_bind str' in 
+    final := !final ^ str ^ "\n" ^ str'' ^ "";
+    vnl := v ::(!vnl)
+  done;
+  !final  ^ "\n" ^ (String.concat ~sep:" && " !vnl)
 
 let mk_earthquake (m :methodology) =
   let (program, bv) = mk_earthquake_vars () in
@@ -122,13 +141,18 @@ let mk_earthquake (m :methodology) =
   | Select -> 
     let s = earthquake_method_1 bv in 
     String.concat ~sep:"\n" [program; s]
-  | New -> failwith "not yet implemented!"
-
+  | New -> 
+    let s = earthquake_method_2 bv in 
+    String.concat ~sep:"\n" [program; s]
 
 let mk_earthquake_to_file () : unit =
   for i = 0 to 5 do
-    let filename = "experiments/bn/processed/earthquake_" ^(Int.to_string i) ^ ".dappl" in
+    let filename = "experiments/bn/processed/earthquake_" ^(Int.to_string i) ^ "_method1" ^".dappl" in
     let oc = Out_channel.create filename in   
     let earthquake = mk_earthquake (Select) in
+    Printf.fprintf oc "%s\n" earthquake; Out_channel.close oc;
+    let filename = "experiments/bn/processed/earthquake_" ^(Int.to_string i) ^ "_method2" ^".dappl" in
+    let oc = Out_channel.create filename in   
+    let earthquake = mk_earthquake (New) in
     Printf.fprintf oc "%s\n" earthquake; Out_channel.close oc;
   done
