@@ -1,0 +1,43 @@
+// d199 is variable asia
+d199 <- [ c198 ];
+// d201 is variable smoke
+d201 <- [ c200 ];
+// b206 is variable lung
+d203 <- [ c202 ];
+b204 <- ( if d201 then ( flip 0.1 ) else ( flip 0.01 ) );
+b205 <- ( if d203 then ( flip 0.1 ) else ( false ) );
+b206 <- ( b204 || b205 );
+// b211 is variable tub
+d208 <- [ c207 ];
+b209 <- ( if d199 then ( flip 0.05 ) else ( flip 0.01 ) );
+b210 <- ( if d208 then ( flip 0.05 ) else ( false ) );
+b211 <- ( b209 || b210 );
+// b216 is variable bronc
+d213 <- [ c212 ];
+b214 <- ( if d201 then ( flip 0.6 ) else ( flip 0.3 ) );
+b215 <- ( if d213 then ( flip 0.6 ) else ( false ) );
+b216 <- ( b214 || b215 );
+// b221 is variable either
+d218 <- [ c217 ];
+b219 <- ( b206 || b211 );
+b220 <- ( if d218 then ( flip 0.5 ) else ( false ) );
+b221 <- ( b219 || b220 );
+// b226 is variable xray
+d223 <- [ c222 ];
+b224 <- ( if b221 then ( flip 0.98 ) else ( flip 0.05 ) );
+b225 <- ( if d223 then ( flip 0.98 ) else ( false ) );
+b226 <- ( b224 || b225 );
+// b231 is variable dysp
+d228 <- [ c227 ];
+b229 <- ( if b216 then ( if b221 then ( flip 0.9 ) else ( flip 0.8 ) ) else ( if b221 then ( flip 0.7 ) else ( flip 0.1 ) ) );
+b230 <- ( if d228 then ( flip 0.9 ) else ( false ) );
+b231 <- ( b229 || b230 );
+b232 <- ( if d199 then ( reward 19 ) else ( true ) );
+b233 <- ( if d201 then ( reward 83 ) else ( true ) );
+
+
+
+
+
+
+b232 && b233 && b206 && b211 && b216 && b221 && b226 && b231

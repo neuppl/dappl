@@ -1,0 +1,31 @@
+// d1 is variable asia
+d1 <- [ c0 ];
+// d3 is variable smoke
+d3 <- [ c2 ];
+// b8 is variable lung
+b8 <- ( if d3 then ( flip 0.1 ) else ( flip 0.01 ) );
+// b9 is variable tub
+b9 <- ( if d1 then ( flip 0.05 ) else ( flip 0.01 ) );
+// b14 is variable bronc
+b14 <- ( if d3 then ( flip 0.6 ) else ( flip 0.3 ) );
+// b19 is variable either
+b19 <- ( b8 || b9 );
+// b24 is variable xray
+// d21 <- [ c20 ];
+// b22 <- ( if b19 then ( flip 0.98 ) else ( flip 0.05 ) );
+// b23 <- ( if d21 then ( flip 0.05 ) else ( false ) );
+b24 <- (if b19 then ( flip 0.98 ) else ( flip 0.05 ));
+// b29 is variable dysp
+// d26 <- [ c25 ];
+// b27 <- ( if b14 then ( if b19 then ( flip 0.9 ) else ( flip 0.8 ) ) else ( if b19 then ( flip 0.7 ) else ( flip 0.1 ) ) );
+// b28 <- ( if d26 then ( flip 0.7 ) else ( true ) );
+b29 <- ( if b14 then ( if b19 then ( flip 0.9 ) else ( flip 0.8 ) ) else ( if b19 then ( flip 0.7 ) else ( flip 0.1 ) ) );
+b30 <- ( if d1 then ( reward 10 ) else ( true ) );
+b31 <- ( if d3 then ( reward 42 ) else ( true ) );
+b32 <- ( if b8 then ( true ) else ( reward 23 ) );
+b33 <- ( if b9 then ( reward 5 ) else ( true ) );
+b34 <- ( if b14 then ( reward 68 ) else ( true ) );
+b35 <- ( if b19 then ( true ) else ( reward 0 ) );
+b36 <- ( if b24 then ( reward 0 ) else ( reward 0 ) );
+b37 <- ( if b29 then ( reward 0 ) else ( true ) );
+b30 && b31 && b32 && b33 && b34 && b35 && b36 && b37

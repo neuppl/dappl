@@ -1,0 +1,31 @@
+// d277 is variable asia
+d277 <- [ c276 ];
+// d279 is variable smoke
+d279 <- [ c278 ];
+// b280 is variable lung
+b280 <- ( if d279 then ( flip 0.1 ) else ( flip 0.01 ) );
+// b281 is variable tub
+b281 <- ( if d277 then ( flip 0.05 ) else ( flip 0.01 ) );
+// b286 is variable bronc
+d283 <- [ c282 ];
+b284 <- ( if d279 then ( flip 0.6 ) else ( flip 0.3 ) );
+b285 <- ( if d283 then ( flip 0.6 ) else ( false ) );
+b286 <- ( b284 || b285 );
+// b291 is variable either
+d288 <- [ c287 ];
+b289 <- ( b280 || b281 );
+b290 <- ( if d288 then ( flip 0.5 ) else ( false ) );
+b291 <- ( b289 || b290 );
+// b292 is variable xray
+b292 <- ( if b291 then ( flip 0.98 ) else ( flip 0.05 ) );
+// b293 is variable dysp
+b293 <- ( if b286 then ( if b291 then ( flip 0.9 ) else ( flip 0.8 ) ) else ( if b291 then ( flip 0.7 ) else ( flip 0.1 ) ) );
+b294 <- ( if d277 then ( reward 36 ) else ( true ) );
+b295 <- ( if d279 then ( reward 33 ) else ( true ) );
+b296 <- ( if b280 then ( reward 53 ) else ( true ) );
+b297 <- ( if b281 then ( reward 71 ) else ( true ) );
+b298 <- ( if b286 then ( reward 95 ) else ( reward 69 ) );
+b299 <- ( if b291 then ( reward 92 ) else ( reward 57 ) );
+b300 <- ( if b292 then ( reward 24 ) else ( true ) );
+
+b294 && b295 && b296 && b297 && b298 && b299 && b300 && b293
