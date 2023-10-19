@@ -1,0 +1,19 @@
+// d366 is variable earthquake
+d366 <- [ c365 ];
+// d368 is variable burglary
+d368 <- [ c367 ];
+// b373 is variable alarm
+d370 <- [ c369 ];
+b371 <- ( if ( d368 ) then ( if ( d366 ) then ( flip 0.95 ) else ( flip 0.94 ) ) else ( if ( d366 ) then ( flip 0.29 ) else ( flip 0.001 ) ) );
+b372 <- ( if ( d370 ) then ( flip 0.95 ) else ( false ) );
+b373 <- ( b371 || b372 );
+// b374 is variable maryCalls
+b374 <- ( if ( b373 ) then ( flip 0.7 ) else ( flip 0.01 ) );
+// b375 is variable johnCalls
+b375 <- ( if ( b373 ) then ( flip 0.9 ) else ( flip 0.05 ) );
+b376 <- ( if ( d366 ) then ( reward 73 ) else ( reward 62 ) );
+b377 <- ( if ( d368 ) then ( reward 77 ) else ( reward 36 ) );
+b378 <- ( if ( b373 ) then ( reward 98 ) else ( true ) );
+b379 <- ( if ( b374 ) then ( reward 40 ) else ( reward 23 ) );
+b380 <- ( if ( b375 ) then ( reward 11 ) else ( true ) );
+b376 && b377 && b378 && b379 && b380

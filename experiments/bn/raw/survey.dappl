@@ -1,15 +1,49 @@
-aadult <- flip 0.5;
-ayoung <- (!aadult && flip 0.6);
-aold <- (!aadult && !ayoung);
-sm <- flip 0.6 ;
-sf <- (!sm) ;
-high <- (if (aadult && sm) then flip 0.72 else (
-    if (aadult && sf) then flip 0.7 else (
-    if (ayoung && sm) then flip 0.75 else (
-    if (ayoung && sf) then flip 0.64 else (
-    if (aold && sm) then flip 0.88 else (
-    if (aold && sf) then flip 0.9 else true
-))))));
-oemp <- (if high then flip 0.96 else flip 0.92);
-rsmall <- (if high then flip 0.25 else flip 0.2);
-oemp && rsmall
+// Discrete[adult : 0.5, young : 0.3, old : 0.2]
+adult <- flip 0.5;
+young <- (!adult && flip 0.6);
+old <- (!adult && !young);
+// Discrete[m : 0.6, f: 0.4]
+m <- flip 0.6 ;
+f <- (!m) ;
+// Variable high, uni
+h1 <- (if (adult && m) then flip 0.72 else false);
+h2 <- (if (adult && f) then flip 0.7 else false);
+h3 <- (if (young && m) then flip 0.75 else false);
+h4 <- (if (young && f) then flip 0.64 else false);
+h5 <- (if (old && m) then flip 0.88 else false);
+h6 <- (if (old && f) then flip 0.9 else false);
+high <- (h1 || h2 || h3 || h4 || h5 || h6); 
+uni <- (!high);
+emp <- (if high then flip 0.96 else flip 0.92);
+self <- (!emp);
+small <- (if high then flip 0.25 else flip 0.2);
+big <- (!small);
+// Variable car, train, other
+car1 <- flip 0.48;
+train1 <- (!car1 && flip 0.807699);
+other1 <- (!car1 && !train1);
+car2 <- flip 0.58;
+train2 <- (!car2 && flip 0.571429);
+other2 <- (!car2 && !train2);
+car3 <- flip 0.56;
+train3 <- (!car3 && flip 0.818183);
+other3 <- (!car3 && !train3);
+car4 <- flip 0.7;
+train4 <- (!car4 && flip 0.7);
+other4 <- (!car4 && !train4);
+car <- (if (emp && small) then car1 else (
+     if (emp && big) then car2 else (
+    if (self && small) then car3 else (
+    if (self && big) then car4 else false
+))));
+train <- (if (emp && small) then train1 else (
+     if (emp && big) then train2 else (
+    if (self && small) then train3 else (
+    if (self && big) then train4 else false
+))));
+other <- (if (emp && small) then other1 else (
+     if (emp && big) then other2 else (
+    if (self && small) then other3 else (
+    if (self && big) then other4 else false
+))));
+if other then reward 1 else reward 0

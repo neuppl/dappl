@@ -1,26 +1,29 @@
-// d62 is variable earthquake
-d62 <- [ c61 ];
-// d64 is variable burglary
-d64 <- [ c63 ];
-// b69 is variable alarm
-d66 <- [ c65 ];
-b67 <- ( if d64 then ( if d62 then ( flip 0.95 ) else ( flip 0.94 ) ) else ( if d62 then ( flip 0.29 ) else ( flip 0.001 ) ) );
-b68 <- ( if d66 then ( flip 0.95 ) else ( false ) );
-b69 <- ( b67 || b68 );
-// b70 is variable maryCalls
-b70 <- ( if b69 then ( flip 0.7 ) else ( flip 0.01 ) );
-// b71 is variable johnCalls
-b71 <- ( if b69 then ( flip 0.9 ) else ( flip 0.05 ) );
-b72 <- ( ( d62 && d64 && b69 && !b70 && b71 ) || ( !d62 && !d64 && b69 && b70 && !b71 ) || ( !d62 && !d64 && b69 && b70 && !b71 ) || ( !d62 && d64 && !b69 && b70 && b71 ) || ( d62 && d64 && !b69 && b70 && !b71 ) || ( d62 && !d64 && b69 && !b70 && !b71 ) );
-b73 <- ( if b72 then ( reward 23 ) else ( reward 23 ) );
-b74 <- ( ( d62 && !d64 && b69 && !b70 && b71 ) || ( !d62 && !d64 && !b69 && !b70 && !b71 ) || ( !d62 && !d64 && b69 && !b70 && !b71 ) || ( d62 && !d64 && b69 && !b70 && !b71 ) || ( d62 && d64 && !b69 && b70 && b71 ) || ( !d62 && !d64 && b69 && b70 && b71 ) );
-b75 <- ( if b74 then ( reward 96 ) else ( reward 44 ) );
-b76 <- ( ( d62 && !d64 && b69 && b70 && b71 ) || ( !d62 && d64 && b69 && b70 && !b71 ) || ( !d62 && d64 && !b69 && b70 && b71 ) || ( d62 && d64 && !b69 && !b70 && !b71 ) || ( !d62 && d64 && b69 && !b70 && b71 ) || ( !d62 && !d64 && b69 && b70 && !b71 ) );
-b77 <- ( if b76 then ( reward 0 ) else ( reward 3 ) );
-b78 <- ( ( d62 && !d64 && b69 && b70 && b71 ) || ( d62 && d64 && b69 && !b70 && !b71 ) || ( !d62 && d64 && b69 && b70 && !b71 ) || ( !d62 && !d64 && !b69 && !b70 && !b71 ) || ( !d62 && !d64 && !b69 && !b70 && !b71 ) || ( d62 && !d64 && !b69 && !b70 && b71 ) );
-b79 <- ( if b78 then ( reward 49 ) else ( reward 70 ) );
-b80 <- ( ( d62 && d64 && !b69 && b70 && !b71 ) || ( !d62 && d64 && b69 && b70 && b71 ) || ( !d62 && !d64 && b69 && !b70 && b71 ) || ( d62 && d64 && !b69 && b70 && !b71 ) || ( d62 && d64 && b69 && b70 && !b71 ) || ( !d62 && d64 && !b69 && !b70 && b71 ) );
-b81 <- ( if b80 then ( reward 55 ) else ( reward 12 ) );
-b82 <- ( ( d62 && d64 && b69 && !b70 && b71 ) || ( d62 && !d64 && b69 && !b70 && !b71 ) || ( !d62 && !d64 && b69 && !b70 && b71 ) || ( !d62 && !d64 && b69 && !b70 && !b71 ) || ( d62 && d64 && !b69 && b70 && b71 ) || ( d62 && !d64 && !b69 && !b70 && !b71 ) );
-b83 <- ( if b82 then ( reward 57 ) else ( reward 11 ) );
-b83 && b81 && b79 && b77 && b75 && b73
+// d67 is variable earthquake
+d67 <- [ c66 ];
+// d69 is variable burglary
+d69 <- [ c68 ];
+// b70 is variable alarm
+b70 <- ( if ( d69 ) then ( if ( d67 ) then ( flip 0.95 ) else ( flip 0.94 ) ) else ( if ( d67 ) then ( flip 0.29 ) else ( flip 0.001 ) ) );
+// b75 is variable maryCalls
+d72 <- [ c71 ];
+b73 <- ( if ( b70 ) then ( flip 0.7 ) else ( flip 0.01 ) );
+b74 <- ( if ( d72 ) then ( flip 0.7 ) else ( false ) );
+b75 <- ( b73 || b74 );
+// b80 is variable johnCalls
+d77 <- [ c76 ];
+b78 <- ( if ( b70 ) then ( flip 0.9 ) else ( flip 0.05 ) );
+b79 <- ( if ( d77 ) then ( flip 0.9 ) else ( false ) );
+b80 <- ( b78 || b79 );
+b81 <- ( ( !d67 && !d69 && b70 && b75 && b80 ) || ( d67 && !d69 && b70 && !b75 && b80 ) || ( !d67 && !d69 && b70 && b75 && b80 ) || ( d67 && !d69 && !b70 && b75 && !b80 ) || ( !d67 && d69 && !b70 && !b75 && b80 ) || ( d67 && !d69 && b70 && !b75 && b80 ) );
+b82 <- ( if ( b81 ) then ( reward 23 ) else ( reward 23 ) );
+b83 <- ( ( !d67 && d69 && b70 && !b75 && !b80 ) || ( d67 && d69 && b70 && !b75 && b80 ) || ( !d67 && !d69 && !b70 && !b75 && !b80 ) || ( d67 && d69 && !b70 && !b75 && b80 ) || ( d67 && !d69 && b70 && !b75 && b80 ) || ( !d67 && d69 && b70 && b75 && !b80 ) );
+b84 <- ( if ( b83 ) then ( reward 96 ) else ( reward 44 ) );
+b85 <- ( ( !d67 && !d69 && !b70 && b75 && !b80 ) || ( !d67 && d69 && b70 && !b75 && b80 ) || ( d67 && d69 && b70 && b75 && !b80 ) || ( d67 && !d69 && b70 && b75 && !b80 ) || ( d67 && d69 && !b70 && b75 && b80 ) || ( d67 && d69 && !b70 && b75 && b80 ) );
+b86 <- ( if ( b85 ) then ( reward 0 ) else ( reward 3 ) );
+b87 <- ( ( d67 && !d69 && b70 && !b75 && b80 ) || ( !d67 && !d69 && b70 && !b75 && b80 ) || ( !d67 && d69 && b70 && b75 && b80 ) || ( d67 && d69 && b70 && b75 && b80 ) || ( d67 && d69 && b70 && !b75 && !b80 ) || ( !d67 && d69 && b70 && !b75 && b80 ) );
+b88 <- ( if ( b87 ) then ( reward 49 ) else ( reward 70 ) );
+b89 <- ( ( d67 && d69 && !b70 && !b75 && b80 ) || ( d67 && d69 && !b70 && b75 && b80 ) || ( !d67 && !d69 && b70 && !b75 && b80 ) || ( d67 && d69 && b70 && !b75 && b80 ) || ( !d67 && d69 && b70 && !b75 && b80 ) || ( d67 && !d69 && b70 && b75 && b80 ) );
+b90 <- ( if ( b89 ) then ( reward 55 ) else ( reward 12 ) );
+b91 <- ( ( !d67 && d69 && !b70 && !b75 && !b80 ) || ( !d67 && d69 && !b70 && b75 && !b80 ) || ( d67 && d69 && b70 && b75 && b80 ) || ( !d67 && d69 && !b70 && b75 && b80 ) || ( !d67 && d69 && !b70 && !b75 && !b80 ) || ( d67 && !d69 && b70 && b75 && b80 ) );
+b92 <- ( if ( b91 ) then ( reward 57 ) else ( reward 11 ) );
+b92 && b90 && b88 && b86 && b84 && b82

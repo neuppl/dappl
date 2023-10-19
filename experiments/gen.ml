@@ -145,3 +145,93 @@ let mk_asia_to_file (j  : int) : unit =
     let earthquake = mk_asia (New) in
     Printf.fprintf oc "%s\n" earthquake; Out_channel.close oc;
   done
+
+(* Benchmark 3: Survey 
+  https://www.bnlearn.com/bnrepository/discrete-small.html#survey
+*)
+let mk_uniform f1 f2 : string * varname list = 
+  let flip1 = "flip " ^ (Float.to_string f1) in
+  let flip2 = "flip " ^ (Float.to_string f2) in
+  let (adult, adultvar) = mk_bind flip1 in
+  let (young, youngvar) = mk_bind ("!" ^ adultvar ^ " && " ^ flip2) in
+  let (old, oldvar) = mk_bind ("!" ^ youngvar ^ " && !" ^ adultvar) in
+  let s = String.concat ~sep:"\n" [adult; young; old] in  
+  (s, [adultvar;youngvar;oldvar])
+
+let rec pair_lists list1 list2 =
+  match list1 with
+  | [] -> []
+  | hd1::tl1 -> List.map list2 ~f:(fun x -> (hd1, x)) @ pair_lists tl1 list2
+
+let mk_high_uni (l1 : varname list) (l2 : varname list) : string * varname * varname =
+  let lst = List.map (pair_lists l1 l2) ~f:(fun (a,b) -> a ^ " && " ^ b) in
+  let list_of_probs = List.map [0.72; 0.7; 0.75 ; 0.64 ; 0.88 ; 0.9] ~f:Float.to_string in
+  let list_of_probs = List.map list_of_probs ~f:(fun s -> "flip " ^ s) in
+  let lst = List.zip_exn lst list_of_probs in
+  let ites = List.map lst ~f:(fun (a,b) -> mk_ite a [b ; "false"]) in
+  let bound = List.map ites ~f:mk_bind in
+  let vars = List.map bound ~f:(fun (_,b) -> b) in
+  let (high, highvar) = mk_bind (String.concat ~sep:" || " vars) in
+  let (uni, univar) = mk_bind ("!"^highvar) in
+  let expr = String.concat ~sep:"\n" (List.map bound ~f:(fun (a,_) -> a) @ [high; uni]) in
+  (expr, highvar, univar)
+
+let mk_car_train_other empself smallbig vars : string * varname =
+  let lst = List.map (pair_lists empself smallbig) ~f:(fun (a,b) -> a ^ " && " ^ b) in
+  let lst = List.zip_exn lst vars in
+  let f = fun (a,b) -> (fun c -> mk_ite a [b;c]) in
+  mk_bind (List.fold_right lst ~f:f ~init:"false")
+
+let mk_survey_vars () : string * varname list =
+  (* Creates adult, young, old variables *)
+  let (age, agevarlist) = mk_uniform 0.5 0.6 in
+  (* Creates m,f variables *)
+  let (m, mvar) = mk_bind "flip 0.6" in 
+  let (f, fvar) = mk_bind ("!" ^ mvar) in
+  (* Creates high, uni variables *)
+  let (highuni, highvar, univar) = mk_high_uni agevarlist [mvar;fvar] in
+  (* Creates emp/self variable *)
+  let (emp, empvar) = mk_bind (mk_ite highvar ["flip 0.96" ; "flip 0.92"]) in
+  let (self, selfvar) = mk_bind ("!"^empvar) in
+  (* Creates small/big variable *)
+  let (small, smallvar) = mk_bind (mk_ite highvar ["flip 0.25" ; "flip 0.2"]) in
+  let (big, bigvar) = mk_bind ("!"^smallvar) in
+  (* Creates car,train,other variables *)
+  let (cto1, cto1list) = mk_uniform 0.48 0.807699 in
+  let (cto2, cto2list) = mk_uniform 0.58 0.571429 in 
+  let (cto3, cto3list) = mk_uniform 0.56 0.818183 in 
+  let (cto4, cto4list) = mk_uniform 0.7 0.7 in 
+  let cars = List.map [cto1list ; cto2list ; cto3list ; cto4list] ~f:(fun l -> List.nth_exn l 0) in
+  let trains = List.map [cto1list ; cto2list ; cto3list ; cto4list] ~f:(fun l -> List.nth_exn l 1) in
+  let others = List.map [cto1list ; cto2list ; cto3list ; cto4list] ~f:(fun l -> List.nth_exn l 2) in
+  let empself, smallbig = [empvar ; selfvar] ,  [smallvar; bigvar] in
+  let (car, carvar) = mk_car_train_other empself smallbig cars in
+  let (train, trainvar) = mk_car_train_other empself smallbig trains in
+  let (other, othervar) = mk_car_train_other empself smallbig others in
+  let prog = String.concat ~sep:"\n" [age; m; f; highuni ; emp ;self ;small;big ; cto1 ; cto2 ; cto3 ; cto4 ;car ; train; other] in 
+  let bound_vars = agevarlist @ [mvar ; fvar ; highvar ; univar; empvar ; selfvar; smallvar ; bigvar ;carvar ; trainvar ; othervar] in 
+  (prog, bound_vars)
+
+let mk_survey (m :methodology) =
+  let (program, bv) = mk_survey_vars () in
+  match m with
+  | Select -> 
+    let s = method_1 bv in 
+    String.concat ~sep:"\n" [program; s]
+  | New -> 
+    let s = method_2 bv in 
+    String.concat ~sep:"\n" [program; s]
+
+(* Create 2j many randomly generate survey files, j many for each methodology*)
+let mk_survey_to_file (j  : int) : unit =
+  let _ : unit = Printf.printf "Generating %i many survey files\n" j in
+  for i = 0 to j do
+    let filename = "experiments/bn/processed/survey_" ^(Int.to_string i) ^ "_method1" ^".dappl" in
+    let oc = Out_channel.create filename in   
+    let earthquake = mk_survey (Select) in
+    Printf.fprintf oc "%s\n" earthquake; Out_channel.close oc;
+    let filename = "experiments/bn/processed/survey_" ^(Int.to_string i) ^ "_method2" ^".dappl" in
+    let oc = Out_channel.create filename in   
+    let earthquake = mk_survey (New) in
+    Printf.fprintf oc "%s\n" earthquake; Out_channel.close oc;
+  done

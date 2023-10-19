@@ -1,34 +1,31 @@
-// d145 is variable asia
-d145 <- [ c144 ];
-// d147 is variable smoke
-d147 <- [ c146 ];
-// b152 is variable lung
-d149 <- [ c148 ];
-b150 <- ( if d147 then ( flip 0.1 ) else ( flip 0.01 ) );
-b151 <- ( if d149 then ( flip 0.1 ) else ( false ) );
-b152 <- ( b150 || b151 );
-// b157 is variable tub
-d154 <- [ c153 ];
-b155 <- ( if d145 then ( flip 0.05 ) else ( flip 0.01 ) );
-b156 <- ( if d154 then ( flip 0.05 ) else ( false ) );
-b157 <- ( b155 || b156 );
-// b158 is variable bronc
-b158 <- ( if d147 then ( flip 0.6 ) else ( flip 0.3 ) );
-// b159 is variable either
-b159 <- ( b152 || b157 );
-// b160 is variable xray
-b160 <- ( if b159 then ( flip 0.98 ) else ( flip 0.05 ) );
-// b165 is variable dysp
-d162 <- [ c161 ];
-b163 <- ( if b158 then ( if b159 then ( flip 0.9 ) else ( flip 0.8 ) ) else ( if b159 then ( flip 0.7 ) else ( flip 0.1 ) ) );
-b164 <- ( if d162 then ( flip 0.9 ) else ( false ) );
-b165 <- ( b163 || b164 );
-b166 <- ( if d145 then ( reward 70 ) else ( reward 59 ) );
+// d640 is variable asia
+d640 <- [ c639 ];
+// d642 is variable smoke
+d642 <- [ c641 ];
+// b643 is variable lung
+b643 <- ( if ( d642 ) then ( flip 0.1 ) else ( flip 0.01 ) );
+// b648 is variable tub
+d645 <- [ c644 ];
+b646 <- ( if ( d640 ) then ( flip 0.05 ) else ( flip 0.01 ) );
+b647 <- ( if ( d645 ) then ( flip 0.05 ) else ( false ) );
+b648 <- ( b646 || b647 );
+// b653 is variable bronc
+d650 <- [ c649 ];
+b651 <- ( if ( d642 ) then ( flip 0.6 ) else ( flip 0.3 ) );
+b652 <- ( if ( d650 ) then ( flip 0.6 ) else ( false ) );
+b653 <- ( b651 || b652 );
+// b654 is variable either
+b654 <- ( b643 || b648 );
+// b655 is variable xray
+b655 <- ( if ( b654 ) then ( flip 0.98 ) else ( flip 0.05 ) );
+// b656 is variable dysp
+b656 <- ( if ( b653 ) then ( if ( b654 ) then ( flip 0.9 ) else ( flip 0.8 ) ) else ( if ( b654 ) then ( flip 0.7 ) else ( flip 0.1 ) ) );
+b657 <- ( if ( d640 ) then ( reward 88 ) else ( true ) );
 
-b167 <- ( if b152 then ( reward 84 ) else ( true ) );
-b168 <- ( if b157 then ( reward 20 ) else ( reward 43 ) );
+b658 <- ( if ( b643 ) then ( reward 4 ) else ( reward 63 ) );
+b659 <- ( if ( b648 ) then ( reward 0 ) else ( true ) );
+b660 <- ( if ( b653 ) then ( reward 4 ) else ( true ) );
+b661 <- ( if ( b654 ) then ( reward 15 ) else ( true ) );
 
-b169 <- ( if b159 then ( reward 46 ) else ( true ) );
-b170 <- ( if b160 then ( reward 54 ) else ( true ) );
-b171 <- ( if b165 then ( reward 18 ) else ( true ) );
-b166 && d147 && b167 && b168 && b158 && b169 && b170 && b171
+b662 <- ( if ( b656 ) then ( reward 16 ) else ( true ) );
+b657 && d642 && b658 && b659 && b660 && b661 && b655 && b662

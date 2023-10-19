@@ -1,0 +1,19 @@
+// d413 is variable earthquake
+d413 <- [ c412 ];
+// d415 is variable burglary
+d415 <- [ c414 ];
+// b416 is variable alarm
+b416 <- ( if ( d415 ) then ( if ( d413 ) then ( flip 0.95 ) else ( flip 0.94 ) ) else ( if ( d413 ) then ( flip 0.29 ) else ( flip 0.001 ) ) );
+// b421 is variable maryCalls
+d418 <- [ c417 ];
+b419 <- ( if ( b416 ) then ( flip 0.7 ) else ( flip 0.01 ) );
+b420 <- ( if ( d418 ) then ( flip 0.7 ) else ( false ) );
+b421 <- ( b419 || b420 );
+// b422 is variable johnCalls
+b422 <- ( if ( b416 ) then ( flip 0.9 ) else ( flip 0.05 ) );
+b423 <- ( if ( d413 ) then ( true ) else ( reward 4 ) );
+b424 <- ( if ( d415 ) then ( reward 95 ) else ( true ) );
+b425 <- ( if ( b416 ) then ( reward 61 ) else ( reward 93 ) );
+b426 <- ( if ( b421 ) then ( reward 57 ) else ( true ) );
+b427 <- ( if ( b422 ) then ( reward 32 ) else ( true ) );
+b423 && b424 && b425 && b426 && b427

@@ -64,7 +64,7 @@ let mk_ite (f : varname) (e : string list) : string =
           (List.length e = 2) in
   let parenthesize = fun s -> String.concat ~sep:" " ["(" ; s ; ")"] in
   let l' = List.map e ~f:parenthesize in 
-  String.concat ~sep:" " ["if"; f; "then"; List.nth_exn l' 0; "else"; List.nth_exn l' 1]
+  String.concat ~sep:" " ["if ("; f; ") then"; List.nth_exn l' 0; "else"; List.nth_exn l' 1]
 
 let mk_ite_print (f : varname) (e : string list) =
   Printf.printf "%s\n" (mk_ite f e)

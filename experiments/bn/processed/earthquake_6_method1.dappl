@@ -1,0 +1,25 @@
+// d274 is variable earthquake
+d274 <- [ c273 ];
+// d276 is variable burglary
+d276 <- [ c275 ];
+// b281 is variable alarm
+d278 <- [ c277 ];
+b279 <- ( if ( d276 ) then ( if ( d274 ) then ( flip 0.95 ) else ( flip 0.94 ) ) else ( if ( d274 ) then ( flip 0.29 ) else ( flip 0.001 ) ) );
+b280 <- ( if ( d278 ) then ( flip 0.95 ) else ( false ) );
+b281 <- ( b279 || b280 );
+// b286 is variable maryCalls
+d283 <- [ c282 ];
+b284 <- ( if ( b281 ) then ( flip 0.7 ) else ( flip 0.01 ) );
+b285 <- ( if ( d283 ) then ( flip 0.7 ) else ( false ) );
+b286 <- ( b284 || b285 );
+// b291 is variable johnCalls
+d288 <- [ c287 ];
+b289 <- ( if ( b281 ) then ( flip 0.9 ) else ( flip 0.05 ) );
+b290 <- ( if ( d288 ) then ( flip 0.9 ) else ( false ) );
+b291 <- ( b289 || b290 );
+
+b292 <- ( if ( d276 ) then ( reward 31 ) else ( true ) );
+b293 <- ( if ( b281 ) then ( reward 50 ) else ( true ) );
+b294 <- ( if ( b286 ) then ( reward 69 ) else ( true ) );
+
+d274 && b292 && b293 && b294 && b291

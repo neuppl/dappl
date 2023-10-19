@@ -3,14 +3,17 @@ d1 <- [ c0 ];
 // d3 is variable burglary
 d3 <- [ c2 ];
 // b4 is variable alarm
-// b4 <- ( if d3 then ( if d1 then ( flip 0.95 ) else ( flip 0.94 ) ) else ( if d1 then ( flip 0.29 ) else ( flip 0.001 ) ) );
-// b9 is variable maryCalls
-// b9 <- ( if b4 then ( flip 0.7 ) else ( flip 0.01 ));
+b4 <- ( if ( d3 ) then ( if ( d1 ) then ( flip 0.95 ) else ( flip 0.94 ) ) else ( if ( d1 ) then ( flip 0.29 ) else ( flip 0.001 ) ) );
+// b5 is variable maryCalls
+b5 <- ( if ( b4 ) then ( flip 0.7 ) else ( flip 0.01 ) );
 // b10 is variable johnCalls
-// b10 <- ( if b4 then ( flip 0.9 ) else ( flip 0.05 ) );
-b11 <- ( if d1 then ( reward 85 ) else ( reward 44 ) );
-b12 <- ( if d3 then ( reward 82 ) else ( true ) );
-// b13 <- ( if b4 then ( reward 21 ) else ( reward 45 ) );
-// mcmc <- (if b9 then (reward 23) else true);
-// b14 <- ( if b10 then ( reward 27 ) else ( reward 15 ) );
-b11 && b12
+d7 <- [ c6 ];
+b8 <- ( if ( b4 ) then ( flip 0.9 ) else ( flip 0.05 ) );
+b9 <- ( if ( d7 ) then ( flip 0.9 ) else ( false ) );
+b10 <- ( b8 || b9 );
+
+b11 <- ( if ( d3 ) then ( reward 85 ) else ( reward 44 ) );
+b12 <- ( if ( b4 ) then ( reward 82 ) else ( true ) );
+b13 <- ( if ( b5 ) then ( true ) else ( reward 41 ) );
+b14 <- ( if ( b10 ) then ( reward 39 ) else ( true ) );
+d1 && b11 && b12 && b13 && b14

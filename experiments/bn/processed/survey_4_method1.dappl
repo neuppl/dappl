@@ -1,0 +1,47 @@
+b1592 <- ( flip 0.5 );
+b1593 <- ( !b1592 && flip 0.6 );
+b1594 <- ( !b1593 && !b1592 );
+b1595 <- ( flip 0.6 );
+b1596 <- ( !b1595 );
+b1597 <- ( if ( b1592 && b1595 ) then ( flip 0.72 ) else ( false ) );
+b1598 <- ( if ( b1592 && b1596 ) then ( flip 0.7 ) else ( false ) );
+b1599 <- ( if ( b1593 && b1595 ) then ( flip 0.75 ) else ( false ) );
+b1600 <- ( if ( b1593 && b1596 ) then ( flip 0.64 ) else ( false ) );
+b1601 <- ( if ( b1594 && b1595 ) then ( flip 0.88 ) else ( false ) );
+b1602 <- ( if ( b1594 && b1596 ) then ( flip 0.9 ) else ( false ) );
+b1603 <- ( b1597 || b1598 || b1599 || b1600 || b1601 || b1602 );
+b1604 <- ( !b1603 );
+b1605 <- ( if ( b1603 ) then ( flip 0.96 ) else ( flip 0.92 ) );
+b1606 <- ( !b1605 );
+b1607 <- ( if ( b1603 ) then ( flip 0.25 ) else ( flip 0.2 ) );
+b1608 <- ( !b1607 );
+b1609 <- ( flip 0.48 );
+b1610 <- ( !b1609 && flip 0.807699 );
+b1611 <- ( !b1610 && !b1609 );
+b1612 <- ( flip 0.58 );
+b1613 <- ( !b1612 && flip 0.571429 );
+b1614 <- ( !b1613 && !b1612 );
+b1615 <- ( flip 0.56 );
+b1616 <- ( !b1615 && flip 0.818183 );
+b1617 <- ( !b1616 && !b1615 );
+b1618 <- ( flip 0.7 );
+b1619 <- ( !b1618 && flip 0.7 );
+b1620 <- ( !b1619 && !b1618 );
+b1621 <- ( if ( b1605 && b1607 ) then ( b1609 ) else ( if ( b1605 && b1608 ) then ( b1612 ) else ( if ( b1606 && b1607 ) then ( b1615 ) else ( if ( b1606 && b1608 ) then ( b1618 ) else ( false ) ) ) ) );
+b1622 <- ( if ( b1605 && b1607 ) then ( b1610 ) else ( if ( b1605 && b1608 ) then ( b1613 ) else ( if ( b1606 && b1607 ) then ( b1616 ) else ( if ( b1606 && b1608 ) then ( b1619 ) else ( false ) ) ) ) );
+b1623 <- ( if ( b1605 && b1607 ) then ( b1611 ) else ( if ( b1605 && b1608 ) then ( b1614 ) else ( if ( b1606 && b1607 ) then ( b1617 ) else ( if ( b1606 && b1608 ) then ( b1620 ) else ( false ) ) ) ) );
+b1624 <- ( if ( b1592 ) then ( reward 47 ) else ( true ) );
+b1625 <- ( if ( b1593 ) then ( reward 2 ) else ( true ) );
+b1626 <- ( if ( b1594 ) then ( reward 43 ) else ( true ) );
+b1627 <- ( if ( b1595 ) then ( reward 29 ) else ( true ) );
+b1628 <- ( if ( b1596 ) then ( reward 10 ) else ( true ) );
+b1629 <- ( if ( b1603 ) then ( reward 99 ) else ( true ) );
+b1630 <- ( if ( b1604 ) then ( reward 41 ) else ( true ) );
+b1631 <- ( if ( b1605 ) then ( reward 95 ) else ( true ) );
+b1632 <- ( if ( b1606 ) then ( reward 5 ) else ( true ) );
+b1633 <- ( if ( b1607 ) then ( reward 51 ) else ( reward 59 ) );
+
+b1634 <- ( if ( b1621 ) then ( true ) else ( reward 91 ) );
+
+b1635 <- ( if ( b1623 ) then ( reward 56 ) else ( true ) );
+b1624 && b1625 && b1626 && b1627 && b1628 && b1629 && b1630 && b1631 && b1632 && b1633 && b1608 && b1634 && b1622 && b1635
