@@ -1,19 +1,22 @@
-// d126 is variable earthquake
-d126 <- [ c125 ];
-// d128 is variable burglary
-d128 <- [ c127 ];
-// b129 is variable alarm
-b129 <- ( if ( d128 ) then ( if ( d126 ) then ( flip 0.95 ) else ( flip 0.94 ) ) else ( if ( d126 ) then ( flip 0.29 ) else ( flip 0.001 ) ) );
-// b134 is variable maryCalls
-d131 <- [ c130 ];
-b132 <- ( if ( b129 ) then ( flip 0.7 ) else ( flip 0.01 ) );
-b133 <- ( if ( d131 ) then ( flip 0.7 ) else ( false ) );
-b134 <- ( b132 || b133 );
-// b135 is variable johnCalls
-b135 <- ( if ( b129 ) then ( flip 0.9 ) else ( flip 0.05 ) );
-b136 <- ( if ( d126 ) then ( reward 24 ) else ( reward 58 ) );
-b137 <- ( if ( d128 ) then ( true ) else ( reward 51 ) );
-b138 <- ( if ( b129 ) then ( reward 9 ) else ( true ) );
-b139 <- ( if ( b134 ) then ( reward 69 ) else ( true ) );
-b140 <- ( if ( b135 ) then ( reward 76 ) else ( true ) );
-b136 && b137 && b138 && b139 && b140
+// d130 is variable earthquake
+d130 <- [ c129 ];
+// d132 is variable burglary
+d132 <- [ c131 ];
+// b137 is variable alarm
+d134 <- [ c133 ];
+b135 <- ( if ( d132 ) then ( if ( d130 ) then ( flip 0.95 ) else ( flip 0.94 ) ) else ( if ( d130 ) then ( flip 0.29 ) else ( flip 0.001 ) ) );
+b136 <- ( if ( d134 ) then ( flip 0.95 ) else ( false ) );
+b137 <- ( b135 || b136 );
+// b142 is variable maryCalls
+d139 <- [ c138 ];
+b140 <- ( if ( b137 ) then ( flip 0.7 ) else ( flip 0.01 ) );
+b141 <- ( if ( d139 ) then ( flip 0.7 ) else ( false ) );
+b142 <- ( b140 || b141 );
+// b143 is variable johnCalls
+b143 <- ( if ( b137 ) then ( flip 0.9 ) else ( flip 0.05 ) );
+b144 <- ( if ( d130 ) then ( reward 69 ) else ( true ) );
+b145 <- ( if ( d132 ) then ( reward 76 ) else ( true ) );
+b146 <- ( if ( b137 ) then ( reward 86 ) else ( true ) );
+b147 <- ( if ( b142 ) then ( reward 38 ) else ( true ) );
+b148 <- ( if ( b143 ) then ( reward 22 ) else ( true ) );
+b144 && b145 && b146 && b147 && b148

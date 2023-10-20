@@ -1,22 +1,19 @@
-// d329 is variable earthquake
-d329 <- [ c328 ];
-// d331 is variable burglary
-d331 <- [ c330 ];
-// b336 is variable alarm
-d333 <- [ c332 ];
-b334 <- ( if ( d331 ) then ( if ( d329 ) then ( flip 0.95 ) else ( flip 0.94 ) ) else ( if ( d329 ) then ( flip 0.29 ) else ( flip 0.001 ) ) );
-b335 <- ( if ( d333 ) then ( flip 0.95 ) else ( false ) );
-b336 <- ( b334 || b335 );
-// b337 is variable maryCalls
-b337 <- ( if ( b336 ) then ( flip 0.7 ) else ( flip 0.01 ) );
-// b342 is variable johnCalls
-d339 <- [ c338 ];
-b340 <- ( if ( b336 ) then ( flip 0.9 ) else ( flip 0.05 ) );
-b341 <- ( if ( d339 ) then ( flip 0.9 ) else ( false ) );
-b342 <- ( b340 || b341 );
-b343 <- ( if ( d329 ) then ( reward 87 ) else ( true ) );
+// d341 is variable earthquake
+d341 <- [ c340 ];
+// d343 is variable burglary
+d343 <- [ c342 ];
+// b348 is variable alarm
+d345 <- [ c344 ];
+b346 <- ( if ( d343 ) then ( if ( d341 ) then ( flip 0.95 ) else ( flip 0.94 ) ) else ( if ( d341 ) then ( flip 0.29 ) else ( flip 0.001 ) ) );
+b347 <- ( if ( d345 ) then ( flip 0.95 ) else ( false ) );
+b348 <- ( b346 || b347 );
+// b349 is variable maryCalls
+b349 <- ( if ( b348 ) then ( flip 0.7 ) else ( flip 0.01 ) );
+// b350 is variable johnCalls
+b350 <- ( if ( b348 ) then ( flip 0.9 ) else ( flip 0.05 ) );
+b351 <- ( if ( d341 ) then ( reward 93 ) else ( true ) );
+b352 <- ( if ( d343 ) then ( true ) else ( reward 95 ) );
+b353 <- ( if ( b348 ) then ( reward 68 ) else ( true ) );
+b354 <- ( if ( b349 ) then ( reward 63 ) else ( true ) );
 
-b344 <- ( if ( b336 ) then ( true ) else ( reward 99 ) );
-b345 <- ( if ( b337 ) then ( reward 26 ) else ( true ) );
-b346 <- ( if ( b342 ) then ( reward 21 ) else ( true ) );
-b343 && d331 && b344 && b345 && b346
+b351 && b352 && b353 && b354 && b350

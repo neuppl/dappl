@@ -1,34 +1,34 @@
-// d591 is variable asia
-d591 <- [ c590 ];
-// d593 is variable smoke
-d593 <- [ c592 ];
-// b594 is variable lung
-b594 <- ( if ( d593 ) then ( flip 0.1 ) else ( flip 0.01 ) );
-// b595 is variable tub
-b595 <- ( if ( d591 ) then ( flip 0.05 ) else ( flip 0.01 ) );
-// b600 is variable bronc
-d597 <- [ c596 ];
-b598 <- ( if ( d593 ) then ( flip 0.6 ) else ( flip 0.3 ) );
-b599 <- ( if ( d597 ) then ( flip 0.6 ) else ( false ) );
-b600 <- ( b598 || b599 );
-// b601 is variable either
-b601 <- ( b594 || b595 );
-// b606 is variable xray
-d603 <- [ c602 ];
-b604 <- ( if ( b601 ) then ( flip 0.98 ) else ( flip 0.05 ) );
-b605 <- ( if ( d603 ) then ( flip 0.98 ) else ( false ) );
-b606 <- ( b604 || b605 );
-// b611 is variable dysp
-d608 <- [ c607 ];
-b609 <- ( if ( b600 ) then ( if ( b601 ) then ( flip 0.9 ) else ( flip 0.8 ) ) else ( if ( b601 ) then ( flip 0.7 ) else ( flip 0.1 ) ) );
-b610 <- ( if ( d608 ) then ( flip 0.9 ) else ( false ) );
-b611 <- ( b609 || b610 );
-b612 <- ( if ( d591 ) then ( reward 20 ) else ( true ) );
-b613 <- ( if ( d593 ) then ( reward 97 ) else ( true ) );
-b614 <- ( if ( b594 ) then ( reward 96 ) else ( true ) );
-b615 <- ( if ( b595 ) then ( reward 5 ) else ( reward 53 ) );
-b616 <- ( if ( b600 ) then ( reward 42 ) else ( true ) );
+// d598 is variable asia
+d598 <- [ c597 ];
+// d600 is variable smoke
+d600 <- [ c599 ];
+// b605 is variable lung
+d602 <- [ c601 ];
+b603 <- ( if ( d600 ) then ( flip 0.1 ) else ( flip 0.01 ) );
+b604 <- ( if ( d602 ) then ( flip 0.1 ) else ( false ) );
+b605 <- ( b603 || b604 );
+// b610 is variable tub
+d607 <- [ c606 ];
+b608 <- ( if ( d598 ) then ( flip 0.05 ) else ( flip 0.01 ) );
+b609 <- ( if ( d607 ) then ( flip 0.05 ) else ( false ) );
+b610 <- ( b608 || b609 );
+// b615 is variable bronc
+d612 <- [ c611 ];
+b613 <- ( if ( d600 ) then ( flip 0.6 ) else ( flip 0.3 ) );
+b614 <- ( if ( d612 ) then ( flip 0.6 ) else ( false ) );
+b615 <- ( b613 || b614 );
+// b616 is variable either
+b616 <- ( b605 || b610 );
+// b617 is variable xray
+b617 <- ( if ( b616 ) then ( flip 0.98 ) else ( flip 0.05 ) );
+// b618 is variable dysp
+b618 <- ( if ( b615 ) then ( if ( b616 ) then ( flip 0.9 ) else ( flip 0.8 ) ) else ( if ( b616 ) then ( flip 0.7 ) else ( flip 0.1 ) ) );
+b619 <- ( if ( d598 ) then ( true ) else ( reward 88 ) );
+b620 <- ( if ( d600 ) then ( reward 87 ) else ( true ) );
+b621 <- ( if ( b605 ) then ( reward 73 ) else ( reward 36 ) );
+b622 <- ( if ( b610 ) then ( reward 88 ) else ( true ) );
+b623 <- ( if ( b615 ) then ( reward 63 ) else ( true ) );
+b624 <- ( if ( b616 ) then ( reward 4 ) else ( true ) );
 
-
-b617 <- ( if ( b611 ) then ( reward 24 ) else ( true ) );
-b612 && b613 && b614 && b615 && b616 && b601 && b606 && b617
+b625 <- ( if ( b618 ) then ( reward 0 ) else ( true ) );
+b619 && b620 && b621 && b622 && b623 && b624 && b617 && b625

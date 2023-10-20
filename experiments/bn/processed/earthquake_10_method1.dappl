@@ -9,11 +9,14 @@ b423 <- ( if ( d421 ) then ( flip 0.95 ) else ( false ) );
 b424 <- ( b422 || b423 );
 // b425 is variable maryCalls
 b425 <- ( if ( b424 ) then ( flip 0.7 ) else ( flip 0.01 ) );
-// b426 is variable johnCalls
-b426 <- ( if ( b424 ) then ( flip 0.9 ) else ( flip 0.05 ) );
-b427 <- ( if ( d417 ) then ( reward 57 ) else ( reward 61 ) );
-b428 <- ( if ( d419 ) then ( reward 32 ) else ( true ) );
-b429 <- ( if ( b424 ) then ( reward 53 ) else ( true ) );
-b430 <- ( if ( b425 ) then ( reward 92 ) else ( true ) );
-b431 <- ( if ( b426 ) then ( reward 82 ) else ( true ) );
-b427 && b428 && b429 && b430 && b431
+// b430 is variable johnCalls
+d427 <- [ c426 ];
+b428 <- ( if ( b424 ) then ( flip 0.9 ) else ( flip 0.05 ) );
+b429 <- ( if ( d427 ) then ( flip 0.9 ) else ( false ) );
+b430 <- ( b428 || b429 );
+b431 <- ( if ( d417 ) then ( reward 31 ) else ( reward 82 ) );
+b432 <- ( if ( d419 ) then ( reward 53 ) else ( reward 83 ) );
+b433 <- ( if ( b424 ) then ( reward 65 ) else ( reward 7 ) );
+b434 <- ( if ( b425 ) then ( reward 45 ) else ( reward 60 ) );
+b435 <- ( if ( b430 ) then ( reward 66 ) else ( true ) );
+b431 && b432 && b433 && b434 && b435

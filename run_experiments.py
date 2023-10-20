@@ -48,8 +48,8 @@ def run_survey (n : int, m :int)  :
 
 def print_avg_stdev(data : list) :
     data_array = np.array(data)
-    average = np.mean(data_array)
-    std_dev = np.std(data_array)
+    average = np.mean(data_array) * 1000
+    std_dev = np.std(data_array) * 1000
     print(f"Average: {average}")
     print(f"Standard Deviation: {std_dev}")
     return
@@ -86,8 +86,6 @@ def do_all (n : int) :
     print_avg_stdev(survey_times_method1)
     print(f"Method 2:")
     print_avg_stdev(survey_times_method2)
-
-do_all(10)
 
 ## For Problog
 
@@ -152,7 +150,69 @@ def run_problog () :
     print_avg_stdev(survey_times_method2)
     return
 
+def exec_derk (file : str):
+    cmd = "python3 derkinderen/maxeu.py " + directory_path + "/"+file
+    result = subprocess.run(cmd, \
+                        shell=True, \
+                        stdout=subprocess.PIPE, \
+                        stderr=subprocess.PIPE, \
+                        text=True)
+    relevant = result.stdout.split('\n')
+    l = [relevant[0], relevant[4], relevant[7]]
+    l = list(map(lambda x : float(x.split(" ")[-2]), l))
+    return sum(l)
+
+def run_derk () :
+    asia_times_method1 = []
+    asia_times_method2 = []
+    earthquake_times_method1 = []
+    earthquake_times_method2 = []
+    survey_times_method1 = []
+    survey_times_method2 = []
+    for file in filenames:
+        f = exec_derk (file)
+        l = file.split("_")
+        bntype = l[0]
+        method = l[1]
+        if bntype == "asia" :
+            if method == "1" :
+                asia_times_method1.append(f)
+            else : 
+                asia_times_method2.append(f)
+        elif bntype == "earthquake" :
+            if method == "1" :
+                earthquake_times_method1.append(f)
+            else : 
+                earthquake_times_method2.append(f)
+        else:
+            if method == "1" :
+                survey_times_method1.append(f)
+            else : 
+                survey_times_method2.append(f)
+    print(f"For asia:")
+    print(f"Method 1:")
+    print_avg_stdev(asia_times_method1)
+    print(f"Method 2:")
+    print_avg_stdev(asia_times_method2)
+    print(f"For earthquake:")
+    print(f"Method 1:")
+    print_avg_stdev(earthquake_times_method1)
+    print(f"Method 2:")
+    print_avg_stdev(earthquake_times_method2)
+    print(f"For survey:")
+    print(f"Method 1:")
+    print_avg_stdev(survey_times_method1)
+    print(f"Method 2:")
+    print_avg_stdev(survey_times_method2)
+    return
+
+print("THIS IS FOR DAPPL")
+do_all(10)
+print("\nTHIS IS FOR PROBLOG")
 run_problog()
+print("\nTHIS IS FOR DERKINDEREN")
+run_derk()
+
                 
 
 
