@@ -1,47 +1,47 @@
-b2030 <- ( flip 0.5 );
-b2031 <- ( !b2030 && flip 0.6 );
-b2032 <- ( !b2031 && !b2030 );
-b2033 <- ( flip 0.6 );
-b2034 <- ( !b2033 );
-b2035 <- ( if ( b2030 && b2033 ) then ( flip 0.72 ) else ( false ) );
-b2036 <- ( if ( b2030 && b2034 ) then ( flip 0.7 ) else ( false ) );
-b2037 <- ( if ( b2031 && b2033 ) then ( flip 0.75 ) else ( false ) );
-b2038 <- ( if ( b2031 && b2034 ) then ( flip 0.64 ) else ( false ) );
-b2039 <- ( if ( b2032 && b2033 ) then ( flip 0.88 ) else ( false ) );
-b2040 <- ( if ( b2032 && b2034 ) then ( flip 0.9 ) else ( false ) );
-b2041 <- ( b2035 || b2036 || b2037 || b2038 || b2039 || b2040 );
-b2042 <- ( !b2041 );
-b2043 <- ( if ( b2041 ) then ( flip 0.96 ) else ( flip 0.92 ) );
-b2044 <- ( !b2043 );
-b2045 <- ( if ( b2041 ) then ( flip 0.25 ) else ( flip 0.2 ) );
-b2046 <- ( !b2045 );
-b2047 <- ( flip 0.48 );
-b2048 <- ( !b2047 && flip 0.807699 );
-b2049 <- ( !b2048 && !b2047 );
-b2050 <- ( flip 0.58 );
-b2051 <- ( !b2050 && flip 0.571429 );
-b2052 <- ( !b2051 && !b2050 );
-b2053 <- ( flip 0.56 );
-b2054 <- ( !b2053 && flip 0.818183 );
-b2055 <- ( !b2054 && !b2053 );
-b2056 <- ( flip 0.7 );
-b2057 <- ( !b2056 && flip 0.7 );
-b2058 <- ( !b2057 && !b2056 );
-b2059 <- ( if ( b2043 && b2045 ) then ( b2047 ) else ( if ( b2043 && b2046 ) then ( b2050 ) else ( if ( b2044 && b2045 ) then ( b2053 ) else ( if ( b2044 && b2046 ) then ( b2056 ) else ( false ) ) ) ) );
-b2060 <- ( if ( b2043 && b2045 ) then ( b2048 ) else ( if ( b2043 && b2046 ) then ( b2051 ) else ( if ( b2044 && b2045 ) then ( b2054 ) else ( if ( b2044 && b2046 ) then ( b2057 ) else ( false ) ) ) ) );
-b2061 <- ( if ( b2043 && b2045 ) then ( b2049 ) else ( if ( b2043 && b2046 ) then ( b2052 ) else ( if ( b2044 && b2045 ) then ( b2055 ) else ( if ( b2044 && b2046 ) then ( b2058 ) else ( false ) ) ) ) );
-b2062 <- ( if ( b2030 ) then ( reward 30 ) else ( reward 65 ) );
+b1947 <- ( flip 0.5 );
+b1948 <- ( !b1947 && flip 0.6 );
+b1949 <- ( !b1948 && !b1947 );
+b1950 <- ( flip 0.6 );
+b1951 <- ( !b1950 );
+b1952 <- ( if ( b1947 && b1950 ) then ( flip 0.72 ) else ( false ) );
+b1953 <- ( if ( b1947 && b1951 ) then ( flip 0.7 ) else ( false ) );
+b1954 <- ( if ( b1948 && b1950 ) then ( flip 0.75 ) else ( false ) );
+b1955 <- ( if ( b1948 && b1951 ) then ( flip 0.64 ) else ( false ) );
+b1956 <- ( if ( b1949 && b1950 ) then ( flip 0.88 ) else ( false ) );
+b1957 <- ( if ( b1949 && b1951 ) then ( flip 0.9 ) else ( false ) );
+b1958 <- ( b1952 || b1953 || b1954 || b1955 || b1956 || b1957 );
+b1959 <- ( !b1958 );
+b1960 <- ( if ( b1958 ) then ( flip 0.96 ) else ( flip 0.92 ) );
+b1961 <- ( !b1960 );
+b1962 <- ( if ( b1958 ) then ( flip 0.25 ) else ( flip 0.2 ) );
+b1963 <- ( !b1962 );
+b1964 <- ( flip 0.48 );
+b1965 <- ( !b1964 && flip 0.807699 );
+b1966 <- ( !b1965 && !b1964 );
+b1967 <- ( flip 0.58 );
+b1968 <- ( !b1967 && flip 0.571429 );
+b1969 <- ( !b1968 && !b1967 );
+b1970 <- ( flip 0.56 );
+b1971 <- ( !b1970 && flip 0.818183 );
+b1972 <- ( !b1971 && !b1970 );
+b1973 <- ( flip 0.7 );
+b1974 <- ( !b1973 && flip 0.7 );
+b1975 <- ( !b1974 && !b1973 );
+b1976 <- ( if ( b1960 && b1962 ) then ( b1964 ) else ( if ( b1960 && b1963 ) then ( b1967 ) else ( if ( b1961 && b1962 ) then ( b1970 ) else ( if ( b1961 && b1963 ) then ( b1973 ) else ( false ) ) ) ) );
+b1977 <- ( if ( b1960 && b1962 ) then ( b1965 ) else ( if ( b1960 && b1963 ) then ( b1968 ) else ( if ( b1961 && b1962 ) then ( b1971 ) else ( if ( b1961 && b1963 ) then ( b1974 ) else ( false ) ) ) ) );
+b1978 <- ( if ( b1960 && b1962 ) then ( b1966 ) else ( if ( b1960 && b1963 ) then ( b1969 ) else ( if ( b1961 && b1962 ) then ( b1972 ) else ( if ( b1961 && b1963 ) then ( b1975 ) else ( false ) ) ) ) );
+b1979 <- ( if ( b1947 ) then ( reward 38 ) else ( true ) );
+b1980 <- ( if ( b1948 ) then ( reward 68 ) else ( true ) );
+b1981 <- ( if ( b1949 ) then ( reward 31 ) else ( true ) );
+b1982 <- ( if ( b1950 ) then ( true ) else ( reward 45 ) );
+b1983 <- ( if ( b1951 ) then ( reward 16 ) else ( true ) );
+b1984 <- ( if ( b1958 ) then ( reward 92 ) else ( true ) );
+b1985 <- ( if ( b1959 ) then ( reward 92 ) else ( true ) );
+b1986 <- ( if ( b1960 ) then ( reward 18 ) else ( true ) );
+b1987 <- ( if ( b1961 ) then ( reward 68 ) else ( true ) );
 
-b2063 <- ( if ( b2032 ) then ( reward 66 ) else ( reward 60 ) );
-b2064 <- ( if ( b2033 ) then ( reward 73 ) else ( true ) );
-
-b2065 <- ( if ( b2041 ) then ( reward 53 ) else ( true ) );
-b2066 <- ( if ( b2042 ) then ( reward 78 ) else ( reward 65 ) );
-b2067 <- ( if ( b2043 ) then ( reward 6 ) else ( true ) );
-
-
-b2068 <- ( if ( b2046 ) then ( reward 41 ) else ( true ) );
-
-
-b2069 <- ( if ( b2061 ) then ( reward 54 ) else ( true ) );
-b2062 && b2031 && b2063 && b2064 && b2034 && b2065 && b2066 && b2067 && b2044 && b2045 && b2068 && b2059 && b2060 && b2069
+b1988 <- ( if ( b1963 ) then ( reward 97 ) else ( true ) );
+b1989 <- ( if ( b1976 ) then ( reward 33 ) else ( reward 67 ) );
+b1990 <- ( if ( b1977 ) then ( reward 7 ) else ( true ) );
+b1991 <- ( if ( b1978 ) then ( reward 41 ) else ( true ) );
+b1979 && b1980 && b1981 && b1982 && b1983 && b1984 && b1985 && b1986 && b1987 && b1962 && b1988 && b1989 && b1990 && b1991

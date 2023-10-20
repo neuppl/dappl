@@ -1,29 +1,23 @@
-// d16 is variable earthquake
-d16 <- [ c15 ];
-// d18 is variable burglary
-d18 <- [ c17 ];
-// b19 is variable alarm
-b19 <- ( if ( d18 ) then ( if ( d16 ) then ( flip 0.95 ) else ( flip 0.94 ) ) else ( if ( d16 ) then ( flip 0.29 ) else ( flip 0.001 ) ) );
-// b24 is variable maryCalls
-d21 <- [ c20 ];
-b22 <- ( if ( b19 ) then ( flip 0.7 ) else ( flip 0.01 ) );
-b23 <- ( if ( d21 ) then ( flip 0.7 ) else ( false ) );
-b24 <- ( b22 || b23 );
-// b29 is variable johnCalls
+// d24 is variable earthquake
+d24 <- [ c23 ];
+// d26 is variable burglary
 d26 <- [ c25 ];
-b27 <- ( if ( b19 ) then ( flip 0.9 ) else ( flip 0.05 ) );
-b28 <- ( if ( d26 ) then ( flip 0.9 ) else ( false ) );
-b29 <- ( b27 || b28 );
-b30 <- ( ( d16 && !d18 && b19 && b24 && !b29 ) || ( d16 && !d18 && b19 && !b24 && b29 ) || ( d16 && !d18 && !b19 && b24 && b29 ) || ( d16 && !d18 && !b19 && !b24 && !b29 ) || ( !d16 && !d18 && b19 && !b24 && b29 ) || ( d16 && !d18 && b19 && !b24 && b29 ) );
-b31 <- ( if ( b30 ) then ( reward 4 ) else ( reward 0 ) );
-b32 <- ( ( !d16 && !d18 && !b19 && !b24 && b29 ) || ( d16 && d18 && b19 && !b24 && b29 ) || ( !d16 && d18 && !b19 && b24 && b29 ) || ( !d16 && !d18 && !b19 && b24 && b29 ) || ( d16 && d18 && b19 && !b24 && !b29 ) || ( !d16 && !d18 && b19 && b24 && !b29 ) );
-b33 <- ( if ( b32 ) then ( reward 21 ) else ( reward 20 ) );
-b34 <- ( ( d16 && d18 && b19 && !b24 && !b29 ) || ( d16 && !d18 && !b19 && !b24 && !b29 ) || ( !d16 && d18 && b19 && !b24 && b29 ) || ( d16 && !d18 && b19 && !b24 && !b29 ) || ( !d16 && !d18 && b19 && !b24 && b29 ) || ( !d16 && d18 && !b19 && !b24 && b29 ) );
-b35 <- ( if ( b34 ) then ( reward 17 ) else ( reward 70 ) );
-b36 <- ( ( d16 && !d18 && !b19 && b24 && !b29 ) || ( !d16 && !d18 && !b19 && b24 && !b29 ) || ( !d16 && !d18 && !b19 && !b24 && b29 ) || ( !d16 && d18 && !b19 && !b24 && !b29 ) || ( !d16 && !d18 && !b19 && !b24 && !b29 ) || ( !d16 && !d18 && !b19 && b24 && !b29 ) );
-b37 <- ( if ( b36 ) then ( reward 49 ) else ( reward 85 ) );
-b38 <- ( ( !d16 && d18 && b19 && b24 && b29 ) || ( d16 && !d18 && b19 && !b24 && b29 ) || ( !d16 && d18 && !b19 && b24 && b29 ) || ( d16 && !d18 && !b19 && b24 && !b29 ) || ( d16 && d18 && !b19 && b24 && b29 ) || ( d16 && d18 && b19 && !b24 && !b29 ) );
-b39 <- ( if ( b38 ) then ( reward 15 ) else ( reward 78 ) );
-b40 <- ( ( !d16 && !d18 && !b19 && b24 && !b29 ) || ( !d16 && d18 && !b19 && !b24 && !b29 ) || ( !d16 && !d18 && b19 && b24 && b29 ) || ( !d16 && !d18 && !b19 && b24 && !b29 ) || ( !d16 && !d18 && b19 && !b24 && !b29 ) || ( !d16 && d18 && b19 && b24 && b29 ) );
-b41 <- ( if ( b40 ) then ( reward 1 ) else ( reward 12 ) );
+// b27 is variable alarm
+b27 <- ( if ( d26 ) then ( if ( d24 ) then ( flip 0.95 ) else ( flip 0.94 ) ) else ( if ( d24 ) then ( flip 0.29 ) else ( flip 0.001 ) ) );
+// b28 is variable maryCalls
+b28 <- ( if ( b27 ) then ( flip 0.7 ) else ( flip 0.01 ) );
+// b29 is variable johnCalls
+b29 <- ( if ( b27 ) then ( flip 0.9 ) else ( flip 0.05 ) );
+b30 <- ( ( !d24 && d26 && b27 && b28 && b29 ) || ( d24 && d26 && !b27 && b28 && b29 ) || ( !d24 && d26 && !b27 && b28 && b29 ) || ( !d24 && d26 && b27 && !b28 && b29 ) || ( !d24 && d26 && b27 && !b28 && !b29 ) || ( !d24 && d26 && !b27 && !b28 && b29 ) );
+b31 <- ( if ( b30 ) then ( reward 20 ) else ( reward 4 ) );
+b32 <- ( ( d24 && d26 && !b27 && b28 && !b29 ) || ( !d24 && !d26 && b27 && b28 && !b29 ) || ( d24 && !d26 && !b27 && !b28 && !b29 ) || ( !d24 && !d26 && b27 && b28 && b29 ) || ( d24 && !d26 && b27 && b28 && !b29 ) || ( !d24 && !d26 && !b27 && b28 && !b29 ) );
+b33 <- ( if ( b32 ) then ( reward 70 ) else ( reward 21 ) );
+b34 <- ( ( !d24 && !d26 && !b27 && !b28 && !b29 ) || ( !d24 && d26 && !b27 && !b28 && !b29 ) || ( d24 && !d26 && b27 && !b28 && b29 ) || ( d24 && !d26 && !b27 && b28 && !b29 ) || ( d24 && d26 && b27 && !b28 && b29 ) || ( d24 && !d26 && b27 && b28 && !b29 ) );
+b35 <- ( if ( b34 ) then ( reward 85 ) else ( reward 17 ) );
+b36 <- ( ( !d24 && d26 && b27 && b28 && b29 ) || ( !d24 && d26 && !b27 && !b28 && !b29 ) || ( !d24 && d26 && b27 && b28 && !b29 ) || ( !d24 && d26 && b27 && !b28 && b29 ) || ( !d24 && d26 && b27 && b28 && !b29 ) || ( !d24 && !d26 && !b27 && !b28 && !b29 ) );
+b37 <- ( if ( b36 ) then ( reward 78 ) else ( reward 49 ) );
+b38 <- ( ( d24 && d26 && !b27 && b28 && b29 ) || ( d24 && !d26 && !b27 && b28 && !b29 ) || ( d24 && d26 && !b27 && !b28 && b29 ) || ( !d24 && d26 && !b27 && b28 && b29 ) || ( d24 && d26 && b27 && !b28 && b29 ) || ( d24 && d26 && b27 && b28 && b29 ) );
+b39 <- ( if ( b38 ) then ( reward 12 ) else ( reward 15 ) );
+b40 <- ( ( !d24 && !d26 && b27 && !b28 && !b29 ) || ( !d24 && d26 && b27 && b28 && !b29 ) || ( !d24 && d26 && b27 && b28 && b29 ) || ( d24 && d26 && !b27 && !b28 && !b29 ) || ( d24 && !d26 && b27 && b28 && !b29 ) || ( !d24 && d26 && b27 && !b28 && b29 ) );
+b41 <- ( if ( b40 ) then ( reward 6 ) else ( reward 1 ) );
 b41 && b39 && b37 && b35 && b33 && b31
