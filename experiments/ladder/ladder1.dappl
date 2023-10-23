@@ -1,0 +1,8 @@
+b0 <- ( true );
+b1 <- ( false );
+f2 <- ( flip 0.5 );
+b3 <- ( if ( b0 ) then ( if ( flip 0.001 ) then ( false ) else ( f2 ) ) else ( if ( b1 ) then ( f2 ) else ( false ) ) );
+b4 <- ( if ( b0 ) then ( if ( flip 0.001 ) then ( false ) else ( !f2 ) ) else ( if ( b1 ) then ( !f2 ) else ( false ) ) );
+observe( !b3 && !b4 );
+d5 <- [  ];
+choose d5 with

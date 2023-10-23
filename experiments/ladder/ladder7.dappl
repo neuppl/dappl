@@ -1,0 +1,38 @@
+b0 <- ( true );
+b1 <- ( false );
+f2 <- ( flip 0.5 );
+b3 <- ( if ( b0 ) then ( if ( flip 0.001 ) then ( false ) else ( f2 ) ) else ( if ( b1 ) then ( f2 ) else ( false ) ) );
+b4 <- ( if ( b0 ) then ( if ( flip 0.001 ) then ( false ) else ( !f2 ) ) else ( if ( b1 ) then ( !f2 ) else ( false ) ) );
+f5 <- ( flip 0.5 );
+b6 <- ( if ( b3 ) then ( if ( flip 0.001 ) then ( false ) else ( f5 ) ) else ( if ( b4 ) then ( f5 ) else ( false ) ) );
+b7 <- ( if ( b3 ) then ( if ( flip 0.001 ) then ( false ) else ( !f5 ) ) else ( if ( b4 ) then ( !f5 ) else ( false ) ) );
+f8 <- ( flip 0.5 );
+b9 <- ( if ( b6 ) then ( if ( flip 0.001 ) then ( false ) else ( f8 ) ) else ( if ( b7 ) then ( f8 ) else ( false ) ) );
+b10 <- ( if ( b6 ) then ( if ( flip 0.001 ) then ( false ) else ( !f8 ) ) else ( if ( b7 ) then ( !f8 ) else ( false ) ) );
+f11 <- ( flip 0.5 );
+b12 <- ( if ( b9 ) then ( if ( flip 0.001 ) then ( false ) else ( f11 ) ) else ( if ( b10 ) then ( f11 ) else ( false ) ) );
+b13 <- ( if ( b9 ) then ( if ( flip 0.001 ) then ( false ) else ( !f11 ) ) else ( if ( b10 ) then ( !f11 ) else ( false ) ) );
+f14 <- ( flip 0.5 );
+b15 <- ( if ( b12 ) then ( if ( flip 0.001 ) then ( false ) else ( f14 ) ) else ( if ( b13 ) then ( f14 ) else ( false ) ) );
+b16 <- ( if ( b12 ) then ( if ( flip 0.001 ) then ( false ) else ( !f14 ) ) else ( if ( b13 ) then ( !f14 ) else ( false ) ) );
+f17 <- ( flip 0.5 );
+b18 <- ( if ( b15 ) then ( if ( flip 0.001 ) then ( false ) else ( f17 ) ) else ( if ( b16 ) then ( f17 ) else ( false ) ) );
+b19 <- ( if ( b15 ) then ( if ( flip 0.001 ) then ( false ) else ( !f17 ) ) else ( if ( b16 ) then ( !f17 ) else ( false ) ) );
+f20 <- ( flip 0.5 );
+b21 <- ( if ( b18 ) then ( if ( flip 0.001 ) then ( false ) else ( f20 ) ) else ( if ( b19 ) then ( f20 ) else ( false ) ) );
+b22 <- ( if ( b18 ) then ( if ( flip 0.001 ) then ( false ) else ( !f20 ) ) else ( if ( b19 ) then ( !f20 ) else ( false ) ) );
+observe( !b21 && !b22 );
+d35 <- [ c34, c33, c32, c31, c30, c29, c28, c27, c26, c25, c24, c23 ];
+choose d35 with
+| c34 -> ( if ( !b3 ) then ( reward 85 ) else ( reward 44 ) )
+| c33 -> ( if ( !b4 ) then ( reward 41 ) else ( reward 82 ) )
+| c32 -> ( if ( !b6 ) then ( reward 0 ) else ( reward 39 ) )
+| c31 -> ( if ( !b7 ) then ( reward 20 ) else ( reward 4 ) )
+| c30 -> ( if ( !b9 ) then ( reward 70 ) else ( reward 21 ) )
+| c29 -> ( if ( !b10 ) then ( reward 85 ) else ( reward 17 ) )
+| c28 -> ( if ( !b12 ) then ( reward 78 ) else ( reward 49 ) )
+| c27 -> ( if ( !b13 ) then ( reward 12 ) else ( reward 15 ) )
+| c26 -> ( if ( !b15 ) then ( reward 6 ) else ( reward 1 ) )
+| c25 -> ( if ( !b16 ) then ( reward 69 ) else ( reward 28 ) )
+| c24 -> ( if ( !b18 ) then ( reward 93 ) else ( reward 89 ) )
+| c23 -> ( if ( !b19 ) then ( reward 23 ) else ( reward 14 ) )

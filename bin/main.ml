@@ -43,6 +43,7 @@ let gen_tests =
       and n = anon ("n" %: int) in
       fun () -> match test with 
       | "mdp"         ->  Dappl_benchmarks.to_file_mdp n
+      | "ladder"         ->  Dappl_benchmarks.to_file_ladder n
       | "earthquake"  ->  Gen.mk_earthquake_to_file n
       | "asia"        ->  Gen.mk_asia_to_file n
       | "survey"      ->  Gen.mk_survey_to_file n

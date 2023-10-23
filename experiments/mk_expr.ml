@@ -22,12 +22,17 @@ let mk_varname (x : var) : varname =
 let mk_reward (_ : unit) : string = 
   let x = Int.to_string (int 100) in 
   String.concat ~sep:" " ["reward" ; x]
+let mk_reward_det (x : int) : string =  
+  String.concat ~sep:" " ["reward" ; Int.to_string x]
 
 (* produces an expression x <- (flip f); IS LAZY FOR A REASON!!! *)
 let mk_flip (_ : unit): string * varname = 
   let v = mk_varname Flip in
   let f = Float.to_string (Random.float 1.) in
   (String.concat ~sep:" " [v; "<-"; "("; "flip"; f ; ");"], v)
+let mk_flip_det (f : float): string * varname = 
+  let v = mk_varname Flip in
+  (String.concat ~sep:" " [v; "<-"; "("; "flip"; Float.to_string f ; ");"], v)
 let mk_flip_print (_ : unit): unit =
   let (s,_) = mk_flip () in 
   Printf.printf "%s\n" s

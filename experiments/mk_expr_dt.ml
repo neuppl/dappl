@@ -57,19 +57,43 @@ let print_lit (l : literal) : string =
 
 let print_clause (c : clause) : string =
   match c with
-  | Flip(f, v)      -> String.concat ~sep:" " [Float.to_string f ; "::" ;  print_lit v ; "."]
+  | Flip(f, v)      ->  if ((Float.equal f 1.) || (Float.equal f 0.)) then
+                        String.concat ~sep:" " [(Float.to_string f)^"0" ; "::" ;  print_lit v ; "."]
+                        else String.concat ~sep:" " [Float.to_string f ; "::" ;  print_lit v ; "."]
   | Choice v        ->  String.concat ~sep:" " ["?" ; "::" ;  print_lit v; "."]
   | Rule(v, l)      -> let s = String.concat ~sep:", " (List.map ~f:print_lit l) in 
                       String.concat ~sep:" " [print_lit v; ":-"; s ; "."]
   | Utility(v,n)    -> String.concat ~sep:" " 
                       ["utility("; print_lit v ; "," ; Int.to_string n ; ")."]
   | Query v         -> String.concat ~sep:" " ["query("; print_lit v ; ")."]
-  | Evidence (l, b) -> String.concat ~sep: " " 
-                      ["evidence(" ; print_lit l ; "," ; Bool.to_string b ; ")."]
+  | Evidence (v, b) -> String.concat ~sep: " " 
+                      ["evidence(" ; print_lit v ; "," ; Bool.to_string b ; ")."]
 
 let print_program (p : problog_program) : string =
+  let filter_fn = fun x -> match x with | Rule(_, []) -> false | _ -> true in
+  let p = List.filter p ~f:filter_fn in
   let m = List.map p ~f:print_clause in
   String.concat ~sep:"\n" m
+
+(* Extracts literals from a program. *)
+let extract_literal (p: clause) : literal  = 
+  match p with
+  | Flip(_, v) -> v
+  | Choice v -> v
+  | Rule (v, _) -> v
+  | Utility(v,_) -> v
+  | Query v -> v
+  | Evidence(v,_) -> v
+
+let rec extract_literal_pg (p: problog_program) : literal list  = 
+  match p with
+  | [] -> []
+  | x :: xs ->  let l = extract_literal x :: extract_literal_pg xs in
+                let dedup_fn = fun x y -> 
+                                match x,y with 
+                                | Var(x), Var(y) -> String.compare x y | Not(x), Not(y) -> String.compare x y
+                                | Not(x), Var(y) -> String.compare x y | Var(x), Not(y) -> String.compare x y in
+                List.dedup_and_sort l ~compare:dedup_fn
 
 (* Produces an expression 
   var :- .
@@ -79,13 +103,29 @@ let mk_reward (_ : unit) : literal * problog_program =
   let v = mk_literal Reward true in
   (v, [Rule(v,[]) ; Utility(v, x)])
 
+let mk_reward_det (i : int) : literal * problog_program = 
+  let v = mk_literal Reward true in
+  (v, [Rule(v,[]) ; Utility(v, i)])
+
 (* produces an expression f :: x; IS LAZY FOR A REASON!!! *)
 let mk_flip (_ : unit): literal * clause = 
   let v = mk_literal Flip true in
   let f = Random.float 1. in
   (v, Flip(f, v))
 
+let mk_flip_det (f : float): literal * clause = 
+  let v = mk_literal Flip true in
+  (v, Flip(f, v))
+
 let mk_flip_pg : literal * problog_program = let (a,b) = mk_flip () in (a, [b])
+
+(* Produces a rule for a new variable given the list. *)
+let mk_rule_with_newvar (l : literal list) = 
+  let v = mk_literal Reward true in
+  Rule(v, l)
+
+let mk_rule (v : literal) (l : literal list) = 
+  Rule(v, l)
 
 (* produces an expression
   ? :: v_0 ... ? :: v_i *)
@@ -102,6 +142,11 @@ let rec propagate_literal (l : literal) (p : problog_program) : problog_program 
     match x with
     | Rule(v, vl) -> Rule(v, l::vl) :: propagate_literal l xs
     | x -> x :: propagate_literal l xs
+
+let rec propagate_literal_list (l : literal list) (p : problog_program) : problog_program = 
+  match l with
+  | [] -> p
+  | x :: xs -> propagate_literal_list xs (propagate_literal x p)
 
 let mk_choosewith_h (l : literal list) (e : problog_program list) = 
   let mute = ref e in
@@ -126,14 +171,33 @@ let mk_choosewith (d : problog_program) (e: problog_program list) : problog_prog
   let queries = List.map dlits ~f:(fun v -> Query v) in
   List.append (List.concat (d :: with_props)) queries
 
-let mk_ite (c: clause) (e : problog_program list) : problog_program =
-  let _ : unit = assert_bool "dude, have two conditions for an ite. cmon that's CS0 shit"
-          (List.length e = 2) in
-  let v = match c with | Flip (_,v) -> v | _ -> failwith "clause in mk_ite not flip" in
-  let p1, p2 = List.nth_exn e 0 , List.nth_exn e 1 in
-  let p1' = propagate_literal v p1 in
-  let p2' = propagate_literal (flip_lit v) p2 in
-  c :: (List.append p1' p2')
+(* Given two problog programs [l; r], and a literal ell,
+  adds ell to all rules in l, not(ell) to all rules in r
+  if no r is given, only add ell to all rules in l.
+*)
+let mk_ite (l: literal) (e : problog_program list) : problog_program =
+  match (List.length e) with
+  | 2 ->  let p1, p2 = List.nth_exn e 0 , List.nth_exn e 1 in
+          let p1' = propagate_literal l p1 in
+          let p2' = propagate_literal (flip_lit l) p2 in
+          List.append p1' p2'
+  | 1 ->  let p1 = List.nth_exn e 0 in
+          let p1' = propagate_literal l p1 in 
+          p1'
+  | _ ->  failwith "dude, have two conditions for an ite. cmon that's CS0 shit"
+
+let mk_ite_list (l: literal list) (e : problog_program list) : problog_program =
+  let l' = List.map l ~f:flip_lit in
+  match (List.length e) with
+  | 2 ->  let p1, p2 = List.nth_exn e 0 , List.nth_exn e 1 in
+          let p1' = propagate_literal_list l p1 in
+          let p2' = propagate_literal_list l' p2 in
+          List.append p1' p2'
+  | 1 ->  let p1 = List.nth_exn e 0 in
+          let p1' = propagate_literal_list l p1 in 
+          p1'
+  | _ ->  failwith "dude, have two conditions for an ite. cmon that's CS0 shit"
+
 
 (* Produces an observe (evidence) *)
 
