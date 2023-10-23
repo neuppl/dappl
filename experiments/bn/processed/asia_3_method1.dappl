@@ -1,34 +1,31 @@
-// d649 is variable asia
-d649 <- [ c648 ];
-// d651 is variable smoke
-d651 <- [ c650 ];
-// b652 is variable lung
-b652 <- ( if ( d651 ) then ( flip 0.1 ) else ( flip 0.01 ) );
-// b657 is variable tub
-d654 <- [ c653 ];
-b655 <- ( if ( d649 ) then ( flip 0.05 ) else ( flip 0.01 ) );
-b656 <- ( if ( d654 ) then ( flip 0.05 ) else ( false ) );
-b657 <- ( b655 || b656 );
-// b658 is variable bronc
-b658 <- ( if ( d651 ) then ( flip 0.6 ) else ( flip 0.3 ) );
-// b663 is variable either
-d660 <- [ c659 ];
-b661 <- ( b652 || b657 );
-b662 <- ( if ( d660 ) then ( flip 0.5 ) else ( false ) );
-b663 <- ( b661 || b662 );
-// b664 is variable xray
-b664 <- ( if ( b663 ) then ( flip 0.98 ) else ( flip 0.05 ) );
-// b669 is variable dysp
-d666 <- [ c665 ];
-b667 <- ( if ( b658 ) then ( if ( b663 ) then ( flip 0.9 ) else ( flip 0.8 ) ) else ( if ( b663 ) then ( flip 0.7 ) else ( flip 0.1 ) ) );
-b668 <- ( if ( d666 ) then ( flip 0.9 ) else ( false ) );
-b669 <- ( b667 || b668 );
-b670 <- ( if ( d649 ) then ( reward 20 ) else ( true ) );
-b671 <- ( if ( d651 ) then ( reward 36 ) else ( true ) );
-b672 <- ( if ( b652 ) then ( reward 86 ) else ( reward 34 ) );
-b673 <- ( if ( b657 ) then ( true ) else ( reward 91 ) );
-b674 <- ( if ( b658 ) then ( reward 12 ) else ( reward 88 ) );
-b675 <- ( if ( b663 ) then ( reward 30 ) else ( true ) );
+// d657 is variable asia
+d657 <- [ c656 ];
+// d659 is variable smoke
+d659 <- [ c658 ];
+// b660 is variable lung
+b660 <- ( if ( d659 ) then ( flip 0.1 ) else ( flip 0.01 ) );
+// b661 is variable tub
+b661 <- ( if ( d657 ) then ( flip 0.05 ) else ( flip 0.01 ) );
+// b666 is variable bronc
+d663 <- [ c662 ];
+b664 <- ( if ( d659 ) then ( flip 0.6 ) else ( flip 0.3 ) );
+b665 <- ( if ( d663 ) then ( flip 0.6 ) else ( false ) );
+b666 <- ( b664 || b665 );
+// b667 is variable either
+b667 <- ( b660 || b661 );
+// b672 is variable xray
+d669 <- [ c668 ];
+b670 <- ( if ( b667 ) then ( flip 0.98 ) else ( flip 0.05 ) );
+b671 <- ( if ( d669 ) then ( flip 0.98 ) else ( false ) );
+b672 <- ( b670 || b671 );
+// b673 is variable dysp
+b673 <- ( if ( b666 ) then ( if ( b667 ) then ( flip 0.9 ) else ( flip 0.8 ) ) else ( if ( b667 ) then ( flip 0.7 ) else ( flip 0.1 ) ) );
+b674 <- ( if ( d657 ) then ( reward 54 ) else ( reward 46 ) );
+b675 <- ( if ( d659 ) then ( reward 55 ) else ( reward 38 ) );
+b676 <- ( if ( b660 ) then ( reward 27 ) else ( reward 60 ) );
+b677 <- ( if ( b661 ) then ( reward 4 ) else ( reward 32 ) );
 
-
-b670 && b671 && b672 && b673 && b674 && b675 && b664 && b669
+b678 <- ( if ( b667 ) then ( reward 67 ) else ( reward 38 ) );
+b679 <- ( if ( b672 ) then ( reward 69 ) else ( true ) );
+b680 <- ( if ( b673 ) then ( reward 79 ) else ( true ) );
+b674 && b675 && b676 && b677 && b666 && b678 && b679 && b680

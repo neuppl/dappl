@@ -1,37 +1,31 @@
-// d889 is variable asia
-d889 <- [ c888 ];
-// d891 is variable smoke
-d891 <- [ c890 ];
-// b892 is variable lung
-b892 <- ( if ( d891 ) then ( flip 0.1 ) else ( flip 0.01 ) );
-// b897 is variable tub
-d894 <- [ c893 ];
-b895 <- ( if ( d889 ) then ( flip 0.05 ) else ( flip 0.01 ) );
-b896 <- ( if ( d894 ) then ( flip 0.05 ) else ( false ) );
-b897 <- ( b895 || b896 );
-// b902 is variable bronc
-d899 <- [ c898 ];
-b900 <- ( if ( d891 ) then ( flip 0.6 ) else ( flip 0.3 ) );
-b901 <- ( if ( d899 ) then ( flip 0.6 ) else ( false ) );
-b902 <- ( b900 || b901 );
-// b907 is variable either
-d904 <- [ c903 ];
-b905 <- ( b892 || b897 );
-b906 <- ( if ( d904 ) then ( flip 0.5 ) else ( false ) );
-b907 <- ( b905 || b906 );
-// b908 is variable xray
-b908 <- ( if ( b907 ) then ( flip 0.98 ) else ( flip 0.05 ) );
-// b913 is variable dysp
-d910 <- [ c909 ];
-b911 <- ( if ( b902 ) then ( if ( b907 ) then ( flip 0.9 ) else ( flip 0.8 ) ) else ( if ( b907 ) then ( flip 0.7 ) else ( flip 0.1 ) ) );
-b912 <- ( if ( d910 ) then ( flip 0.9 ) else ( false ) );
-b913 <- ( b911 || b912 );
-b914 <- ( if ( d889 ) then ( reward 80 ) else ( true ) );
-b915 <- ( if ( d891 ) then ( reward 63 ) else ( reward 58 ) );
-b916 <- ( if ( b892 ) then ( reward 30 ) else ( true ) );
-b917 <- ( if ( b897 ) then ( reward 82 ) else ( true ) );
-b918 <- ( if ( b902 ) then ( reward 17 ) else ( true ) );
-b919 <- ( if ( b907 ) then ( reward 55 ) else ( true ) );
-b920 <- ( if ( b908 ) then ( reward 89 ) else ( true ) );
+// d912 is variable asia
+d912 <- [ c911 ];
+// d914 is variable smoke
+d914 <- [ c913 ];
+// b915 is variable lung
+b915 <- ( if ( d914 ) then ( flip 0.1 ) else ( flip 0.01 ) );
+// b916 is variable tub
+b916 <- ( if ( d912 ) then ( flip 0.05 ) else ( flip 0.01 ) );
+// b917 is variable bronc
+b917 <- ( if ( d914 ) then ( flip 0.6 ) else ( flip 0.3 ) );
+// b922 is variable either
+d919 <- [ c918 ];
+b920 <- ( b915 || b916 );
+b921 <- ( if ( d919 ) then ( flip 0.5 ) else ( false ) );
+b922 <- ( b920 || b921 );
+// b927 is variable xray
+d924 <- [ c923 ];
+b925 <- ( if ( b922 ) then ( flip 0.98 ) else ( flip 0.05 ) );
+b926 <- ( if ( d924 ) then ( flip 0.98 ) else ( false ) );
+b927 <- ( b925 || b926 );
+// b928 is variable dysp
+b928 <- ( if ( b917 ) then ( if ( b922 ) then ( flip 0.9 ) else ( flip 0.8 ) ) else ( if ( b922 ) then ( flip 0.7 ) else ( flip 0.1 ) ) );
+b929 <- ( if ( d912 ) then ( reward 67 ) else ( reward 62 ) );
+b930 <- ( if ( d914 ) then ( reward 24 ) else ( reward 71 ) );
 
-b914 && b915 && b916 && b917 && b918 && b919 && b920 && b913
+b931 <- ( if ( b916 ) then ( reward 71 ) else ( true ) );
+b932 <- ( if ( b917 ) then ( reward 1 ) else ( reward 34 ) );
+
+b933 <- ( if ( b927 ) then ( reward 48 ) else ( true ) );
+b934 <- ( if ( b928 ) then ( true ) else ( reward 46 ) );
+b929 && b930 && b915 && b931 && b932 && b922 && b933 && b934
