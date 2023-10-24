@@ -105,6 +105,7 @@ let mk_column_network (o1 : varname) (o2 : varname) =
   (final_string, v1, v2)
 (* This function creates the ladder. *)
 let mk_ladder_h (n : int) =
+  if n = 0 then failwith "invalid number of columns; make sure it's >=1.";
   let list_of_vars : varname list ref = ref [] in
   let (init1, v1) = Mk_expr.mk_bind "true" in
   let (init2, v2) = Mk_expr.mk_bind "false" in
@@ -115,16 +116,46 @@ let mk_ladder_h (n : int) =
   let l = List.init n ~f:(fun _ -> ()) in
   let init = (String.concat ~sep:"\n" [init1; init2], v1, v2) in
   let (program, v1, v2) = List.fold l ~init:init ~f:fold_fn in
-  let decision_vars = List.drop_last_exn (List.drop_last_exn !list_of_vars) in
-  (program, v1, v2, decision_vars) 
+  let nodes = List.drop_last_exn (List.drop_last_exn !list_of_vars) in
+  (program, v1, v2, nodes) 
+
+(* This function creates depth many nested decisions. 
+   depth : specifies the decision nesting depth 
+   nodes : the 2n nodes of the graph 
+   cache : a list of nodes we've seen. the corresponding decisions allocated will be false.
+*)
+let rec mk_depth_h (depth : int) (nodes : varname list) (cache: varname list): string list =
+  if depth < 1 then failwith "unsupported depth; is it >=1?" ;
+  let node_fn = fun a x -> Mk_expr.mk_ite ("!" ^ x) [Mk_expr.mk_reward () ; a] in
+  match depth with
+  (* If depth is 1 then just do `if var then reward x else reward y` *)
+  | 1 ->  List.map nodes ~f:(node_fn (Mk_expr.mk_reward()))
+  (* If depth is not 1 then recurse *)
+  | _ ->  let len = List.length nodes in
+          let fn = 
+            fun x ->  match (List.find cache ~f:(fun y -> String.equal x y)) with
+                      | None -> "false"
+                      | _    -> let l = mk_depth_h (depth-1) nodes (x :: cache) in
+                                let (_, decvar, choices) = Mk_expr.mk_dec len in
+                                let e = Mk_expr.mk_choosewith decvar choices l in
+                                node_fn e x in
+          List.map nodes ~f:fn
 
 (* This function creates the actual decision problem. *)
 let mk_ladder (cols : int) = 
-  let (program, v1, v2, decision_vars) = mk_ladder_h cols in
+  let (program, v1, v2, nodes) = mk_ladder_h cols in
   let obs = Mk_expr.mk_observe ("!" ^ v1 ^ " && " ^ "!" ^ v2) in
-  let (dec, decvar, choices) = Mk_expr.mk_dec (List.length decision_vars) in
-  let map = List.map decision_vars 
+  let (dec, decvar, choices) = Mk_expr.mk_dec (List.length nodes) in
+  let map = List.map nodes 
               ~f:(fun x -> Mk_expr.mk_ite ("!" ^ x) [Mk_expr.mk_reward () ; Mk_expr.mk_reward ()]) in
+  let rws = Mk_expr.mk_choosewith decvar choices map in
+  String.concat ~sep:"\n" [program ; obs ; dec ; rws]
+
+let mk_ladder_test (cols : int) (depth: int) = 
+  let (program, v1, v2, nodes) = mk_ladder_h cols in
+  let obs = Mk_expr.mk_observe ("!" ^ v1 ^ " && " ^ "!" ^ v2) in
+  let (dec, decvar, choices) = Mk_expr.mk_dec (List.length nodes) in
+  let map = mk_depth_h depth nodes in
   let rws = Mk_expr.mk_choosewith decvar choices map in
   String.concat ~sep:"\n" [program ; obs ; dec ; rws]
 
