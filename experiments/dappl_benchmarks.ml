@@ -129,33 +129,31 @@ let rec mk_depth_h (depth : int) (nodes : varname list) (cache: varname list): s
   let node_fn = fun a x -> Mk_expr.mk_ite ("!" ^ x) [Mk_expr.mk_reward () ; a] in
   match depth with
   (* If depth is 1 then just do `if var then reward x else reward y` *)
-  | 1 ->  List.map nodes ~f:(node_fn (Mk_expr.mk_reward()))
+  | 1 ->  let fn = 
+            fun x -> match (List.find cache ~f:(fun y -> String.equal x y)) with
+            | Some(_) -> "false"
+            | _ -> node_fn (Mk_expr.mk_reward()) x in
+          List.map nodes ~f:fn
   (* If depth is not 1 then recurse *)
   | _ ->  let len = List.length nodes in
           let fn = 
             fun x ->  match (List.find cache ~f:(fun y -> String.equal x y)) with
-                      | None -> "false"
-                      | _    -> let l = mk_depth_h (depth-1) nodes (x :: cache) in
-                                let (_, decvar, choices) = Mk_expr.mk_dec len in
-                                let e = Mk_expr.mk_choosewith decvar choices l in
+                      | Some(_) -> "false"
+                      | None    -> let l = mk_depth_h (depth-1) nodes (x :: cache) in
+                                let (dec, decvar, choices) = Mk_expr.mk_dec len in
+                                let e = String.concat ~sep:"\n" 
+                                          [dec; Mk_expr.mk_choosewith decvar choices l] in
                                 node_fn e x in
           List.map nodes ~f:fn
 
 (* This function creates the actual decision problem. *)
-let mk_ladder (cols : int) = 
+let mk_ladder (cols : int) (depth : int) = 
+  if cols < 2 then failwith "Make sure cols >= 2!";
+  if depth > cols then failwith "Make sure depth <= cols!";
   let (program, v1, v2, nodes) = mk_ladder_h cols in
   let obs = Mk_expr.mk_observe ("!" ^ v1 ^ " && " ^ "!" ^ v2) in
   let (dec, decvar, choices) = Mk_expr.mk_dec (List.length nodes) in
-  let map = List.map nodes 
-              ~f:(fun x -> Mk_expr.mk_ite ("!" ^ x) [Mk_expr.mk_reward () ; Mk_expr.mk_reward ()]) in
-  let rws = Mk_expr.mk_choosewith decvar choices map in
-  String.concat ~sep:"\n" [program ; obs ; dec ; rws]
-
-let mk_ladder_test (cols : int) (depth: int) = 
-  let (program, v1, v2, nodes) = mk_ladder_h cols in
-  let obs = Mk_expr.mk_observe ("!" ^ v1 ^ " && " ^ "!" ^ v2) in
-  let (dec, decvar, choices) = Mk_expr.mk_dec (List.length nodes) in
-  let map = mk_depth_h depth nodes in
+  let map = mk_depth_h depth nodes [] in
   let rws = Mk_expr.mk_choosewith decvar choices map in
   String.concat ~sep:"\n" [program ; obs ; dec ; rws]
 
@@ -198,14 +196,15 @@ let mk_ladder_dt (cols : int) =
   let program' = mk_choosewith pr l in
   program @ [rule ; rule'] @ evidence @ program'
 
-let to_file_ladder (cols : int) = 
-  let program = mk_ladder cols in 
-  let filename = "experiments/ladder/ladder" ^(Int.to_string cols) ^ ".dappl" in
+let to_file_ladder (cols : int) (depth : int)= 
+  let col_str, depth_str = Int.to_string cols, Int.to_string depth in
+  let program = mk_ladder cols depth in 
+  let filename = "experiments/ladder/ladder" ^ col_str ^ "_" ^ depth_str ^ ".dappl" in
   let oc = Out_channel.create filename in 
   Printf.fprintf oc "%s\n" program; Out_channel.close oc;
   Printf.printf "Generated MDP benchmark with %n columns at %s, run\ndappl run %s to see MEU\n" cols filename filename;
   let program = mk_ladder_dt cols in 
-  let filename = "experiments/ladder/ladder" ^(Int.to_string cols) ^ ".pl" in
+  let filename = "experiments/ladder/ladder" ^ col_str ^ ".pl" in
   let oc = Out_channel.create filename in 
   Printf.fprintf oc "%s\n" (print_program program); Out_channel.close oc;
-  Printf.printf "Generated MDP benchmark with %n columns at %s, run\ndappl run %s to see MEU\n" cols filename filename;
+  Printf.printf "Generated MDP benchmark with %n columns at %s, run\ndappl run %s to see MEU\n" cols filename filename

@@ -9,13 +9,5 @@ b7 <- ( if ( b3 ) then ( if ( flip 0.001 ) then ( false ) else ( !f5 ) ) else ( 
 observe( !b6 && !b7 );
 d10 <- [ c9, c8 ];
 choose d10 with
-| c9 -> ( if ( !b3 ) then ( reward 20 ) else ( 
-  choose d10 with
-  | c9 -> false
-  | c8 -> reward 28
- ) )
-| c8 -> ( if ( !b4 ) then ( reward 0 ) else ( 
-  choose d10 with
-  | c9 -> false
-  | c8 -> if ( !b3 ) then ( reward 20 ) else (reward 4)
- ) )
+| c9 -> ( if ( !b3 ) then ( reward 85 ) else ( reward 44 ) )
+| c8 -> ( if ( !b4 ) then ( reward 41 ) else ( reward 82 ) )

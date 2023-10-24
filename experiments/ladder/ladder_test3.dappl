@@ -1,0 +1,18 @@
+b16 <- ( true );
+b17 <- ( false );
+f18 <- ( flip 0.5 );
+b19 <- ( if ( b16 ) then ( if ( flip 0.001 ) then ( false ) else ( f18 ) ) else ( if ( b17 ) then ( f18 ) else ( false ) ) );
+b20 <- ( if ( b16 ) then ( if ( flip 0.001 ) then ( false ) else ( !f18 ) ) else ( if ( b17 ) then ( !f18 ) else ( false ) ) );
+f21 <- ( flip 0.5 );
+b22 <- ( if ( b19 ) then ( if ( flip 0.001 ) then ( false ) else ( f21 ) ) else ( if ( b20 ) then ( f21 ) else ( false ) ) );
+b23 <- ( if ( b19 ) then ( if ( flip 0.001 ) then ( false ) else ( !f21 ) ) else ( if ( b20 ) then ( !f21 ) else ( false ) ) );
+f24 <- ( flip 0.5 );
+b25 <- ( if ( b22 ) then ( if ( flip 0.001 ) then ( false ) else ( f24 ) ) else ( if ( b23 ) then ( f24 ) else ( false ) ) );
+b26 <- ( if ( b22 ) then ( if ( flip 0.001 ) then ( false ) else ( !f24 ) ) else ( if ( b23 ) then ( !f24 ) else ( false ) ) );
+observe( !b25 && !b26 );
+d31 <- [ c30, c29, c28, c27 ];
+choose d31 with
+| c30 -> ( if ( !b19 ) then ( reward 70 ) else ( reward 21 ) )
+| c29 -> ( if ( !b20 ) then ( reward 85 ) else ( reward 17 ) )
+| c28 -> ( if ( !b22 ) then ( reward 78 ) else ( reward 49 ) )
+| c27 -> ( if ( !b23 ) then ( reward 12 ) else ( reward 15 ) )

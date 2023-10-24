@@ -1,5 +1,5 @@
-1 :: f1 .
-0 :: f2 .
+1.0 :: f1 .
+0.0 :: f2 .
 0.5 :: f3 .
 0.0001 :: f4 .
 0.0001 :: f5 .
@@ -20,12 +20,12 @@ evidence( r13 , false ).
 ? :: c15 .
 ? :: c14 .
 r19 :- not(c14), c15, not(r6) .
-utility( r19 , 20 ).
+utility( r19 , 78 ).
 r18 :- not(c14), c15, r6 .
-utility( r18 , 4 ).
+utility( r18 , 49 ).
 r17 :- c14, not(c15), not(r7) .
-utility( r17 , 0 ).
+utility( r17 , 85 ).
 r16 :- c14, not(c15), r7 .
-utility( r16 , 39 ).
+utility( r16 , 17 ).
 query( c15 ).
 query( c14 ).
