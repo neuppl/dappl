@@ -1,0 +1,100 @@
+b0 <- ( true );
+b1 <- ( false );
+f2 <- ( flip 0.5 );
+b3 <- ( if ( b0 ) then ( if ( flip 0.001 ) then ( false ) else ( f2 ) ) else ( if ( b1 ) then ( f2 ) else ( false ) ) );
+b4 <- ( if ( b0 ) then ( if ( flip 0.001 ) then ( false ) else ( !f2 ) ) else ( if ( b1 ) then ( !f2 ) else ( false ) ) );
+f5 <- ( flip 0.5 );
+b6 <- ( if ( b3 ) then ( if ( flip 0.001 ) then ( false ) else ( f5 ) ) else ( if ( b4 ) then ( f5 ) else ( false ) ) );
+b7 <- ( if ( b3 ) then ( if ( flip 0.001 ) then ( false ) else ( !f5 ) ) else ( if ( b4 ) then ( !f5 ) else ( false ) ) );
+f8 <- ( flip 0.5 );
+b9 <- ( if ( b6 ) then ( if ( flip 0.001 ) then ( false ) else ( f8 ) ) else ( if ( b7 ) then ( f8 ) else ( false ) ) );
+b10 <- ( if ( b6 ) then ( if ( flip 0.001 ) then ( false ) else ( !f8 ) ) else ( if ( b7 ) then ( !f8 ) else ( false ) ) );
+f11 <- ( flip 0.5 );
+b12 <- ( if ( b9 ) then ( if ( flip 0.001 ) then ( false ) else ( f11 ) ) else ( if ( b10 ) then ( f11 ) else ( false ) ) );
+b13 <- ( if ( b9 ) then ( if ( flip 0.001 ) then ( false ) else ( !f11 ) ) else ( if ( b10 ) then ( !f11 ) else ( false ) ) );
+f14 <- ( flip 0.5 );
+b15 <- ( if ( b12 ) then ( if ( flip 0.001 ) then ( false ) else ( f14 ) ) else ( if ( b13 ) then ( f14 ) else ( false ) ) );
+b16 <- ( if ( b12 ) then ( if ( flip 0.001 ) then ( false ) else ( !f14 ) ) else ( if ( b13 ) then ( !f14 ) else ( false ) ) );
+observe( !b15 && !b16 );
+d25 <- [ c24, c23, c22, c21, c20, c19, c18, c17 ];
+choose d25 with
+| c24 -> ( if ( !b3 ) then ( reward 15 ) else ( d34 <- [ c33, c32, c31, c30, c29, c28, c27, c26 ];
+choose d34 with
+| c33 -> ( false )
+| c32 -> ( if ( !b4 ) then ( reward 85 ) else ( reward 44 ) )
+| c31 -> ( if ( !b6 ) then ( reward 41 ) else ( reward 82 ) )
+| c30 -> ( if ( !b7 ) then ( reward 0 ) else ( reward 39 ) )
+| c29 -> ( if ( !b9 ) then ( reward 20 ) else ( reward 4 ) )
+| c28 -> ( if ( !b10 ) then ( reward 70 ) else ( reward 21 ) )
+| c27 -> ( if ( !b12 ) then ( reward 85 ) else ( reward 17 ) )
+| c26 -> ( if ( !b13 ) then ( reward 78 ) else ( reward 49 ) ) ) )
+| c23 -> ( if ( !b4 ) then ( reward 70 ) else ( d43 <- [ c42, c41, c40, c39, c38, c37, c36, c35 ];
+choose d43 with
+| c42 -> ( if ( !b3 ) then ( reward 1 ) else ( reward 12 ) )
+| c41 -> ( false )
+| c40 -> ( if ( !b6 ) then ( reward 28 ) else ( reward 6 ) )
+| c39 -> ( if ( !b7 ) then ( reward 89 ) else ( reward 69 ) )
+| c38 -> ( if ( !b9 ) then ( reward 14 ) else ( reward 93 ) )
+| c37 -> ( if ( !b10 ) then ( reward 23 ) else ( reward 23 ) )
+| c36 -> ( if ( !b12 ) then ( reward 96 ) else ( reward 44 ) )
+| c35 -> ( if ( !b13 ) then ( reward 0 ) else ( reward 3 ) ) ) )
+| c22 -> ( if ( !b6 ) then ( reward 84 ) else ( d52 <- [ c51, c50, c49, c48, c47, c46, c45, c44 ];
+choose d52 with
+| c51 -> ( if ( !b3 ) then ( reward 12 ) else ( reward 49 ) )
+| c50 -> ( if ( !b4 ) then ( reward 11 ) else ( reward 55 ) )
+| c49 -> ( false )
+| c48 -> ( if ( !b7 ) then ( reward 97 ) else ( reward 57 ) )
+| c47 -> ( if ( !b9 ) then ( reward 60 ) else ( reward 97 ) )
+| c46 -> ( if ( !b10 ) then ( reward 63 ) else ( reward 83 ) )
+| c45 -> ( if ( !b12 ) then ( reward 99 ) else ( reward 20 ) )
+| c44 -> ( if ( !b13 ) then ( reward 70 ) else ( reward 59 ) ) ) )
+| c21 -> ( if ( !b7 ) then ( reward 22 ) else ( d61 <- [ c60, c59, c58, c57, c56, c55, c54, c53 ];
+choose d61 with
+| c60 -> ( if ( !b3 ) then ( reward 20 ) else ( reward 43 ) )
+| c59 -> ( if ( !b4 ) then ( reward 54 ) else ( reward 46 ) )
+| c58 -> ( if ( !b6 ) then ( reward 88 ) else ( reward 18 ) )
+| c57 -> ( false )
+| c56 -> ( if ( !b9 ) then ( reward 24 ) else ( reward 58 ) )
+| c55 -> ( if ( !b10 ) then ( reward 9 ) else ( reward 51 ) )
+| c54 -> ( if ( !b12 ) then ( reward 76 ) else ( reward 69 ) )
+| c53 -> ( if ( !b13 ) then ( reward 38 ) else ( reward 86 ) ) ) )
+| c20 -> ( if ( !b9 ) then ( reward 35 ) else ( d70 <- [ c69, c68, c67, c66, c65, c64, c63, c62 ];
+choose d70 with
+| c69 -> ( if ( !b3 ) then ( reward 52 ) else ( reward 65 ) )
+| c68 -> ( if ( !b4 ) then ( reward 83 ) else ( reward 19 ) )
+| c67 -> ( if ( !b6 ) then ( reward 40 ) else ( reward 82 ) )
+| c66 -> ( if ( !b7 ) then ( reward 35 ) else ( reward 70 ) )
+| c65 -> ( false )
+| c64 -> ( if ( !b10 ) then ( reward 91 ) else ( reward 36 ) )
+| c63 -> ( if ( !b12 ) then ( reward 24 ) else ( reward 68 ) )
+| c62 -> ( if ( !b13 ) then ( reward 56 ) else ( reward 22 ) ) ) )
+| c19 -> ( if ( !b10 ) then ( reward 89 ) else ( d79 <- [ c78, c77, c76, c75, c74, c73, c72, c71 ];
+choose d79 with
+| c78 -> ( if ( !b3 ) then ( reward 36 ) else ( reward 28 ) )
+| c77 -> ( if ( !b4 ) then ( reward 53 ) else ( reward 33 ) )
+| c76 -> ( if ( !b6 ) then ( reward 69 ) else ( reward 71 ) )
+| c75 -> ( if ( !b7 ) then ( reward 57 ) else ( reward 95 ) )
+| c74 -> ( if ( !b9 ) then ( reward 24 ) else ( reward 92 ) )
+| c73 -> ( false )
+| c72 -> ( if ( !b12 ) then ( reward 78 ) else ( reward 46 ) )
+| c71 -> ( if ( !b13 ) then ( reward 88 ) else ( reward 33 ) ) ) )
+| c18 -> ( if ( !b12 ) then ( reward 36 ) else ( d88 <- [ c87, c86, c85, c84, c83, c82, c81, c80 ];
+choose d88 with
+| c87 -> ( if ( !b3 ) then ( reward 58 ) else ( reward 95 ) )
+| c86 -> ( if ( !b4 ) then ( reward 1 ) else ( reward 93 ) )
+| c85 -> ( if ( !b6 ) then ( reward 13 ) else ( reward 56 ) )
+| c84 -> ( if ( !b7 ) then ( reward 13 ) else ( reward 29 ) )
+| c83 -> ( if ( !b9 ) then ( reward 17 ) else ( reward 0 ) )
+| c82 -> ( if ( !b10 ) then ( reward 71 ) else ( reward 86 ) )
+| c81 -> ( false )
+| c80 -> ( if ( !b13 ) then ( reward 48 ) else ( reward 24 ) ) ) )
+| c17 -> ( if ( !b13 ) then ( reward 61 ) else ( d97 <- [ c96, c95, c94, c93, c92, c91, c90, c89 ];
+choose d97 with
+| c96 -> ( if ( !b3 ) then ( reward 71 ) else ( reward 11 ) )
+| c95 -> ( if ( !b4 ) then ( reward 65 ) else ( reward 32 ) )
+| c94 -> ( if ( !b6 ) then ( reward 31 ) else ( reward 49 ) )
+| c93 -> ( if ( !b7 ) then ( reward 69 ) else ( reward 50 ) )
+| c92 -> ( if ( !b9 ) then ( reward 12 ) else ( reward 58 ) )
+| c91 -> ( if ( !b10 ) then ( reward 1 ) else ( reward 83 ) )
+| c90 -> ( if ( !b12 ) then ( reward 9 ) else ( reward 96 ) )
+| c89 -> ( false ) ) )

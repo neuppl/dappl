@@ -40,10 +40,13 @@ let gen_tests =
     ~readme:(fun () -> "TEST = mdp, n = an integer.")
      (let%map_open.Command 
       test = anon ("test" %: string)
-      and n = anon ("n" %: int) in
+      and n = anon ("n" %: int) 
+      and d = anon (maybe ("d" %: int)) in
       fun () -> match test with 
       | "mdp"         ->  Dappl_benchmarks.to_file_mdp n
-      | "ladder"         ->  Dappl_benchmarks.to_file_ladder n
+      | "ladder"      ->  (match d with 
+                          | None -> failwith "No depth specified for ladder!"
+                          | Some(x) -> Dappl_benchmarks.to_file_ladder n x)
       | "earthquake"  ->  Gen.mk_earthquake_to_file n
       | "asia"        ->  Gen.mk_asia_to_file n
       | "survey"      ->  Gen.mk_survey_to_file n
