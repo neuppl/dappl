@@ -31,6 +31,13 @@ let flip_lit (l : literal) =
   | Var s -> Not s
   | Not s -> Var s
 
+let lit_same_name (x : literal) (y : literal) =
+match x,y with 
+| Var(x), Var(y) -> String.equal x y
+| Not(x), Var(y) -> String.equal x y
+| Var(x), Not(y) -> String.equal x y
+| Not(x), Not(y) -> String.equal x y
+
 (* There are four types of clauses: 
   1. variable declarations 0.5 :: fliphalf .
   2. choice declarations ? :: decision .
@@ -129,10 +136,17 @@ let mk_rule (v : literal) (l : literal list) =
 
 (* produces an expression
   ? :: v_0 ... ? :: v_i *)
-let mk_dec (i : int) :  literal list * problog_program = 
-  let l = List.init i ~f:(fun _ -> mk_literal Choice true) in
-  let l' = List.map ~f:(fun v -> Choice v) l in
-  (l, l')
+let mk_dec ?(names = []) (i : int):  literal list * problog_program = 
+  match names with
+  | [] ->
+    let l = List.init i ~f:(fun _ -> mk_literal Choice true) in
+    let l' = List.map ~f:(fun v -> Choice v) l in
+    (l, l')
+  | _ ->
+    let l = List.map ~f:(fun v -> Var v) names in
+    let l' = List.map ~f:(fun v -> Choice v) l in
+    (l, l')
+
 
 (* Propagates a literal l across rules in program p *)
 let rec propagate_literal (l : literal) (p : problog_program) : problog_program =

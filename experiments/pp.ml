@@ -6,7 +6,6 @@
 
 open Dappl.Core_grammar
 open Core
-open Mk_expr_dt
 
 let map_tab (s : string list) = List.map s ~f:(fun str -> "\t"^str)
 
@@ -68,27 +67,3 @@ and pp_dappl_h (dappl : expr) : string list =
   | e                   ->  [pp_dappl_h_bool e]
 
 let pp_dappl (dappl : expr) = String.concat ~sep:"\n" (pp_dappl_h dappl)
-
-let pp_dtproblog_h_bool (dappl : expr) : string = 
-  match dappl with 
-  | True                ->  "true"
-  | False               ->  "false"
-  | And (_x,_y)           ->  failwith "TODO"
-  | Or (_x,_y)            ->  failwith "TODO"
-  | Xor (_x,_y)           ->  failwith "TODO"
-  | Not _x               ->  failwith "TODO"
-  | _                   ->  failwith "TODO"
-and pp_dtproblog_h (dappl : expr) (_seen : literal list): clause list =
-  match dappl with
-  | Ite (_x,_y,_z)         ->  failwith "TODO"
-  | ChooseWith (_d, _l)   ->  failwith "TODO"
-  | Flip _n              ->  failwith "TODO"
-  | Reward _k            ->  failwith "TODO"
-  | Decision _l          ->  failwith "TODO"
-  | Bind (_s, _e, _e')     ->  failwith "TODO"
-  | Observe (_e , _e')    ->  failwith "TODO"
-  | Sequence(_e, _e')     ->  failwith "TODO"
-  | Ident _x             ->  failwith "TODO"
-  | _e                   ->  failwith "TODO"
-
-let pp_dtproblog (dappl : expr) = print_program (pp_dtproblog_h dappl [])

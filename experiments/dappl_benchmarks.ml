@@ -182,19 +182,55 @@ let mk_ladder_dt_h (cols : int) =
   let decision_vars = List.drop_last_exn (List.drop_last_exn !list_of_vars) in
   (true_cl :: false_cl :: program, v1, v2, decision_vars) 
 
+let rec extract (l : 'a option list) : 'a list =
+  match l with
+  | [] -> []
+  | x :: xs -> match x with | None -> extract xs | Some v -> v :: extract xs
+
+(* This function creates depth many nested decisions. 
+   depth : specifies the decision nesting depth 
+   nodes : the 2n nodes of the graph 
+   cache : a list of nodes we've seen. the corresponding decisions allocated will be false.
+*)
+let rec mk_depth_h_dt (depth : int) (nodes : literal list) (cache: literal list): problog_program list =
+  if depth < 1 then failwith "unsupported depth; is it >=1?" ;
+  let node_fn = fun a x -> 
+                  let x = flip_lit x in
+                  let (_, p) = mk_reward () in
+                  mk_ite x [p ; a] in
+  match depth with
+  (* If depth is 1 then just do `if var then reward x else reward y` *)
+  | 1 ->  let fn = 
+            fun x -> match (List.find cache ~f:(fun y -> lit_same_name x y)) with
+            | Some(_) -> None
+            | _ ->  let (_, p) = mk_reward () in
+                    Some (node_fn p x) in
+          extract (List.map nodes ~f:fn)
+  (* If depth is not 1 then recurse *)
+  | _ ->  let len = List.length nodes in
+          let fn = 
+            fun x ->  match (List.find cache ~f:(fun y -> lit_same_name x y)) with
+                      | Some(_) -> None
+                      | None    -> let decs = mk_depth_h_dt (depth-1) nodes (x :: cache) in
+                                let (_,p) = mk_dec len in
+                                let e = mk_choosewith p decs in
+                                Some(node_fn e x) in
+          extract (List.map nodes ~f:fn)
+
 (* This function creates the actual decision problem. *)
-let mk_ladder_dt (cols : int) = 
+let mk_ladder_dt (cols : int) (depth : int) = 
+  if cols < 2 then failwith "Make sure cols >= 2!";
+  if depth > cols then failwith "Make sure depth <= cols!";
   let (program, v1, v2, decision_vars) = mk_ladder_dt_h cols in
   let rule = mk_rule_with_newvar [v1]  in
   let rule_lit = extract_literal rule in
   let rule' = mk_rule rule_lit [v2] in
-  let evidence = mk_observe rule_lit false in
+  let obs = mk_observe rule_lit false in
   let (_, pr) = mk_dec (List.length decision_vars) in
-  let init = List.init (List.length decision_vars) ~f:(fun _ -> [snd (mk_reward ()) ; snd (mk_reward ())]) in
-  let l = List.zip_exn (List.map decision_vars ~f:flip_lit) init in
-  let l = List.map l ~f:(fun (a, b) -> mk_ite a b) in
-  let program' = mk_choosewith pr l in
-  program @ [rule ; rule'] @ evidence @ program'
+  let map = mk_depth_h_dt depth decision_vars [] in
+  let rws = mk_choosewith pr map in
+  program @ [rule ; rule'] @ obs @ rws
+
 
 let to_file_ladder (cols : int) (depth : int)= 
   let col_str, depth_str = Int.to_string cols, Int.to_string depth in
@@ -203,8 +239,8 @@ let to_file_ladder (cols : int) (depth : int)=
   let oc = Out_channel.create filename in 
   Printf.fprintf oc "%s\n" program; Out_channel.close oc;
   Printf.printf "Generated MDP benchmark with %n columns at %s, run\ndappl run %s to see MEU\n" cols filename filename;
-  let program = mk_ladder_dt cols in 
-  let filename = "experiments/ladder/ladder" ^ col_str ^ ".pl" in
+  let program = mk_ladder_dt cols depth in 
+  let filename = "experiments/ladder/ladder" ^ col_str ^ "_" ^ depth_str ^ ".pl" in
   let oc = Out_channel.create filename in 
   Printf.fprintf oc "%s\n" (print_program program); Out_channel.close oc;
   Printf.printf "Generated MDP benchmark with %n columns at %s, run\ndappl run %s to see MEU\n" cols filename filename
