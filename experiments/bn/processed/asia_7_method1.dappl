@@ -1,31 +1,34 @@
-// d912 is variable asia
-d912 <- [ c911 ];
-// d914 is variable smoke
-d914 <- [ c913 ];
-// b915 is variable lung
-b915 <- ( if ( d914 ) then ( flip 0.1 ) else ( flip 0.01 ) );
-// b916 is variable tub
-b916 <- ( if ( d912 ) then ( flip 0.05 ) else ( flip 0.01 ) );
-// b917 is variable bronc
-b917 <- ( if ( d914 ) then ( flip 0.6 ) else ( flip 0.3 ) );
-// b922 is variable either
-d919 <- [ c918 ];
-b920 <- ( b915 || b916 );
-b921 <- ( if ( d919 ) then ( flip 0.5 ) else ( false ) );
-b922 <- ( b920 || b921 );
-// b927 is variable xray
-d924 <- [ c923 ];
-b925 <- ( if ( b922 ) then ( flip 0.98 ) else ( flip 0.05 ) );
-b926 <- ( if ( d924 ) then ( flip 0.98 ) else ( false ) );
-b927 <- ( b925 || b926 );
-// b928 is variable dysp
-b928 <- ( if ( b917 ) then ( if ( b922 ) then ( flip 0.9 ) else ( flip 0.8 ) ) else ( if ( b922 ) then ( flip 0.7 ) else ( flip 0.1 ) ) );
-b929 <- ( if ( d912 ) then ( reward 67 ) else ( reward 62 ) );
-b930 <- ( if ( d914 ) then ( reward 24 ) else ( reward 71 ) );
-
-b931 <- ( if ( b916 ) then ( reward 71 ) else ( true ) );
-b932 <- ( if ( b917 ) then ( reward 1 ) else ( reward 34 ) );
-
-b933 <- ( if ( b927 ) then ( reward 48 ) else ( true ) );
-b934 <- ( if ( b928 ) then ( true ) else ( reward 46 ) );
-b929 && b930 && b915 && b931 && b932 && b922 && b933 && b934
+// d889 is variable asia
+d889 <- [ c888 ];
+// d891 is variable smoke
+d891 <- [ c890 ];
+// b892 is variable lung
+b892 <- ( if ( d891 ) then ( flip 0.1 ) else ( flip 0.01 ) );
+// b893 is variable tub
+b893 <- ( if ( d889 ) then ( flip 0.05 ) else ( flip 0.01 ) );
+// b898 is variable bronc
+d895 <- [ c894 ];
+b896 <- ( if ( d891 ) then ( flip 0.6 ) else ( flip 0.3 ) );
+b897 <- ( if ( d895 ) then ( flip 0.6 ) else ( false ) );
+b898 <- ( b896 || b897 );
+// b899 is variable either
+b899 <- ( b892 || b893 );
+// b904 is variable xray
+d901 <- [ c900 ];
+b902 <- ( if ( b899 ) then ( flip 0.98 ) else ( flip 0.05 ) );
+b903 <- ( if ( d901 ) then ( flip 0.98 ) else ( false ) );
+b904 <- ( b902 || b903 );
+// b909 is variable dysp
+d906 <- [ c905 ];
+b907 <- ( if ( b898 ) then ( if ( b899 ) then ( flip 0.9 ) else ( flip 0.8 ) ) else ( if ( b899 ) then ( flip 0.7 ) else ( flip 0.1 ) ) );
+b908 <- ( if ( d906 ) then ( flip 0.9 ) else ( false ) );
+b909 <- ( b907 || b908 );
+b910 <- ( if ( d889 ) then ( reward 97 ) else ( true ) );
+b911 <- ( if ( d891 ) then ( reward 36 ) else ( true ) );
+b912 <- ( if ( b892 ) then ( reward 26 ) else ( true ) );
+b913 <- ( if ( b893 ) then ( reward 85 ) else ( true ) );
+b914 <- ( if ( b898 ) then ( true ) else ( reward 63 ) );
+b915 <- ( if ( b899 ) then ( reward 76 ) else ( true ) );
+b916 <- ( if ( b904 ) then ( reward 20 ) else ( reward 90 ) );
+b917 <- ( if ( b909 ) then ( reward 81 ) else ( true ) );
+b910 && b911 && b912 && b913 && b914 && b915 && b916 && b917

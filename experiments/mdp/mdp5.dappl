@@ -1,25 +1,25 @@
 f20 <- ( flip 0.91051862764638747 );
 d23 <- [ c22, c21 ];
-if f20 then ( choose d23 with
+if ( f20 ) then ( choose d23 with
 | c22 -> ( reward 15 )
 | c21 -> ( reward 78 ) ) else ( f13 <- ( flip 0.67399547680489058 );
 d19 <- [ c18, c17, c16, c15, c14 ];
-if f13 then ( choose d19 with
+if ( f13 ) then ( choose d19 with
 | c18 -> ( reward 49 )
 | c17 -> ( reward 85 )
 | c16 -> ( reward 17 )
 | c15 -> ( reward 70 )
 | c14 -> ( reward 21 ) ) else ( f9 <- ( flip 0.78435865007230765 );
 d12 <- [ c11, c10 ];
-if f9 then ( choose d12 with
+if ( f9 ) then ( choose d12 with
 | c11 -> ( reward 20 )
 | c10 -> ( reward 4 ) ) else ( f5 <- ( flip 0.66507712584402734 );
 d8 <- [ c7, c6 ];
-if f5 then ( choose d8 with
+if ( f5 ) then ( choose d8 with
 | c7 -> ( reward 0 )
 | c6 -> ( reward 39 ) ) else ( f0 <- ( flip 0.32172344106784706 );
 d4 <- [ c3, c2, c1 ];
-if f0 then ( choose d4 with
+if ( f0 ) then ( choose d4 with
 | c3 -> ( reward 41 )
 | c2 -> ( reward 82 )
 | c1 -> ( reward 85 ) ) else ( reward 44 ) ) ) ) )

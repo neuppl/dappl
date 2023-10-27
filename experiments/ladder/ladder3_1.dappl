@@ -10,9 +10,11 @@ f8 <- ( flip 0.5 );
 b9 <- ( if ( b6 ) then ( if ( flip 0.001 ) then ( false ) else ( f8 ) ) else ( if ( b7 ) then ( f8 ) else ( false ) ) );
 b10 <- ( if ( b6 ) then ( if ( flip 0.001 ) then ( false ) else ( !f8 ) ) else ( if ( b7 ) then ( !f8 ) else ( false ) ) );
 observe( !b9 && !b10 );
-d15 <- [ c14, c13, c12, c11 ];
-choose d15 with
-| c14 -> ( if ( !b3 ) then ( reward 85 ) else ( reward 44 ) )
-| c13 -> ( if ( !b4 ) then ( reward 41 ) else ( reward 82 ) )
-| c12 -> ( if ( !b6 ) then ( reward 0 ) else ( reward 39 ) )
-| c11 -> ( if ( !b7 ) then ( reward 20 ) else ( reward 4 ) )
+d17 <- [ c16, c15, c14, c13, c12, c11 ];
+choose d17 with
+| c16 -> ( if ( !b3 ) then ( reward 85 ) else ( reward 44 ) )
+| c15 -> ( if ( !b4 ) then ( reward 41 ) else ( reward 82 ) )
+| c14 -> ( if ( !b6 ) then ( reward 0 ) else ( reward 39 ) )
+| c13 -> ( if ( !b7 ) then ( reward 20 ) else ( reward 4 ) )
+| c12 -> ( if ( !b9 ) then ( reward 70 ) else ( reward 21 ) )
+| c11 -> ( if ( !b10 ) then ( reward 85 ) else ( reward 17 ) )

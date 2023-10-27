@@ -1,8 +1,0 @@
-b6 <- ( true );
-b7 <- ( false );
-f8 <- ( flip 0.5 );
-b9 <- ( if ( b6 ) then ( if ( flip 0.001 ) then ( false ) else ( f8 ) ) else ( if ( b7 ) then ( f8 ) else ( false ) ) );
-b10 <- ( if ( b6 ) then ( if ( flip 0.001 ) then ( false ) else ( !f8 ) ) else ( if ( b7 ) then ( !f8 ) else ( false ) ) );
-observe( !b9 && !b10 );
-d11 <- [  ];
-choose d11 with

@@ -10,29 +10,47 @@ f8 <- ( flip 0.5 );
 b9 <- ( if ( b6 ) then ( if ( flip 0.001 ) then ( false ) else ( f8 ) ) else ( if ( b7 ) then ( f8 ) else ( false ) ) );
 b10 <- ( if ( b6 ) then ( if ( flip 0.001 ) then ( false ) else ( !f8 ) ) else ( if ( b7 ) then ( !f8 ) else ( false ) ) );
 observe( !b9 && !b10 );
-d15 <- [ c14, c13, c12, c11 ];
-choose d15 with
-| c14 -> ( if ( !b3 ) then ( reward 4 ) else ( d20 <- [ c19, c18, c17, c16 ];
-choose d20 with
-| c19 -> ( false )
-| c18 -> ( if ( !b4 ) then ( reward 85 ) else ( reward 44 ) )
-| c17 -> ( if ( !b6 ) then ( reward 41 ) else ( reward 82 ) )
-| c16 -> ( if ( !b7 ) then ( reward 0 ) else ( reward 39 ) ) ) )
-| c13 -> ( if ( !b4 ) then ( reward 78 ) else ( d25 <- [ c24, c23, c22, c21 ];
-choose d25 with
-| c24 -> ( if ( !b3 ) then ( reward 21 ) else ( reward 20 ) )
-| c23 -> ( false )
-| c22 -> ( if ( !b6 ) then ( reward 17 ) else ( reward 70 ) )
-| c21 -> ( if ( !b7 ) then ( reward 49 ) else ( reward 85 ) ) ) )
-| c12 -> ( if ( !b6 ) then ( reward 89 ) else ( d30 <- [ c29, c28, c27, c26 ];
-choose d30 with
-| c29 -> ( if ( !b3 ) then ( reward 12 ) else ( reward 15 ) )
-| c28 -> ( if ( !b4 ) then ( reward 6 ) else ( reward 1 ) )
-| c27 -> ( false )
-| c26 -> ( if ( !b7 ) then ( reward 69 ) else ( reward 28 ) ) ) )
-| c11 -> ( if ( !b7 ) then ( reward 3 ) else ( d35 <- [ c34, c33, c32, c31 ];
+d17 <- [ c16, c15, c14, c13, c12, c11 ];
+choose d17 with
+| c16 -> ( if ( !b3 ) then ( reward 17 ) else ( d23 <- [ c22, c21, c20, c19, c18 ];
+choose d23 with
+| c22 -> ( if ( !b4 ) then ( reward 85 ) else ( reward 44 ) )
+| c21 -> ( if ( !b6 ) then ( reward 41 ) else ( reward 82 ) )
+| c20 -> ( if ( !b7 ) then ( reward 0 ) else ( reward 39 ) )
+| c19 -> ( if ( !b9 ) then ( reward 20 ) else ( reward 4 ) )
+| c18 -> ( if ( !b10 ) then ( reward 70 ) else ( reward 21 ) ) ) )
+| c15 -> ( if ( !b4 ) then ( reward 93 ) else ( d29 <- [ c28, c27, c26, c25, c24 ];
+choose d29 with
+| c28 -> ( if ( !b3 ) then ( reward 49 ) else ( reward 85 ) )
+| c27 -> ( if ( !b6 ) then ( reward 15 ) else ( reward 78 ) )
+| c26 -> ( if ( !b7 ) then ( reward 1 ) else ( reward 12 ) )
+| c25 -> ( if ( !b9 ) then ( reward 28 ) else ( reward 6 ) )
+| c24 -> ( if ( !b10 ) then ( reward 89 ) else ( reward 69 ) ) ) )
+| c14 -> ( if ( !b6 ) then ( reward 55 ) else ( d35 <- [ c34, c33, c32, c31, c30 ];
 choose d35 with
-| c34 -> ( if ( !b3 ) then ( reward 14 ) else ( reward 93 ) )
-| c33 -> ( if ( !b4 ) then ( reward 23 ) else ( reward 23 ) )
-| c32 -> ( if ( !b6 ) then ( reward 96 ) else ( reward 44 ) )
-| c31 -> ( false ) ) )
+| c34 -> ( if ( !b3 ) then ( reward 23 ) else ( reward 14 ) )
+| c33 -> ( if ( !b4 ) then ( reward 44 ) else ( reward 23 ) )
+| c32 -> ( if ( !b7 ) then ( reward 3 ) else ( reward 96 ) )
+| c31 -> ( if ( !b9 ) then ( reward 70 ) else ( reward 0 ) )
+| c30 -> ( if ( !b10 ) then ( reward 12 ) else ( reward 49 ) ) ) )
+| c13 -> ( if ( !b7 ) then ( reward 70 ) else ( d41 <- [ c40, c39, c38, c37, c36 ];
+choose d41 with
+| c40 -> ( if ( !b3 ) then ( reward 57 ) else ( reward 11 ) )
+| c39 -> ( if ( !b4 ) then ( reward 97 ) else ( reward 97 ) )
+| c38 -> ( if ( !b6 ) then ( reward 83 ) else ( reward 60 ) )
+| c37 -> ( if ( !b9 ) then ( reward 20 ) else ( reward 63 ) )
+| c36 -> ( if ( !b10 ) then ( reward 59 ) else ( reward 99 ) ) ) )
+| c12 -> ( if ( !b9 ) then ( reward 9 ) else ( d47 <- [ c46, c45, c44, c43, c42 ];
+choose d47 with
+| c46 -> ( if ( !b3 ) then ( reward 43 ) else ( reward 84 ) )
+| c45 -> ( if ( !b4 ) then ( reward 46 ) else ( reward 20 ) )
+| c44 -> ( if ( !b6 ) then ( reward 18 ) else ( reward 54 ) )
+| c43 -> ( if ( !b7 ) then ( reward 58 ) else ( reward 88 ) )
+| c42 -> ( if ( !b10 ) then ( reward 51 ) else ( reward 24 ) ) ) )
+| c11 -> ( if ( !b10 ) then ( reward 40 ) else ( d53 <- [ c52, c51, c50, c49, c48 ];
+choose d53 with
+| c52 -> ( if ( !b3 ) then ( reward 76 ) else ( reward 69 ) )
+| c51 -> ( if ( !b4 ) then ( reward 38 ) else ( reward 86 ) )
+| c50 -> ( if ( !b6 ) then ( reward 65 ) else ( reward 22 ) )
+| c49 -> ( if ( !b7 ) then ( reward 19 ) else ( reward 52 ) )
+| c48 -> ( if ( !b9 ) then ( reward 82 ) else ( reward 83 ) ) ) )

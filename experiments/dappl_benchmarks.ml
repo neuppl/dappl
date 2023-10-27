@@ -92,6 +92,16 @@ let to_file_mdp (cols : int) =
   n is the number of tries. It must be the case that n <= 2m.
 *)
 
+let rec extract (l : 'a option list) : 'a list =
+  match l with
+  | [] -> []
+  | x :: xs -> match x with | None -> extract xs | Some v -> v :: extract xs
+
+let rec remove (l : 'a list) (elt : 'a) (eq: 'a -> 'a -> bool): 'a list =
+  match l with
+  | [] -> []
+  | x :: xs -> if eq x elt then remove xs elt eq else x :: remove xs elt eq
+
 (* This function, given two varnames, creates a new ladder column. *)
 let mk_column_network (o1 : varname) (o2 : varname) = 
   let (f, fv) = Mk_expr.mk_flip_det 0.5 in
@@ -116,7 +126,7 @@ let mk_ladder_h (n : int) =
   let l = List.init n ~f:(fun _ -> ()) in
   let init = (String.concat ~sep:"\n" [init1; init2], v1, v2) in
   let (program, v1, v2) = List.fold l ~init:init ~f:fold_fn in
-  let nodes = List.drop_last_exn (List.drop_last_exn !list_of_vars) in
+  let nodes = !list_of_vars in
   (program, v1, v2, nodes) 
 
 (* This function creates depth many nested decisions. 
@@ -131,20 +141,21 @@ let rec mk_depth_h (depth : int) (nodes : varname list) (cache: varname list): s
   (* If depth is 1 then just do `if var then reward x else reward y` *)
   | 1 ->  let fn = 
             fun x -> match (List.find cache ~f:(fun y -> String.equal x y)) with
-            | Some(_) -> "false"
-            | _ -> node_fn (Mk_expr.mk_reward()) x in
-          List.map nodes ~f:fn
+            | Some(_) -> None
+            | _ -> Some(node_fn (Mk_expr.mk_reward()) x) in
+          extract (List.map nodes ~f:fn)
   (* If depth is not 1 then recurse *)
-  | _ ->  let len = List.length nodes in
-          let fn = 
+  | _ ->  let fn = 
             fun x ->  match (List.find cache ~f:(fun y -> String.equal x y)) with
-                      | Some(_) -> "false"
-                      | None    -> let l = mk_depth_h (depth-1) nodes (x :: cache) in
-                                let (dec, decvar, choices) = Mk_expr.mk_dec len in
-                                let e = String.concat ~sep:"\n" 
-                                          [dec; Mk_expr.mk_choosewith decvar choices l] in
-                                node_fn e x in
-          List.map nodes ~f:fn
+                      | Some(_) ->  None
+                      | None    ->  let nodes' = remove nodes x String.equal in
+                                    let len = List.length nodes' in
+                                    let l = mk_depth_h (depth-1) nodes' (x :: cache) in
+                                    let (dec, decvar, choices) = Mk_expr.mk_dec len in
+                                    let e = String.concat ~sep:"\n" 
+                                            [dec; Mk_expr.mk_choosewith decvar choices l] in
+                                    Some (node_fn e x) in
+          extract (List.map nodes ~f:fn)
 
 (* This function creates the actual decision problem. *)
 let mk_ladder (cols : int) (depth : int) = 
@@ -179,13 +190,8 @@ let mk_ladder_dt_h (cols : int) =
                   (s @ fs, w, w') in
   let l = List.init cols ~f:(fun _ -> ()) in
   let (program, v1, v2) = List.fold l ~init:([], true_lit, false_lit) ~f:fold_fn in
-  let decision_vars = List.drop_last_exn (List.drop_last_exn !list_of_vars) in
+  let decision_vars = !list_of_vars in
   (true_cl :: false_cl :: program, v1, v2, decision_vars) 
-
-let rec extract (l : 'a option list) : 'a list =
-  match l with
-  | [] -> []
-  | x :: xs -> match x with | None -> extract xs | Some v -> v :: extract xs
 
 (* This function creates depth many nested decisions. 
    depth : specifies the decision nesting depth 
@@ -207,14 +213,16 @@ let rec mk_depth_h_dt (depth : int) (nodes : literal list) (cache: literal list)
                     Some (node_fn p x) in
           extract (List.map nodes ~f:fn)
   (* If depth is not 1 then recurse *)
-  | _ ->  let len = List.length nodes in
+  | _ ->  
           let fn = 
             fun x ->  match (List.find cache ~f:(fun y -> lit_same_name x y)) with
-                      | Some(_) -> None
-                      | None    -> let decs = mk_depth_h_dt (depth-1) nodes (x :: cache) in
-                                let (_,p) = mk_dec len in
-                                let e = mk_choosewith p decs in
-                                Some(node_fn e x) in
+                      | Some(_) ->  None
+                      | None    ->  let nodes = remove nodes x lit_same_name in
+                                    let len = List.length nodes in
+                                    let decs = mk_depth_h_dt (depth-1) nodes (x :: cache) in
+                                    let (_,p) = mk_dec len in
+                                    let e = mk_choosewith p decs in
+                                    Some(node_fn e x) in
           extract (List.map nodes ~f:fn)
 
 (* This function creates the actual decision problem. *)

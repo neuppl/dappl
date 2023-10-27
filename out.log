@@ -1,0 +1,146 @@
+Doing HMM benchmark on Method ./_build/install/default/bin/dappl run 
+Calculating numbers for 1 many columns
+Average: 2.1253824234009997
+Standard Deviation: 0.2623399538080549
+Calculating numbers for 2 many columns
+Average: 1.9670963287340002
+Standard Deviation: 0.33807494239206565
+Calculating numbers for 5 many columns
+Average: 2.0072221756
+Standard Deviation: 0.21062341642674406
+Calculating numbers for 10 many columns
+Average: 2.6939868926999995
+Standard Deviation: 0.4310965285841793
+Calculating numbers for 20 many columns
+Average: 4.147934913635
+Standard Deviation: 0.7293252163153445
+Calculating numbers for 50 many columns
+Average: 14.601182937609998
+Standard Deviation: 1.4710957094131014
+Calculating numbers for 100 many columns
+Average: 49.91261959077
+Standard Deviation: 1.950442876210689
+Calculating numbers for 200 many columns
+Average: 206.47025108350002
+Standard Deviation: 9.126821398194357
+Calculating numbers for 500 many columns
+Average: 1436.35058403
+Standard Deviation: 30.96365256480001
+Calculating numbers for 1000 many columns
+TIMEOUT happened after 5 seconds when calling ./_build/install/default/bin/dappl run experiments/mdp/mdp1000.dappl
+
+Average: nan
+Standard Deviation: nan
+Calculating numbers for 2000 many columns
+TIMEOUT happened after 5 seconds when calling ./_build/install/default/bin/dappl run experiments/mdp/mdp2000.dappl
+
+Average: nan
+Standard Deviation: nan
+Doing HMM benchmark on Method problog dt -v 
+Calculating numbers for 1 many columns
+Average: 3.09
+Standard Deviation: 0.07000000000000005
+Calculating numbers for 2 many columns
+Average: 8.33
+Standard Deviation: 1.1958678856796845
+Calculating numbers for 5 many columns
+TIMEOUT happened after 5 seconds when calling problog dt -v experiments/mdp/mdp5.pl
+
+Average: nan
+Standard Deviation: nan
+Calculating numbers for 10 many columns
+TIMEOUT happened after 5 seconds when calling problog dt -v experiments/mdp/mdp10.pl
+
+Average: nan
+Standard Deviation: nan
+Calculating numbers for 20 many columns
+TIMEOUT happened after 5 seconds when calling problog dt -v experiments/mdp/mdp20.pl
+
+Average: nan
+Standard Deviation: nan
+Calculating numbers for 50 many columns
+TIMEOUT happened after 5 seconds when calling problog dt -v experiments/mdp/mdp50.pl
+
+Average: nan
+Standard Deviation: nan
+Calculating numbers for 100 many columns
+TIMEOUT happened after 5 seconds when calling problog dt -v experiments/mdp/mdp100.pl
+
+Average: nan
+Standard Deviation: nan
+Calculating numbers for 200 many columns
+TIMEOUT happened after 5 seconds when calling problog dt -v experiments/mdp/mdp200.pl
+
+Average: nan
+Standard Deviation: nan
+Calculating numbers for 500 many columns
+TIMEOUT happened after 5 seconds when calling problog dt -v experiments/mdp/mdp500.pl
+
+Average: nan
+Standard Deviation: nan
+Calculating numbers for 1000 many columns
+TIMEOUT happened after 5 seconds when calling problog dt -v experiments/mdp/mdp1000.pl
+
+Average: nan
+Standard Deviation: nan
+Calculating numbers for 2000 many columns
+TIMEOUT happened after 5 seconds when calling problog dt -v experiments/mdp/mdp2000.pl
+
+Average: nan
+Standard Deviation: nan
+Doing HMM benchmark on Method python3 derkinderen/maxeu.py 
+Calculating numbers for 1 many columns
+TIMEOUT happened after 5 seconds when calling python3 derkinderen/maxeu.py experiments/mdp/mdp1.pl
+
+Average: nan
+Standard Deviation: nan
+Calculating numbers for 2 many columns
+TIMEOUT happened after 5 seconds when calling python3 derkinderen/maxeu.py experiments/mdp/mdp2.pl
+
+Average: nan
+Standard Deviation: nan
+Calculating numbers for 5 many columns
+TIMEOUT happened after 5 seconds when calling python3 derkinderen/maxeu.py experiments/mdp/mdp5.pl
+
+Average: nan
+Standard Deviation: nan
+Calculating numbers for 10 many columns
+TIMEOUT happened after 5 seconds when calling python3 derkinderen/maxeu.py experiments/mdp/mdp10.pl
+
+Average: nan
+Standard Deviation: nan
+Calculating numbers for 20 many columns
+TIMEOUT happened after 5 seconds when calling python3 derkinderen/maxeu.py experiments/mdp/mdp20.pl
+
+Average: nan
+Standard Deviation: nan
+Calculating numbers for 50 many columns
+TIMEOUT happened after 5 seconds when calling python3 derkinderen/maxeu.py experiments/mdp/mdp50.pl
+
+Average: nan
+Standard Deviation: nan
+Calculating numbers for 100 many columns
+TIMEOUT happened after 5 seconds when calling python3 derkinderen/maxeu.py experiments/mdp/mdp100.pl
+
+Average: nan
+Standard Deviation: nan
+Calculating numbers for 200 many columns
+TIMEOUT happened after 5 seconds when calling python3 derkinderen/maxeu.py experiments/mdp/mdp200.pl
+
+Average: nan
+Standard Deviation: nan
+Calculating numbers for 500 many columns
+TIMEOUT happened after 5 seconds when calling python3 derkinderen/maxeu.py experiments/mdp/mdp500.pl
+
+Average: nan
+Standard Deviation: nan
+Calculating numbers for 1000 many columns
+TIMEOUT happened after 5 seconds when calling python3 derkinderen/maxeu.py experiments/mdp/mdp1000.pl
+
+Average: nan
+Standard Deviation: nan
+Calculating numbers for 2000 many columns
+TIMEOUT happened after 5 seconds when calling python3 derkinderen/maxeu.py experiments/mdp/mdp2000.pl
+
+Average: nan
+Standard Deviation: nan
