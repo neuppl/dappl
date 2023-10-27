@@ -30,18 +30,18 @@ b1883 <- ( !b1882 && !b1881 );
 b1884 <- ( if ( b1868 && b1870 ) then ( b1872 ) else ( if ( b1868 && b1871 ) then ( b1875 ) else ( if ( b1869 && b1870 ) then ( b1878 ) else ( if ( b1869 && b1871 ) then ( b1881 ) else ( false ) ) ) ) );
 b1885 <- ( if ( b1868 && b1870 ) then ( b1873 ) else ( if ( b1868 && b1871 ) then ( b1876 ) else ( if ( b1869 && b1870 ) then ( b1879 ) else ( if ( b1869 && b1871 ) then ( b1882 ) else ( false ) ) ) ) );
 b1886 <- ( if ( b1868 && b1870 ) then ( b1874 ) else ( if ( b1868 && b1871 ) then ( b1877 ) else ( if ( b1869 && b1870 ) then ( b1880 ) else ( if ( b1869 && b1871 ) then ( b1883 ) else ( false ) ) ) ) );
-b1887 <- ( if ( b1855 ) then ( reward 38 ) else ( reward 98 ) );
+b1887 <- ( if ( b1855 ) then ( reward 47 ) else ( reward 15 ) );
+b1888 <- ( if ( b1856 ) then ( reward 84 ) else ( true ) );
+b1889 <- ( if ( b1857 ) then ( reward 43 ) else ( true ) );
+b1890 <- ( if ( b1858 ) then ( reward 40 ) else ( true ) );
+b1891 <- ( if ( b1859 ) then ( reward 32 ) else ( true ) );
 
+b1892 <- ( if ( b1867 ) then ( reward 69 ) else ( reward 63 ) );
 
-
-b1888 <- ( if ( b1859 ) then ( reward 31 ) else ( reward 68 ) );
-b1889 <- ( if ( b1866 ) then ( reward 45 ) else ( true ) );
-b1890 <- ( if ( b1867 ) then ( reward 16 ) else ( true ) );
-b1891 <- ( if ( b1868 ) then ( reward 92 ) else ( true ) );
-b1892 <- ( if ( b1869 ) then ( reward 92 ) else ( true ) );
-b1893 <- ( if ( b1870 ) then ( reward 68 ) else ( reward 18 ) );
-b1894 <- ( if ( b1871 ) then ( reward 67 ) else ( reward 97 ) );
-b1895 <- ( if ( b1884 ) then ( reward 33 ) else ( true ) );
-b1896 <- ( if ( b1885 ) then ( reward 41 ) else ( reward 7 ) );
-b1897 <- ( if ( b1886 ) then ( true ) else ( reward 73 ) );
-b1887 && b1856 && b1857 && b1858 && b1888 && b1889 && b1890 && b1891 && b1892 && b1893 && b1894 && b1895 && b1896 && b1897
+b1893 <- ( if ( b1869 ) then ( reward 40 ) else ( true ) );
+b1894 <- ( if ( b1870 ) then ( reward 17 ) else ( true ) );
+b1895 <- ( if ( b1871 ) then ( reward 46 ) else ( true ) );
+b1896 <- ( if ( b1884 ) then ( reward 25 ) else ( true ) );
+b1897 <- ( if ( b1885 ) then ( reward 91 ) else ( true ) );
+b1898 <- ( if ( b1886 ) then ( reward 19 ) else ( true ) );
+b1887 && b1888 && b1889 && b1890 && b1891 && b1866 && b1892 && b1868 && b1893 && b1894 && b1895 && b1896 && b1897 && b1898

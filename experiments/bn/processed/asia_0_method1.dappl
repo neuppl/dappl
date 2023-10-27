@@ -1,34 +1,28 @@
-// d435 is variable asia
-d435 <- [ c434 ];
-// d437 is variable smoke
-d437 <- [ c436 ];
-// b438 is variable lung
-b438 <- ( if ( d437 ) then ( flip 0.1 ) else ( flip 0.01 ) );
-// b439 is variable tub
-b439 <- ( if ( d435 ) then ( flip 0.05 ) else ( flip 0.01 ) );
-// b444 is variable bronc
-d441 <- [ c440 ];
-b442 <- ( if ( d437 ) then ( flip 0.6 ) else ( flip 0.3 ) );
-b443 <- ( if ( d441 ) then ( flip 0.6 ) else ( false ) );
-b444 <- ( b442 || b443 );
-// b449 is variable either
-d446 <- [ c445 ];
-b447 <- ( b438 || b439 );
-b448 <- ( if ( d446 ) then ( flip 0.5 ) else ( false ) );
-b449 <- ( b447 || b448 );
-// b454 is variable xray
-d451 <- [ c450 ];
-b452 <- ( if ( b449 ) then ( flip 0.98 ) else ( flip 0.05 ) );
-b453 <- ( if ( d451 ) then ( flip 0.98 ) else ( false ) );
-b454 <- ( b452 || b453 );
-// b455 is variable dysp
-b455 <- ( if ( b444 ) then ( if ( b449 ) then ( flip 0.9 ) else ( flip 0.8 ) ) else ( if ( b449 ) then ( flip 0.7 ) else ( flip 0.1 ) ) );
-b456 <- ( if ( d435 ) then ( reward 68 ) else ( true ) );
-b457 <- ( if ( d437 ) then ( reward 47 ) else ( true ) );
-b458 <- ( if ( b438 ) then ( reward 7 ) else ( reward 6 ) );
-b459 <- ( if ( b439 ) then ( reward 69 ) else ( reward 70 ) );
-b460 <- ( if ( b444 ) then ( reward 46 ) else ( true ) );
-b461 <- ( if ( b449 ) then ( reward 29 ) else ( true ) );
-b462 <- ( if ( b454 ) then ( reward 51 ) else ( reward 22 ) );
-b463 <- ( if ( b455 ) then ( reward 36 ) else ( true ) );
-b456 && b457 && b458 && b459 && b460 && b461 && b462 && b463
+// d488 is variable asia
+d488 <- [ c487 ];
+// d490 is variable smoke
+d490 <- [ c489 ];
+// b491 is variable lung
+b491 <- ( if ( d490 ) then ( flip 0.1 ) else ( flip 0.01 ) );
+// b492 is variable tub
+b492 <- ( if ( d488 ) then ( flip 0.05 ) else ( flip 0.01 ) );
+// b493 is variable bronc
+b493 <- ( if ( d490 ) then ( flip 0.6 ) else ( flip 0.3 ) );
+// b494 is variable either
+b494 <- ( b491 || b492 );
+// b495 is variable xray
+b495 <- ( if ( b494 ) then ( flip 0.98 ) else ( flip 0.05 ) );
+// b500 is variable dysp
+d497 <- [ c496 ];
+b498 <- ( if ( b493 ) then ( if ( b494 ) then ( flip 0.9 ) else ( flip 0.8 ) ) else ( if ( b494 ) then ( flip 0.7 ) else ( flip 0.1 ) ) );
+b499 <- ( if ( d497 ) then ( flip 0.9 ) else ( false ) );
+b500 <- ( b498 || b499 );
+b501 <- ( if ( d488 ) then ( reward 60 ) else ( reward 67 ) );
+b502 <- ( if ( d490 ) then ( true ) else ( reward 31 ) );
+b503 <- ( if ( b491 ) then ( reward 83 ) else ( reward 18 ) );
+b504 <- ( if ( b492 ) then ( reward 29 ) else ( reward 42 ) );
+b505 <- ( if ( b493 ) then ( reward 11 ) else ( true ) );
+
+
+
+b501 && b502 && b503 && b504 && b505 && b494 && b495 && b500

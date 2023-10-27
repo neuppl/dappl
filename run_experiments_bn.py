@@ -1,215 +1,67 @@
 import subprocess
 import os
 import numpy as np
+from run_experiments_other import *
+import sys
 
 #######################
 # This file runs 
 # and outputs the BAYESIAN NETWORK benchmarks coded in experiments/.
-# run `python3 run_experiments_bn.py` to see results printed on terminal;
-# run `python3 run_experiments_bn.py > results_bn.log` if you *really* want to see it in a file...
 #######################
 
+class BN(Enum):
+  asia = "asia"
+  earthquake = "earthquake"
+  survey = "survey"
 
-## For dappl
+# Get a list of all filenames in the directory  
+directory_path = "experiments/bn/problog" 
+problog_filenames = os.listdir(directory_path)
+  
+def run_bn (method : Method, b : BN, \
+            lbl : int, d : int, \
+            to : int, times : int ) :
+  match method :
+    case Method.dappl :
+      filepath = "experiments/bn/processed/"
+      filename = f"{b.value}_{lbl}_method{d}.dappl"
+      return run_n_times(method, filepath, filename, to, times)
+    case _ :
+      filepath = "experiments/bn/problog/"
+      filename = f"{b.value}_{lbl}_method{d}.pl"
+      return run_n_times(method, filepath, filename, to, times)
 
-# Generate test files 
-command = "./_build/install/default/bin/dappl"
-
-def gen_test (n : int) :  
-    cmd = command + " test bn " + str(n)
+def bn(n : int) :
+  columns_of_df = [f"{b}_{i}" for b in list(BN.__members__.keys()) for i in [1,2]]
+  columns_of_df = [[f"{i}_mean", f"{i}_stdev"] for i in columns_of_df]
+  columns_of_df =  list(chain.from_iterable(columns_of_df))
+  df = pd.DataFrame(index=list(Method.__members__.keys()), columns=columns_of_df)
+  for bn in BN :
+    cmd = f"./_build/install/default/bin/dappl test bn {bn.value} {n}"
     subprocess.run(cmd, \
                         shell=True, \
                         stdout=subprocess.PIPE, \
                         stderr=subprocess.PIPE, \
                         text=True)
-    return
-
-def run_bn (n : int , m : int, bn : str) :
-  cmd = command+ " run experiments/bn/processed/" + bn \
-            + "_" + str(n) + "_method1.dappl"
-  result = subprocess.run(cmd, \
-                        shell=True, \
-                        stdout=subprocess.PIPE, \
-                        stderr=subprocess.PIPE, \
-                        text=True)
-  return float(result.stdout.split(" ")[-1])
-
-# Custom commands to run MEU time
-
-def run_asia (n : int, m :int) : return run_bn (n,m, "asia")
-def run_earthquake (n : int, m :int) : return run_bn (n,m, "earthquake")
-def run_survey (n : int, m :int) : return run_bn (n,m, "survey")
-
-def print_avg_stdev(data : list) :
-    data_array = np.array(data)
-    average = np.mean(data_array) * 1000
-    std_dev = np.std(data_array) * 1000
-    print(f"Average: {average}")
-    print(f"Standard Deviation: {std_dev}")
-    return
-
-def do_all (n : int) :
-    gen_test(n)
-    print("Generated "+str(n)+" tests.\n")
-    asia_times_method1 = []
-    asia_times_method2 = []
-    earthquake_times_method1 = []
-    earthquake_times_method2 = []
-    survey_times_method1 = []
-    survey_times_method2 = []
-    for i in range(n) :
-        for _ in range(10):
-            asia_times_method1.append(run_asia(i,1))
-            asia_times_method2.append(run_asia(i,2))
-            earthquake_times_method1.append(run_earthquake(i,1))
-            earthquake_times_method2.append(run_earthquake(i,2))
-            survey_times_method1.append(run_survey(i,1))
-            survey_times_method2.append(run_survey(i,2))
-    print(f"For asia:")
-    print(f"Method 1:")
-    print_avg_stdev(asia_times_method1)
-    print(f"Method 2:")
-    print_avg_stdev(asia_times_method2)
-    print(f"For earthquake:")
-    print(f"Method 1:")
-    print_avg_stdev(earthquake_times_method1)
-    print(f"Method 2:")
-    print_avg_stdev(earthquake_times_method2)
-    print(f"For survey:")
-    print(f"Method 1:")
-    print_avg_stdev(survey_times_method1)
-    print(f"Method 2:")
-    print_avg_stdev(survey_times_method2)
-
-## For Problog
-
-directory_path = "experiments/bn/problog" 
-
-# Get a list of all filenames in the directory
-filenames = os.listdir(directory_path)
-
-def exec_problog (file : str):
-    cmd = "problog dt -v " + directory_path + "/"+file
-    result = subprocess.run(cmd, \
-                        shell=True, \
-                        stdout=subprocess.PIPE, \
-                        stderr=subprocess.PIPE, \
-                        text=True)
-    relevant = result.stdout.split('\n')[2:5]
-    asdf = list(map(lambda x: x.split(" ")[-1], relevant))
-    jkl = list(map(lambda x : float(x[:-1]), asdf))
-    return sum(jkl)
-    
-def run_problog () :
-    asia_times_method1 = []
-    asia_times_method2 = []
-    earthquake_times_method1 = []
-    earthquake_times_method2 = []
-    survey_times_method1 = []
-    survey_times_method2 = []
-    for file in filenames:
-      for _ in range(10):
-          f = exec_problog (file)
-          l = file.split("_")
-          bntype = l[0]
-          method = l[1]
-          if bntype == "asia" :
-              if method == "1" :
-                  asia_times_method1.append(f)
-              else : 
-                  asia_times_method2.append(f)
-          elif bntype == "earthquake" :
-              if method == "1" :
-                  earthquake_times_method1.append(f)
-              else : 
-                  earthquake_times_method2.append(f)
-          else:
-              if method == "1" :
-                  survey_times_method1.append(f)
-              else : 
-                  survey_times_method2.append(f)
-    print(f"For asia:")
-    print(f"Method 1:")
-    print_avg_stdev(asia_times_method1)
-    print(f"Method 2:")
-    print_avg_stdev(asia_times_method2)
-    print(f"For earthquake:")
-    print(f"Method 1:")
-    print_avg_stdev(earthquake_times_method1)
-    print(f"Method 2:")
-    print_avg_stdev(earthquake_times_method2)
-    print(f"For survey:")
-    print(f"Method 1:")
-    print_avg_stdev(survey_times_method1)
-    print(f"Method 2:")
-    print_avg_stdev(survey_times_method2)
-    return
-
-def exec_derk (file : str):
-    cmd = "python3 derkinderen/maxeu.py " + directory_path + "/"+file
-    result = subprocess.run(cmd, \
-                        shell=True, \
-                        stdout=subprocess.PIPE, \
-                        stderr=subprocess.PIPE, \
-                        text=True)
-    relevant = result.stdout.split('\n')
-    l = [relevant[0], relevant[4], relevant[7]]
-    l = list(map(lambda x : float(x.split(" ")[-2]), l))
-    return sum(l)
-
-def run_derk () :
-    asia_times_method1 = []
-    asia_times_method2 = []
-    earthquake_times_method1 = []
-    earthquake_times_method2 = []
-    survey_times_method1 = []
-    survey_times_method2 = []
-    for file in filenames:
-      for _ in range(10):
-        f = exec_derk (file)
-        l = file.split("_")
-        bntype = l[0]
-        method = l[1]
-        if bntype == "asia" :
-            if method == "1" :
-                asia_times_method1.append(f)
-            else : 
-                asia_times_method2.append(f)
-        elif bntype == "earthquake" :
-            if method == "1" :
-                earthquake_times_method1.append(f)
-            else : 
-                earthquake_times_method2.append(f)
-        else:
-            if method == "1" :
-                survey_times_method1.append(f)
-            else : 
-                survey_times_method2.append(f)
-    print(f"For asia:")
-    print(f"Method 1:")
-    print_avg_stdev(asia_times_method1)
-    print(f"Method 2:")
-    print_avg_stdev(asia_times_method2)
-    print(f"For earthquake:")
-    print(f"Method 1:")
-    print_avg_stdev(earthquake_times_method1)
-    print(f"Method 2:")
-    print_avg_stdev(earthquake_times_method2)
-    print(f"For survey:")
-    print(f"Method 1:")
-    print_avg_stdev(survey_times_method1)
-    print(f"Method 2:")
-    print_avg_stdev(survey_times_method2)
-    return
-
-print("THIS IS FOR DAPPL")
-do_all(10)
-print("\nTHIS IS FOR PROBLOG")
-run_problog()
-print("\nTHIS IS FOR DERKINDEREN")
-run_derk()
-
-                
+  for method in Method :
+    for bn in BN: 
+        for ty in [1,2] :
+            print(f"+++++++++++++++++++++++++++++++++++++")
+            print(f"Doing BN benchmark on Method {method.name}")
+            print(f"Bayesian network : {bn.value}, Decision inserted via type {ty}")
+            print(f"+++++++++++++++++++++++++++++++++++++")
+            l = []
+            for lbl in range(n) :
+                l = l + run_bn(method, bn, lbl, ty, 10, 10)
+            if avg_stdev(l) is not None :
+              (a,b) = avg_stdev(l)
+              avg_str = f"{bn.name}_{ty}_mean"
+              stdev_str = f"{bn.name}_{ty}_stdev"
+              df.loc[method.name, avg_str] = a
+              df.loc[method.name, stdev_str] = b
+            else : continue
+  df.to_csv('numbers/bn.csv', index=True)
+  return
 
 
     
