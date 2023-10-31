@@ -1,0 +1,47 @@
+THIS IS FOR DAPPL
+Generated 10 tests.
+
+For asia:
+Method 1:
+Average: 0.9378218650812902
+Standard Deviation: 0.20008218553558282
+Method 2:
+Average: 0.9433221817015099
+Standard Deviation: 0.19690131810590356
+For earthquake:
+Method 1:
+Average: 0.6713056564331299
+Standard Deviation: 0.06188865251312658
+Method 2:
+Average: 0.66305160522464
+Standard Deviation: 0.057767202257756174
+For survey:
+Method 1:
+Average: 0.8142352104187301
+Standard Deviation: 0.08535410688535684
+Method 2:
+Average: 0.81319570541372
+Standard Deviation: 0.08326270635341139
+
+THIS IS FOR PROBLOG
+For asia:
+Method 1:
+Average: 47.317
+Standard Deviation: 33.12405185058133
+Method 2:
+Average: 112.53799999999998
+Standard Deviation: 54.27818121492282
+For earthquake:
+Method 1:
+Average: 20.241
+Standard Deviation: 10.873988182814987
+Method 2:
+Average: 27.473999999999997
+Standard Deviation: 6.1392445789364025
+For survey:
+Method 1:
+Average: 173.62999999999994
+Standard Deviation: 147.8715263328272
+Method 2:
+Average: 287.0179999999999
+Standard Deviation: 173.17605225896565
