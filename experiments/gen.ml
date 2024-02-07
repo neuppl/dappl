@@ -21,6 +21,76 @@ open Mk_expr
 open Core
 open Method
 
+let zip_with_fn l r f = List.map (List.zip_exn l r) ~f:f
+let mk_discrete (id : string) (pr : float list) = 
+  (* Helper functions *)
+  let rec suffixes l = match l with | [] -> [] | _::xs' as xs -> xs::(suffixes xs') in
+  let rec prefixes l = (match l with
+  | []   -> [[]]
+  | x::xs   -> []::List.map (prefixes xs) ~f:(fun li -> x :: li)) in
+  (* zip is the re-weighted flips (invariant: last one is flip 1) *)
+  let pr_suffixes = suffixes pr in
+  let zip = zip_with_fn pr pr_suffixes (fun (a,b) ->
+    let sum = List.fold b ~init:0. ~f:(+.) in a /. sum) in
+  (* varnames is the list of variables that correspond to each category *)
+  let varnames = List.init (List.length pr) ~f:(fun i -> id ^ Int.to_string i) in   
+  (* varname_prefixes are the prefixes except for the entire list *)
+  let varname_prefixes = List.drop_last_exn (prefixes varnames) in
+  let flips = List.map zip ~f:(fun x -> "flip " ^ (Float.to_string x) ^ "") in
+  let varname_prefixes_as_neg_and = 
+    List.map varname_prefixes ~f:(fun l -> 
+      String.concat ~sep:" && " 
+        (List.map l ~f:(fun s -> "!"^s))) in
+  let bindings = zip_with_fn varname_prefixes_as_neg_and flips
+    (fun (s, f) -> if String.is_empty s then f else s ^ " && ( " ^ f ^ ")") in
+  (* var <- prefix && (flip renormalized weight *)
+  let letbinds = zip_with_fn varnames bindings (fun (v, b) -> mk_bind_custom v b) in
+  let expr = String.concat ~sep:"\n" (List.map letbinds ~f:fst) in
+  (expr, (List.map letbinds ~f:snd))
+
+(* takes a (guard, behavior) list and a final behavior and produces
+x <- if guard[0] then behavior[0] else (if guard [1] ... else final_behavior);
+*)
+let rec mk_nested_ite_h : (varname * string) list -> string -> string = fun l s ->
+  match l with
+  | [] -> s
+  | (g, f)::xs -> mk_ite g [f ; (mk_nested_ite_h xs s)]
+and mk_nested_ite = fun id l s -> let iteexp = mk_nested_ite_h l s in 
+  mk_bind_custom id iteexp
+
+let transpose_lists lists =
+  let rec transpose acc = function
+    | [] -> List.rev acc
+    | []::_ -> List.rev acc
+    | xs -> 
+        let heads, tails =
+          let x = (List.map xs ~f:(fun l -> (List.hd_exn l, List.tl_exn l))) in
+          List.map x ~f:fst , List.map x ~f:snd in
+        transpose (heads :: acc) tails
+  in
+  transpose [] lists
+
+let ite_discrete_to_discrete_ite (id : varname) : varname list -> (float list) list -> varname * varname list =
+  fun vl wl ->
+    let _ = Printf.printf "Doing the %s \n" id in
+    (* First transpose the probabilities. *)
+    let wl_transpose = transpose_lists wl in
+    let _ = Printf.printf "%i\n" (List.length wl_transpose) in 
+    let last = List.map wl_transpose ~f:(fun x -> List.hd_exn (List.rev x)) in
+    let _ = Printf.printf "%i\n" (List.length last) in
+    let rest = List.map wl_transpose ~f:(fun x ->List.rev (List.tl_exn (List.rev x))) in
+    let _ = Printf.printf "%i\n" (List.length rest) in
+    let last_str = List.map last ~f:(fun x -> "flip " ^ Float.to_string x) in
+    let rest_str = List.map rest ~f:(fun l -> List.map l ~f:(fun x -> "flip " ^ Float.to_string x)) in  
+    let varnames = List.init (List.length wl_transpose) ~f:(fun i -> id ^ Int.to_string i) in 
+    let rest_str = List.zip_exn varnames (List.map rest_str ~f:(fun x -> List.zip_exn vl x)) in
+    let final = zip_with_fn rest_str last_str (fun ((id, l),c) -> mk_nested_ite id l c) in
+    let expr = String.concat ~sep:"\n" (List.map final ~f:fst) in
+    (expr, (List.map final ~f:snd))
+
+let cartesian l l' = 
+  List.concat (List.map l ~f:(fun e -> List.map l' ~f:(fun e' -> (e,e'))))
+
 (* Benchmark 1: Earthquake 
   https://www.bnlearn.com/bnrepository/discrete-small.html#earthquake
 *)
@@ -76,9 +146,7 @@ let mk_earthquake_to_file (j  : int) : unit =
     Printf.fprintf oc "%s\n" earthquake; Out_channel.close oc;
   done
 
-(* Benchmark 2: Asia 
-  https://www.bnlearn.com/bnrepository/discrete-small.html#asia
-*)
+
 let mk_asia_vars () : string * varname list =
   (* Creates asia variable *)
   let (asia, asiavar, _) = mk_dec 1 in
@@ -235,3 +303,85 @@ let mk_survey_to_file (j  : int) : unit =
     let earthquake = mk_survey (New) in
     Printf.fprintf oc "%s\n" earthquake; Out_channel.close oc;
   done
+
+(* Benchmark 4: Insurance
+  https://www.bnlearn.com/documentation/man/insurance.html
+*)
+
+let rec mk_insurance_to_file (j  : int) : unit =
+  let _ : unit = Printf.printf "Generating %i many insurance files\n" j in
+  for i = 0 to j do
+    let filename = "experiments/bn/processed/insurance_" ^(Int.to_string i) ^ "_method1" ^".dappl" in
+    let oc = Out_channel.create filename in   
+    let earthquake = mk_insurance (Select) in
+    Printf.fprintf oc "%s\n" earthquake; Out_channel.close oc;
+    let filename = "experiments/bn/processed/insurance_" ^(Int.to_string i) ^ "_method2" ^".dappl" in
+    let oc = Out_channel.create filename in   
+    let earthquake = mk_insurance (New) in
+    Printf.fprintf oc "%s\n" earthquake; Out_channel.close oc;
+  done
+and mk_insurance (m : methodology) =
+  let (program, bv) = mk_insurance_vars () in
+  match m with
+  | Select -> 
+    let s = method_1 bv in 
+    String.concat ~sep:"\n" [program; s]
+  | New -> 
+    let s = method_2 bv in 
+    String.concat ~sep:"\n" [program; s]
+and mk_insurance_vars () : string * varname list = 
+  let prog = ref []  in
+  let boundvars = ref [] in
+  (* Age *)
+  let (ageExp, ageVars) = mk_discrete "age" [0.2 ; 0.6 ; 0.2] in
+  let _ = prog := ageExp :: !prog in
+  (* SocioEcon *)
+  let (socioEconExp, socioEconVars) = 
+    ite_discrete_to_discrete_ite "SocioEcon" (List.drop_last_exn ageVars)
+      [[0.4; 0.4; 0.19;0.01]; [0.4; 0.4; 0.19;0.01];[0.5; 0.2; 0.29;0.01]] in
+  let _ = prog :=  socioEconExp :: !prog in
+  (* OtherCar *)
+  let (otherCarExp, _otherCarVars) = 
+    ite_discrete_to_discrete_ite "OtherCar" (List.drop_last_exn socioEconVars)
+      [[0.5; 0.5] ; [0.8 ; 0.2] ; [0.9 ; 0.1] ; [0.95 ; 0.05]] in
+  let _ = prog :=  otherCarExp :: !prog in
+  (* RiskAversion *)
+  let (riskExp, _riskVars) = 
+    let list_of_vars = cartesian ageVars socioEconVars in
+    let _ = Printf.printf "%i" (List.length list_of_vars) in
+    let list_of_vars = List.map list_of_vars ~f:(fun (a,b) -> a ^ " && " ^ b) in
+    ite_discrete_to_discrete_ite "RiskAversion" (List.drop_last_exn list_of_vars)
+      [[0.020000;0.580000;0.300000;0.100000];
+      [0.020000;0.380000;0.500000;0.100000];
+      [0.020000;0.480000;0.400000;0.100000];
+      [0.020000;0.580000;0.300000;0.100000];
+      [0.015000;0.285000;0.500000;0.200000];
+      [0.015000;0.185000;0.600000;0.200000];
+      [0.015000;0.285000;0.500000;0.200000];
+      [0.015000;0.285000;0.400000;0.300000];
+      [0.010000;0.090000;0.400000;0.500000];
+      [0.010000;0.040000;0.350000;0.600000];
+      [0.010000;0.090000;0.400000;0.500000];
+      [0.010000;0.090000;0.400000;0.500000]] in
+  let _ = prog :=  riskExp :: !prog in
+  (* RiskAversion *)
+  let (riskExp, _riskVars) = 
+    let list_of_vars = cartesian ageVars socioEconVars in
+    let _ = Printf.printf "%i" (List.length list_of_vars) in
+    let list_of_vars = List.map list_of_vars ~f:(fun (a,b) -> a ^ " && " ^ b) in
+    ite_discrete_to_discrete_ite "RiskAversion" (List.drop_last_exn list_of_vars)
+      [[0.020000;0.580000;0.300000;0.100000];
+      [0.020000;0.380000;0.500000;0.100000];
+      [0.020000;0.480000;0.400000;0.100000];
+      [0.020000;0.580000;0.300000;0.100000];
+      [0.015000;0.285000;0.500000;0.200000];
+      [0.015000;0.185000;0.600000;0.200000];
+      [0.015000;0.285000;0.500000;0.200000];
+      [0.015000;0.285000;0.400000;0.300000];
+      [0.010000;0.090000;0.400000;0.500000];
+      [0.010000;0.040000;0.350000;0.600000];
+      [0.010000;0.090000;0.400000;0.500000];
+      [0.010000;0.090000;0.400000;0.500000]] in
+  let _ = prog :=  riskExp :: !prog in
+  let final_prog = String.concat ~sep:"\n" (List.rev !prog) in
+  (final_prog, !boundvars)

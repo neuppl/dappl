@@ -86,3 +86,7 @@ let mk_bind (e : string) : (string * varname) =
   let x = mk_varname Else in
   let expr = String.concat ~sep:" " [x ; "<-" ;"("; e ; ");"] in
   (expr, x)
+
+let mk_bind_custom (id : string) (e : string) : (string * varname) = 
+  let expr = String.concat ~sep:" " [id ; "<-" ;"("; e ; ");"] in
+  (expr, id)

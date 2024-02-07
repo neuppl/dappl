@@ -52,7 +52,8 @@ let gen_tests =
       | "survey"      ->  Gen.mk_survey_to_file n
       | "bn"          ->  Gen.mk_earthquake_to_file n ;
                           Gen.mk_asia_to_file n;
-                          Gen.mk_survey_to_file n
+                          Gen.mk_survey_to_file n ;
+                          Gen.mk_insurance_to_file n;
       | _             ->  failwith "invalid test!")
 
 let command =

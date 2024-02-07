@@ -1,0 +1,26 @@
+age0 <- ( flip 0.2 );
+age1 <- ( !age0 && ( flip 0.74999999999999989) );
+age2 <- ( !age0 && !age1 && ( flip 1.) );
+SocioEcon0 <- ( if ( age0 ) then ( flip 0.4 ) else ( if ( age1 ) then ( flip 0.4 ) else ( flip 0.5 ) ) );
+SocioEcon1 <- ( if ( age0 ) then ( flip 0.4 ) else ( if ( age1 ) then ( flip 0.4 ) else ( flip 0.2 ) ) );
+SocioEcon2 <- ( if ( age0 ) then ( flip 0.19 ) else ( if ( age1 ) then ( flip 0.19 ) else ( flip 0.29 ) ) );
+SocioEcon3 <- ( if ( age0 ) then ( flip 0.01 ) else ( if ( age1 ) then ( flip 0.01 ) else ( flip 0.01 ) ) );
+OtherCar0 <- ( if ( SocioEcon0 ) then ( flip 0.5 ) else ( if ( SocioEcon1 ) then ( flip 0.8 ) else ( if ( SocioEcon2 ) then ( flip 0.9 ) else ( flip 0.95 ) ) ) );
+OtherCar1 <- ( if ( SocioEcon0 ) then ( flip 0.5 ) else ( if ( SocioEcon1 ) then ( flip 0.2 ) else ( if ( SocioEcon2 ) then ( flip 0.1 ) else ( flip 0.05 ) ) ) );
+RiskAversion0 <- ( if ( age0 && SocioEcon0 ) then ( flip 0.02 ) else ( if ( age0 && SocioEcon1 ) then ( flip 0.02 ) else ( if ( age0 && SocioEcon2 ) then ( flip 0.02 ) else ( if ( age0 && SocioEcon3 ) then ( flip 0.02 ) else ( if ( age1 && SocioEcon0 ) then ( flip 0.015 ) else ( if ( age1 && SocioEcon1 ) then ( flip 0.015 ) else ( if ( age1 && SocioEcon2 ) then ( flip 0.015 ) else ( if ( age1 && SocioEcon3 ) then ( flip 0.015 ) else ( if ( age2 && SocioEcon0 ) then ( flip 0.01 ) else ( if ( age2 && SocioEcon1 ) then ( flip 0.01 ) else ( if ( age2 && SocioEcon2 ) then ( flip 0.01 ) else ( flip 0.01 ) ) ) ) ) ) ) ) ) ) ) );
+RiskAversion1 <- ( if ( age0 && SocioEcon0 ) then ( flip 0.58 ) else ( if ( age0 && SocioEcon1 ) then ( flip 0.38 ) else ( if ( age0 && SocioEcon2 ) then ( flip 0.48 ) else ( if ( age0 && SocioEcon3 ) then ( flip 0.58 ) else ( if ( age1 && SocioEcon0 ) then ( flip 0.285 ) else ( if ( age1 && SocioEcon1 ) then ( flip 0.185 ) else ( if ( age1 && SocioEcon2 ) then ( flip 0.285 ) else ( if ( age1 && SocioEcon3 ) then ( flip 0.285 ) else ( if ( age2 && SocioEcon0 ) then ( flip 0.09 ) else ( if ( age2 && SocioEcon1 ) then ( flip 0.04 ) else ( if ( age2 && SocioEcon2 ) then ( flip 0.09 ) else ( flip 0.09 ) ) ) ) ) ) ) ) ) ) ) );
+RiskAversion2 <- ( if ( age0 && SocioEcon0 ) then ( flip 0.3 ) else ( if ( age0 && SocioEcon1 ) then ( flip 0.5 ) else ( if ( age0 && SocioEcon2 ) then ( flip 0.4 ) else ( if ( age0 && SocioEcon3 ) then ( flip 0.3 ) else ( if ( age1 && SocioEcon0 ) then ( flip 0.5 ) else ( if ( age1 && SocioEcon1 ) then ( flip 0.6 ) else ( if ( age1 && SocioEcon2 ) then ( flip 0.5 ) else ( if ( age1 && SocioEcon3 ) then ( flip 0.4 ) else ( if ( age2 && SocioEcon0 ) then ( flip 0.4 ) else ( if ( age2 && SocioEcon1 ) then ( flip 0.35 ) else ( if ( age2 && SocioEcon2 ) then ( flip 0.4 ) else ( flip 0.4 ) ) ) ) ) ) ) ) ) ) ) );
+RiskAversion3 <- ( if ( age0 && SocioEcon0 ) then ( flip 0.1 ) else ( if ( age0 && SocioEcon1 ) then ( flip 0.1 ) else ( if ( age0 && SocioEcon2 ) then ( flip 0.1 ) else ( if ( age0 && SocioEcon3 ) then ( flip 0.1 ) else ( if ( age1 && SocioEcon0 ) then ( flip 0.2 ) else ( if ( age1 && SocioEcon1 ) then ( flip 0.2 ) else ( if ( age1 && SocioEcon2 ) then ( flip 0.2 ) else ( if ( age1 && SocioEcon3 ) then ( flip 0.3 ) else ( if ( age2 && SocioEcon0 ) then ( flip 0.5 ) else ( if ( age2 && SocioEcon1 ) then ( flip 0.6 ) else ( if ( age2 && SocioEcon2 ) then ( flip 0.5 ) else ( flip 0.5 ) ) ) ) ) ) ) ) ) ) ) );
+b592 <- ( (  ) || (  ) || (  ) || (  ) || (  ) || (  ) );
+b593 <- ( if ( b592 ) then ( reward 54 ) else ( reward 7 ) );
+b594 <- ( (  ) || (  ) || (  ) || (  ) || (  ) || (  ) );
+b595 <- ( if ( b594 ) then ( reward 38 ) else ( reward 10 ) );
+b596 <- ( (  ) || (  ) || (  ) || (  ) || (  ) || (  ) );
+b597 <- ( if ( b596 ) then ( reward 38 ) else ( reward 2 ) );
+b598 <- ( (  ) || (  ) || (  ) || (  ) || (  ) || (  ) );
+b599 <- ( if ( b598 ) then ( reward 14 ) else ( reward 80 ) );
+b600 <- ( (  ) || (  ) || (  ) || (  ) || (  ) || (  ) );
+b601 <- ( if ( b600 ) then ( reward 80 ) else ( reward 18 ) );
+b602 <- ( (  ) || (  ) || (  ) || (  ) || (  ) || (  ) );
+b603 <- ( if ( b602 ) then ( reward 91 ) else ( reward 40 ) );
+b603 && b601 && b599 && b597 && b595 && b593

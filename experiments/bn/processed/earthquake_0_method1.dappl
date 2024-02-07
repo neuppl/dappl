@@ -11,9 +11,9 @@ b8 <- ( if ( d6 ) then ( flip 0.7 ) else ( false ) );
 b9 <- ( b7 || b8 );
 // b10 is variable johnCalls
 b10 <- ( if ( b4 ) then ( flip 0.9 ) else ( flip 0.05 ) );
-b11 <- ( if ( d1 ) then ( true ) else ( reward 44 ) );
-b12 <- ( if ( d3 ) then ( true ) else ( reward 85 ) );
-b13 <- ( if ( b4 ) then ( reward 41 ) else ( reward 82 ) );
-b14 <- ( if ( b9 ) then ( reward 39 ) else ( true ) );
-b15 <- ( if ( b10 ) then ( reward 4 ) else ( reward 0 ) );
+b11 <- ( if ( d1 ) then ( reward 44 ) else ( true ) );
+b12 <- ( if ( d3 ) then ( reward 85 ) else ( true ) );
+b13 <- ( if ( b4 ) then ( reward 82 ) else ( true ) );
+b14 <- ( if ( b9 ) then ( reward 41 ) else ( true ) );
+b15 <- ( if ( b10 ) then ( reward 39 ) else ( true ) );
 b11 && b12 && b13 && b14 && b15

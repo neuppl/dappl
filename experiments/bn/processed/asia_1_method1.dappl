@@ -1,37 +1,37 @@
-// d541 is variable asia
-d541 <- [ c540 ];
-// d543 is variable smoke
-d543 <- [ c542 ];
-// b548 is variable lung
-d545 <- [ c544 ];
-b546 <- ( if ( d543 ) then ( flip 0.1 ) else ( flip 0.01 ) );
-b547 <- ( if ( d545 ) then ( flip 0.1 ) else ( false ) );
-b548 <- ( b546 || b547 );
-// b553 is variable tub
-d550 <- [ c549 ];
-b551 <- ( if ( d541 ) then ( flip 0.05 ) else ( flip 0.01 ) );
-b552 <- ( if ( d550 ) then ( flip 0.05 ) else ( false ) );
-b553 <- ( b551 || b552 );
-// b558 is variable bronc
-d555 <- [ c554 ];
-b556 <- ( if ( d543 ) then ( flip 0.6 ) else ( flip 0.3 ) );
-b557 <- ( if ( d555 ) then ( flip 0.6 ) else ( false ) );
-b558 <- ( b556 || b557 );
-// b559 is variable either
-b559 <- ( b548 || b553 );
-// b564 is variable xray
-d561 <- [ c560 ];
-b562 <- ( if ( b559 ) then ( flip 0.98 ) else ( flip 0.05 ) );
-b563 <- ( if ( d561 ) then ( flip 0.98 ) else ( false ) );
-b564 <- ( b562 || b563 );
-// b565 is variable dysp
-b565 <- ( if ( b558 ) then ( if ( b559 ) then ( flip 0.9 ) else ( flip 0.8 ) ) else ( if ( b559 ) then ( flip 0.7 ) else ( flip 0.1 ) ) );
-b566 <- ( if ( d541 ) then ( reward 56 ) else ( true ) );
-b567 <- ( if ( d543 ) then ( reward 25 ) else ( reward 41 ) );
-b568 <- ( if ( b548 ) then ( reward 52 ) else ( reward 90 ) );
-b569 <- ( if ( b553 ) then ( reward 7 ) else ( true ) );
-b570 <- ( if ( b558 ) then ( reward 54 ) else ( true ) );
-b571 <- ( if ( b559 ) then ( reward 38 ) else ( reward 10 ) );
-b572 <- ( if ( b564 ) then ( true ) else ( reward 2 ) );
-b573 <- ( if ( b565 ) then ( reward 38 ) else ( true ) );
-b566 && b567 && b568 && b569 && b570 && b571 && b572 && b573
+// d182 is variable asia
+d182 <- [ c181 ];
+// d184 is variable smoke
+d184 <- [ c183 ];
+// b189 is variable lung
+d186 <- [ c185 ];
+b187 <- ( if ( d184 ) then ( flip 0.1 ) else ( flip 0.01 ) );
+b188 <- ( if ( d186 ) then ( flip 0.1 ) else ( false ) );
+b189 <- ( b187 || b188 );
+// b190 is variable tub
+b190 <- ( if ( d182 ) then ( flip 0.05 ) else ( flip 0.01 ) );
+// b191 is variable bronc
+b191 <- ( if ( d184 ) then ( flip 0.6 ) else ( flip 0.3 ) );
+// b196 is variable either
+d193 <- [ c192 ];
+b194 <- ( b189 || b190 );
+b195 <- ( if ( d193 ) then ( flip 0.5 ) else ( false ) );
+b196 <- ( b194 || b195 );
+// b201 is variable xray
+d198 <- [ c197 ];
+b199 <- ( if ( b196 ) then ( flip 0.98 ) else ( flip 0.05 ) );
+b200 <- ( if ( d198 ) then ( flip 0.98 ) else ( false ) );
+b201 <- ( b199 || b200 );
+// b206 is variable dysp
+d203 <- [ c202 ];
+b204 <- ( if ( b191 ) then ( if ( b196 ) then ( flip 0.9 ) else ( flip 0.8 ) ) else ( if ( b196 ) then ( flip 0.7 ) else ( flip 0.1 ) ) );
+b205 <- ( if ( d203 ) then ( flip 0.9 ) else ( false ) );
+b206 <- ( b204 || b205 );
+b207 <- ( if ( d182 ) then ( reward 68 ) else ( true ) );
+b208 <- ( if ( d184 ) then ( reward 24 ) else ( true ) );
+b209 <- ( if ( b189 ) then ( reward 56 ) else ( reward 22 ) );
+b210 <- ( if ( b190 ) then ( reward 35 ) else ( true ) );
+b211 <- ( if ( b191 ) then ( reward 28 ) else ( true ) );
+b212 <- ( if ( b196 ) then ( reward 36 ) else ( true ) );
+b213 <- ( if ( b201 ) then ( reward 33 ) else ( true ) );
+b214 <- ( if ( b206 ) then ( reward 53 ) else ( true ) );
+b207 && b208 && b209 && b210 && b211 && b212 && b213 && b214
