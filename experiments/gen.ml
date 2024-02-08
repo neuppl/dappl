@@ -22,32 +22,61 @@ open Core
 open Method
 
 let zip_with_fn l r f = List.map (List.zip_exn l r) ~f:f
-let mk_discrete (id : string) (pr : float list) = 
-  (* Helper functions *)
-  let rec suffixes l = match l with | [] -> [] | _::xs' as xs -> xs::(suffixes xs') in
-  let rec prefixes l = (match l with
-  | []   -> [[]]
-  | x::xs   -> []::List.map (prefixes xs) ~f:(fun li -> x :: li)) in
-  (* zip is the re-weighted flips (invariant: last one is flip 1) *)
-  let pr_suffixes = suffixes pr in
-  let zip = zip_with_fn pr pr_suffixes (fun (a,b) ->
-    let sum = List.fold b ~init:0. ~f:(+.) in a /. sum) in
-  (* varnames is the list of variables that correspond to each category *)
-  let varnames = List.init (List.length pr) ~f:(fun i -> id ^ Int.to_string i) in   
-  (* varname_prefixes are the prefixes except for the entire list *)
-  let varname_prefixes = List.drop_last_exn (prefixes varnames) in
-  let flips = List.map zip ~f:(fun x -> "flip " ^ (Float.to_string x) ^ "") in
-  let varname_prefixes_as_neg_and = 
-    List.map varname_prefixes ~f:(fun l -> 
-      String.concat ~sep:" && " 
-        (List.map l ~f:(fun s -> "!"^s))) in
-  let bindings = zip_with_fn varname_prefixes_as_neg_and flips
-    (fun (s, f) -> if String.is_empty s then f else s ^ " && ( " ^ f ^ ")") in
-  (* var <- prefix && (flip renormalized weight *)
-  let letbinds = zip_with_fn varnames bindings (fun (v, b) -> mk_bind_custom v b) in
-  let expr = String.concat ~sep:"\n" (List.map letbinds ~f:fst) in
-  (expr, (List.map letbinds ~f:snd))
-
+let mk_discrete (id : string) (pr : float list) =
+  if Random.bool () then
+    (* Helper functions *)
+    let rec suffixes l = match l with | [] -> [] | _::xs' as xs -> xs::(suffixes xs') in
+    let rec prefixes l = (match l with
+    | []   -> [[]]
+    | x::xs   -> []::List.map (prefixes xs) ~f:(fun li -> x :: li)) in
+    (* zip is the re-weighted flips (invariant: last one is flip 1) *)
+    let pr_suffixes = suffixes pr in
+    let zip = zip_with_fn pr pr_suffixes (fun (a,b) ->
+      let sum = List.fold b ~init:0. ~f:(+.) in a /. sum) in
+    (* varnames is the list of variables that correspond to each category *)
+    let varnames = List.init (List.length pr) ~f:(fun i -> id ^ Int.to_string i) in   
+    (* varname_prefixes are the prefixes except for the entire list *)
+    let varname_prefixes = List.drop_last_exn (prefixes varnames) in
+    let flips = List.map zip ~f:(fun x -> "flip " ^ (Float.to_string x) ^ "") in
+    let varname_prefixes_as_neg_and = 
+      List.map varname_prefixes ~f:(fun l -> 
+        String.concat ~sep:" && " 
+          (List.map l ~f:(fun s -> "!"^s))) in
+    let bindings = zip_with_fn varname_prefixes_as_neg_and flips
+      (fun (s, f) -> if String.is_empty s then f else s ^ " && ( " ^ f ^ ")") in
+    (* var <- prefix && (flip renormalized weight *)
+    let letbinds = zip_with_fn varnames bindings (fun (v, b) -> 
+      mk_bind_custom v b) in
+    let expr = String.concat ~sep:"\n" (List.map letbinds ~f:fst) in
+    (expr, (List.map letbinds ~f:snd))
+  else
+    let wt = 1. /. (Int.to_float (List.length pr)) in
+    (* Helper functions *)
+    let rec suffixes l = match l with | [] -> [] | _::xs' as xs -> xs::(suffixes xs') in
+    let rec prefixes l = (match l with
+    | []   -> [[]]
+    | x::xs   -> []::List.map (prefixes xs) ~f:(fun li -> x :: li)) in
+    (* zip is the re-weighted flips (invariant: last one is flip 1) *)
+    let pr_suffixes = suffixes pr in
+    let zip = zip_with_fn pr pr_suffixes (fun (a,b) ->
+      let sum = List.fold b ~init:0. ~f:(+.) in a /. sum) in
+    (* varnames is the list of variables that correspond to each category *)
+    let varnames = List.init (List.length pr) ~f:(fun i -> id ^ Int.to_string i) in   
+    (* varname_prefixes are the prefixes except for the entire list *)
+    let varname_prefixes = List.drop_last_exn (prefixes varnames) in
+    let flips = List.map zip ~f:(fun x -> "flip " ^ (Float.to_string x) ^ "") in
+    let varname_prefixes_as_neg_and = 
+      List.map varname_prefixes ~f:(fun l -> 
+        String.concat ~sep:" && " 
+          (List.map l ~f:(fun s -> "!"^s))) in
+    let bindings = zip_with_fn varname_prefixes_as_neg_and flips
+      (fun (s, f) -> if String.is_empty s then f else s ^ " && ( " ^ f ^ ")") in
+    let bindings = List.zip_exn bindings pr in
+    (* var <- prefix && (flip renormalized weight *)
+    let letbinds = zip_with_fn varnames bindings (fun (v, (b,p)) -> 
+      new_dec_or_bind_custom_with_prs v b p wt) in
+    let expr = String.concat ~sep:"\n" (List.map letbinds ~f:fst) in
+    (expr, (List.map letbinds ~f:snd))
 (* takes a (guard, behavior) list and a final behavior and produces
 x <- if guard[0] then behavior[0] else (if guard [1] ... else final_behavior);
 *)
@@ -57,6 +86,8 @@ let rec mk_nested_ite_h : (varname * string) list -> string -> string = fun l s 
   | (g, f)::xs -> mk_ite g [f ; (mk_nested_ite_h xs s)]
 and mk_nested_ite = fun id l s -> let iteexp = mk_nested_ite_h l s in 
   mk_bind_custom id iteexp
+and mk_nested_ite_prob = fun id l s f pr -> let iteexp = mk_nested_ite_h l s in 
+  new_dec_or_bind_custom_with_prs id iteexp f pr
 
 let transpose_lists lists =
   let rec transpose acc = function
@@ -72,21 +103,41 @@ let transpose_lists lists =
 
 let ite_discrete_to_discrete_ite (id : varname) : varname list -> (float list) list -> varname * varname list =
   fun vl wl ->
-    let _ = Printf.printf "Doing the %s \n" id in
-    (* First transpose the probabilities. *)
-    let wl_transpose = transpose_lists wl in
-    let _ = Printf.printf "%i\n" (List.length wl_transpose) in 
-    let last = List.map wl_transpose ~f:(fun x -> List.hd_exn (List.rev x)) in
-    let _ = Printf.printf "%i\n" (List.length last) in
-    let rest = List.map wl_transpose ~f:(fun x ->List.rev (List.tl_exn (List.rev x))) in
-    let _ = Printf.printf "%i\n" (List.length rest) in
-    let last_str = List.map last ~f:(fun x -> "flip " ^ Float.to_string x) in
-    let rest_str = List.map rest ~f:(fun l -> List.map l ~f:(fun x -> "flip " ^ Float.to_string x)) in  
-    let varnames = List.init (List.length wl_transpose) ~f:(fun i -> id ^ Int.to_string i) in 
-    let rest_str = List.zip_exn varnames (List.map rest_str ~f:(fun x -> List.zip_exn vl x)) in
-    let final = zip_with_fn rest_str last_str (fun ((id, l),c) -> mk_nested_ite id l c) in
-    let expr = String.concat ~sep:"\n" (List.map final ~f:fst) in
-    (expr, (List.map final ~f:snd))
+    if Random.bool () then
+      (* let _ : unit = Printf.printf "Doing the %s \n" id in *)
+      (* First transpose the probabilities. *)
+      let wl_transpose = transpose_lists wl in
+      (* let _ : unit =  Printf.printf "%i\n" (List.length wl_transpose) in  *)
+      let last = List.map wl_transpose ~f:(fun x -> List.hd_exn (List.rev x)) in
+      (* let _ : unit =  Printf.printf "%i\n" (List.length last) in *)
+      let rest = List.map wl_transpose ~f:(fun x ->List.rev (List.tl_exn (List.rev x))) in
+      (* let _ : unit =  Printf.printf "%i\n" (List.length rest) in *)
+      let last_str = List.map last ~f:(fun x -> "flip " ^ Float.to_string x) in
+      let rest_str = List.map rest ~f:(fun l -> List.map l ~f:(fun x -> "flip " ^ Float.to_string x)) in  
+      let varnames = List.init (List.length wl_transpose) ~f:(fun i -> id ^ Int.to_string i) in 
+      let rest_str = List.zip_exn varnames (List.map rest_str ~f:(fun x -> List.zip_exn vl x)) in
+      let final = zip_with_fn rest_str last_str (fun ((id, l),c) -> mk_nested_ite id l c) in
+      let expr = String.concat ~sep:"\n" (List.map final ~f:fst) in
+      (expr, (List.map final ~f:snd))
+    else 
+      (* let _ : unit = Printf.printf "Doing the %s \n" id in *)
+      (* First transpose the probabilities. *)
+      let wl_transpose = transpose_lists wl in
+      (* let _ : unit =  Printf.printf "%i\n" (List.length wl_transpose) in  *)
+      let last = List.map wl_transpose ~f:(fun x -> List.hd_exn (List.rev x)) in
+      (* let _ : unit =  Printf.printf "%i\n" (List.length last) in *)
+      let rest = List.map wl_transpose ~f:(fun x ->List.rev (List.tl_exn (List.rev x))) in
+      (* let _ : unit =  Printf.printf "%i\n" (List.length rest) in *)
+      let last_str = List.map last ~f:(fun x -> "flip " ^ Float.to_string x) in
+      let rest_str = List.map rest ~f:(fun l -> List.map l ~f:(fun x -> "flip " ^ Float.to_string x)) in  
+      let varnames = List.init (List.length wl_transpose) ~f:(fun i -> id ^ Int.to_string i) in 
+      let rest_str = List.zip_exn varnames (List.map rest_str ~f:(fun x -> List.zip_exn vl x)) in
+      let last_str = List.zip_exn last_str last in
+      let wt = 1. /. (Int.to_float (List.length last)) in 
+      let final = zip_with_fn rest_str last_str 
+        (fun ((id, l),(c, p)) -> mk_nested_ite_prob id l c p wt) in
+      let expr = String.concat ~sep:"\n" (List.map final ~f:fst) in
+      (expr, (List.map final ~f:snd))      
 
 let cartesian l l' = 
   List.concat (List.map l ~f:(fun e -> List.map l' ~f:(fun e' -> (e,e'))))
@@ -334,21 +385,24 @@ and mk_insurance_vars () : string * varname list =
   let boundvars = ref [] in
   (* Age *)
   let (ageExp, ageVars) = mk_discrete "age" [0.2 ; 0.6 ; 0.2] in
-  let _ = prog := ageExp :: !prog in
+  let _ :unit = prog := ageExp :: !prog in
+  let _ : unit =  boundvars :=  List.append ageVars !boundvars in  
   (* SocioEcon *)
   let (socioEconExp, socioEconVars) = 
     ite_discrete_to_discrete_ite "SocioEcon" (List.drop_last_exn ageVars)
       [[0.4; 0.4; 0.19;0.01]; [0.4; 0.4; 0.19;0.01];[0.5; 0.2; 0.29;0.01]] in
-  let _ = prog :=  socioEconExp :: !prog in
-  (* OtherCar
-  let (otherCarExp, _otherCarVars) = 
+  let _ :unit = prog :=  socioEconExp :: !prog in
+  let _ : unit =  boundvars :=  List.append socioEconVars !boundvars in
+  (* OtherCar *)
+  let (otherCarExp, otherCarVars) = 
     ite_discrete_to_discrete_ite "OtherCar" (List.drop_last_exn socioEconVars)
       [[0.5; 0.5] ; [0.8 ; 0.2] ; [0.9 ; 0.1] ; [0.95 ; 0.05]] in
-  let _ = prog :=  otherCarExp :: !prog in *)
+  let _ : unit =  prog :=  otherCarExp :: !prog in
+  let _ : unit =  boundvars :=  List.append otherCarVars !boundvars in
   (* RiskAversion *)
   let (riskExp, riskVars) = 
     let list_of_vars = cartesian ageVars socioEconVars in
-    let _ = Printf.printf "%i" (List.length list_of_vars) in
+    (* let _ : unit =  Printf.printf "%i" (List.length list_of_vars) in *)
     let list_of_vars = List.map list_of_vars ~f:(fun (a,b) -> a ^ " && " ^ b) in
     ite_discrete_to_discrete_ite "RiskAversion" (List.drop_last_exn list_of_vars)
       [[0.020000;0.580000;0.300000;0.100000];
@@ -363,11 +417,12 @@ and mk_insurance_vars () : string * varname list =
       [0.010000;0.040000;0.350000;0.600000];
       [0.010000;0.090000;0.400000;0.500000];
       [0.010000;0.090000;0.400000;0.500000]] in
-  let _ = prog :=  riskExp :: !prog in
+  let _ :unit = prog :=  riskExp :: !prog in
+  let _ : unit =  boundvars :=  List.append riskVars !boundvars in
   (* Antitheft *)
   let (antiExp, antiVars) = 
     let list_of_vars = cartesian riskVars socioEconVars in
-    let _ = Printf.printf "%i" (List.length list_of_vars) in
+    (* let _ : unit =  Printf.printf "%i" (List.length list_of_vars) in *)
     let list_of_vars = List.map list_of_vars ~f:(fun (a,b) -> a ^ " && " ^ b) in
     ite_discrete_to_discrete_ite "AntiTheft" (List.drop_last_exn list_of_vars)
       [[0.000001] ; [0.000001] ; [0.050000] ; [0.500000];
@@ -376,13 +431,13 @@ and mk_insurance_vars () : string * varname list =
       [0.950000] ; [0.999999] ; [0.9999999] ; [0.999999]
       ] in
   let (notantiExp, notantiVar) = mk_bind_custom "NotAntiTheft0" ("! " ^ (List.hd_exn antiVars)) in
-  let _ = prog :=  notantiExp :: antiExp :: !prog in
-  let _ = boundvars := List.append antiVars !boundvars in
+  let _ : unit =  prog :=  notantiExp :: antiExp :: !prog in
   let antiVars = List.rev (notantiVar :: antiVars) in
+  let _ : unit =  boundvars := List.append antiVars !boundvars in
   (* HomeBase *)
   let (homeExp, homeVars) = 
     let list_of_vars = cartesian riskVars socioEconVars in
-    let _ = Printf.printf "%i" (List.length list_of_vars) in
+    let _ : unit =  Printf.printf "%i" (List.length list_of_vars) in
     let list_of_vars = List.map list_of_vars ~f:(fun (a,b) -> a ^ " && " ^ b) in
     ite_discrete_to_discrete_ite "HomeBase" (List.drop_last_exn list_of_vars)
       [[0.000001;0.800000;0.049999;0.150000];
@@ -404,11 +459,12 @@ and mk_insurance_vars () : string * varname list =
       [0.950000;0.000001;0.024445;0.025554];
       [0.999997;0.000001;0.000001;0.000001];
       [0.999997;0.000001;0.000001;0.000001]] in
-  let _ = prog :=  homeExp :: !prog in
+  let _ : unit =  prog :=  homeExp :: !prog in
+  let _ : unit =  boundvars := List.append homeVars !boundvars in
   (* SeniorTrain *)
   let (seniorExp, seniorVars) = 
     let list_of_vars = cartesian ageVars riskVars in
-    let _ = Printf.printf "%i" (List.length list_of_vars) in
+    let _ : unit =  Printf.printf "%i" (List.length list_of_vars) in
     let list_of_vars = List.map list_of_vars ~f:(fun (a,b) -> a ^ " && " ^ b) in
     ite_discrete_to_discrete_ite "SeniorTrain" (List.drop_last_exn list_of_vars)
       [[0.00000] ; [0.00000]; [0.00000]; [0.00000];
@@ -416,22 +472,23 @@ and mk_insurance_vars () : string * varname list =
       [0.000001] ; [0.000001]; [0.3]; [0.9]] in
   let (notseniorExp, _notseniorVar) = 
       mk_bind_custom "NotSeniorTrain0" ("! " ^ (List.hd_exn seniorVars)) in
-  let _ = prog :=  notseniorExp :: seniorExp :: !prog in
-  let _ = boundvars := List.append seniorVars !boundvars in
+  let _ : unit =  prog :=  notseniorExp :: seniorExp :: !prog in
+  let _ : unit =  boundvars := List.append seniorVars !boundvars in
   (* DrivingSkill *)
   let (dskillExp, dskillVars) = 
     let list_of_vars = cartesian ageVars [(List.hd_exn seniorVars); "NotSeniorTrain0"] in
-    let _ = Printf.printf "%i" (List.length list_of_vars) in
+    let _ : unit =  Printf.printf "%i" (List.length list_of_vars) in
     let list_of_vars = List.map list_of_vars ~f:(fun (a,b) -> a ^ " && " ^ b) in
     ite_discrete_to_discrete_ite "DrivingSkill" (List.drop_last_exn list_of_vars)
       [[0.500000;0.450000;0.050000];[0.500000;0.450000;0.050000];
       [0.300000;0.600000;0.100000]; [0.300000;0.600000;0.100000];
       [0.100000;0.600000;0.300000] ; [0.400000;0.500000;0.100000]] in
-  let _ = prog :=  dskillExp :: !prog in
-  (* DrivingHistory
-  let (dhistExp, _dhistVars) = 
+  let _ : unit =  prog :=  dskillExp :: !prog in
+  let _ : unit =  boundvars := List.append dskillVars !boundvars in
+  (* DrivingHistory *)
+  let (dhistExp, dhistVars) = 
     let list_of_vars = cartesian dskillVars riskVars in
-    let _ = Printf.printf "%i" (List.length list_of_vars) in
+    let _ : unit =  Printf.printf "%i" (List.length list_of_vars) in
     let list_of_vars = List.map list_of_vars ~f:(fun (a,b) -> a ^ " && " ^ b) in
     ite_discrete_to_discrete_ite "DrivingHistory" (List.drop_last_exn list_of_vars)
       [[0.001000;0.004000;0.995000]; 
@@ -448,11 +505,12 @@ and mk_insurance_vars () : string * varname list =
       [0.600000;0.300000;0.100000];
       [0.990000;0.009999;0.000001]; 
 	    [0.999998;0.000001;0.000001]] in
-  let _ = prog :=  dhistExp :: !prog in *)
+  let _ : unit =  prog :=  dhistExp :: !prog in
+  let _ : unit =  boundvars := List.append dhistVars !boundvars in
   (* DrivingQuality *)
   let (dqualExp, dqualVars) = 
     let list_of_vars = cartesian dskillVars riskVars in
-    let _ = Printf.printf "%i" (List.length list_of_vars) in
+    let _ : unit =  Printf.printf "%i" (List.length list_of_vars) in
     let list_of_vars = List.map list_of_vars ~f:(fun (a,b) -> a ^ " && " ^ b) in
     ite_discrete_to_discrete_ite "DrivingQuality" (List.drop_last_exn list_of_vars)
       [[1.000000;0.000000;0.000000]; 
@@ -469,11 +527,12 @@ and mk_insurance_vars () : string * varname list =
       [0.010000;0.010000;0.980000];
       [0.000000;0.000000;1.000000]; 
 	    [0.000000;0.000000;1.000000]] in
-  let _ = prog :=  dqualExp :: !prog in
+  let _ : unit =  prog :=  dqualExp :: !prog in
+  let _ : unit =  boundvars := List.append dqualVars !boundvars in
   (* MakeModel *)
   let (modelExp, modelVars) = 
     let list_of_vars = cartesian socioEconVars riskVars in
-    let _ = Printf.printf "%i" (List.length list_of_vars) in
+    let _ : unit =  Printf.printf "%i" (List.length list_of_vars) in
     let list_of_vars = List.map list_of_vars ~f:(fun (a,b) -> a ^ " && " ^ b) in
     ite_discrete_to_discrete_ite "MakeModel" (List.drop_last_exn list_of_vars)
       [[0.100000;0.700000;0.200000;0.000000;0.000000];
@@ -495,11 +554,12 @@ and mk_insurance_vars () : string * varname list =
 	    [0.300000;0.010000;0.090000;0.400000;0.200000]; 
       [0.300000;0.010000;0.090000;0.400000;0.200000]; 
       [0.300000;0.010000;0.090000;0.400000;0.200000]] in
-  let _ = prog :=  modelExp :: !prog in
+  let _ : unit =  prog :=  modelExp :: !prog in
+  let _ : unit =  boundvars := List.append modelVars !boundvars in
   (* VehicleYear *)
   let (vyearExp, vyearVars) = 
     let list_of_vars = cartesian socioEconVars riskVars in
-    let _ = Printf.printf "%i" (List.length list_of_vars) in
+    let _ : unit =  Printf.printf "%i" (List.length list_of_vars) in
     let list_of_vars = List.map list_of_vars ~f:(fun (a,b) -> a ^ " && " ^ b) in
     ite_discrete_to_discrete_ite "VehicleYear" (List.drop_last_exn list_of_vars)
       [[0.150000];[0.150000];[0.150000];[0.150000];
@@ -508,12 +568,12 @@ and mk_insurance_vars () : string * varname list =
       [0.900000];[0.900000];[0.900000];[0.900000]] in
   let (notvyearExp, _notvyearVars) = 
       mk_bind_custom "NotVehicleYear0" ("! " ^ (List.hd_exn vyearVars)) in
-  let _ = prog :=  notvyearExp :: vyearExp :: !prog in
-  let _ = boundvars := List.append vyearVars !boundvars in
+  let _ : unit =  prog :=  notvyearExp :: vyearExp :: !prog in
+  let _ : unit =  boundvars := List.append vyearVars !boundvars in
   (* Airbag *)
   let (airbagExp, airbagVars) = 
     let list_of_vars = cartesian modelVars [(List.hd_exn vyearVars); "NotVehicleYear0"] in
-    let _ = Printf.printf "%i" (List.length list_of_vars) in
+    let _ : unit =  Printf.printf "%i" (List.length list_of_vars) in
     let list_of_vars = List.map list_of_vars ~f:(fun (a,b) -> a ^ " && " ^ b) in
     ite_discrete_to_discrete_ite "Airbag" (List.drop_last_exn list_of_vars)
       [[1.000000]; 
@@ -528,13 +588,13 @@ and mk_insurance_vars () : string * varname list =
 	    [0.100000]] in
   let (notairbagExp, notairbagVars) = 
       mk_bind_custom "NotAirbag0" ("! " ^ (List.hd_exn airbagVars)) in
-  let _ = prog :=  notairbagExp :: airbagExp :: !prog in
-  let _ = boundvars := List.append airbagVars !boundvars in
+  let _ : unit =  prog :=  notairbagExp :: airbagExp :: !prog in
   let airbagVars = List.rev(notairbagVars :: airbagVars) in
+  let _ : unit =  boundvars := List.append airbagVars !boundvars in
   (* Antilock *)
   let (antilockExp, antilockVars) = 
     let list_of_vars = cartesian modelVars [(List.hd_exn vyearVars); "NotVehicleYear0"] in
-    let _ = Printf.printf "%i" (List.length list_of_vars) in
+    let _ : unit =  Printf.printf "%i" (List.length list_of_vars) in
     let list_of_vars = List.map list_of_vars ~f:(fun (a,b) -> a ^ " && " ^ b) in
     ite_discrete_to_discrete_ite "Antilock" (List.drop_last_exn list_of_vars)
       [[0.900000]; 
@@ -549,13 +609,13 @@ and mk_insurance_vars () : string * varname list =
 	    [0.150000]] in
   let (notantilockExp, notantilockVars) = 
       mk_bind_custom "NotAntilock0" ("! " ^ (List.hd_exn airbagVars)) in
-  let _ = prog :=  notantilockExp :: antilockExp :: !prog in
-  let _ = boundvars := List.append antilockVars !boundvars in
+  let _ : unit =  prog :=  notantilockExp :: antilockExp :: !prog in
   let antilockVars = List.rev(notantilockVars :: antilockVars) in
+  let _ : unit =  boundvars := List.append antilockVars !boundvars in
   (* RuggedAuto *)
   let (rautoExp, rautoVars) = 
     let list_of_vars = cartesian modelVars [(List.hd_exn vyearVars); "NotVehicleYear0"] in
-    let _ = Printf.printf "%i" (List.length list_of_vars) in
+    let _ : unit =  Printf.printf "%i" (List.length list_of_vars) in
     let list_of_vars = List.map list_of_vars ~f:(fun (a,b) -> a ^ " && " ^ b) in
     ite_discrete_to_discrete_ite "RuggedAuto" (List.drop_last_exn list_of_vars)
       [[0.950000;0.040000;0.010000]; 
@@ -568,11 +628,12 @@ and mk_insurance_vars () : string * varname list =
 	    [0.100000;0.600000;0.300000];
       [0.050000;0.550000;0.400000]; 
 	    [0.050000;0.550000;0.400000];] in
-  let _ = prog :=  rautoExp :: !prog in
-  (* Cushioning
+  let _ : unit =  prog :=  rautoExp :: !prog in
+  let _ : unit =  boundvars := List.append rautoVars !boundvars in
+  (* Cushioning *)
   let (cushExp, cushVars) = 
     let list_of_vars = cartesian rautoVars airbagVars in
-    let _ = Printf.printf "%i" (List.length list_of_vars) in
+    let _ : unit =  Printf.printf "%i" (List.length list_of_vars) in
     let list_of_vars = List.map list_of_vars ~f:(fun (a,b) -> a ^ " && " ^ b) in
     ite_discrete_to_discrete_ite "Cushioning" (List.drop_last_exn list_of_vars)
       [[0.500000;0.300000;0.200000;0.000000]; 
@@ -581,11 +642,12 @@ and mk_insurance_vars () : string * varname list =
       [0.100000;0.600000;0.300000;0.000000];
       [0.000000;0.000000;0.000000;1.000000]; 
       [0.000000;0.000000;0.700000;0.300000];] in
-  let _ = prog :=  cushExp :: !prog in *)
+  let _ : unit =  prog :=  cushExp :: !prog in
+  let _ : unit =  boundvars := List.append cushVars !boundvars in
   (* GoodStudent *)
   let (gsExp, gsVars) = 
     let list_of_vars = cartesian socioEconVars ageVars in
-    let _ = Printf.printf "%i" (List.length list_of_vars) in
+    let _ : unit =  Printf.printf "%i" (List.length list_of_vars) in
     let list_of_vars = List.map list_of_vars ~f:(fun (a,b) -> a ^ " && " ^ b) in
     ite_discrete_to_discrete_ite "GoodStudent" (List.drop_last_exn list_of_vars)
       [[0.1]; [0.0]; [0.0];
@@ -594,12 +656,13 @@ and mk_insurance_vars () : string * varname list =
       [0.4]; [0.0]; [0.0];] in
   let (notgsExp, notgsVars) = 
       mk_bind_custom "NotGoodStudent" ("! " ^ (List.hd_exn gsVars)) in
-  let _ = prog :=  notgsExp :: gsExp :: !prog in
-  let _ = boundvars := List.append gsVars !boundvars in
-  let _gsVars = List.rev(notgsVars :: gsVars) in
+  let _ : unit =  prog :=  notgsExp :: gsExp :: !prog in
+  let gsVars = List.rev(notgsVars :: gsVars) in
+  let _ : unit =  boundvars := List.append gsVars !boundvars in
   (* Mileage *)
   let (mileageExp, mileageVars) = mk_discrete "Mileage" [0.100000;0.400000;0.400000;0.100000] in
-  let _ = prog := mileageExp :: !prog in
+  let _ : unit =  prog := mileageExp :: !prog in
+  let _ : unit =  boundvars := List.append mileageVars !boundvars in
   (* CarValue *)
   let (carvalueExp, carvalueVars) = 
     let list_of_vars = 
@@ -648,7 +711,8 @@ and mk_insurance_vars () : string * varname list =
       [0.000001;0.000001;0.000001;0.000001;0.999996];  
       [0.000001;0.000001;0.000001;0.000001;0.999996]; 
       [0.000001;0.000001;0.000001;0.000001;0.999996];] in
-  let _ = prog := carvalueExp :: !prog in
+  let _ : unit =  prog := carvalueExp :: !prog in
+  let _ : unit =  boundvars := List.append carvalueVars !boundvars in
   (* Theft *)
   let (theftExp, theftVars) = 
     let list_of_vars = 
@@ -695,11 +759,11 @@ and mk_insurance_vars () : string * varname list =
     [0.000200]; 
     [0.000200]; 
     [0.000001];] in 
-  let _ = prog := theftExp :: !prog in
-  let _ = boundvars := List.append theftVars !boundvars in
+  let _ : unit =  prog := theftExp :: !prog in
+  let _ : unit =  boundvars := List.append theftVars !boundvars in
   let (nottheftExp, nottheftVars) = 
     mk_bind_custom "NotTheft0" ("! " ^ (List.hd_exn theftVars)) in
-  let _ = prog := nottheftExp :: !prog in
+  let _ : unit =  prog := nottheftExp :: !prog in
   let theftVars = List.rev (nottheftVars :: theftVars) in
   (* Accident *)
   let (accidentExp, accidentVars) = 
@@ -731,17 +795,19 @@ and mk_insurance_vars () : string * varname list =
     [0.100000;0.100000;0.300000;0.500000]; 
     [0.940000;0.030000;0.020000;0.010000]; 
     [0.980000;0.010000;0.007000;0.003000];] in
-  let _ = prog := accidentExp :: !prog in
-  (* ILiCost
-  let (ilicostExp, _ilicostVars) = 
+  let _ : unit =  prog := accidentExp :: !prog in
+  let _ : unit =  boundvars := List.append accidentVars !boundvars in
+  (* ILiCost *)
+  let (ilicostExp, ilicostVars) = 
     ite_discrete_to_discrete_ite "ILiCost" (List.drop_last_exn accidentVars)
     [[1.000000;0.000000;0.000000;0.000000]; 
     [0.999000;0.000998;0.000001;0.000001];
     [0.900000;0.050000;0.030000;0.020000]; 
     [0.800000;0.100000;0.060000;0.040000];] in
-  let _ = prog := ilicostExp :: !prog in
+  let _ : unit =  prog := ilicostExp :: !prog in
+  let _ : unit =  boundvars := List.append ilicostVars !boundvars in
   (* MedCost *)
-  let (medcostExp, _medcostVars) = 
+  let (medcostExp, medcostVars) = 
     let list_of_vars = 
       cartesian (cartesian accidentVars ageVars) cushVars in
     let list_of_vars = List.map list_of_vars ~f:(fun ((a,b),c) -> a ^ " && " ^ b ^ " && " ^ c) in
@@ -794,7 +860,8 @@ and mk_insurance_vars () : string * varname list =
     [0.300000;0.300000;0.200000;0.200000]; 
     [0.600000;0.300000;0.070000;0.030000]; 
     [0.900000;0.050000;0.030000;0.020000]] in
-  let _ = prog := medcostExp :: !prog in *)
+  let _ : unit =  prog := medcostExp :: !prog in
+  let _ : unit =  boundvars := List.append medcostVars !boundvars in
   (* OtherCarCost *)
   let (othercarcostExp, othercarcostVars) = 
     let list_of_vars = 
@@ -813,7 +880,8 @@ and mk_insurance_vars () : string * varname list =
 	 [0.200000;0.400000;0.399960;0.000040]; 
 	 [0.100000;0.500000;0.399940;0.000060]; 
 	 [0.005000;0.550000;0.444900;0.000100]] in
-  let _ = prog := othercarcostExp :: !prog in 
+  let _ : unit =  prog := othercarcostExp :: !prog in 
+  let _ : unit =  boundvars := List.append othercarcostVars !boundvars in
   (* ThisCarDamaged *)
   let (thiscardamExp, thiscardamVars) = 
     let list_of_vars = 
@@ -832,7 +900,8 @@ and mk_insurance_vars () : string * varname list =
     [0.000001;0.000009;0.000090;0.999900]; 
     [0.000001;0.000999;0.009000;0.990000]; 
     [0.050000;0.200000;0.200000;0.550000]] in
-  let _ = prog := thiscardamExp :: !prog in 
+  let _ : unit =  prog := thiscardamExp :: !prog in
+  let _ : unit =  boundvars := List.append thiscardamVars !boundvars in 
   (* ThisCarCost *)
   let (thiscarcostExp, thiscarcostVars) = 
     let list_of_vars = 
@@ -898,9 +967,10 @@ and mk_insurance_vars () : string * varname list =
 
     [0.000001;0.000001;0.009998;0.990000]; 
     [0.000001;0.000001;0.029998;0.970000];] in
-  let _ = prog := thiscarcostExp :: !prog in 
+  let _ : unit =  prog := thiscarcostExp :: !prog in 
+  let _ : unit =  boundvars := List.append thiscarcostVars !boundvars in 
   (* PropCost *)
-  let (propcostExp, _) = 
+  let (propcostExp, propcostVars) = 
     let list_of_vars = 
       cartesian othercarcostVars thiscarcostVars in
     let list_of_vars = List.map list_of_vars ~f:(fun (a,b) -> a ^ " && " ^ b) in
@@ -921,6 +991,7 @@ and mk_insurance_vars () : string * varname list =
     [0.000000;0.000000;0.000000;1.000000]; 
     [0.000000;0.000000;0.000000;1.000000]; 
     [0.000000;0.000000;0.000000;1.000000];] in
-  let _ = prog := propcostExp :: !prog in 
+  let _ : unit =  prog := propcostExp :: !prog in
+  let _ : unit =  boundvars := List.append propcostVars !boundvars in  
   let final_prog = String.concat ~sep:"\n" (List.rev !prog) in
   (final_prog, !boundvars)

@@ -25,9 +25,20 @@ let introduce_new_dec (e : string) (f : float): string * varname =
                 mk_bind (mk_ite d [flip ; "false"]) in
   let (b3, x) = mk_bind (String.concat ~sep:" " [y ; "||" ; z]) in
   (String.concat ~sep:"\n" [s;b1;b2;b3], x)
+let introduce_new_dec_custom (id : string) (e : string)  (f : float): string * varname = 
+  let (s, d, _) = mk_dec 1 in
+  let (b1, y) = mk_bind e in
+  let (b2, z) = let flip = "flip "^ (Float.to_string f) in 
+                mk_bind (mk_ite d [flip ; "false"]) in
+  let (b3, x) = mk_bind_custom id (String.concat ~sep:" " [y ; "||" ; z]) in
+  (String.concat ~sep:"\n" [s;b1;b2;b3], x)
 
 let new_dec_or_bind (e : string) (f : float) : string * varname = 
   if Random.bool () then introduce_new_dec e f else mk_bind e
+let new_dec_or_bind_custom (id : string) (e : string)  (f : float) =
+  if Random.bool () then introduce_new_dec e f else mk_bind_custom id e
+let new_dec_or_bind_custom_with_prs (id : string) (e : string)  (f : float) (pr : float) =
+  if (Float.compare (Random.float 1.) pr) > 0 then introduce_new_dec_custom id e f else mk_bind_custom id e
 
 (* Does method 1 for adding rewards 
   For each x in bound_vars, we create the clause

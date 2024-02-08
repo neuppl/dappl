@@ -1,28 +1,31 @@
-// d589 is variable asia
-d589 <- [ c588 ];
-// d591 is variable smoke
-d591 <- [ c590 ];
-// b592 is variable lung
-b592 <- ( if ( d591 ) then ( flip 0.1 ) else ( flip 0.01 ) );
-// b593 is variable tub
-b593 <- ( if ( d589 ) then ( flip 0.05 ) else ( flip 0.01 ) );
-// b594 is variable bronc
-b594 <- ( if ( d591 ) then ( flip 0.6 ) else ( flip 0.3 ) );
-// b595 is variable either
-b595 <- ( b592 || b593 );
-// b600 is variable xray
+// d595 is variable asia
+d595 <- [ c594 ];
+// d597 is variable smoke
 d597 <- [ c596 ];
-b598 <- ( if ( b595 ) then ( flip 0.98 ) else ( flip 0.05 ) );
-b599 <- ( if ( d597 ) then ( flip 0.98 ) else ( false ) );
-b600 <- ( b598 || b599 );
-// b601 is variable dysp
-b601 <- ( if ( b594 ) then ( if ( b595 ) then ( flip 0.9 ) else ( flip 0.8 ) ) else ( if ( b595 ) then ( flip 0.7 ) else ( flip 0.1 ) ) );
-b602 <- ( if ( d589 ) then ( reward 87 ) else ( true ) );
-b603 <- ( if ( d591 ) then ( reward 36 ) else ( true ) );
-b604 <- ( if ( b592 ) then ( reward 88 ) else ( reward 73 ) );
-b605 <- ( if ( b593 ) then ( reward 63 ) else ( true ) );
-b606 <- ( if ( b594 ) then ( reward 4 ) else ( true ) );
-b607 <- ( if ( b595 ) then ( reward 0 ) else ( true ) );
-b608 <- ( if ( b600 ) then ( reward 15 ) else ( reward 4 ) );
+// b602 is variable lung
+d599 <- [ c598 ];
+b600 <- ( if ( d597 ) then ( flip 0.1 ) else ( flip 0.01 ) );
+b601 <- ( if ( d599 ) then ( flip 0.1 ) else ( false ) );
+b602 <- ( b600 || b601 );
+// b607 is variable tub
+d604 <- [ c603 ];
+b605 <- ( if ( d595 ) then ( flip 0.05 ) else ( flip 0.01 ) );
+b606 <- ( if ( d604 ) then ( flip 0.05 ) else ( false ) );
+b607 <- ( b605 || b606 );
+// b608 is variable bronc
+b608 <- ( if ( d597 ) then ( flip 0.6 ) else ( flip 0.3 ) );
+// b609 is variable either
+b609 <- ( b602 || b607 );
+// b610 is variable xray
+b610 <- ( if ( b609 ) then ( flip 0.98 ) else ( flip 0.05 ) );
+// b611 is variable dysp
+b611 <- ( if ( b608 ) then ( if ( b609 ) then ( flip 0.9 ) else ( flip 0.8 ) ) else ( if ( b609 ) then ( flip 0.7 ) else ( flip 0.1 ) ) );
+b612 <- ( if ( d595 ) then ( reward 42 ) else ( true ) );
+b613 <- ( if ( d597 ) then ( reward 24 ) else ( true ) );
+b614 <- ( if ( b602 ) then ( reward 87 ) else ( reward 88 ) );
 
-b602 && b603 && b604 && b605 && b606 && b607 && b608 && b601
+
+b615 <- ( if ( b609 ) then ( true ) else ( reward 36 ) );
+b616 <- ( if ( b610 ) then ( reward 73 ) else ( true ) );
+b617 <- ( if ( b611 ) then ( reward 88 ) else ( true ) );
+b612 && b613 && b614 && b607 && b608 && b615 && b616 && b617
