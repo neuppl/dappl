@@ -1,28 +1,34 @@
-// d712 is variable asia
-d712 <- [ c711 ];
-// d714 is variable smoke
+// d703 is variable asia
+d703 <- [ c702 ];
+// d705 is variable smoke
+d705 <- [ c704 ];
+// b706 is variable lung
+b706 <- ( if ( d705 ) then ( flip 0.1 ) else ( flip 0.01 ) );
+// b707 is variable tub
+b707 <- ( if ( d703 ) then ( flip 0.05 ) else ( flip 0.01 ) );
+// b712 is variable bronc
+d709 <- [ c708 ];
+b710 <- ( if ( d705 ) then ( flip 0.6 ) else ( flip 0.3 ) );
+b711 <- ( if ( d709 ) then ( flip 0.6 ) else ( false ) );
+b712 <- ( b710 || b711 );
+// b717 is variable either
 d714 <- [ c713 ];
-// b715 is variable lung
-b715 <- ( if ( d714 ) then ( flip 0.1 ) else ( flip 0.01 ) );
-// b716 is variable tub
-b716 <- ( if ( d712 ) then ( flip 0.05 ) else ( flip 0.01 ) );
-// b717 is variable bronc
-b717 <- ( if ( d714 ) then ( flip 0.6 ) else ( flip 0.3 ) );
-// b722 is variable either
+b715 <- ( b706 || b707 );
+b716 <- ( if ( d714 ) then ( flip 0.5 ) else ( false ) );
+b717 <- ( b715 || b716 );
+// b722 is variable xray
 d719 <- [ c718 ];
-b720 <- ( b715 || b716 );
-b721 <- ( if ( d719 ) then ( flip 0.5 ) else ( false ) );
+b720 <- ( if ( b717 ) then ( flip 0.98 ) else ( flip 0.05 ) );
+b721 <- ( if ( d719 ) then ( flip 0.98 ) else ( false ) );
 b722 <- ( b720 || b721 );
-// b723 is variable xray
-b723 <- ( if ( b722 ) then ( flip 0.98 ) else ( flip 0.05 ) );
-// b724 is variable dysp
-b724 <- ( if ( b717 ) then ( if ( b722 ) then ( flip 0.9 ) else ( flip 0.8 ) ) else ( if ( b722 ) then ( flip 0.7 ) else ( flip 0.1 ) ) );
-b725 <- ( if ( d712 ) then ( true ) else ( reward 11 ) );
-b726 <- ( if ( d714 ) then ( reward 27 ) else ( reward 60 ) );
-b727 <- ( if ( b715 ) then ( true ) else ( reward 71 ) );
-b728 <- ( if ( b716 ) then ( reward 61 ) else ( reward 47 ) );
-b729 <- ( if ( b717 ) then ( reward 1 ) else ( true ) );
-b730 <- ( if ( b722 ) then ( reward 82 ) else ( true ) );
-b731 <- ( if ( b723 ) then ( true ) else ( reward 95 ) );
-b732 <- ( if ( b724 ) then ( reward 69 ) else ( true ) );
-b725 && b726 && b727 && b728 && b729 && b730 && b731 && b732
+// b723 is variable dysp
+b723 <- ( if ( b712 ) then ( if ( b717 ) then ( flip 0.9 ) else ( flip 0.8 ) ) else ( if ( b717 ) then ( flip 0.7 ) else ( flip 0.1 ) ) );
+b724 <- ( if ( d703 ) then ( reward 95 ) else ( true ) );
+b725 <- ( if ( d705 ) then ( true ) else ( reward 69 ) );
+b726 <- ( if ( b706 ) then ( reward 41 ) else ( reward 13 ) );
+b727 <- ( if ( b707 ) then ( reward 25 ) else ( reward 94 ) );
+b728 <- ( if ( b712 ) then ( reward 56 ) else ( true ) );
+b729 <- ( if ( b717 ) then ( reward 34 ) else ( true ) );
+b730 <- ( if ( b722 ) then ( reward 92 ) else ( true ) );
+b731 <- ( if ( b723 ) then ( reward 54 ) else ( true ) );
+b724 && b725 && b726 && b727 && b728 && b729 && b730 && b731

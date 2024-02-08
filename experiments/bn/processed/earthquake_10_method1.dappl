@@ -1,22 +1,25 @@
-// d441 is variable earthquake
-d441 <- [ c440 ];
-// d443 is variable burglary
-d443 <- [ c442 ];
-// b448 is variable alarm
-d445 <- [ c444 ];
-b446 <- ( if ( d443 ) then ( if ( d441 ) then ( flip 0.95 ) else ( flip 0.94 ) ) else ( if ( d441 ) then ( flip 0.29 ) else ( flip 0.001 ) ) );
-b447 <- ( if ( d445 ) then ( flip 0.95 ) else ( false ) );
-b448 <- ( b446 || b447 );
-// b453 is variable maryCalls
-d450 <- [ c449 ];
-b451 <- ( if ( b448 ) then ( flip 0.7 ) else ( flip 0.01 ) );
-b452 <- ( if ( d450 ) then ( flip 0.7 ) else ( false ) );
-b453 <- ( b451 || b452 );
-// b454 is variable johnCalls
-b454 <- ( if ( b448 ) then ( flip 0.9 ) else ( flip 0.05 ) );
-b455 <- ( if ( d441 ) then ( reward 53 ) else ( true ) );
-b456 <- ( if ( d443 ) then ( reward 92 ) else ( true ) );
-b457 <- ( if ( b448 ) then ( reward 31 ) else ( reward 82 ) );
-b458 <- ( if ( b453 ) then ( reward 83 ) else ( true ) );
-b459 <- ( if ( b454 ) then ( reward 53 ) else ( true ) );
-b455 && b456 && b457 && b458 && b459
+// d419 is variable earthquake
+d419 <- [ c418 ];
+// d421 is variable burglary
+d421 <- [ c420 ];
+// b426 is variable alarm
+d423 <- [ c422 ];
+b424 <- ( if ( d421 ) then ( if ( d419 ) then ( flip 0.95 ) else ( flip 0.94 ) ) else ( if ( d419 ) then ( flip 0.29 ) else ( flip 0.001 ) ) );
+b425 <- ( if ( d423 ) then ( flip 0.95 ) else ( false ) );
+b426 <- ( b424 || b425 );
+// b431 is variable maryCalls
+d428 <- [ c427 ];
+b429 <- ( if ( b426 ) then ( flip 0.7 ) else ( flip 0.01 ) );
+b430 <- ( if ( d428 ) then ( flip 0.7 ) else ( false ) );
+b431 <- ( b429 || b430 );
+// b436 is variable johnCalls
+d433 <- [ c432 ];
+b434 <- ( if ( b426 ) then ( flip 0.9 ) else ( flip 0.05 ) );
+b435 <- ( if ( d433 ) then ( flip 0.9 ) else ( false ) );
+b436 <- ( b434 || b435 );
+b437 <- ( if ( d419 ) then ( reward 45 ) else ( true ) );
+b438 <- ( if ( d421 ) then ( true ) else ( reward 66 ) );
+b439 <- ( if ( b426 ) then ( reward 17 ) else ( true ) );
+
+b440 <- ( if ( b436 ) then ( reward 51 ) else ( true ) );
+b437 && b438 && b439 && b431 && b440
