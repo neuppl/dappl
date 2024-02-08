@@ -995,3 +995,35 @@ and mk_insurance_vars () : string * varname list =
   let _ : unit =  boundvars := List.append propcostVars !boundvars in  
   let final_prog = String.concat ~sep:"\n" (List.rev !prog) in
   (final_prog, !boundvars)
+
+(* Benchmark 4: Sachs
+  https://www.bnlearn.com/bnrepository/discrete-small.html#sachs
+*)
+
+let rec mk_sachs_to_file (j  : int) : unit =
+  let _ : unit = Printf.printf "Generating %i many Sachs files\n" j in
+  for i = 0 to j do
+    let filename = "experiments/bn/processed/sachs_" ^(Int.to_string i) ^ "_method1" ^".dappl" in
+    let oc = Out_channel.create filename in   
+    let earthquake = mk_insurance (Select) in
+    Printf.fprintf oc "%s\n" earthquake; Out_channel.close oc;
+    let filename = "experiments/bn/processed/sachs_" ^(Int.to_string i) ^ "_method2" ^".dappl" in
+    let oc = Out_channel.create filename in   
+    let earthquake = mk_insurance (New) in
+    Printf.fprintf oc "%s\n" earthquake; Out_channel.close oc;
+  done
+and mk_sachs (m : methodology) =
+  let (program, bv) = mk_sachs_vars () in
+  match m with
+  | Select -> 
+    let s = method_1 bv in 
+    String.concat ~sep:"\n" [program; s]
+  | New -> 
+    let s = method_2 bv in 
+    String.concat ~sep:"\n" [program; s]
+and mk_sachs_vars () : string * varname list = 
+  let prog = ref []  in
+  let boundvars = ref [] in
+  (* vars here *)
+  let final_prog = String.concat ~sep:"\n" (List.rev !prog) in
+  (final_prog, !boundvars)

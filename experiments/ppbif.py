@@ -11,11 +11,9 @@ def read_file_and_split_words(filename):
         print(f"File '{filename}' not found.")
         return []
 
-def remove_empty_lines(input_file, output_file):
-    with open(input_file, 'r') as infile:
-        with open(output_file, 'w') as outfile:
-            for line in infile:
-                if line.strip():  # Check if the line is not empty after stripping whitespace
-                    outfile.write(line)
+x = read_file_and_split_words("experiments/thing.thing")
+x = x.replace(",", ";").replace("then", "then\n\t").replace("else", "else\n\t")
+x = x.replace("discrete(", "[").replace(")", "]")
 
-remove_empty_lines('new2.bif', 'new.bif')
+with open("ref.ref", 'w') as file:
+    file.write(x)
