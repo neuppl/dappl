@@ -18,8 +18,8 @@ b16 <- ( if ( b8 ) then ( flip 0.9 ) else ( flip 0.05 ) );
 b17 <- ( if ( d15 ) then ( flip 0.9 ) else ( false ) );
 b18 <- ( b16 || b17 );
 b19 <- ( if ( d1 ) then ( reward 44 ) else ( true ) );
-b20 <- ( if ( d3 ) then ( reward 82 ) else ( reward 85 ) );
-b21 <- ( if ( b8 ) then ( true ) else ( reward 41 ) );
-b22 <- ( if ( b13 ) then ( reward 39 ) else ( true ) );
-b23 <- ( if ( b18 ) then ( reward 4 ) else ( reward 0 ) );
+b20 <- ( if ( d3 ) then ( true ) else ( reward 85 ) );
+b21 <- ( if ( b8 ) then ( reward 82 ) else ( true ) );
+b22 <- ( if ( b13 ) then ( reward 41 ) else ( true ) );
+b23 <- ( if ( b18 ) then ( reward 39 ) else ( true ) );
 b19 && b20 && b21 && b22 && b23

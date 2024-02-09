@@ -1,28 +1,34 @@
-// d1113 is variable asia
-d1113 <- [ c1112 ];
-// d1115 is variable smoke
-d1115 <- [ c1114 ];
-// b1116 is variable lung
-b1116 <- ( if ( d1115 ) then ( flip 0.1 ) else ( flip 0.01 ) );
-// b1117 is variable tub
-b1117 <- ( if ( d1113 ) then ( flip 0.05 ) else ( flip 0.01 ) );
-// b1118 is variable bronc
-b1118 <- ( if ( d1115 ) then ( flip 0.6 ) else ( flip 0.3 ) );
-// b1119 is variable either
-b1119 <- ( b1116 || b1117 );
-// b1124 is variable xray
+// d1119 is variable asia
+d1119 <- [ c1118 ];
+// d1121 is variable smoke
 d1121 <- [ c1120 ];
-b1122 <- ( if ( b1119 ) then ( flip 0.98 ) else ( flip 0.05 ) );
-b1123 <- ( if ( d1121 ) then ( flip 0.98 ) else ( false ) );
-b1124 <- ( b1122 || b1123 );
-// b1125 is variable dysp
-b1125 <- ( if ( b1118 ) then ( if ( b1119 ) then ( flip 0.9 ) else ( flip 0.8 ) ) else ( if ( b1119 ) then ( flip 0.7 ) else ( flip 0.1 ) ) );
+// b1122 is variable lung
+b1122 <- ( if ( d1121 ) then ( flip 0.1 ) else ( flip 0.01 ) );
+// b1123 is variable tub
+b1123 <- ( if ( d1119 ) then ( flip 0.05 ) else ( flip 0.01 ) );
+// b1128 is variable bronc
+d1125 <- [ c1124 ];
+b1126 <- ( if ( d1121 ) then ( flip 0.6 ) else ( flip 0.3 ) );
+b1127 <- ( if ( d1125 ) then ( flip 0.6 ) else ( false ) );
+b1128 <- ( b1126 || b1127 );
+// b1129 is variable either
+b1129 <- ( b1122 || b1123 );
+// b1134 is variable xray
+d1131 <- [ c1130 ];
+b1132 <- ( if ( b1129 ) then ( flip 0.98 ) else ( flip 0.05 ) );
+b1133 <- ( if ( d1131 ) then ( flip 0.98 ) else ( false ) );
+b1134 <- ( b1132 || b1133 );
+// b1139 is variable dysp
+d1136 <- [ c1135 ];
+b1137 <- ( if ( b1128 ) then ( if ( b1129 ) then ( flip 0.9 ) else ( flip 0.8 ) ) else ( if ( b1129 ) then ( flip 0.7 ) else ( flip 0.1 ) ) );
+b1138 <- ( if ( d1136 ) then ( flip 0.9 ) else ( false ) );
+b1139 <- ( b1137 || b1138 );
+b1140 <- ( if ( d1119 ) then ( reward 46 ) else ( true ) );
+b1141 <- ( if ( d1121 ) then ( reward 12 ) else ( reward 70 ) );
+b1142 <- ( if ( b1122 ) then ( reward 47 ) else ( reward 99 ) );
 
-b1126 <- ( if ( d1115 ) then ( reward 88 ) else ( true ) );
-b1127 <- ( if ( b1116 ) then ( reward 14 ) else ( true ) );
-b1128 <- ( if ( b1117 ) then ( reward 82 ) else ( true ) );
-b1129 <- ( if ( b1118 ) then ( reward 87 ) else ( reward 69 ) );
-b1130 <- ( if ( b1119 ) then ( reward 67 ) else ( true ) );
-b1131 <- ( if ( b1124 ) then ( reward 31 ) else ( true ) );
-b1132 <- ( if ( b1125 ) then ( reward 37 ) else ( reward 95 ) );
-d1113 && b1126 && b1127 && b1128 && b1129 && b1130 && b1131 && b1132
+b1143 <- ( if ( b1128 ) then ( reward 93 ) else ( true ) );
+
+b1144 <- ( if ( b1134 ) then ( reward 88 ) else ( true ) );
+b1145 <- ( if ( b1139 ) then ( reward 14 ) else ( true ) );
+b1140 && b1141 && b1142 && b1123 && b1143 && b1129 && b1144 && b1145

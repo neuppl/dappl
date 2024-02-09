@@ -1005,11 +1005,11 @@ let rec mk_sachs_to_file (j  : int) : unit =
   for i = 0 to j do
     let filename = "experiments/bn/processed/sachs_" ^(Int.to_string i) ^ "_method1" ^".dappl" in
     let oc = Out_channel.create filename in   
-    let earthquake = mk_insurance (Select) in
+    let earthquake = mk_sachs (Select) in
     Printf.fprintf oc "%s\n" earthquake; Out_channel.close oc;
     let filename = "experiments/bn/processed/sachs_" ^(Int.to_string i) ^ "_method2" ^".dappl" in
     let oc = Out_channel.create filename in   
-    let earthquake = mk_insurance (New) in
+    let earthquake = mk_sachs (New) in
     Printf.fprintf oc "%s\n" earthquake; Out_channel.close oc;
   done
 and mk_sachs (m : methodology) =
@@ -1024,6 +1024,170 @@ and mk_sachs (m : methodology) =
 and mk_sachs_vars () : string * varname list = 
   let prog = ref []  in
   let boundvars = ref [] in
-  (* vars here *)
+  (* PKC *)
+  let (pkcexp, pkcvars) = mk_discrete "PKC" [0.423132;0.481639;0.095229] in
+  let _ : unit =  prog := pkcexp :: !prog in 
+  let _ : unit =  boundvars := List.append pkcvars !boundvars in 
+  (* PKA *)
+  let (pkaexp , pkavars) = 
+    ite_discrete_to_discrete_ite "PKA" (List.drop_last_exn pkcvars)
+      [[0.386425;0.379424;0.234150]; 
+      [0.060396;0.922647;0.016957];
+      [0.015770;0.958738;0.025491]] in
+  let _ :unit = prog :=  pkaexp :: !prog in
+  let _ : unit =  boundvars :=  List.append pkavars !boundvars in
+  (* Raf *)
+  let (rafexp, rafvars) = 
+    let list_of_vars = 
+      cartesian pkavars pkcvars in
+    let list_of_vars = List.map list_of_vars ~f:(fun (a,b) -> a ^ " && " ^ b) in
+    ite_discrete_to_discrete_ite "Raf" (List.drop_last_exn list_of_vars)
+    [[0.062322;0.147249;0.790429];
+    [0.369401;0.331212;0.299387];
+	  [0.867580;0.127854;0.004566];
+    [0.447506;0.312575;0.239920]; 
+    [0.550823;0.392914;0.056263];
+    [0.884257;0.115668;0.000075];
+    [0.842885;0.127146;0.029970];
+	  [0.748950;0.159530;0.091520];
+	  [0.841808;0.155367;0.002825]] in
+  let _ :unit = prog :=  rafexp :: !prog in
+  let _ : unit =  boundvars :=  List.append rafvars !boundvars in
+  (* P38 *)
+  let (p38exp, p38vars) = 
+    let list_of_vars = 
+      cartesian pkavars pkcvars in
+    let list_of_vars = List.map list_of_vars ~f:(fun (a,b) -> a ^ " && " ^ b) in
+    ite_discrete_to_discrete_ite "PTE" (List.drop_last_exn list_of_vars)
+    [[0.306912;0.064586;0.628502];
+    [0.655823;0.343942;0.000236];
+    [0.867580;0.127854;0.004566];
+    [0.919187;0.078464;0.002349];
+    [0.814978;0.185007;0.000015];
+    [0.803140;0.192729;0.004131];
+    [0.807378;0.091639;0.100983];
+    [0.386230;0.159530;0.454240];
+    [0.765537;0.231638;0.002825]] in
+  let _ :unit = prog :=  p38exp :: !prog in
+  let _ : unit =  boundvars :=  List.append p38vars !boundvars in
+  (* Mek *)
+  let (mekexp, mekvars) = 
+    let list_of_vars = 
+      cartesian (cartesian pkavars pkcvars) rafvars in
+    let list_of_vars = 
+      List.map list_of_vars ~f:(fun ((a,b),c) -> a ^ " && " ^ b ^ " && " ^ c)  in
+    ite_discrete_to_discrete_ite "Mek" (List.drop_last_exn list_of_vars)
+    [[0.745177;0.254598;0.000224];
+	 [0.384601;0.123137;0.492262];
+	 [0.262181;0.001450;0.736368];
+	 [0.706658;0.293129;0.000213]; 
+	 [0.269276;0.730486;0.000237]; 
+	 [0.850656;0.106562;0.042782];
+	 [0.854386;0.143860;0.001754]; 
+	 [0.011905;0.976190;0.011905]; 
+	 [0.333333;0.333333;0.333333];
+	 [0.757691;0.242277;0.000032]; 
+	 [0.343172;0.649403;0.007425]; 
+	 [0.865290;0.101003;0.033707];
+	 [0.714815;0.285175;0.000009]; 
+	 [0.274658;0.720027;0.005315]; 
+	 [0.281496;0.585116;0.133388];
+	 [0.825646;0.174325;0.000028]; 
+	 [0.105411;0.894372;0.000216]; 
+	 [0.333333;0.333333;0.333333];
+	 [0.997728;0.002244;0.000027]; 
+	 [0.999637;0.000181;0.000181]; 
+	 [0.936105;0.000770;0.063125];
+	 [0.968984;0.030643;0.000374]; 
+	 [0.854386;0.143860;0.001754]; 
+	 [0.498471;0.498471;0.003058];
+	 [0.725951;0.272931;0.001119]; 
+	 [0.006061;0.987879;0.006061];
+	 [0.333333;0.333333;0.333333]] in
+  let _ :unit = prog :=  mekexp :: !prog in
+  let _ : unit =  boundvars :=  List.append mekvars !boundvars in
+  (* Erk *)
+  let (erkexp, erkvars) = 
+    let list_of_vars = 
+      cartesian mekvars pkavars in
+    let list_of_vars = 
+      List.map list_of_vars ~f:(fun (a,b) -> a ^ " && " ^ b)  in
+    ite_discrete_to_discrete_ite "Erk" (List.drop_last_exn list_of_vars)
+    [[0.850513;0.138724;0.010762]; 
+	 [0.117712;0.691936;0.190352]; 
+	 [0.074060;0.700446;0.225494]; 
+	 [0.387033;0.483691;0.129276]; 
+	 [0.048958;0.728240;0.222802]; 
+	 [0.003663;0.102564;0.893773]; 
+	 [0.008683;0.187959;0.803358]; 
+	 [0.001153;0.748558;0.250288]; 
+	 [0.033333;0.033333;0.933333]] in
+  let _ :unit = prog :=  erkexp :: !prog in
+  let _ : unit =  boundvars :=  List.append erkvars !boundvars in
+  (* Akt *)
+  let (aktexp, aktvars) = 
+    let list_of_vars = 
+      cartesian erkvars pkavars in
+    let list_of_vars = 
+      List.map list_of_vars ~f:(fun (a,b) -> a ^ " && " ^ b)  in
+    ite_discrete_to_discrete_ite "Akt" (List.drop_last_exn list_of_vars)
+    [[0.672118;0.327779;0.000103]; 
+	 [0.620386;0.379503;0.000112]; 
+	 [0.975086;0.024055;0.000859]; 
+	 [0.334951;0.664870;0.000180]; 
+	 [0.821408;0.178202;0.000390]; 
+	 [0.948362;0.051547;0.000091]; 
+	 [0.000077;0.118307;0.881616]; 
+	 [0.177106;0.813733;0.009161]; 
+	 [0.170341;0.829396;0.000262]] in
+  let _ :unit = prog :=  aktexp :: !prog in
+  let _ : unit =  boundvars :=  List.append aktvars !boundvars in
+  (* Jnk *)
+  let (jnkexp, jnkvars) = 
+    let list_of_vars = 
+      cartesian pkavars pkcvars in
+    let list_of_vars = 
+      List.map list_of_vars ~f:(fun (a,b) -> a ^ " && " ^ b)  in
+    ite_discrete_to_discrete_ite "Jnk" (List.drop_last_exn list_of_vars)
+    [[0.289926;0.245764;0.464310]; 
+    [0.579444;0.420321;0.000236]; 
+    [0.004566;0.990868;0.004566]; 
+    [0.576670;0.423287;0.000043]; 
+    [0.612904;0.387081;0.000015]; 
+    [0.044690;0.934956;0.020355]; 
+    [0.996124;0.003807;0.000069]; 
+    [0.862301;0.136860;0.000840]; 
+    [0.155367;0.841808;0.002825]] in
+  let _ :unit = prog :=  jnkexp :: !prog in
+  let _ : unit =  boundvars :=  List.append jnkvars !boundvars in
+  (* Plcg *)
+  let (plcgexp, plcgvars) = mk_discrete "Plcg" [0.812134;0.083380;0.104487] in
+  let _ : unit =  prog := plcgexp :: !prog in 
+  let _ : unit =  boundvars := List.append plcgvars !boundvars in
+  (* PIP3 *)
+  let (pip3exp , pip3vars) = 
+    ite_discrete_to_discrete_ite "PIP3" (List.drop_last_exn plcgvars)
+      [[0.218431;0.447324;0.334245]; 
+      [0.077967;0.211202;0.710831]; 
+      [0.423706;0.439653;0.136641]] in
+  let _ :unit = prog :=  pip3exp :: !prog in
+  let _ : unit =  boundvars :=  List.append pip3vars !boundvars in
+  (* PIP2 *)
+  let (pip2exp , pip2vars) = 
+    let list_of_vars = cartesian pip3vars plcgvars in
+    let list_of_vars = 
+      List.map list_of_vars ~f:(fun (a,b) -> a ^ " && " ^ b)  in
+    ite_discrete_to_discrete_ite "PIP2" (List.drop_last_exn list_of_vars)
+    [[0.996792;0.003170;0.000039]; 
+	 [0.997890;0.001055;0.001055]; 
+	 [0.221809;0.493649;0.284542]; 
+	 [0.986711;0.013270;0.000019]; 
+	 [0.957165;0.042445;0.000389]; 
+	 [0.076728;0.391103;0.532169]; 
+	 [0.872401;0.120071;0.007528]; 
+	 [0.521810;0.462455;0.015735]; 
+	 [0.026417;0.052354;0.921230]] in
+  let _ :unit = prog :=  pip2exp :: !prog in
+  let _ : unit =  boundvars :=  List.append pip2vars !boundvars in
   let final_prog = String.concat ~sep:"\n" (List.rev !prog) in
   (final_prog, !boundvars)

@@ -1,37 +1,31 @@
-// d1041 is variable asia
-d1041 <- [ c1040 ];
-// d1043 is variable smoke
-d1043 <- [ c1042 ];
-// b1048 is variable lung
-d1045 <- [ c1044 ];
-b1046 <- ( if ( d1043 ) then ( flip 0.1 ) else ( flip 0.01 ) );
-b1047 <- ( if ( d1045 ) then ( flip 0.1 ) else ( false ) );
-b1048 <- ( b1046 || b1047 );
-// b1049 is variable tub
-b1049 <- ( if ( d1041 ) then ( flip 0.05 ) else ( flip 0.01 ) );
-// b1054 is variable bronc
-d1051 <- [ c1050 ];
-b1052 <- ( if ( d1043 ) then ( flip 0.6 ) else ( flip 0.3 ) );
-b1053 <- ( if ( d1051 ) then ( flip 0.6 ) else ( false ) );
-b1054 <- ( b1052 || b1053 );
-// b1055 is variable either
-b1055 <- ( b1048 || b1049 );
-// b1060 is variable xray
-d1057 <- [ c1056 ];
-b1058 <- ( if ( b1055 ) then ( flip 0.98 ) else ( flip 0.05 ) );
-b1059 <- ( if ( d1057 ) then ( flip 0.98 ) else ( false ) );
-b1060 <- ( b1058 || b1059 );
-// b1065 is variable dysp
-d1062 <- [ c1061 ];
-b1063 <- ( if ( b1054 ) then ( if ( b1055 ) then ( flip 0.9 ) else ( flip 0.8 ) ) else ( if ( b1055 ) then ( flip 0.7 ) else ( flip 0.1 ) ) );
-b1064 <- ( if ( d1062 ) then ( flip 0.9 ) else ( false ) );
-b1065 <- ( b1063 || b1064 );
-b1066 <- ( if ( d1041 ) then ( reward 71 ) else ( true ) );
-b1067 <- ( if ( d1043 ) then ( reward 31 ) else ( true ) );
-b1068 <- ( if ( b1048 ) then ( reward 63 ) else ( reward 61 ) );
-b1069 <- ( if ( b1049 ) then ( reward 33 ) else ( true ) );
-b1070 <- ( if ( b1054 ) then ( reward 55 ) else ( true ) );
-b1071 <- ( if ( b1055 ) then ( reward 23 ) else ( true ) );
-b1072 <- ( if ( b1060 ) then ( reward 38 ) else ( true ) );
-b1073 <- ( if ( b1065 ) then ( true ) else ( reward 66 ) );
-b1066 && b1067 && b1068 && b1069 && b1070 && b1071 && b1072 && b1073
+// d1054 is variable asia
+d1054 <- [ c1053 ];
+// d1056 is variable smoke
+d1056 <- [ c1055 ];
+// b1061 is variable lung
+d1058 <- [ c1057 ];
+b1059 <- ( if ( d1056 ) then ( flip 0.1 ) else ( flip 0.01 ) );
+b1060 <- ( if ( d1058 ) then ( flip 0.1 ) else ( false ) );
+b1061 <- ( b1059 || b1060 );
+// b1062 is variable tub
+b1062 <- ( if ( d1054 ) then ( flip 0.05 ) else ( flip 0.01 ) );
+// b1063 is variable bronc
+b1063 <- ( if ( d1056 ) then ( flip 0.6 ) else ( flip 0.3 ) );
+// b1068 is variable either
+d1065 <- [ c1064 ];
+b1066 <- ( b1061 || b1062 );
+b1067 <- ( if ( d1065 ) then ( flip 0.5 ) else ( false ) );
+b1068 <- ( b1066 || b1067 );
+// b1069 is variable xray
+b1069 <- ( if ( b1068 ) then ( flip 0.98 ) else ( flip 0.05 ) );
+// b1070 is variable dysp
+b1070 <- ( if ( b1063 ) then ( if ( b1068 ) then ( flip 0.9 ) else ( flip 0.8 ) ) else ( if ( b1068 ) then ( flip 0.7 ) else ( flip 0.1 ) ) );
+
+
+
+b1071 <- ( if ( b1062 ) then ( reward 46 ) else ( true ) );
+b1072 <- ( if ( b1063 ) then ( reward 54 ) else ( true ) );
+b1073 <- ( if ( b1068 ) then ( reward 71 ) else ( true ) );
+b1074 <- ( if ( b1069 ) then ( reward 31 ) else ( true ) );
+b1075 <- ( if ( b1070 ) then ( reward 61 ) else ( true ) );
+d1054 && d1056 && b1061 && b1071 && b1072 && b1073 && b1074 && b1075

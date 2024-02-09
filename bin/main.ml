@@ -54,6 +54,7 @@ let gen_tests =
                           Gen.mk_asia_to_file n;
                           Gen.mk_survey_to_file n ;
                           Gen.mk_insurance_to_file n;
+                          Gen.mk_sachs_to_file n;
       | _             ->  failwith "invalid test!")
 
 let command =
