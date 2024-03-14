@@ -9,13 +9,14 @@ type expr =
   | Not         of expr
   | Ite         of expr * expr * expr
   | ChooseWith  of expr * (string * expr) list
-  | Flip        of Bignum.t
-  | Reward      of Bignum.t
+  | Flip        of float
+  | Reward      of float
   | Decision    of string list
   | Bind        of string * expr * expr
   | Observe     of expr * expr
   | Ident       of string
   | Sequence    of expr * expr
+  | Discrete    of (string * float) list
   | True
   | False
 [@@deriving sexp_of]
@@ -54,6 +55,7 @@ let rec from_external_expr (e: Syntax.eexpr) =
   | Flip(_, n)          -> Flip(n)
   | Reward(_, k)        -> Reward(k)
   | Decision(_, l)      -> Decision(l)
+  | Discrete(_, l)      -> Discrete(l)
   | Observe(_, e, e')   -> Observe(f e, f e')
   | Sequence(_, e, e')  -> Sequence(f e, f e')
   | Bind(_, x, e1, e2)  -> Bind(x, f e1, f e2)

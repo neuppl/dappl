@@ -38,9 +38,9 @@
 
 %%
 num:
-    | FLOAT_LIT { (Bignum.of_string $1) }
-    | INT_LIT { (Bignum.of_int $1) }
-    | INT_LIT DIVIDE INT_LIT { Bignum.($1 // $3) }
+    | FLOAT_LIT { (Float.of_string $1) }
+    | INT_LIT { (Float.of_int $1) }
+    | INT_LIT DIVIDE INT_LIT { Float.div (Float.of_int $1) (Float.of_int $3) }
 
 pattern:
   | ID TO expr { ($1, $3) }

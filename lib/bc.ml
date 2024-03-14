@@ -7,6 +7,7 @@ open Rsdd
 open Core_grammar
 open Core
 open Rsdd_abstractions
+open Typechecker
 open Hashtbl
 
 
@@ -54,10 +55,8 @@ let rec bc (dappl : expr) (bdd : rsdd_bdd_builder) : cf =
                             let l = List.fold ir2 ~init:(f bdd) ~f:(cf_or bdd) in
                             cf_and bdd ed l
                             (* for (a,b) in l_of_behaviors *)
-  | Flip n              ->  let k = Bignum.to_float n in
-                            mk_newvar_prob bdd k
-  | Reward k            ->  let k = Bignum.to_float k in
-                            mk_newvar_rew bdd k
+  | Flip n              ->  mk_newvar_prob bdd n
+  | Reward k            ->  mk_newvar_rew bdd k
   | Decision l          ->  let (e, l) = mk_newvar_dec bdd l in 
                             let _ : unit = dlist := List.append !dlist l in 
                             e
@@ -72,15 +71,19 @@ let rec bc (dappl : expr) (bdd : rsdd_bdd_builder) : cf =
                             }
   | Sequence(e, e')     ->  bc (And(e, e')) bdd
   | Ident x             ->  let ox = Hashtbl.find dictionary x in
-                            match ox with 
+                            (match ox with 
                             | None -> failwith "unbound variable!"
-                            | Some x' -> x'
+                            | Some x' -> x')
+  | _         -> failwith "fuck"
 
 (*Debug fn*)
 let rt_newest_lbl bdd = let (lbl, _) = bdd_new_var bdd true in 
                         Printf.printf "asdfasdf %n\n" (Int64.to_int_exn lbl)
 
-let infer (prog :program) : float * float = 
+let infer (prog : program) : float * float = 
+  (* typecheck *)
+  is_well_typed prog.body ;
+  Printf.printf "typechecked!\n" ;
   (* compile first *)
   let new_bdd = mk_bdd_builder_default_order 0L in
   let cf = bc prog.body new_bdd in 
@@ -93,7 +96,7 @@ let infer (prog :program) : float * float =
   let (lbl, _) = bdd_new_var new_bdd true in 
   let _ : unit = if not(Int64.to_int_exn lbl = (List.length wmc_map)) 
           then failwith "live variable-weight mismatch error: do you have any dead code?" 
-          else () in 
+          else () in  
   let wmcparam = new_wmc_params_eu wmc_map in
   (* Finally the actual MEU *)
   let unn_and_acc = bdd_and new_bdd cf.unn cf.acc in
