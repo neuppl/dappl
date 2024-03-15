@@ -4,7 +4,7 @@ open Core_grammar
 open Core
 open Fun
 
-type typ = | Bool_t | Rew_t | Choice_t of string list
+type typ = | Bool_t | Rew_t | Choice_t of string list | Discrete_t of string list
 
 let equal_typ = fun x y -> match x, y with
 | Bool_t , Bool_t -> true
@@ -13,7 +13,8 @@ let equal_typ = fun x y -> match x, y with
 | _ -> false ;;
 
 let typ_to_string = fun t -> match t with 
-| Bool_t -> "Bool" | Rew_t -> "Reward" | Choice_t (l) -> List.to_string ~f:id l ;;
+| Bool_t -> "Bool" | Rew_t -> "Reward" 
+| Choice_t l -> List.to_string ~f:id l | Discrete_t l -> List.to_string ~f:id l;;
 
 exception TypeError of string ;;
 exception ConflictingVarNameError of string ;;
@@ -27,6 +28,7 @@ let rec typecheck_h : expr -> stringmap -> typ = fun e s-> match e with
 | Flip _              ->  Bool_t
 | Reward _            ->  Rew_t
 | Decision l          ->  Choice_t l
+| Discrete l          ->  Discrete_t (List.map l ~f:(fun (cat, pr) -> cat))
 | Ident x             ->  Map.find_exn s x
 | And (x,y)           ->  (match typecheck_h x s, typecheck_h y s with 
                           | Bool_t, Bool_t   -> Bool_t
@@ -67,7 +69,18 @@ let rec typecheck_h : expr -> stringmap -> typ = fun e s-> match e with
                             (match is_all_the_same_type with 
                             | Some x -> x | None -> raise (TypeError "Expected Choose Branches to be of same type!"))
                           else raise (NonExhaustiveError "Branches of Choose is nonexhaustive!")
-                        | a           -> raise (TypeError ("Expected Choose# guard to be Bool, got "^(typ_to_string a))))
+                        | Discrete_t k  ->
+                          let (names, exprs) = List.unzip l in
+                          let is_exhaustive = 
+                            Set.equal (Set.of_list (module String) k) (Set.of_list (module String) names) in
+                          if is_exhaustive then
+                            let types = List.map ~f:(fun ex -> typecheck_h ex s) exprs in
+                            let is_all_the_same_type = 
+                              List.all_equal types ~equal:equal_typ in
+                            (match is_all_the_same_type with 
+                            | Some x -> x | None -> raise (TypeError "Expected Choose Branches to be of same type!"))
+                          else raise (NonExhaustiveError "Branches of Choose is nonexhaustive!")
+                        | a           -> raise (TypeError ("Expected Choose guard to be Bool, got "^(typ_to_string a))))
 | _ -> raise (TypeError "")
 
 let is_well_typed : expr -> unit = fun e ->
