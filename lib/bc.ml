@@ -7,9 +7,10 @@ open Rsdd
 open Core_grammar
 open Core
 open Rsdd_abstractions
-open Typechecker
+(* open Typechecker *)
 open Hashtbl
-
+open Anf
+open Pp
 
 (* We maintain an association list of strings and VarLabels 
   to enforce exhaustive patternmatch in ChooseWith. *)
@@ -81,12 +82,18 @@ let rt_newest_lbl bdd = let (lbl, _) = bdd_new_var bdd true in
                         Printf.printf "asdfasdf %n\n" (Int64.to_int_exn lbl)
 
 let infer (prog : program) : float * float = 
+  let program = prog.body in
   (* typecheck *)
-  is_well_typed prog.body ;
+  (* is_well_typed program ; *)
   Printf.printf "typechecked!\n" ;
+  (* ANF *)
+  let program = uniquify (flatten program) in
+  Printf.printf "UNIQUIFY+FLATTEN\n%s\n" (pp_dappl program);
+  let program = anf program in
+  Printf.printf "ANF\n%s\n" (pp_dappl program);
   (* compile first *)
   let new_bdd = mk_bdd_builder_default_order 0L in
-  let cf = bc prog.body new_bdd in 
+  let cf = bc program new_bdd in 
   (* then remember decisions, store as varlabel list *)
   let decisions = List.map !dlist ~f:(fun (_,b) -> b) in
   (* Then we make the WMC param. *)
@@ -102,3 +109,34 @@ let infer (prog : program) : float * float =
   let unn_and_acc = bdd_and new_bdd cf.unn cf.acc in
   let (meu, _) = bdd_meu unn_and_acc cf.acc decisions lbl wmcparam in 
   extract meu
+
+type tbl = Wt of (float * float) * (float * float) | Expr of expr
+
+let prob_to_expect : float -> tbl = fun pr ->
+  Wt ((1.0 -. pr, 0.0), (pr, 0.0))
+let rw_to_expect : float -> tbl = fun rw ->
+  Wt ((1.0 , 0.0), (1.0, rw))
+
+type tblmap = (string, tbl, String.comparator_witness) Map.t
+
+let rec build_stuff_up : expr -> tblmap * expr = fun e ->
+  let empty_table : tblmap = Map.empty (module String) in
+  build_stuff_up_h (empty_table, e)
+and build_stuff_up_h : tblmap * expr -> tblmap * expr = fun (s, e) -> match e with
+| Bind(i, b, t) -> 
+  let x = (match b with 
+  | Flip f    -> prob_to_expect f
+  | Reward k  -> rw_to_expect k
+  | True      -> prob_to_expect 1. 
+  | False     -> prob_to_expect 0. 
+  | y         -> Expr(y) ) in
+  let s' = Map.add_exn s ~key:i ~data:x in build_stuff_up_h (s', t)
+| x             -> (s, x)
+
+(* let bc' : rsdd_bdd_builder -> tblmap * expr -> cf = fun bdd (s, e) -> 
+match e with
+| Reward k -> mk_newvar_rew bdd k
+| Flip f  ->  mk_newvar_prob bdd f
+| True    -> t bdd 
+| False   -> f bdd
+| And *)

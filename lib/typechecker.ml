@@ -1,4 +1,4 @@
-(* typecheck_hs a dappl program *) 
+(* typechecks a dappl program *) 
 
 open Core_grammar
 open Core
@@ -20,7 +20,7 @@ exception TypeError of string ;;
 exception ConflictingVarNameError of string ;;
 exception NonExhaustiveError of string ;;
 
-type stringmap = (string, typ, Base.String.comparator_witness) Base.Map.t
+type stringmap = (string, typ, String.comparator_witness) Map.t
 
 let rec typecheck_h : expr -> stringmap -> typ = fun e s-> match e with 
 | True -> Bool_t
@@ -28,7 +28,7 @@ let rec typecheck_h : expr -> stringmap -> typ = fun e s-> match e with
 | Flip _              ->  Bool_t
 | Reward _            ->  Rew_t
 | Decision l          ->  Choice_t l
-| Discrete l          ->  Discrete_t (List.map l ~f:(fun (cat, pr) -> cat))
+| Discrete l          ->  Discrete_t (List.map l ~f:(fun (cat, _) -> cat))
 | Ident x             ->  Map.find_exn s x
 | And (x,y)           ->  (match typecheck_h x s, typecheck_h y s with 
                           | Bool_t, Bool_t   -> Bool_t
@@ -45,9 +45,17 @@ let rec typecheck_h : expr -> stringmap -> typ = fun e s-> match e with
                         | Bool_t -> Bool_t 
                         | a      -> raise (TypeError ("Expected Bool at NOT, got "^(typ_to_string a))))
 | Ite (x,y,z)       ->  (match typecheck_h x s with
-                        | Bool_t -> if equal_typ (typecheck_h y s) (typecheck_h z s) then typecheck_h y s else 
-                                    raise (TypeError "Expected ITE Branches to be of same type!")
-                        | a      -> raise (TypeError ("Expected ITE guard to be Bool, got "^(typ_to_string a))))
+                        | Bool_t      ->  let a,b = typecheck_h y s , typecheck_h z s in
+                                          if equal_typ a b then a else 
+                                          raise (TypeError 
+                                            ("Expected ITE Branches to be of same type, got "^(typ_to_string a)^" and "^(typ_to_string b)))
+                        | Choice_t l  ->  if List.length l = 1 then 
+                                          (let a,b = typecheck_h y s , typecheck_h z s in
+                                          if equal_typ a b then a else 
+                                          raise (TypeError 
+                                            ("Expected ITE Branches to be of same type, got "^(typ_to_string a)^" and "^(typ_to_string b)))) else
+                                          raise (TypeError "Expected ITE of Choice to be of only one decision!")
+                        | a           -> raise (TypeError ("Expected ITE guard to be Bool, got "^(typ_to_string a))))
 | Bind (str, e, e') ->  let tp_e = typecheck_h e s in
                         let s' = try Map.add_exn s ~key:str ~data:tp_e with _ -> 
                           raise (ConflictingVarNameError ("You defined the variable "^str^" multiple times!")) in

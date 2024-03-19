@@ -4,7 +4,7 @@
   pp_dtproblog takes in a dappl AST and prints the relevant problog program   
 *)
 
-open Dappl.Core_grammar
+open Core_grammar
 open Core
 
 let map_tab (s : string list) = List.map s ~f:(fun str -> "\t"^str)
@@ -35,6 +35,7 @@ let rec pp_dappl_h_bool (dappl : expr) : string =
   | Xor (x,y)           ->  let x, y = pp_dappl_h_bool x, pp_dappl_h_bool y in 
                             String.concat ~sep:" " ["(" ; x ; ") ^ (" ; y ; ")"]
   | Not x               ->  String.concat ~sep:" " ["!(" ; pp_dappl_h_bool x; ")"]
+  | Discrete _          ->  failwith "how do you have a Discrete??"
   | _                   ->  failwith "stepped into Bool case illegally in pp"
 and pp_dappl_h (dappl : expr) : string list =
   match dappl with
@@ -55,7 +56,7 @@ and pp_dappl_h (dappl : expr) : string list =
   | Decision l          ->  let s = String.concat ~sep:", " l in
                             add ~front:"[" ~back:"]" [s]
   | Bind (s, e, e')     ->  let x, y = pp_dappl_h e, pp_dappl_h e' in
-                            let x = add ~front:(s ^ " <- ") ~back:";" x in
+                            let x = (add ~front:(s ^ " <- ") x) @ [";"] in
                             x @ y
   | Observe (e , e')    ->  let x, y = pp_dappl_h e, pp_dappl_h e' in
                             let x = add ~front:" observe (" ~back:");" x in

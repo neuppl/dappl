@@ -1,0 +1,5 @@
+// x <- flip 0.5 ;
+// choose [U, N] with
+// | U -> (if x then reward 1 else reward 0)
+// | N -> reward 3
+(flip 0.5) && (flip 0.3)
