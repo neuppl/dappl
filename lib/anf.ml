@@ -14,6 +14,9 @@ and flatten_h : expr -> (string * expr) list * expr = function
 | Bind(x, t1, t2) ->  
   let (l1, ft1) , (l2, ft2) = flatten_h t1, flatten_h t2 in
   (l1 @ [(x , ft1)] @ l2, ft2)
+| And(t1, t2)     -> 
+  let (l1, ft1), (l2, ft2) = flatten_h t1, flatten_h t2 in 
+  (l1 @ l2, And(ft1, ft2))
 | x -> ([], x) 
 
 let rec uniquify : expr -> expr = fun e -> uniquify_h e 0
@@ -44,101 +47,59 @@ let is_value : expr -> bool = function
 | Ident _       -> true
 | _             -> false
 
-let rec anf : expr -> expr = fun e ->
-  let (l, e)       = anf_h e in
-  let (l', e')     = anf_hh e in
-  let squash       = fun _ (s,b) e ->  Bind(s , b, e) in
-  List.fold_right (l@l') ~f:(squash ()) ~init:e
-and anf_h : expr -> (string * expr) list * expr = 
-  let ct = ref 0 in 
-  let fresh = fun _ -> 
-    let n = Int.to_string !ct in 
-    (ct := !ct + 1) ; "anf"^n in
-  function
-  | And(x,y)          ->  (match is_value x, is_value y with
-                          | true, true -> ([], And(x,y))
-                          | false, false -> 
-                            let new1, new2 = fresh (), fresh () in 
-                            let (lx, ex) , (ly, ey) = anf_h x, anf_h y in
-                            let new_and = And(Ident(new1), Ident(new2)) in
-                            (lx @ [(new1, ex)] @ ly @ [(new2, ey)], new_and)
-                          | false, true -> 
-                            let new1 = fresh () in 
-                            let (lx, ex) = anf_h x in
-                            let new_and = And(Ident(new1), y) in
-                            (lx @ [(new1, ex)] , new_and)
-                          | true, false -> 
-                            let new2 = fresh () in 
-                            let (ly, ey) = anf_h y in
-                            let new_and = And(x, Ident(new2)) in
-                            (ly @ [(new2, ey)], new_and))
-  | Or(x,y)           ->  (match is_value x, is_value y with
-                          | true, true -> ([], Or(x,y))
-                          | false, false -> 
-                            let new1, new2 = fresh (), fresh () in 
-                            let (lx, ex) , (ly, ey) = anf_h x, anf_h y in
-                            let new_and = Or(Ident(new1), Ident(new2)) in
-                            (lx @ [(new1, ex)] @ ly @ [(new2, ey)], new_and)
-                          | false, true -> 
-                            let new1 = fresh () in 
-                            let (lx, ex) = anf_h x in
-                            let new_and = Or(Ident(new1), y) in
-                            (lx @ [(new1, ex)] , new_and)
-                          | true, false -> 
-                            let new2 = fresh () in 
-                            let (ly, ey) = anf_h y in
-                            let new_and = Or(x, Ident(new2)) in
-                            (ly @ [(new2, ey)], new_and))
-  | Xor(x,y)          ->  (match is_value x, is_value y with
-                          | true, true -> ([], Xor(x,y))
-                          | false, false -> 
-                            let new1, new2 = fresh (), fresh () in 
-                            let (lx, ex) , (ly, ey) = anf_h x, anf_h y in
-                            let new_and = Xor(Ident(new1), Ident(new2)) in
-                            (lx @ [(new1, ex)] @ ly @ [(new2, ey)], new_and)
-                          | false, true -> 
-                            let new1 = fresh () in 
-                            let (lx, ex) = anf_h x in
-                            let new_and = Xor(Ident(new1), y) in
-                            (lx @ [(new1, ex)] , new_and)
-                          | true, false -> 
-                            let new2 = fresh () in 
-                            let (ly, ey) = anf_h y in
-                            let new_and = Xor(x, Ident(new2)) in
-                            (ly @ [(new2, ey)], new_and))
-  | Not x             ->  if is_value x 
-                          then ([], Not x) 
-                          else
-                            let new1 = fresh () in 
-                            let (lx, ex) = anf_h x in
-                            let new_not = Not(Ident(new1)) in
-                            (lx @ [(new1, ex)], new_not)
-  | Ite(g, x, y)      ->  let new1, new2, new3 = fresh (), fresh (), fresh () in 
-                          let (lg, eg), (lx, ex), (ly, ey) = anf_h g , anf_h x, anf_h y in
-                          let new_if = Ite(Ident(new1), Ident(new2), Ident(new3)) in
-                          (lg @ [(new1, eg)] @ lx @ [(new2, ex)] @ ly @ [(new3, ey)], new_if)
-  | Bind(n, x, y)     ->  let (lx, ex), (ly, ey) = anf_h x, anf_h y in  
-                          (lx @ [(n, ex)] @ ly, ey)
-  | Observe(p, e)     ->  let (lp, ep), (le, ee) = anf_h p, anf_h e in
-                          let new1, new2 = fresh (), fresh () in
-                          (lp @ [(new1, ep)] @ le @ [(new2, ee)], Observe(Ident(new1), Ident(new2)))
-  | Sequence(e, e')   ->  let (lp, ep), (le, ee) = anf_h e, anf_h e' in
-                          let new1, new2 = fresh (), fresh () in
-                          (lp @ [(new1, ep)] @ le @ [(new2, ee)], Sequence(Ident(new1), Ident(new2)))
-  | ChooseWith(e, l)  ->  let (le, ee) = anf_h e in
-                          let newdec = fresh () in
-                          let (names, anfs) = List.unzip (List.map l ~f:(fun (n,k) -> (n, anf_h k))) in
-                          let (newvars, returns) = List.unzip anfs in
-                          let newnames = List.init (List.length l) ~f:(fun _ -> fresh ()) in
-                          let new_choose = ChooseWith (Ident newdec, List.zip_exn names (List.map newnames ~f:(fun x -> Ident x))) in
-                          let newasdf = List.zip_exn newnames returns in
-                          let interpd = interpolate newvars newasdf in
-                          (le @ [(newdec, ee)] @ interpd, new_choose)
-  | x                 ->  ([], x)
-and interpolate : 'a list list -> 'a list -> 'a list = fun ll l ->
-match ll, l with
-| (x :: xs), (y :: ys)  -> x @ [y] @ (interpolate xs ys)
-| [] , []               -> []
-| _                     -> failwith "Wrong Lengths!"
+let ct = ref (-1)
 
+let fresh () = (ct := !ct + 1) ;  "var_"^(Int.to_string !ct)
+let newlet () e1 e2 = let n = fresh () in Bind(n, e1, e2)
+let newlet_id () e f = let n = fresh () in Bind(n, e, f (Ident(n))) 
 
+let rec anf_h : expr -> (expr -> expr) -> expr = fun e lambda -> match e with
+(* Base Cases *)
+| True                  ->  lambda True
+| False                 ->  lambda False
+| Ident k               ->  lambda (Ident k)
+(* exp --> let new_var = exp in new_var *)
+| Flip  f               ->  newlet_id () (Flip f) lambda
+| Reward k              ->  newlet_id () (Reward k) lambda
+| Decision l            ->  newlet_id () (Decision l) lambda
+| Discrete l            ->  newlet_id () (Discrete l) lambda
+| And (x,y)             ->  anf_h x (fun lft ->
+                              anf_h y (fun rgt ->
+                                newlet_id () (And(lft, rgt)) lambda
+                            ))
+| Or (x,y)              ->  anf_h x (fun lft ->
+                              anf_h y (fun rgt ->
+                                newlet_id () (Or(lft, rgt)) lambda
+                            ))
+| Xor (x,y)              -> anf_h x (fun lft ->
+                              anf_h y (fun rgt ->
+                                newlet_id () (Xor(lft, rgt)) lambda
+                            ))
+| Not x                 ->  anf_h x (fun i ->
+                              newlet_id () (Not i) lambda)
+| Ite (g, t, e)         ->  anf_h g (fun gd ->
+                              anf_h t (fun thn ->
+                                anf_h e (fun els ->
+                                  newlet_id () (Ite(gd, thn, els)) lambda
+                            )))
+(* TODO: Check this case *)
+| Observe (b, e)        ->  anf_h b (fun obs ->
+                              anf_h e (fun rst ->
+                                lambda (Observe (obs,rst))))
+| Bind (s, b, e)        ->  anf_h b (fun bd ->
+                              Bind(s, bd, anf_h e lambda))
+| Sequence (f, n)       ->  anf_h f (fun fs ->
+                              anf_h n (fun nx ->
+                                newlet_id () (Sequence(fs, nx)) lambda
+                            ))
+(* TODO: Check this case *)
+| ChooseWith (e, l)     ->  let rec fold_fn = fun ct a k -> match ct with
+                                              | ChooseWith(x,l) -> ChooseWith(x, l @ [(a,k)])
+                                              | Bind(x,y,l)     -> Bind(x,y, fold_fn l a k)
+                                              | _               -> failwith "error!"          in
+                            let x = fun d -> List.fold_right l 
+                              ~init:(ChooseWith(d, []))
+                              ~f:(fun (a,b) ct  -> anf_h b (fold_fn ct a)) in 
+                            flatten (anf_h e (fun k -> newlet_id () (x k) lambda))
+and anf : expr -> expr = fun e -> anf_h e (fun x -> x)
+                        

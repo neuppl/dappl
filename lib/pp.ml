@@ -36,6 +36,8 @@ let rec pp_dappl_h_bool (dappl : expr) : string =
                             String.concat ~sep:" " ["(" ; x ; ") ^ (" ; y ; ")"]
   | Not x               ->  String.concat ~sep:" " ["!(" ; pp_dappl_h_bool x; ")"]
   | Discrete _          ->  failwith "how do you have a Discrete??"
+  | Flip n              ->  "flip " ^ Float.to_string n
+  | Ident x             ->  x
   | _                   ->  failwith "stepped into Bool case illegally in pp"
 and pp_dappl_h (dappl : expr) : string list =
   match dappl with
@@ -51,7 +53,6 @@ and pp_dappl_h (dappl : expr) : string list =
                                           | x :: xs -> let s' = "| " ^ s ^ " -> " ^ x in s' :: xs in
                             let final = List.map (List.zip_exn s e) ~f:zip_fn in
                             (add ~front:"choose" ~back:"with" d) @ List.concat final
-  | Flip n              ->  ["flip " ^ Float.to_string n]
   | Reward k            ->  ["reward " ^ Float.to_string k]
   | Decision l          ->  let s = String.concat ~sep:", " l in
                             add ~front:"[" ~back:"]" [s]
@@ -64,7 +65,6 @@ and pp_dappl_h (dappl : expr) : string list =
   | Sequence(e, e')     ->  let x, y = pp_dappl_h e, pp_dappl_h e' in
                             let x = add ~back:";" x in
                             x @ y
-  | Ident x             ->  [x]
   | e                   ->  [pp_dappl_h_bool e]
 
 let pp_dappl (dappl : expr) = String.concat ~sep:"\n" (pp_dappl_h dappl)
