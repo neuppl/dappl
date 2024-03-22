@@ -33,7 +33,7 @@ and typecheck : expr -> stringmap -> typ = fun e s -> match e with
 | Flip _            ->  MBool_t
 | Decision l        ->  Choice_t l
 | Reward (_ , e)    ->  typecheck e s 
-| Return e          ->  let typ_e = typecheck x e in 
+| Return x          ->  let typ_e = typecheck x s in 
                         if (equal_typ typ_e Bool_t) 
                         then Bool_t 
                         else raise (TypeError (
