@@ -29,64 +29,38 @@ rule token =
     parse
     | white                     { token lexbuf; }
     | newline                   { next_line lexbuf; token lexbuf }
-    | '+'                       { PLUS }
-    | '-'                       { MINUS }
-    | '*'                       { MULTIPLY }
-    | '/'                       { DIVIDE }
-    | "<=>"                     { IFF }
-    | "^"                       { XOR }
-    | '%'                       { MODULUS }
-    | '<'                       { LT }
-    | '>'                       { GT }
-    | '!'                       { NOT }
-    | "int"                     { INT }
-    | "bool"                    { BOOL }
-    | "list"                    { LIST }
-    | "<="                      { LTE }
-    | ">="                      { GTE }
-    | "=="                      { EQUAL_TO }
-    | "<<"                      { LEFTSHIFT }
-    | ">>"                      { RIGHTSHIFT }
-    | "="                       { EQUAL }
-    | "!="                      { NEQ }
-    | "&&"                      { AND }
-    | "<-"                      { BIND }
-    | "||"                      { OR }
-    | "::"                      { CONS }
     | "//"                      { comment lexbuf; }
+    (* Logical operators *)
+    | "^"                       { XOR }
+    | '!'                       { NOT }
+    | "&&"                      { AND }
+    | "||"                      { OR }
+    (* Bind *)
+    | "<-"                      { BIND }
+    | ';'                       { SEMICOLON }
+    (* ITE *)
     | "if"                      { IF }
-    | "sample"                  { SAMPLE }
-    | "else"                    { ELSE }
-    | "discrete"                { DISCRETE }
     | "then"                    { THEN }
+    | "else"                    { ELSE }
+    (* Keywords for probabilistic fragment *)
+    | "discrete"                { DISCRETE }
     | "true"                    { TRUE }
     | "false"                   { FALSE }
-    | "let"                     { LET }
-    | "fst"                     { FST }
-    | "snd"                     { SND }
-    | "in"                      { IN }
-    | "iterate"                 { ITERATE }
-    | "uniform"                 { UNIFORM }
-    | "return"                  { RETURN }
-    | "binomial"                { BINOMIAL }
     | "observe"                 { OBSERVE }
     | "flip"                    { FLIP }
+    (* Keywords for decision-theoretic fragment *)
     | "reward"                  { REWARD }
-    | "fun"                     { FUN }
-    | "head"                    { HEAD }
-    | "tail"                    { TAIL }
-    | "length"                  { LENGTH }
     | "choose"                  { CHOOSE }
+    | '['                       { LBRACKET }
+    | ']'                       { RBRACKET }
     | "with"                    { WITH }
     | '|'                       { MID }
     | "->"                      { TO }
+    (* Returning a pure value *)
+    | "return"                  { RETURN }
+    (* Delimiters and etc. *)
     | '('                       { LPAREN }
     | ')'                       { RPAREN }
-    | '['                       { LBRACKET }
-    | ']'                       { RBRACKET }
-    | '{'                       { LBRACE }
-    | '}'                       { RBRACE }
-    | ';'                       { SEMICOLON }
     | ':'                       { COLON }
     | ','                       { COMMA }
     | float as num              { FLOAT_LIT(num); }

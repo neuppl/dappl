@@ -4,93 +4,116 @@ open Core_grammar
 open Core
 open Fun
 
-type typ = | Bool_t | Rew_t | Choice_t of string list | Discrete_t of string list
+type typ = Bool_t | MBool_t |Choice_t of string list
 
 let equal_typ = fun x y -> match x, y with
 | Bool_t , Bool_t -> true
-| Rew_t , Rew_t   -> true
+| MBool_t, MBool_t -> true
 | Choice_t(l), Choice_t(k) -> if (List.equal (String.equal) l k) then true else false
-| _ -> false ;;
+| _ -> false
 
 let typ_to_string = fun t -> match t with 
-| Bool_t -> "Bool" | Rew_t -> "Reward" 
-| Choice_t l -> List.to_string ~f:id l | Discrete_t l -> List.to_string ~f:id l;;
+| Bool_t -> "Bool"
+| MBool_t -> "M Bool"
+| Choice_t l -> List.to_string ~f:id l
 
 exception TypeError of string ;;
 exception ConflictingVarNameError of string ;;
+exception UnboundVariableError of string
 exception NonExhaustiveError of string ;;
 
 type stringmap = (string, typ, String.comparator_witness) Map.t
 
-let rec typecheck_h : expr -> stringmap -> typ = fun e s-> match e with 
-| True -> Bool_t
-| False -> Bool_t
-| Flip _              ->  Bool_t
-| Reward _            ->  Rew_t
-| Decision l          ->  Choice_t l
-| Discrete l          ->  Discrete_t (List.map l ~f:(fun (cat, _) -> cat))
-| Ident x             ->  Map.find_exn s x
-| And (x,y)           ->  (match typecheck_h x s, typecheck_h y s with 
-                          | Bool_t, Bool_t   -> Bool_t
-                          | a,b              -> raise (TypeError 
-                                                ("Expected Bools at AND, got "^(typ_to_string a)^" and "^(typ_to_string b))))  
-| Or (x,y)            ->  (match typecheck_h x s, typecheck_h y s with 
-                          | Bool_t, Bool_t -> Bool_t
-                          | a,b            -> raise (TypeError 
-                                                ("Expected Bools at OR, got "^(typ_to_string a)^" and "^(typ_to_string b))))
-| Xor (x,y)          ->  (match typecheck_h x s, typecheck_h y s with 
-                          | a,b            -> raise (TypeError 
-                                                ("Expected Bools at XOR, got "^(typ_to_string a)^" and "^(typ_to_string b))))
-| Not x             ->  (match typecheck_h x s with 
-                        | Bool_t -> Bool_t 
-                        | a      -> raise (TypeError ("Expected Bool at NOT, got "^(typ_to_string a))))
-| Ite (x,y,z)       ->  (match typecheck_h x s with
-                        | Bool_t      ->  let a,b = typecheck_h y s , typecheck_h z s in
-                                          if equal_typ a b then a else 
-                                          raise (TypeError 
-                                            ("Expected ITE Branches to be of same type, got "^(typ_to_string a)^" and "^(typ_to_string b)))
-                        | Choice_t l  ->  if List.length l = 1 then 
-                                          (let a,b = typecheck_h y s , typecheck_h z s in
-                                          if equal_typ a b then a else 
-                                          raise (TypeError 
-                                            ("Expected ITE Branches to be of same type, got "^(typ_to_string a)^" and "^(typ_to_string b)))) else
-                                          raise (TypeError "Expected ITE of Choice to be of only one decision!")
-                        | a           -> raise (TypeError ("Expected ITE guard to be Bool, got "^(typ_to_string a))))
-| Bind (str, e, e') ->  let tp_e = typecheck_h e s in
-                        let s' = try Map.add_exn s ~key:str ~data:tp_e with _ -> 
-                          raise (ConflictingVarNameError ("You defined the variable "^str^" multiple times!")) in
-                        typecheck_h e' s'
-| Observe (e,e')    ->  let tp_e = typecheck_h e s in
-                        (match tp_e with 
-                        | Bool_t  -> typecheck_h e' s
-                        | _       -> raise (TypeError ("Expected Bool in Observe, got "^(typ_to_string tp_e))))
-| ChooseWith(e, l)  ->  let tp_e = typecheck_h e s in
+let rec is_well_typed : expr -> unit = fun e ->
+  let new_store : stringmap = Map.empty (module String) in
+  let _ = typecheck e new_store in ()
+and typecheck : expr -> stringmap -> typ = fun e s -> match e with 
+| True | False      ->  Bool_t
+| Ident x           ->  (match (Map.find s x) with Some t -> t | None -> raise (UnboundVariableError x))
+| Flip _            ->  MBool_t
+| Decision l        ->  Choice_t l
+| Reward (_ , e)    ->  typecheck e s 
+| Return e          ->  let typ_e = typecheck x e in 
+                        if (equal_typ typ_e Bool_t) 
+                        then Bool_t 
+                        else raise (TypeError (
+                          "Expected pure expression in Return, got "^(typ_to_string typ_e)))
+| And(x , y)        ->  let typ_x, typ_y = typecheck x s , typecheck y s in
+                        if (equal_typ typ_x Bool_t && equal_typ typ_y Bool_t) 
+                        then Bool_t
+                        else raise (TypeError (
+                          "Expected Booleans in AND, got "^(typ_to_string typ_x)^" and "^(typ_to_string typ_y)))
+| Or(x , y)         ->  let typ_x, typ_y = typecheck x s , typecheck y s in
+                        if (equal_typ typ_x Bool_t && equal_typ typ_y Bool_t) 
+                        then Bool_t
+                        else raise (TypeError (
+                          "Expected Booleans in OR, got "^(typ_to_string typ_x)^" and "^(typ_to_string typ_y)))
+| Xor(x , y)        ->  let typ_x, typ_y = typecheck x s , typecheck y s in
+                        if (equal_typ typ_x Bool_t && equal_typ typ_y Bool_t) 
+                        then Bool_t
+                        else raise (TypeError (
+                          "Expected Booleans in OR, got "^(typ_to_string typ_x)^" and "^(typ_to_string typ_y)))
+| Not x             ->  let typ_x = typecheck x s in
+                        if equal_typ typ_x Bool_t
+                        then Bool_t
+                        else raise (TypeError (
+                          "Expected Boolean in NOT, got "^(typ_to_string typ_x)))
+| Ite (g, t, e)     ->  let typ_g         = typecheck g s in
+                        let typ_t, typ_e  = typecheck t s, typecheck e s in
+                        (match typ_g with
+                        | MBool_t   -> 
+                          raise (TypeError (
+                            "Expected Bool_t as if guard, got "^(typ_to_string typ_g)))
+                        | Bool_t    -> 
+                          (if equal_typ typ_t typ_e 
+                          then typ_t 
+                          else raise (TypeError (
+                            "Branches of ITE do not match, got "
+                            ^(typ_to_string typ_t)^" and "^(typ_to_string typ_e))))
+                        | Choice_t l -> 
+                          if (List.length l > 1) 
+                          then raise (TypeError (
+                            "Expected a decision of 1 variable as if guard, 
+                            got "^(Int.to_string (List.length l))))
+                          else 
+                            (if equal_typ typ_t typ_e 
+                            then typ_t 
+                            else raise (TypeError (
+                              "Branches of ITE do not match, got "
+                              ^(typ_to_string typ_t)^" and "^(typ_to_string typ_e)))))
+| Observe (b, e)    ->  let typ_b = typecheck b s in 
+                        if (equal_typ typ_b Bool_t)
+                        then typecheck e s
+                        else raise (TypeError (
+                          "Expected Bool_t as Observed event, got "^(typ_to_string typ_b)))
+| Bind (x, e, e')   ->  let typ_e = typecheck e s in
+                        if (equal_typ typ_e MBool_t)
+                        then 
+                          let s'    = Map.add s ~key:x ~data:Bool_t in
+                          (match s' with 
+                          | `Ok s'      -> typecheck e' s'
+                          | `Duplicate  -> raise (
+                              ConflictingVarNameError ("Repeated Variable Name: "^x)))
+                        else 
+                          let s'    = Map.add s ~key:x ~data:typ_e in
+                          (match s' with 
+                          | `Ok s'      -> typecheck e' s'
+                          | `Duplicate  -> raise (
+                              ConflictingVarNameError ("Repeated Variable Name: "^x)))
+| ChooseWith(e, l)  ->  let tp_e  = typecheck e s in
                         (match tp_e with
                         | Choice_t k  ->
-                          let (names, exprs) = List.unzip l in
-                          let is_exhaustive = 
+                          let (names, exprs)  = List.unzip l in
+                          let is_exhaustive   = 
                             Set.equal (Set.of_list (module String) k) (Set.of_list (module String) names) in
                           if is_exhaustive then
-                            let types = List.map ~f:(fun ex -> typecheck_h ex s) exprs in
+                            let types = List.map ~f:(fun ex -> typecheck ex s) exprs in
                             let is_all_the_same_type = 
                               List.all_equal types ~equal:equal_typ in
                             (match is_all_the_same_type with 
-                            | Some x -> x | None -> raise (TypeError "Expected Choose Branches to be of same type!"))
-                          else raise (NonExhaustiveError "Branches of Choose is nonexhaustive!")
-                        | Discrete_t k  ->
-                          let (names, exprs) = List.unzip l in
-                          let is_exhaustive = 
-                            Set.equal (Set.of_list (module String) k) (Set.of_list (module String) names) in
-                          if is_exhaustive then
-                            let types = List.map ~f:(fun ex -> typecheck_h ex s) exprs in
-                            let is_all_the_same_type = 
-                              List.all_equal types ~equal:equal_typ in
-                            (match is_all_the_same_type with 
-                            | Some x -> x | None -> raise (TypeError "Expected Choose Branches to be of same type!"))
-                          else raise (NonExhaustiveError "Branches of Choose is nonexhaustive!")
-                        | a           -> raise (TypeError ("Expected Choose guard to be Bool, got "^(typ_to_string a))))
-| _ -> raise (TypeError "")
-
-let is_well_typed : expr -> unit = fun e ->
-  let new_store : stringmap = Map.empty (module String) in
-  let _ = typecheck_h e new_store in ()
+                            | Some x -> x | None -> raise (TypeError 
+                              "Expected Choose Branches to be of same type!"))
+                          else raise (NonExhaustiveError 
+                              "Branches of Choose is nonexhaustive!")
+                        | a           -> raise (TypeError (
+                              "Expected Choose guard to be Choice_t, got "^(typ_to_string a))))

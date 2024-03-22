@@ -28,13 +28,12 @@ type eexpr =
   | Not         of source * eexpr
   | Ite         of source * eexpr * eexpr * eexpr
   | ChooseWith  of source * eexpr * ((string * eexpr) list)
-  | Reward      of source * float
   | Flip        of source * float
   | Decision    of source * (string list) 
-  | Discrete    of source * ((string * float) list)
   | Bind        of source * string * eexpr * eexpr
-  | Sequence    of source * eexpr * eexpr
   | Observe     of source * eexpr * eexpr
+  | Reward      of source * float * eexpr
+  | Return      of source * eexpr
   | Ident       of source * string
   | True        of source
   | False       of source

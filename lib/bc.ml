@@ -9,7 +9,6 @@ open Core
 open Rsdd_abstractions
 (* open Typechecker *)
 open Hashtbl
-open Anf
 open Pp
 
 (* We maintain an association list of strings and VarLabels 
@@ -86,11 +85,6 @@ let infer (prog : program) : float * float =
   (* typecheck *)
   (* is_well_typed program ; *)
   Printf.printf "typechecked!\n" ;
-  (* ANF *)
-  let program = uniquify (flatten program) in
-  Printf.printf "UNIQUIFY+FLATTEN\n%s\n" (pp_dappl program);
-  let program = anf program in
-  Printf.printf "ANF\n%s\n" (pp_dappl program);
   (* compile first *)
   let new_bdd = mk_bdd_builder_default_order 0L in
   let cf = bc program new_bdd in 

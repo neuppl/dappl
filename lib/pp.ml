@@ -35,7 +35,6 @@ let rec pp_dappl_h_bool (dappl : expr) : string =
   | Xor (x,y)           ->  let x, y = pp_dappl_h_bool x, pp_dappl_h_bool y in 
                             String.concat ~sep:" " ["(" ; x ; ") ^ (" ; y ; ")"]
   | Not x               ->  String.concat ~sep:" " ["!(" ; pp_dappl_h_bool x; ")"]
-  | Discrete _          ->  failwith "how do you have a Discrete??"
   | Flip n              ->  "flip " ^ Float.to_string n
   | Ident x             ->  x
   | _                   ->  failwith "stepped into Bool case illegally in pp"
@@ -45,15 +44,16 @@ and pp_dappl_h (dappl : expr) : string list =
                             let y = map_tab (parenthesize (pp_dappl_h y)) in 
                             let z = map_tab (parenthesize (pp_dappl_h z)) in
                             (add ~front:"if" x) @ ["then"] @ y @ ["else"] @ z
-  | ChooseWith (d, l)   ->  let d = pp_dappl_h d in
-                            let (s, e) = List.unzip l in
-                            let e = List.map e ~f:pp_dappl_h in
-                            let zip_fn =  fun (s, e) -> match e with
+  | ChooseWith (d, l)   ->  let d       = pp_dappl_h d in
+                            let (s, e)  = List.unzip l in
+                            let e       = List.map e ~f:pp_dappl_h in
+                            let zip_fn  = fun (s, e) -> match e with
                                           | [] -> failwith "syntactically incorrect!!"
                                           | x :: xs -> let s' = "| " ^ s ^ " -> " ^ x in s' :: xs in
-                            let final = List.map (List.zip_exn s e) ~f:zip_fn in
+                            let final   = List.map (List.zip_exn s e) ~f:zip_fn in
                             (add ~front:"choose" ~back:"with" d) @ List.concat final
-  | Reward k            ->  ["reward " ^ Float.to_string k]
+  | Reward (k , e)      ->  let rewp = "reward " ^ Float.to_string k ^ " ;" in
+                            rewp :: pp_dappl_h e
   | Decision l          ->  let s = String.concat ~sep:", " l in
                             add ~front:"[" ~back:"]" [s]
   | Bind (s, e, e')     ->  let x, y = pp_dappl_h e, pp_dappl_h e' in
@@ -61,9 +61,6 @@ and pp_dappl_h (dappl : expr) : string list =
                             x @ y
   | Observe (e , e')    ->  let x, y = pp_dappl_h e, pp_dappl_h e' in
                             let x = add ~front:" observe (" ~back:");" x in
-                            x @ y
-  | Sequence(e, e')     ->  let x, y = pp_dappl_h e, pp_dappl_h e' in
-                            let x = add ~back:";" x in
                             x @ y
   | e                   ->  [pp_dappl_h_bool e]
 

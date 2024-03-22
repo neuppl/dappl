@@ -27,12 +27,13 @@ let only_filename =
      let%map filename = anon ("filename" %: string) in
      fun () ->
         let parsed = parse_from_file filename in
-        let internal = Core_grammar.from_external_program parsed in
-        (* let _ : unit = Format.printf ("program parses. yay!\n") in  *)
-        let t = Core_unix.gettimeofday() in
+        let _ = Core_grammar.from_external_program parsed in
+        Printf.printf ("program parses. yay!\n"))
+ 
+        (* let t = Core_unix.gettimeofday() in
         let (_, meu) = Bc.infer internal in
         let t' = Core_unix.gettimeofday() in
-        Printf.printf  "MEU is %F\nTime elapsed: %F\n" meu (t' -. t))
+        Printf.printf  "MEU is %F\nTime elapsed: %F\n" meu (t' -. t)) *)
 
 let gen_tests =
   Command.basic
