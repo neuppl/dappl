@@ -21,7 +21,7 @@ open Set *)
 
 type eu = (float * float)
 type weight_fn = (int64 * (eu * eu)) list
-type rw_set = Int64.Set.t
+type rw_list = int64 list
 
 let mk_eu (a :float) (b : float) : eu = (a,b)
 
@@ -30,20 +30,23 @@ type cf =
   unn : rsdd_bdd_ptr;
   acc : rsdd_bdd_ptr;
   fn : weight_fn;
-  rw : rw_set
+  rw : rw_list
 }
 
+(* Looks up a varlabel from a weight map *)
 let rec lookup (lbl : int64) (l : weight_fn) : bool =
   match l with 
   | [] -> false
   | (lbl', _) :: xs ->  if Int64.equal lbl lbl' then true else lookup lbl xs
 
+(* Deduplicates a weight map *)
 let rec dedup (l : weight_fn) : weight_fn = 
   match l with 
   | [] -> [] 
   | [x] -> [x] 
   | (lbl, eu)::(lbl', eu')::xs -> if Int64.equal lbl lbl' then dedup ((lbl, eu) :: xs) else (lbl, eu)::(dedup ((lbl',eu')::xs)) 
 
+(* Merges two weight functions *)
 let merge_weight_fns (l1 : weight_fn) (l2 : weight_fn) : weight_fn =
   let l = List.sort (List.append l1 l2) ~compare:(fun x y -> Int64.compare (fst x) (fst y)) in 
   dedup l
@@ -57,7 +60,7 @@ let t (bdd : rsdd_bdd_builder) : cf =
     unn = bdd_true bdd;
     acc = bdd_true bdd;
     fn = [];
-    rw = Int64.Set.empty
+    rw = []
   }
 
 let f (bdd : rsdd_bdd_builder) : cf = 
@@ -65,7 +68,7 @@ let f (bdd : rsdd_bdd_builder) : cf =
     unn = bdd_false bdd;
     acc = bdd_true bdd;
     fn = [];
-    rw = Int64.Set.empty
+    rw = []
   }
 
 let mk_from_ptr (bdd : rsdd_bdd_builder) (ptr : rsdd_bdd_ptr) : cf =
@@ -73,7 +76,7 @@ let mk_from_ptr (bdd : rsdd_bdd_builder) (ptr : rsdd_bdd_ptr) : cf =
     unn = ptr; 
     acc = bdd_true bdd;
     fn = [];
-    rw = Int64.Set.empty
+    rw = []
   }
 
 let mk_newvar_prob (bdd : rsdd_bdd_builder) (pr : float) : cf = 
@@ -84,7 +87,7 @@ let mk_newvar_prob (bdd : rsdd_bdd_builder) (pr : float) : cf =
     unn = ptr;
     acc = bdd_true bdd;
     fn = [(lbl, wt)];
-    rw = Int64.Set.empty
+    rw = [];
   }
 
 let mk_newvar_rew (bdd : rsdd_bdd_builder) (rw : float) : cf = 
@@ -95,7 +98,7 @@ let mk_newvar_rew (bdd : rsdd_bdd_builder) (rw : float) : cf =
     unn = ptr;
     acc = bdd_true bdd;
     fn = [(lbl, wt)];
-    rw = Set.add Int64.Set.empty lbl
+    rw = []
   }
 
 (* Helper functions and their infix operations. *)

@@ -50,6 +50,8 @@ pattern_list :
 pure_expr:
   | TRUE { True({startpos=$startpos; endpos=$endpos}) }
   | FALSE { False({startpos=$startpos; endpos=$endpos}) }
+  | (* (e) *) 
+    delimited(LPAREN, pure_expr, RPAREN) { $1 }
   | (* x *)
     ID { Ident({startpos=$startpos; endpos=$endpos}, $1) }
   | (* e && e *) 
