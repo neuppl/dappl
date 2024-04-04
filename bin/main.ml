@@ -30,9 +30,10 @@ let only_filename =
         let internal = Core_grammar.from_external_program parsed in
         (* let _ : unit = Format.printf ("program parses. yay!\n") in  *)
         let t = Core_unix.gettimeofday() in
-        let (_, meu) = Bc.infer internal in
+        let ((_, meu),pruned) = Bc.infer internal in
         let t' = Core_unix.gettimeofday() in
-        Printf.printf  "MEU is %F\nTime elapsed: %F\n" meu (t' -. t))
+        Printf.printf  "MEU is %F\nTime elapsed: %F\n" meu (t' -. t);
+        Printf.printf  "times pruned is %n" (Int64.to_int_exn pruned))
 
 let gen_tests =
   Command.basic

@@ -9,10 +9,11 @@ let kc_program (s : string) =
   let parsed = Util.parse_program s in
   let internal = Core_grammar.from_external_program parsed in
   let t = Core_unix.gettimeofday() in
-  let (_, b) = Bc.infer internal in 
+  let ((_, b),p) = Bc.infer internal in 
   let t' = Core_unix.gettimeofday() in
-  let _ : unit = Printf.printf "MEU is: %F\n" b in
-  let _ : unit = Printf.printf  "Time elapsed: %F\n" (t' -. t) in 
+  Printf.printf "MEU is: %F\n" b;
+  Printf.printf  "Time elapsed: %F\n" (t' -. t);
+  Printf.printf "Times pruned: %n\n" (Int64.to_int_exn p);
   ()
 
 (* 

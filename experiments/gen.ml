@@ -299,21 +299,21 @@ let mk_car_train_other empself smallbig vars : string * varname =
   let lst = List.map (pair_lists empself smallbig) ~f:(fun (a,b) -> a ^ " && " ^ b) in
   let lst = List.zip_exn lst vars in
   let f = fun (a,b) -> (fun c -> mk_ite a [b;c]) in
-  mk_bind (List.fold_right lst ~f:f ~init:"false")
+  new_dec_or_bind (List.fold_right lst ~f:f ~init:"false") 0.5
 
 let mk_survey_vars () : string * varname list =
   (* Creates adult, young, old variables *)
   let (age, agevarlist) = mk_uniform 0.5 0.6 in
   (* Creates m,f variables *)
-  let (m, mvar) = mk_bind "flip 0.6" in 
+  let (m, mvar) = new_dec_or_bind "flip 0.6" 0.5 in 
   let (f, fvar) = mk_bind ("!" ^ mvar) in
   (* Creates high, uni variables *)
   let (highuni, highvar, univar) = mk_high_uni agevarlist [mvar;fvar] in
   (* Creates emp/self variable *)
-  let (emp, empvar) = mk_bind (mk_ite highvar ["flip 0.96" ; "flip 0.92"]) in
+  let (emp, empvar) = new_dec_or_bind (mk_ite highvar ["flip 0.96" ; "flip 0.92"]) 0.5 in
   let (self, selfvar) = mk_bind ("!"^empvar) in
   (* Creates small/big variable *)
-  let (small, smallvar) = mk_bind (mk_ite highvar ["flip 0.25" ; "flip 0.2"]) in
+  let (small, smallvar) = new_dec_or_bind (mk_ite highvar ["flip 0.25" ; "flip 0.2"]) 0.5 in
   let (big, bigvar) = mk_bind ("!"^smallvar) in
   (* Creates car,train,other variables *)
   let (cto1, cto1list) = mk_uniform 0.48 0.807699 in

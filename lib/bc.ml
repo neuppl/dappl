@@ -80,7 +80,7 @@ let rec bc (dappl : expr) (bdd : rsdd_bdd_builder) : cf =
 let rt_newest_lbl bdd = let (lbl, _) = bdd_new_var bdd true in 
                         Printf.printf "asdfasdf %n\n" (Int64.to_int_exn lbl)
 
-let infer (prog :program) : float * float = 
+let infer (prog :program) : (float * float) * int64 = 
   (* compile first *)
   let new_bdd = mk_bdd_builder_default_order 0L in
   let cf = bc prog.body new_bdd in 
@@ -97,5 +97,5 @@ let infer (prog :program) : float * float =
   let wmcparam = new_wmc_params_eu wmc_map in
   (* Finally the actual MEU *)
   let unn_and_acc = bdd_and new_bdd cf.unn cf.acc in
-  let (meu, _) = bdd_meu unn_and_acc cf.acc decisions lbl wmcparam in 
-  extract meu
+  let (meu, _, _, t) = bdd_meu unn_and_acc cf.acc decisions lbl wmcparam in 
+  (extract meu, t)
