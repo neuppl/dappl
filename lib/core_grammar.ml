@@ -9,31 +9,18 @@ type expr =
   | Not         of expr
   | Ite         of expr * expr * expr
   | ChooseWith  of expr * (string * expr) list
-  | Flip        of Bignum.t
-  | Reward      of Bignum.t
+  | Flip        of float
+  | Reward      of float * expr
   | Decision    of string list
   | Bind        of string * expr * expr
   | Observe     of expr * expr
   | Ident       of string
-  | Sequence    of expr * expr
+  | Return      of expr
+  | Discrete    of (string * float) list
+  | Loop        of int * expr
   | True
   | False
 [@@deriving sexp_of]
-
-(* Substituting string i in expr e with expr f
-let rec subst (e : expr) (f : expr) (i : string) : expr = match e with
-  | Ident(s)          -> if s = i then f else Ident(s)
-  (* The rest are super easy recursion *)
-  | And(e1, e2)       -> And(subst e1 f i, subst e2 f i)
-  | Or(e1, e2)        -> Or(subst e1 f i, subst e2 f i)
-  | Not(e1)           -> Not(subst e1 f i)
-  | Ite(guard, t, e') -> Ite(subst guard f i, subst t f i, subst e' f i)
-  | Bind(s, e1, e2)   -> 
-    if s == i then failwith "BindingError: Conflicting variable names!"
-    else Bind(s, subst e1 f i, subst e2 f i)
-  | Observe(e1, e2)         -> Observe((subst e1 f i), (subst e2 f i))
-  | Return e          -> Return (subst e f i)
-  | x                 -> x   *)
 
 (** top-level symbol *)
 type program = { body: expr }
@@ -48,15 +35,17 @@ let rec from_external_expr (e: Syntax.eexpr) =
   | Xor(_, e1, e2)      -> Xor(f e1, f e2)
   | Not(_, e)           -> Not(f e)
   | Ite(_, g, thn, els) -> Ite(f g, f thn, f els)
-  | ChooseWith (_, d, l)   -> let fmap = fun (x,y) -> (x, f y) in 
+  | ChooseWith (_, d, l)   -> let fmap = fun (x,y) -> (x, f y) in
                            let map : (string * expr) list= List.map fmap l in
                            ChooseWith(f d , map)
   | Flip(_, n)          -> Flip(n)
-  | Reward(_, k)        -> Reward(k)
+  | Reward(_, k, e)     -> Reward(k, f e)
   | Decision(_, l)      -> Decision(l)
   | Observe(_, e, e')   -> Observe(f e, f e')
-  | Sequence(_, e, e')  -> Sequence(f e, f e')
   | Bind(_, x, e1, e2)  -> Bind(x, f e1, f e2)
+  | Return(_, p)        -> Return(f p)
+  | Discrete(_, l)      -> Discrete l
+  | Loop(_, i, e)       -> Loop(Int.of_float i, f e)
   | Ident(_, x)         -> Ident(x)
   | True _              -> True
   | False _             -> False

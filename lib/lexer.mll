@@ -1,7 +1,8 @@
-(** defines the lexer used for defining all symbols during parsing
+(*
+  * defines the lexer used for defining all symbols during parsing
   * this file contains many more symbols than necessary; they can be ignored
   * see https://dev.realworldocaml.org/parsing-with-ocamllex-and-menhir.html
-  *)
+*)
 {
 open Lexing
 open Parser
@@ -41,41 +42,30 @@ rule token =
     | '!'                       { NOT }
     | "int"                     { INT }
     | "bool"                    { BOOL }
-    | "list"                    { LIST }
     | "<="                      { LTE }
     | ">="                      { GTE }
     | "=="                      { EQUAL_TO }
-    | "<<"                      { LEFTSHIFT }
-    | ">>"                      { RIGHTSHIFT }
     | "="                       { EQUAL }
     | "!="                      { NEQ }
     | "&&"                      { AND }
     | "<-"                      { BIND }
     | "||"                      { OR }
-    | "::"                      { CONS }
     | "//"                      { comment lexbuf; }
     | "if"                      { IF }
     | "sample"                  { SAMPLE }
     | "else"                    { ELSE }
     | "discrete"                { DISCRETE }
     | "then"                    { THEN }
-    | "true"                    { TRUE }
-    | "false"                   { FALSE }
-    | "let"                     { LET }
-    | "fst"                     { FST }
-    | "snd"                     { SND }
+    | "tt"                      { TRUE }
+    | "ff"                      { FALSE }
     | "in"                      { IN }
-    | "iterate"                 { ITERATE }
+    | "loop"                    { LOOP }
     | "uniform"                 { UNIFORM }
     | "return"                  { RETURN }
     | "binomial"                { BINOMIAL }
     | "observe"                 { OBSERVE }
     | "flip"                    { FLIP }
     | "reward"                  { REWARD }
-    | "fun"                     { FUN }
-    | "head"                    { HEAD }
-    | "tail"                    { TAIL }
-    | "length"                  { LENGTH }
     | "choose"                  { CHOOSE }
     | "with"                    { WITH }
     | '|'                       { MID }
