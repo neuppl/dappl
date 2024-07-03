@@ -6,7 +6,7 @@
 open Rsdd
 open Core_grammar
 open Core
-open Rsdd_abstractions
+(* open Rsdd_abstractions *)
 open Sexplib.Std
 
 (*
@@ -46,7 +46,7 @@ type bexpr =
 | Or          of bexpr * bexpr
 | Xor         of bexpr * bexpr
 | Not         of bexpr
-| ExactlyOne  of string list
+| ExactlyOne  of string list * bool
 [@@deriving sexp_of]
 
 (* subst e x e' = e[x/e'] *)
@@ -130,7 +130,6 @@ fun e' wts ids  -> match e' with
 (* Base Cases *)
 | True              ->  (TT, TT, wts, [])
 | False             ->  (FF, TT, wts, [])
-(* marked sus *)
 | Ident s           ->  (match Map.find ids s with
                         | Some b  -> (b, TT, wts, [])
                         | None    -> raise UnboundVariableError)
@@ -140,10 +139,10 @@ fun e' wts ids  -> match e' with
                         (Id(new_var), TT, s', [])
 | Discrete l        ->  let probabilities = List.map l ~f:(fun (x,y) -> (x,prob_to_expect y)) in
                         let s'      = List.fold probabilities ~init:wts ~f:(fun mp (a, wt) -> Map.add_exn mp ~key:a ~data:wt) in
-                        (ExactlyOne (List.map l ~f:(fun (x,_)->x)), TT, s', [])
+                        (ExactlyOne ((List.map l ~f:(fun (x,_)->x)), false), TT, s', [])
 | Decision l        ->  let wt      = ((1.0 , 0.0), (1.0, 0.0)) in
                         let s'      = List.fold l ~init:wts ~f:(fun mp a -> Map.add_exn mp ~key:a ~data:wt) in
-                        (ExactlyOne l, TT, s', [])
+                        (ExactlyOne (l, true), TT, s', [])
 (* Inductive Cases *)
 | Return p          ->  build_h p wts ids
 | Reward(k,e)       ->  let (unn, acc, tbl, l)      = build_h e wts ids in
@@ -227,26 +226,96 @@ it is intended to be the boundary into RSDD--the BDD maker.
 
 -------------------------------------- *)
 
+(* rsdd_tbls map RSDD variable identifiers to weights *)
+type rsdd_tbl = (int64, wt, Int64.comparator_witness) Map.t
+let empty_tbl : rsdd_tbl = Map.empty (module Int64)
+
+(* We maintain an association list of strings and VarLabels
+  to enforce exhaustive patternmatch in ChooseWith. *)
+
+let dlist : ((string * rsdd_var_label) list) ref = ref [];;
+let insert_decision : string -> rsdd_var_label -> unit = fun x y ->
+  let o = List.Assoc.find !dlist ~equal:String.equal x in
+  match o with
+  | None    -> dlist := (x,y)::!dlist
+  | Some _  -> ()
+let insert_decision_list : (string * rsdd_var_label) list -> unit = fun l ->
+  List.fold l ~init:() ~f:(fun _ (x,y) -> insert_decision x y)
+(* let lookup : string -> rsdd_var_label = fun x ->
+  let o = List.Assoc.find !dlist ~equal:String.equal x in
+  match o with
+  | None -> failwith "unbound decision error??"
+  | Some ptr -> (*let _ = Printf.printf "found!\n" in*) ptr *)
+
+
+type cf =
+{
+  unn           : rsdd_bdd_ptr;
+  acc           : rsdd_bdd_ptr;
+  decision_vars : rsdd_var_label list;
+  num_vars      : int64;
+  fn            : rsdd_wmc_params_e_u;
+}
+
 let rec translate (prop : propexpr) : cf =
-  let size    = Map.length prop.wtmap in
-  let builder = mk_bdd_builder_default_order (Int64.of_int size) in
-  let ptr_unn = _translate prop.unn builder
-  and ptr_acc = _translate prop.acc builder
-  and wt_map  = _translate_wtmap  prop.wtmap in
-  { unn = ptr_unn ; acc = ptr_acc ; fn = wt_map}
-and _translate (exp : bexpr) (builder : rsdd_bdd_builder): rsdd_bdd_ptr = match exp with
-| TT            ->  bdd_true builder
-| FF            ->  bdd_false builder
-| Id _          ->  snd (bdd_new_var builder true)
-| And(a,b)      ->  bdd_and builder (_translate a builder) (_translate b builder)
-| Or(a,b)       ->  bdd_or builder (_translate a builder) (_translate b builder)
-| Xor(a,b)      ->  _translate (And(Or(a,b), Not(And(a,b)))) builder
-| Not a         ->  bdd_negate builder (_translate a builder)
-| ExactlyOne l  ->  let (x, _) = mk_newvar_dec builder l in x.unn
+  let size                = Map.length prop.wtmap in
+  let builder             = mk_bdd_builder_default_order (Int64.of_int size) in
+  let (ptr_unn, wt_map')  = _translate prop.unn prop.wtmap empty_tbl  builder in
+  let (ptr_acc, wt_map'') = _translate prop.acc prop.wtmap wt_map'  builder in
+  let wt_map_list         = Map.to_alist ~key_order:`Increasing wt_map'' in
+  let wmcparams           = new_wmc_params_eu (List.map wt_map_list ~f:snd) in
+  let (n, _)              = bdd_new_var builder true in
+  { unn           = bdd_and builder ptr_unn ptr_acc ;
+    acc           = ptr_acc ;
+    decision_vars = (List.map !dlist ~f:snd) ;
+    num_vars      = n ;
+    fn            = wmcparams }
+and _translate
+  (exp : bexpr)
+  (wts : tbl)
+  (eus : rsdd_tbl)
+  (builder : rsdd_bdd_builder)
+  : rsdd_bdd_ptr * rsdd_tbl =
+match exp with
+| TT            ->  (bdd_true builder, eus)
+| FF            ->  (bdd_false builder, eus)
+| Id s          ->  let (x,y)           = (bdd_new_var builder true) in
+                    let v               = Map.find_exn wts s in
+                    let eus'            = Map.add_exn eus ~key:x ~data:v in
+                    (y, eus')
+| And(a,b)      ->  let (ptr_a, eus_a)  = _translate a wts eus builder in
+                    let (ptr_b, eus_b)  = _translate b wts eus_a builder in
+                    (bdd_and builder ptr_a ptr_b, eus_b)
+| Or(a,b)       ->  let (ptr_a, eus_a)  = _translate a wts eus builder in
+                    let (ptr_b, eus_b)  = _translate b wts eus_a builder in
+                    (bdd_or builder ptr_a ptr_b, eus_b)
+| Xor(a,b)      ->  _translate (And(Or(a,b), Not(And(a,b)))) wts eus builder
+| Not a         ->  let (x,y)           = (_translate a wts eus builder) in
+                    (bdd_negate builder x, y)
+| ExactlyOne(l, d)  ->  let l'              = List.map l ~f:(fun _ -> bdd_new_var builder true) in
+                    let exactly_one     = bdd_exactlyone builder (List.map l' ~f:fst) in
+                    let l''             = zip_with_fn l l' (fun x (y,_) -> (x,y)) in
+                    let eus'            = List.fold l'' ~init:eus
+                                            ~f:(fun e (x,y) -> Map.add_exn e ~key:y ~data:(Map.find_exn wts x)) in
+                    if d then insert_decision_list (zip_with_fn l l' (fun x (y,_) -> (x, mk_varlabel y)));
+                    (exactly_one, eus')
 
-and _translate_wtmap (_ : tbl) : weight_fn = failwith "NotYetImplemented"
+(* MEU. If cache is true, it is performed with caching, if not, it is just with pruning. *)
+let perform_meu (c : cf) (cache : bool) =
+  if cache then
+      let (meu, _, size) = bdd_meu c.unn c.acc c.decision_vars c.num_vars c.fn in
+      (extract meu, size)
+  else
+      let (meu, _, size) = bdd_meu_without_cache c.unn c.acc c.decision_vars c.num_vars c.fn in
+      (extract meu, size)
 
-let infer _ = failwith "TODO"
-
-
+(* The entire pipeline *)
+let infer (e : expr) (cache : bool) (debug : bool) =
+  let pe = bc e in
+  let cf = translate pe in
+  if debug then
+    Format.printf "AST:\n%s\n" (Sexplib0__Sexp.to_string_hum ~indent:2 (Core_grammar.sexp_of_expr e)) ;
+    Format.printf "UNN : \n%s\n" (Sexplib0__Sexp.to_string_hum ~indent:2 (sexp_of_bexpr pe.unn));
+    Format.printf "ACC : \n%s\n" (Sexplib0__Sexp.to_string_hum ~indent:2 (sexp_of_bexpr pe.acc));
+  perform_meu cf cache
 
