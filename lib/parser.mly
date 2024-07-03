@@ -8,14 +8,13 @@
 /* Tokens */
 %token EOF
 %token PLUS MINUS MULTIPLY DIVIDE MODULUS
-%token LT LTE GT GTE EQUAL_TO NEQ EQUAL LEFTSHIFT RIGHTSHIFT
-%token AND OR NOT DISCRETE IFF XOR SAMPLE
+%token AND OR NOT DISCRETE XOR
 %token LPAREN RPAREN
-%token IF THEN ELSE TRUE FALSE IN INT
+%token IF THEN ELSE TRUE FALSE IN
 %token SEMICOLON COMMA COLON
-%token LET OBSERVE FLIP REWARD LBRACE RBRACE FST SND FUN BOOL ITERATE UNIFORM BINOMIAL
-%token LIST LBRACKET RBRACKET CONS HEAD TAIL LENGTH BIND RETURN
-%token CHOOSE WITH MID TO
+%token LET OBSERVE FLIP REWARD LBRACE RBRACE
+%token LIST LBRACKET RBRACKET BIND RETURN
+%token CHOOSE WITH MID TO LOOP
 
 %token <int>    INT_LIT
 %token <string> FLOAT_LIT
@@ -27,10 +26,7 @@
 %left NOT
 %left IFF
 %left XOR
-%left LTE GTE LT GT NEQ
-%right CONS
-%left PLUS MINUS EQUAL_TO LEFTSHIFT RIGHTSHIFT
-%left MULTIPLY DIVIDE MODULUS
+
 /* entry point */
 
 %start program
@@ -40,7 +36,7 @@
 num:
     | FLOAT_LIT { (Float.of_string $1) }
     | INT_LIT { (Float.of_int $1) }
-    | INT_LIT DIVIDE INT_LIT { Float.div ($1) ($3) }
+    | INT_LIT DIVIDE INT_LIT { Float.div (Float.of_int $1) (Float.of_int $3) }
 
 disc :
   | ID COLON num { ($1, $3)}
@@ -77,9 +73,9 @@ expr:
     | (* return P *)
       RETURN expr { Return({startpos=$startpos; endpos=$endpos}, $2)}
     | (* discrete[ x_1 : p_1, ... x_n : p_n] *)
-      DISCRETE delimited(LBRACKET, disc_list, RBRACKET) { Return({startpos=$startpos; endpos=$endpos}, $2)}
+      DISCRETE delimited(LBRACKET, disc_list, RBRACKET) { Discrete({startpos=$startpos; endpos=$endpos}, $2)}
     | (* loop n { e } *)
-      LOOP INT_LIT delimited(LBRACE, e , RBRACE) { Loop({startpos=$startpos; endpos=$endpos}, $2, $3)}
+      LOOP num delimited(LBRACE, expr , RBRACE) { Loop({startpos=$startpos; endpos=$endpos}, $2, $3)}
 
 program:
   body=expr; EOF { { body=body } }

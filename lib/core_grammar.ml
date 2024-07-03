@@ -45,7 +45,7 @@ let rec from_external_expr (e: Syntax.eexpr) =
   | Bind(_, x, e1, e2)  -> Bind(x, f e1, f e2)
   | Return(_, p)        -> Return(f p)
   | Discrete(_, l)      -> Discrete l
-  | Loop(_, i, e)       -> Loop(Int.of_float i, f e)
+  | Loop(_, i, e)       -> Loop(Float.to_int i, f e)
   | Ident(_, x)         -> Ident(x)
   | True _              -> True
   | False _             -> False

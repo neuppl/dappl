@@ -1,3 +1,5 @@
-adult <- flip 0.5;
-young <- (!adult && flip 0.6);
-if young then reward 1 else reward 0
+y <- loop 2 {
+    x <- flip 0.6 ;
+    return x
+} ;
+return y

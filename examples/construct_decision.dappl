@@ -1,1 +1,1 @@
-x <- [a1, a2, a3]; x
+x <- return [a1, a2, a3]; x

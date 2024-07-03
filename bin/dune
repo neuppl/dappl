@@ -2,4 +2,8 @@
  (public_name dappl)
  (name main)
  (preprocess (pps ppx_jane))
- (libraries dappl experiments core bignum sexplib core_unix.command_unix))
+ (libraries
+   dappl
+   ; experiments
+   core bignum sexplib core_unix.command_unix
+ ))

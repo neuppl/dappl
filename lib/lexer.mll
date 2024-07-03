@@ -34,25 +34,13 @@ rule token =
     | '-'                       { MINUS }
     | '*'                       { MULTIPLY }
     | '/'                       { DIVIDE }
-    | "<=>"                     { IFF }
     | "^"                       { XOR }
-    | '%'                       { MODULUS }
-    | '<'                       { LT }
-    | '>'                       { GT }
     | '!'                       { NOT }
-    | "int"                     { INT }
-    | "bool"                    { BOOL }
-    | "<="                      { LTE }
-    | ">="                      { GTE }
-    | "=="                      { EQUAL_TO }
-    | "="                       { EQUAL }
-    | "!="                      { NEQ }
     | "&&"                      { AND }
     | "<-"                      { BIND }
     | "||"                      { OR }
     | "//"                      { comment lexbuf; }
     | "if"                      { IF }
-    | "sample"                  { SAMPLE }
     | "else"                    { ELSE }
     | "discrete"                { DISCRETE }
     | "then"                    { THEN }
@@ -60,9 +48,7 @@ rule token =
     | "ff"                      { FALSE }
     | "in"                      { IN }
     | "loop"                    { LOOP }
-    | "uniform"                 { UNIFORM }
     | "return"                  { RETURN }
-    | "binomial"                { BINOMIAL }
     | "observe"                 { OBSERVE }
     | "flip"                    { FLIP }
     | "reward"                  { REWARD }
