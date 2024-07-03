@@ -17,7 +17,6 @@ open Core
 
 type eu = (float * float)
 type weight_fn = (int64 * (eu * eu)) list
-type rw_set = Int64.Set.t
 
 let mk_eu (a :float) (b : float) : eu = (a,b)
 
@@ -26,7 +25,6 @@ type cf =
   unn : rsdd_bdd_ptr;
   acc : rsdd_bdd_ptr;
   fn : weight_fn;
-  rw : rw_set
 }
 
 let rec lookup (lbl : int64) (l : weight_fn) : bool =
@@ -53,7 +51,6 @@ let t (bdd : rsdd_bdd_builder) : cf =
     unn = bdd_true bdd;
     acc = bdd_true bdd;
     fn = [];
-    rw = Int64.Set.empty
   }
 
 let f (bdd : rsdd_bdd_builder) : cf =
@@ -61,7 +58,6 @@ let f (bdd : rsdd_bdd_builder) : cf =
     unn = bdd_false bdd;
     acc = bdd_true bdd;
     fn = [];
-    rw = Int64.Set.empty
   }
 
 let mk_from_ptr (bdd : rsdd_bdd_builder) (ptr : rsdd_bdd_ptr) : cf =
@@ -69,7 +65,6 @@ let mk_from_ptr (bdd : rsdd_bdd_builder) (ptr : rsdd_bdd_ptr) : cf =
     unn = ptr;
     acc = bdd_true bdd;
     fn = [];
-    rw = Int64.Set.empty
   }
 
 let mk_newvar_prob (bdd : rsdd_bdd_builder) (pr : float) : cf =
@@ -80,7 +75,6 @@ let mk_newvar_prob (bdd : rsdd_bdd_builder) (pr : float) : cf =
     unn = ptr;
     acc = bdd_true bdd;
     fn = [(lbl, wt)];
-    rw = Int64.Set.empty
   }
 
 let mk_newvar_rew (bdd : rsdd_bdd_builder) (rw : float) : cf =
@@ -91,7 +85,6 @@ let mk_newvar_rew (bdd : rsdd_bdd_builder) (rw : float) : cf =
     unn = ptr;
     acc = bdd_true bdd;
     fn = [(lbl, wt)];
-    rw = Set.add Int64.Set.empty lbl
   }
 
 (* Helper functions and their infix operations. *)
@@ -99,15 +92,14 @@ let mk_newvar_rew (bdd : rsdd_bdd_builder) (rw : float) : cf =
 let cf_not (bdd : rsdd_bdd_builder) (x : cf) : cf =
   {
     unn = bdd_negate bdd x.unn;
-    acc = x.acc ; fn = x.fn ; rw = x.rw
+    acc = x.acc ; fn = x.fn
   }
 
 let cf_and (bdd : rsdd_bdd_builder) (a : cf) (b: cf): cf =
   {
     unn = bdd_and bdd a.unn b.unn;
     acc = bdd_and bdd a.acc b.acc;
-    fn = merge_weight_fns a.fn b.fn;
-    rw = Set.union a.rw b.rw
+    fn = merge_weight_fns a.fn b.fn
   }
 
 let cf_or (bdd : rsdd_bdd_builder) (a : cf) (b: cf): cf =
@@ -115,7 +107,6 @@ let cf_or (bdd : rsdd_bdd_builder) (a : cf) (b: cf): cf =
     unn = bdd_or bdd a.unn b.unn;
     acc = bdd_and bdd a.acc b.acc;
     fn = merge_weight_fns a.fn b.fn;
-    rw = Set.union a.rw b.rw
   }
 
 let cf_ite (bdd : rsdd_bdd_builder) (a : cf) (b : cf) (c : cf): cf =
@@ -123,7 +114,6 @@ let cf_ite (bdd : rsdd_bdd_builder) (a : cf) (b : cf) (c : cf): cf =
     unn = bdd_ite bdd a.unn b.unn c.unn;
     acc = bdd_ite bdd a.unn b.acc c.acc;
     fn = merge_weight_fns a.fn (merge_weight_fns b.fn c.fn);
-    rw = Set.union (Set.union a.rw b.rw) c.rw
   }
 
 
@@ -135,7 +125,6 @@ let exactly_one (b : rsdd_bdd_builder) (l : int64 list) : cf =
     unn = bdd_exactlyone b l;
     acc = bdd_true b;
     fn = List.map l ~f:make_unit;
-    rw = Int64.Set.empty
   }
 
 let mk_singleton (b : rsdd_bdd_builder) (a : int64) (l : rsdd_bdd_ptr) : cf =
@@ -143,7 +132,6 @@ let mk_singleton (b : rsdd_bdd_builder) (a : int64) (l : rsdd_bdd_ptr) : cf =
     unn = l;
     acc = bdd_true b;
     fn = [a,((1.0, 0.0), (1.0, 0.0))];
-    rw = Int64.Set.empty
   }
 
 let mk_newvar_dec (bdd : rsdd_bdd_builder) (decisions : string list) : cf * (string * rsdd_var_label) list  =

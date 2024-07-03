@@ -3,10 +3,10 @@
   as shown in Section 4 of the paper
 *)
 
-(* open Rsdd *)
+open Rsdd
 open Core_grammar
 open Core
-(* open Rsdd_abstractions *)
+open Rsdd_abstractions
 open Sexplib.Std
 
 (*
@@ -168,6 +168,9 @@ fun e' wts ids  -> match e' with
                         | _       -> raise (BCError "Expected ident on ITE"))
 | ChooseWith(x, l)  ->  (match x with
                         | Ident s ->
+                          let decision = (match Map.find ids s with
+                                          | Some b  -> b
+                                          | None    -> raise UnboundVariableError) in
                           let (names, exprs) = List.unzip l in
                           (* Compute varphi_i, gamma_i, R_i for all i *)
                           let f =
@@ -190,11 +193,12 @@ fun e' wts ids  -> match e' with
                           (* Conjoin gammas with names *)
                           let gammas = zip_with_fn names gammas (fun t g -> And(Id t, g)) in
                           let gamma   = List.fold gammas ~init:FF ~f:(fun a b -> Or(a,b)) in
-                          (And(Id s, phi), And(Id s, gamma), tbl, [])
+                          (And(decision, phi), And(decision, gamma), tbl, [])
                         | _       -> raise (BCError "Expected ident on Choose"))
 | Bind(x,b,e')      ->  let (phi_b, gamma_b, wt_b, rw_b) = build_h b wts ids in
+                        Printf.printf "%s\n" (Sexplib0__Sexp.to_string_hum(sexp_of_expr e'));
                         let ids' = Map.add_exn ids ~key:x ~data:phi_b in
-                        (* Printf.printf "added key %s !\n" x; *)
+                        Printf.printf "added key %s !\n" x;
                         let (phi_e, gamma_e, wt_e, rw_e) = build_h e' wt_b ids' in
                         (phi_e, And(gamma_b, gamma_e), wt_e, rw_b @ rw_e)
 | Loop(n,e)         ->  build_h (unroll n e) wts ids
@@ -215,4 +219,34 @@ fun n e ->
   let list_of_names = List.init n ~f:(fun i -> "LOOP_VAR_"^(Int.to_string i)) in
   List.fold_right list_of_names ~f:(fun x y -> Bind(x, e, y)) ~init:(Return(True))
 
+(* -------------------------------------
+  Compiling PropExpr to CF
+
+A CF is a record with the same parts as PropExpr, except that
+it is intended to be the boundary into RSDD--the BDD maker.
+
+-------------------------------------- *)
+
+let rec translate (prop : propexpr) : cf =
+  let size    = Map.length prop.wtmap in
+  let builder = mk_bdd_builder_default_order (Int64.of_int size) in
+  let ptr_unn = _translate prop.unn builder
+  and ptr_acc = _translate prop.acc builder
+  and wt_map  = _translate_wtmap  prop.wtmap in
+  { unn = ptr_unn ; acc = ptr_acc ; fn = wt_map}
+and _translate (exp : bexpr) (builder : rsdd_bdd_builder): rsdd_bdd_ptr = match exp with
+| TT            ->  bdd_true builder
+| FF            ->  bdd_false builder
+| Id _          ->  snd (bdd_new_var builder true)
+| And(a,b)      ->  bdd_and builder (_translate a builder) (_translate b builder)
+| Or(a,b)       ->  bdd_or builder (_translate a builder) (_translate b builder)
+| Xor(a,b)      ->  _translate (And(Or(a,b), Not(And(a,b)))) builder
+| Not a         ->  bdd_negate builder (_translate a builder)
+| ExactlyOne l  ->  let (x, _) = mk_newvar_dec builder l in x.unn
+
+and _translate_wtmap (_ : tbl) : weight_fn = failwith "NotYetImplemented"
+
 let infer _ = failwith "TODO"
+
+
+

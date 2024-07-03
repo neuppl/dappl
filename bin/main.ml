@@ -12,8 +12,8 @@ open Core
 
 (** print the s-expression parsing of the program (mainly for debugging the parser )*)
 let  _print_sexp_prop (prop : Bc.propexpr) : unit =
-  Format.printf "UNN : \n\t%s\n" (Sexplib0__Sexp.to_string_hum ~indent:2 (Bc.sexp_of_bexpr prop.unn));
-  Format.printf "ACC : \n\t%s\n" (Sexplib0__Sexp.to_string_hum ~indent:2 (Bc.sexp_of_bexpr prop.acc))
+  Format.printf "UNN : \n%s\n" (Sexplib0__Sexp.to_string_hum ~indent:2 (Bc.sexp_of_bexpr prop.unn));
+  Format.printf "ACC : \n%s\n" (Sexplib0__Sexp.to_string_hum ~indent:2 (Bc.sexp_of_bexpr prop.acc))
 
 let print_sexp =
   Command.basic
@@ -29,7 +29,7 @@ let print_sexp =
           match verbosity with
           | "front" ->  Format.printf "%s\n" (Sexplib0__Sexp.to_string_hum ~indent:2 expr)
           | "prop"  ->  _print_sexp_prop prop
-          | "all"   ->  Format.printf "AST : \n\t%s\n" (Sexplib0__Sexp.to_string_hum ~indent:2 expr);
+          | "all"   ->  Format.printf "AST : \n%s\n" (Sexplib0__Sexp.to_string_hum ~indent:2 expr);
                         _print_sexp_prop prop
           | _       -> failwith "invalid debug!"
     )
