@@ -1,3 +1,1 @@
-loop 2 {
-    reward 3 ; return tt
-}
+reward 3; return tt

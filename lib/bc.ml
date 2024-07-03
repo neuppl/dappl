@@ -257,19 +257,18 @@ type cf =
   fn            : rsdd_wmc_params_e_u;
 }
 
-let rec translate (prop : propexpr) : cf =
-  let size                = Map.length prop.wtmap in
-  let builder             = mk_bdd_builder_default_order (Int64.of_int size) in
-  let (ptr_unn, wt_map')  = _translate prop.unn prop.wtmap empty_tbl  builder in
-  let (ptr_acc, wt_map'') = _translate prop.acc prop.wtmap wt_map'  builder in
+let rec translate (prop : propexpr) : cf * rsdd_tbl =
+  let builder             = mk_bdd_builder_default_order 0L in
+  let (ptr_unn, wt_map')  = _translate prop.unn prop.wtmap empty_tbl builder in
+  let (ptr_acc, wt_map'') = _translate prop.acc prop.wtmap wt_map' builder in
   let wt_map_list         = Map.to_alist ~key_order:`Increasing wt_map'' in
   let wmcparams           = new_wmc_params_eu (List.map wt_map_list ~f:snd) in
   let (n, _)              = bdd_new_var builder true in
-  { unn           = bdd_and builder ptr_unn ptr_acc ;
+  ({ unn           = bdd_and builder ptr_unn ptr_acc ;
     acc           = ptr_acc ;
     decision_vars = (List.map !dlist ~f:snd) ;
     num_vars      = n ;
-    fn            = wmcparams }
+    fn            = wmcparams }, wt_map'')
 and _translate
   (exp : bexpr)
   (wts : tbl)
@@ -303,19 +302,34 @@ match exp with
 (* MEU. If cache is true, it is performed with caching, if not, it is just with pruning. *)
 let perform_meu (c : cf) (cache : bool) =
   if cache then
-      let (meu, _, size) = bdd_meu c.unn c.acc c.decision_vars c.num_vars c.fn in
+      let (meu, _, size) = bdd_meu c.unn c.acc c.decision_vars 0L c.fn in
       (extract meu, size)
   else
-      let (meu, _, size) = bdd_meu_without_cache c.unn c.acc c.decision_vars c.num_vars c.fn in
+      let (meu, _, size) = bdd_meu_without_cache c.unn c.acc c.decision_vars 0L c.fn in
       (extract meu, size)
 
 (* The entire pipeline *)
-let infer (e : expr) (cache : bool) (debug : bool) =
+let rec infer (e : expr) (cache : bool) (debug_level : int) =
   let pe = bc e in
-  let cf = translate pe in
-  if debug then
-    Format.printf "AST:\n%s\n" (Sexplib0__Sexp.to_string_hum ~indent:2 (Core_grammar.sexp_of_expr e)) ;
-    Format.printf "UNN : \n%s\n" (Sexplib0__Sexp.to_string_hum ~indent:2 (sexp_of_bexpr pe.unn));
-    Format.printf "ACC : \n%s\n" (Sexplib0__Sexp.to_string_hum ~indent:2 (sexp_of_bexpr pe.acc));
+  let (cf, wt_map) = translate pe in
+  if debug_level >= 1 then(
+    Format.printf "AST:\n%s\n\n" (Sexplib0__Sexp.to_string_hum ~indent:2 (Core_grammar.sexp_of_expr e)) ;
+    Format.printf "UNN : \n%s\n\n" (Sexplib0__Sexp.to_string_hum ~indent:2 (sexp_of_bexpr pe.unn));
+    Format.printf "ACC : \n%s\n\n" (Sexplib0__Sexp.to_string_hum ~indent:2 (sexp_of_bexpr pe.acc));
+    if debug_level > 1 then (
+      print_wtmap(pe.wtmap);
+      print_rsdd_tbl(wt_map);
+      Format.printf "\nSIZE : %i\n\n" (Int64.to_int_exn cf.num_vars))
+  );
   perform_meu cf cache
+and print_wtmap(t : tbl) =
+  Format.printf "PRINTING WEIGHT MAP:\n" ;
+  Map.iteri t ~f:(
+    fun ~key:x ~data:((a,b),(c,d)) ->
+      Format.printf "VAR %s : LO (%f, %f), HI (%f, %f)\n" x a b c d)
+and print_rsdd_tbl(t: rsdd_tbl) =
+  Format.printf "PRINTING RSDD WEIGHT MAP:\n" ;
+  Map.iteri t ~f:(
+    fun ~key:x ~data:((a,b),(c,d)) ->
+      Format.printf "VAR %i : LO (%f, %f), HI (%f, %f)\n" (Int64.to_int_exn x) a b c d)
 

@@ -33,25 +33,26 @@ let print_sexp =
                         _print_sexp_prop prop
           | _       -> failwith "invalid debug!"
     )
-(*
-let only_filename =
-  Command.basic
-    ~summary:"dappl solves your meu problems."
-    ~readme:(fun () -> "put in a .dappl file to see the magic happen!")
-     (let open Command.Let_syntax in
-     let open Command.Param in
-     let%map filename = anon ("filename" %: string) in
-     fun () ->
-        let parsed = parse_from_file filename in
-        let internal = Core_grammar.from_external_program parsed in
-        (* let _ : unit = Format.printf ("program parses. yay!\n") in  *)
-        let t = Core_unix.gettimeofday() in
-        let ((_, meu),pruned) = Bc.infer internal in
-        let t' = Core_unix.gettimeofday() in
-        Printf.printf  "MEU is %F\nTime elapsed: %F\n" meu (t' -. t);
-        Printf.printf  "times pruned is %n" (Int64.to_int_exn pruned))
 
-let gen_tests =
+let run =
+  Command.basic
+    ~summary:"dappl solver."
+    ~readme:(fun () -> "dappl run ?with-cache ?debug $FILE ")
+     (let%map_open.Command
+        filename = anon ("filename" %: string)
+        and with_cache = anon ("with-cache?" %: bool)
+        and debug_level = anon ("debug-level?" %: int) in
+        fun () ->
+          let parsed = parse_from_file filename in
+          let internal = (Core_grammar.from_external_program parsed).body in
+          let t = Core_unix.gettimeofday() in
+          let ((_, meu),size) = Bc.infer internal with_cache debug_level in
+          let t' = Core_unix.gettimeofday() in
+          Format.printf  "MEU is %F\nTime elapsed: %F\n" meu (t' -. t);
+          Format.printf  "size is %n\n" size
+     )
+
+(* let gen_tests =
   Command.basic
     ~summary:"dappl test suite."
     ~readme:(fun () -> "TEST = mdp, n = an integer.")
@@ -74,9 +75,9 @@ let gen_tests =
                           Gen.mk_sachs_to_file n;
       | _             ->  failwith "invalid test!") *)
 
-(* let command =
+let command =
   Command.group
     ~summary:"Only the best for the people!"
-    [ "run", only_filename; "test", gen_tests ] *)
+    [ "run", run; "ast", print_sexp ]
 
-let () = Command_unix.run ~version:"0.1" print_sexp
+let () = Command_unix.run ~version:"0.1" command
