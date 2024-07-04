@@ -1,4 +1,4 @@
-x <- [a1, a2, a3] ;
+x <- [a1 , a2, a3] ;
 choose x with
 | a1 -> reward 3 ; return tt
 | a2 -> reward 50 ; return tt

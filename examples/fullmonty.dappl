@@ -1,7 +1,6 @@
-door1 <- flip 0.333333333333333 ; 
-door2 <- ((!door1) && (flip 0.5)) ;
-monty <- (if door1 then (flip 0.5) else door2);
-observe(monty);
-choose [switch, no_switch] with
-| switch -> if door2 then reward 500 else reward 0
-| no_switch -> if door1 then reward 500 else reward 0
+monty <- discrete[door1 : 0.3333 , door2 : 0.3333, door3 : 0.3333] ;
+observe(door3);
+d <- [switch, no_switch];
+choose d with
+| switch -> if door2 then (reward 500 ; return tt) else (reward 0 ; return tt)
+| no_switch -> if door1 then (reward 500 ; return tt) else (reward 0 ; return tt)

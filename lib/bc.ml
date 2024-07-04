@@ -166,18 +166,29 @@ fun e' wts ids  -> match e' with
 | Observe(b, e)     ->  (match b with
                         | Ident s ->
                           let (unn, acc, tbl, l)  = build_h e wts ids in
-                          (unn, And(acc, Id s), tbl, l)
+                          (match Map.find ids s with
+                          | Some(expr) ->
+                              (unn, And(acc, expr), tbl, l)
+                          | None ->
+                              let (unn, acc, tbl, l)  = build_h e wts ids in
+                              (unn, And(acc, Id s), tbl, l))
                         | _       -> raise (BCError "Expected ident on observe"))
 | Ite(g, thn, els)  ->  (match g with
                         | Ident s ->
-                          let v                           = Map.find_exn ids s in
                           let (unn_t, acc_t, tbl_t, l_t)  = build_h thn wts ids in
                           let (unn_e, acc_e, tbl_e, l_e)  = build_h els tbl_t ids in
                           let unn_t'                      = conj (conj unn_t l_t false) l_e true in
                           let unn_e'                      = conj (conj unn_e l_e false) l_t true in
-                          let unn                         = Or(And(v, unn_t'), And(Not v, unn_e')) in
-                          let acc                         = Or(And(v, acc_t), And(Not v, acc_e)) in
-                          (unn, acc, tbl_e, [])
+                          let poss                        = Map.find ids s in
+                          (match poss with
+                          | Some v ->
+                              let unn = Or(And(v, unn_t'), And(Not v, unn_e')) in
+                              let acc = Or(And(v, acc_t), And(Not v, acc_e)) in
+                              (unn, acc, tbl_e, [])
+                          | None  ->
+                              let unn = Or(And(Id s, unn_t'), And(Not (Id s), unn_e')) in
+                              let acc = Or(And(Id s, acc_t), And(Not (Id s), acc_e)) in
+                              (unn, acc, tbl_e, []))
                         | _       -> raise (BCError "Expected ident on ITE"))
 | ChooseWith(x, l)  ->  (match x with
                         | Ident s ->
@@ -199,7 +210,7 @@ fun e' wts ids  -> match e' with
                           let rews_and_rews_to_rm =
                             List.init (List.length rews) ~f:(fun i -> (List.nth_exn rews i), rews_to_rm i) in
                           let phis = zip_with_fn phis rews_and_rews_to_rm
-                            (fun p (r, nr) -> conj (conj p r false ) nr true) in
+                            (fun p (r, nr) -> conj (conj p r true) nr false) in
                           (* Compute formula above, conjoin with names *)
                           let phis  = zip_with_fn names phis (fun t phi -> And(Id t, phi)) in
                           let phi   = List.fold phis ~init:FF ~f:(fun a b -> Or(a,b)) in
