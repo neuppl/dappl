@@ -1,3 +1,1 @@
-x <- (flip 0.5) ;
-y <- (if x then (reward 3; return tt) else (reward 0 ; return tt)) ;
-y
+reward 1 ; flip 0.5
