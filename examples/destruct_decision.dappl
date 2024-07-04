@@ -1,5 +1,5 @@
 x <- [a1, a2, a3] ;
 choose x with
-| a1 -> reward 2 ; return tt
+| a1 -> reward 3 ; return tt
 | a2 -> reward 50 ; return tt
 | a3 -> reward 0 ; return tt

@@ -1,0 +1,154 @@
+
+
+
+ NEW TEST
+
+got ub lb for total policy: ExpectedUtility(1.0, 1.5) , ExpectedUtility(1.0, 0.0) 
+
+
+
+{PartialModel { true_assignments: VarSet { b: {} }, false_assignments: VarSet { b: {} } }: ExpectedUtility(1.0, 1.5)}
+
+
+DOING BEXPR (Or (And (Id flip_0) (And (And TT (Not (Id rew_1))) (Id rew_2)))
+ (And (Not (Id flip_0)) (And (And TT (Not (Id rew_2))) (Id rew_1))))
+ENTERING OR
+PRINTING SEEN VARS:
+DOING BEXPR (And (Id flip_0) (And (And TT (Not (Id rew_1))) (Id rew_2)))
+ENTERING AND
+PRINTING SEEN VARS:
+DOING BEXPR (Id flip_0)
+Allocated new var 0 for flip_0 
+FINISHED BRANCH OF AND
+PRINTING SEEN VARS:
+SAW VAR flip_0
+DOING BEXPR (And (And TT (Not (Id rew_1))) (Id rew_2))
+ENTERING AND
+PRINTING SEEN VARS:
+SAW VAR flip_0
+DOING BEXPR (And TT (Not (Id rew_1)))
+ENTERING AND
+PRINTING SEEN VARS:
+SAW VAR flip_0
+DOING BEXPR TT
+FINISHED BRANCH OF AND
+PRINTING SEEN VARS:
+SAW VAR flip_0
+DOING BEXPR (Not (Id rew_1))
+DOING BEXPR (Id rew_1)
+Allocated new var 1 for rew_1 
+FINISHED BRANCH OF AND
+PRINTING SEEN VARS:
+SAW VAR flip_0
+SAW VAR rew_1
+DOING BEXPR (Id rew_2)
+Allocated new var 2 for rew_2 
+FINISHED BRANCH OF OR
+PRINTING SEEN VARS:
+SAW VAR flip_0
+SAW VAR rew_1
+SAW VAR rew_2
+DOING BEXPR (And (Not (Id flip_0)) (And (And TT (Not (Id rew_2))) (Id rew_1)))
+ENTERING AND
+PRINTING SEEN VARS:
+SAW VAR flip_0
+SAW VAR rew_1
+SAW VAR rew_2
+DOING BEXPR (Not (Id flip_0))
+DOING BEXPR (Id flip_0)
+FINISHED BRANCH OF AND
+PRINTING SEEN VARS:
+SAW VAR flip_0
+SAW VAR rew_1
+SAW VAR rew_2
+DOING BEXPR (And (And TT (Not (Id rew_2))) (Id rew_1))
+ENTERING AND
+PRINTING SEEN VARS:
+SAW VAR flip_0
+SAW VAR rew_1
+SAW VAR rew_2
+DOING BEXPR (And TT (Not (Id rew_2)))
+ENTERING AND
+PRINTING SEEN VARS:
+SAW VAR flip_0
+SAW VAR rew_1
+SAW VAR rew_2
+DOING BEXPR TT
+FINISHED BRANCH OF AND
+PRINTING SEEN VARS:
+SAW VAR flip_0
+SAW VAR rew_1
+SAW VAR rew_2
+DOING BEXPR (Not (Id rew_2))
+DOING BEXPR (Id rew_2)
+FINISHED BRANCH OF AND
+PRINTING SEEN VARS:
+SAW VAR flip_0
+SAW VAR rew_1
+SAW VAR rew_2
+DOING BEXPR (Id rew_1)
+DOING BEXPR (And TT (And (Or (And (Id flip_0) TT) (And (Not (Id flip_0)) TT)) TT))
+ENTERING AND
+PRINTING SEEN VARS:
+DOING BEXPR TT
+FINISHED BRANCH OF AND
+PRINTING SEEN VARS:
+DOING BEXPR (And (Or (And (Id flip_0) TT) (And (Not (Id flip_0)) TT)) TT)
+ENTERING AND
+PRINTING SEEN VARS:
+DOING BEXPR (Or (And (Id flip_0) TT) (And (Not (Id flip_0)) TT))
+ENTERING OR
+PRINTING SEEN VARS:
+DOING BEXPR (And (Id flip_0) TT)
+ENTERING AND
+PRINTING SEEN VARS:
+DOING BEXPR (Id flip_0)
+Allocated new var 3 for flip_0 
+FINISHED BRANCH OF AND
+PRINTING SEEN VARS:
+SAW VAR flip_0
+DOING BEXPR TT
+FINISHED BRANCH OF OR
+PRINTING SEEN VARS:
+SAW VAR flip_0
+DOING BEXPR (And (Not (Id flip_0)) TT)
+ENTERING AND
+PRINTING SEEN VARS:
+SAW VAR flip_0
+DOING BEXPR (Not (Id flip_0))
+DOING BEXPR (Id flip_0)
+FINISHED BRANCH OF AND
+PRINTING SEEN VARS:
+SAW VAR flip_0
+DOING BEXPR TT
+FINISHED BRANCH OF AND
+PRINTING SEEN VARS:
+SAW VAR flip_0
+DOING BEXPR TT
+AST:
+(Bind x (Flip 0.5)
+  (Bind y (Ite (Ident x) (Reward 3 (Return True)) (Reward 0 (Return True)))
+    (Ident y)))
+
+UNN : 
+(Or (And (Id flip_0) (And (And TT (Not (Id rew_1))) (Id rew_2)))
+  (And (Not (Id flip_0)) (And (And TT (Not (Id rew_2))) (Id rew_1))))
+
+ACC : 
+(And TT (And (Or (And (Id flip_0) TT) (And (Not (Id flip_0)) TT)) TT))
+
+PRINTING WEIGHT MAP:
+VAR flip_0 : LO (0.500000, 0.000000), HI (0.500000, 0.000000)
+VAR rew_1 : LO (1.000000, 0.000000), HI (1.000000, 3.000000)
+VAR rew_2 : LO (1.000000, 0.000000), HI (1.000000, 0.000000)
+PRINTING RSDD WEIGHT MAP:
+VAR 0 : LO (0.500000, 0.000000), HI (0.500000, 0.000000)
+VAR 1 : LO (1.000000, 0.000000), HI (1.000000, 3.000000)
+VAR 2 : LO (1.000000, 0.000000), HI (1.000000, 0.000000)
+VAR 3 : LO (0.500000, 0.000000), HI (0.500000, 0.000000)
+
+SIZE : 4
+
+MEU is 1.5
+Time elapsed: 0.00118112564087
+size is 2283020516

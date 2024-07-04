@@ -6,8 +6,10 @@
 open Rsdd
 open Core_grammar
 open Core
-(* open Rsdd_abstractions *)
 open Sexplib.Std
+
+exception BCError of string
+exception UnboundVariableError
 
 (*
   Architecture:
@@ -49,6 +51,8 @@ type bexpr =
 | ExactlyOne  of string list * bool
 [@@deriving sexp_of]
 
+let print_bexpr = fun be -> (Sexplib0__Sexp.to_string_hum (sexp_of_bexpr be))
+
 (* subst e x e' = e[x/e'] *)
 let rec subst : bexpr -> string -> bexpr -> bexpr = fun e s e' -> match e with
 | Id t            -> if String.equal s t then e' else Id t
@@ -83,6 +87,12 @@ let empty_tbl : tbl = Map.empty (module String)
 type ident_tbl = (string, bexpr, String.comparator_witness) Map.t
 let empty_ident_tbl : ident_tbl = Map.empty (module String)
 
+let print_ident_tbl(t : ident_tbl) =
+  Format.printf "PRINTING IDENT TBL:\n" ;
+  Map.iteri t ~f:(
+    fun ~key:x ~data:be ->
+      Format.printf "VAR %s : VAL %s\n" x (print_bexpr be))
+
 (* A simple counter to build fresh names *)
 let ct = ref (-1)
 let fresh = fun _ -> (ct := !ct + 1) ; Int.to_string !ct
@@ -106,8 +116,11 @@ type propexpr = {
   wtmap : tbl
 }
 
-exception BCError of string
-exception UnboundVariableError
+let print_wtmap(t : tbl) =
+  Format.printf "PRINTING WEIGHT MAP:\n" ;
+  Map.iteri t ~f:(
+    fun ~key:x ~data:((a,b),(c,d)) ->
+      Format.printf "VAR %s : LO (%f, %f), HI (%f, %f)\n" x a b c d)
 
 (* bc uses a helper function build_h ... *)
 let rec bc : expr -> propexpr = fun e ->
@@ -157,12 +170,13 @@ fun e' wts ids  -> match e' with
                         | _       -> raise (BCError "Expected ident on observe"))
 | Ite(g, thn, els)  ->  (match g with
                         | Ident s ->
-                          let (unn_t, acc_t, tbl_t, l_t) = build_h thn wts ids in
-                          let (unn_e, acc_e, tbl_e, l_e) = build_h els tbl_t ids in
-                          let unn_t'  = conj (conj unn_t l_t false) l_e true in
-                          let unn_e'  = conj (conj unn_e l_e false) l_t true in
-                          let unn     = Or(And(Id s, unn_t'), And(Not(Id s), unn_e')) in
-                          let acc     = Or(And(Id s, acc_t), And(Not(Id s), acc_e)) in
+                          let v                           = Map.find_exn ids s in
+                          let (unn_t, acc_t, tbl_t, l_t)  = build_h thn wts ids in
+                          let (unn_e, acc_e, tbl_e, l_e)  = build_h els tbl_t ids in
+                          let unn_t'                      = conj (conj unn_t l_t false) l_e true in
+                          let unn_e'                      = conj (conj unn_e l_e false) l_t true in
+                          let unn                         = Or(And(v, unn_t'), And(Not v, unn_e')) in
+                          let acc                         = Or(And(v, acc_t), And(Not v, acc_e)) in
                           (unn, acc, tbl_e, [])
                         | _       -> raise (BCError "Expected ident on ITE"))
 | ChooseWith(x, l)  ->  (match x with
@@ -195,9 +209,8 @@ fun e' wts ids  -> match e' with
                           (And(decision, phi), And(decision, gamma), tbl, [])
                         | _       -> raise (BCError "Expected ident on Choose"))
 | Bind(x,b,e')      ->  let (phi_b, gamma_b, wt_b, rw_b) = build_h b wts ids in
-                        Printf.printf "%s\n" (Sexplib0__Sexp.to_string_hum(sexp_of_expr e'));
                         let ids' = Map.add_exn ids ~key:x ~data:phi_b in
-                        Printf.printf "added key %s !\n" x;
+                        (* print_ident_tbl ids'; *)
                         let (phi_e, gamma_e, wt_e, rw_e) = build_h e' wt_b ids' in
                         (phi_e, And(gamma_b, gamma_e), wt_e, rw_b @ rw_e)
 | Loop(n,e)         ->  build_h (unroll n e) wts ids
@@ -230,6 +243,12 @@ it is intended to be the boundary into RSDD--the BDD maker.
 type rsdd_tbl = (int64, wt, Int64.comparator_witness) Map.t
 let empty_tbl : rsdd_tbl = Map.empty (module Int64)
 
+let print_rsdd_tbl(t: rsdd_tbl) =
+  Format.printf "PRINTING RSDD WEIGHT MAP:\n" ;
+  Map.iteri t ~f:(
+    fun ~key:x ~data:((a,b),(c,d)) ->
+      Format.printf "VAR %i : LO (%f, %f), HI (%f, %f)\n" (Int64.to_int_exn x) a b c d)
+
 (* We maintain an association list of strings and VarLabels
   to enforce exhaustive patternmatch in ChooseWith. *)
 
@@ -240,6 +259,7 @@ let insert_decision : string -> rsdd_var_label -> unit = fun x y ->
   | None    -> dlist := (x,y)::!dlist
   | Some _  -> ()
 let insert_decision_list : (string * rsdd_var_label) list -> unit = fun l ->
+  List.iter (List.map l ~f:fst) ~f:(fun x ->Format.printf "Adding %s as decision\n" x);
   List.fold l ~init:() ~f:(fun _ (x,y) -> insert_decision x y)
 (* let lookup : string -> rsdd_var_label = fun x ->
   let o = List.Assoc.find !dlist ~equal:String.equal x in
@@ -257,13 +277,24 @@ type cf =
   fn            : rsdd_wmc_params_e_u;
 }
 
+type seen_vars = (string, rsdd_bdd_ptr, String.comparator_witness) Map.t
+let empty_seen_vars : seen_vars = Map.empty (module String)
+let print_seen_vars(t : seen_vars) =
+  Format.printf "PRINTING SEEN VARS:\n" ;
+  Map.iter_keys t ~f:(
+    fun z ->
+      Format.printf "SAW VAR %s\n" z)
+
+type decision_list = (string, rsdd_bdd_ptr, String.comparator_witness) Map.t
+let empty_decisions : decision_list = Map.empty (module String)
+
 let rec translate (prop : propexpr) : cf * rsdd_tbl =
-  let builder             = mk_bdd_builder_default_order 0L in
-  let (ptr_unn, wt_map')  = _translate prop.unn prop.wtmap empty_tbl builder in
-  let (ptr_acc, wt_map'') = _translate prop.acc prop.wtmap wt_map' builder in
-  let wt_map_list         = Map.to_alist ~key_order:`Increasing wt_map'' in
-  let wmcparams           = new_wmc_params_eu (List.map wt_map_list ~f:snd) in
-  let (n, _)              = bdd_new_var builder true in
+  let builder                   = mk_bdd_builder_default_order 0L in
+  let (ptr_unn, wt_map', sv, d) = _translate prop.unn prop.wtmap empty_tbl empty_seen_vars empty_decisions builder in
+  let (ptr_acc, wt_map'', _, _) = _translate prop.acc prop.wtmap wt_map' sv d builder in
+  let wt_map_list               = Map.to_alist ~key_order:`Increasing wt_map'' in
+  let wmcparams                 = new_wmc_params_eu (List.map wt_map_list ~f:snd) in
+  let (n, _)                    = bdd_new_var builder true in
   ({ unn           = bdd_and builder ptr_unn ptr_acc ;
     acc           = ptr_acc ;
     decision_vars = (List.map !dlist ~f:snd) ;
@@ -273,43 +304,58 @@ and _translate
   (exp : bexpr)
   (wts : tbl)
   (eus : rsdd_tbl)
+  (seen : seen_vars)
+  (d : decision_list)
   (builder : rsdd_bdd_builder)
-  : rsdd_bdd_ptr * rsdd_tbl =
+  : rsdd_bdd_ptr * rsdd_tbl * seen_vars * decision_list =
+(* Format.printf "DOING BEXPR %s\n" (print_bexpr exp); *)
 match exp with
-| TT            ->  (bdd_true builder, eus)
-| FF            ->  (bdd_false builder, eus)
-| Id s          ->  let (x,y)           = (bdd_new_var builder true) in
-                    let v               = Map.find_exn wts s in
-                    let eus'            = Map.add_exn eus ~key:x ~data:v in
-                    (y, eus')
-| And(a,b)      ->  let (ptr_a, eus_a)  = _translate a wts eus builder in
-                    let (ptr_b, eus_b)  = _translate b wts eus_a builder in
-                    (bdd_and builder ptr_a ptr_b, eus_b)
-| Or(a,b)       ->  let (ptr_a, eus_a)  = _translate a wts eus builder in
-                    let (ptr_b, eus_b)  = _translate b wts eus_a builder in
-                    (bdd_or builder ptr_a ptr_b, eus_b)
-| Xor(a,b)      ->  _translate (And(Or(a,b), Not(And(a,b)))) wts eus builder
-| Not a         ->  let (x,y)           = (_translate a wts eus builder) in
-                    (bdd_negate builder x, y)
-| ExactlyOne(l, d)  ->  let l'              = List.map l ~f:(fun _ -> bdd_new_var builder true) in
-                    let exactly_one     = bdd_exactlyone builder (List.map l' ~f:fst) in
-                    let l''             = zip_with_fn l l' (fun x (y,_) -> (x,y)) in
-                    let eus'            = List.fold l'' ~init:eus
-                                            ~f:(fun e (x,y) -> Map.add_exn e ~key:y ~data:(Map.find_exn wts x)) in
-                    if d then insert_decision_list (zip_with_fn l l' (fun x (y,_) -> (x, mk_varlabel y)));
-                    (exactly_one, eus')
+| TT            ->  (bdd_true builder, eus, seen, d)
+| FF            ->  (bdd_false builder, eus, seen, d)
+| Id s          ->  (match Map.find seen s with
+                    | None      ->  let (x,y) = (bdd_new_var builder true) in
+                                    Format.printf "Allocated new var %i for %s \n" (Int64.to_int_exn x) s;
+                                    let v     = Map.find_exn wts s in
+                                    let eus'  = Map.add_exn eus ~key:x ~data:v in
+                                    let seen' = Map.add_exn seen ~key:s ~data:y in
+                                    (y, eus', seen', d)
+                    | Some ptr  ->  (ptr, eus, seen, d))
+| And(a,b)      ->  let (ptr_a, eus_a, seen_a, d_a)  = _translate a wts eus seen d builder in
+                    let (ptr_b, eus_b, seen_b, d_b)  = _translate b wts eus_a seen_a d_a builder in
+                    (bdd_and builder ptr_a ptr_b, eus_b, seen_b, d_b)
+| Or(a,b)       ->  let (ptr_a, eus_a, seen_a, d_a)  = _translate a wts eus seen d builder in
+                    let (ptr_b, eus_b, seen_b, d_b)  = _translate b wts eus_a seen_a d_a builder in
+                    (bdd_or builder ptr_a ptr_b, eus_b, seen_b, d_b)
+| Xor(a,b)      ->  _translate (And(Or(a,b), Not(And(a,b)))) wts eus seen d builder
+| Not a         ->  let (x,y,s, d')           = _translate a wts eus seen d builder in
+                    (bdd_negate builder x, y, s, d')
+| ExactlyOne(l, b)  ->  let hsh = List.fold l ~init:"" ~f:String.append in
+                        match Map.find d hsh with
+                        | None ->
+                          let l'              = List.map l ~f:(fun _ -> bdd_new_var builder true) in
+                          let exactly_one     = bdd_exactlyone builder (List.map l' ~f:fst) in
+                          let l''             = zip_with_fn l l' (fun x (y,z) -> (x,y,z)) in
+                          let eus'            = List.fold l'' ~init:eus
+                                                  ~f:(fun e (x,y,_) -> Map.add_exn e ~key:y ~data:(Map.find_exn wts x)) in
+                          let seen'           = List.fold l'' ~init:seen
+                                                  ~f:(fun e (x,_,z) -> Map.add_exn e ~key:x ~data:z) in
+                          let d'              = Map.add_exn d ~key:hsh ~data:exactly_one in
+                          if b then insert_decision_list (zip_with_fn l l' (fun x (y,_) -> (x, mk_varlabel y)));
+                          (exactly_one, eus', seen', d')
+                        | Some ptr -> (ptr, eus, seen, d)
 
 (* MEU. If cache is true, it is performed with caching, if not, it is just with pruning. *)
 let perform_meu (c : cf) (cache : bool) =
+  let num = Int64.of_int (List.length c.decision_vars) in
   if cache then
-      let (meu, _, size) = bdd_meu c.unn c.acc c.decision_vars 0L c.fn in
+      let (meu, _, size) = bdd_meu c.unn c.acc c.decision_vars num c.fn in
       (extract meu, size)
   else
-      let (meu, _, size) = bdd_meu_without_cache c.unn c.acc c.decision_vars 0L c.fn in
+      let (meu, _, size) = bdd_meu_without_cache c.unn c.acc c.decision_vars num c.fn in
       (extract meu, size)
 
 (* The entire pipeline *)
-let rec infer (e : expr) (cache : bool) (debug_level : int) =
+let infer (e : expr) (cache : bool) (debug_level : int) =
   let pe = bc e in
   let (cf, wt_map) = translate pe in
   if debug_level >= 1 then(
@@ -322,14 +368,3 @@ let rec infer (e : expr) (cache : bool) (debug_level : int) =
       Format.printf "\nSIZE : %i\n\n" (Int64.to_int_exn cf.num_vars))
   );
   perform_meu cf cache
-and print_wtmap(t : tbl) =
-  Format.printf "PRINTING WEIGHT MAP:\n" ;
-  Map.iteri t ~f:(
-    fun ~key:x ~data:((a,b),(c,d)) ->
-      Format.printf "VAR %s : LO (%f, %f), HI (%f, %f)\n" x a b c d)
-and print_rsdd_tbl(t: rsdd_tbl) =
-  Format.printf "PRINTING RSDD WEIGHT MAP:\n" ;
-  Map.iteri t ~f:(
-    fun ~key:x ~data:((a,b),(c,d)) ->
-      Format.printf "VAR %i : LO (%f, %f), HI (%f, %f)\n" (Int64.to_int_exn x) a b c d)
-

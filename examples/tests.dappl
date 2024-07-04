@@ -1,5 +1,2 @@
-y <- loop 2 {
-    x <- flip 0.6 ;
-    return x
-} ;
-return y
+x <- reward 1; flip 0.5 ;
+x || x
