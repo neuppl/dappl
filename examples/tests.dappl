@@ -1,2 +1,2 @@
-x <- reward 1; flip 0.5 ;
-x || x
+x <- (reward 1 ; y <- flip 0.5; return y) ;
+x

@@ -242,7 +242,7 @@ fun n e ->
   let list_of_names = List.init n ~f:(fun i -> "LOOP_VAR_"^(Int.to_string i)) in
   let rt            = Return(List.fold list_of_names ~init:True ~f:(fun e s -> And(e, Ident s))) in
   let v = List.fold_right list_of_names ~f:(fun x y -> Bind(x, e, y)) ~init:rt in
-  Format.printf "unrolled: %s\n" (Sexplib0__Sexp.to_string_hum (Core_grammar.sexp_of_expr v));
+  (* Format.printf "unrolled: %s\n" (Sexplib0__Sexp.to_string_hum (Core_grammar.sexp_of_expr v)); *)
   v
 
 (* -------------------------------------
@@ -273,7 +273,7 @@ let insert_decision : string -> rsdd_var_label -> unit = fun x y ->
   | None    -> dlist := (x,y)::!dlist
   | Some _  -> ()
 let insert_decision_list : (string * rsdd_var_label) list -> unit = fun l ->
-  List.iter (List.map l ~f:fst) ~f:(fun x ->Format.printf "Adding %s as decision\n" x);
+  (* List.iter (List.map l ~f:fst) ~f:(fun x ->Format.printf "Adding %s as decision\n" x); *)
   List.fold l ~init:() ~f:(fun _ (x,y) -> insert_decision x y)
 (* let lookup : string -> rsdd_var_label = fun x ->
   let o = List.Assoc.find !dlist ~equal:String.equal x in
@@ -328,7 +328,7 @@ match exp with
 | FF            ->  (bdd_false builder, eus, seen, d)
 | Id s          ->  (match Map.find seen s with
                     | None      ->  let (x,y) = (bdd_new_var builder true) in
-                                    Format.printf "Allocated new var %i for %s \n" (Int64.to_int_exn x) s;
+                                    (* Format.printf "Allocated new var %i for %s \n" (Int64.to_int_exn x) s; *)
                                     let v     = Map.find_exn wts s in
                                     let eus'  = Map.add_exn eus ~key:x ~data:v in
                                     let seen' = Map.add_exn seen ~key:s ~data:y in

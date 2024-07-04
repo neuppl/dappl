@@ -1,4 +1,4 @@
-; (library
-;  (preprocess (pps ppx_jane))
-;  (libraries dappl core bignum sexplib core_unix oUnit rsdd)
-;  (name experiments))
+(library
+ (preprocess (pps ppx_jane))
+ (libraries dappl core bignum sexplib core_unix oUnit smart-print rsdd)
+ (name experiments))

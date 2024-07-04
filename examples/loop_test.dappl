@@ -1,4 +1,7 @@
-loop 2 {
-    x <- flip 0.5 ;
-    if x then (reward 2 ; return tt) else (reward 0 ; return tt)
+loop 3 {
+  x <- (flip 0.5) ;
+  if x then
+    (reward 2.; return (tt))
+  else
+    (reward 0.; return (tt))
 }

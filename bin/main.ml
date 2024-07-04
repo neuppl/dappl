@@ -1,5 +1,5 @@
 open Dappl
-(* open Experiments *)
+open Experiments
 open Util
 open Core
 
@@ -20,11 +20,12 @@ let print_sexp =
     ~summary:"dappl debugging tool."
     ~readme:(fun () ->
       "
-          \tdappl ast [front | prop | all] $FILE \n\n\
+          \tdappl ast [front | prop | round-trip | all] $FILE \n\n\
         \
-        front : prints s-expression representation of the dappl AST.\n\
-        prop  : prints s-expression representation of the underlying Boolean formulae.\n\
-        all   : prints both representations.\n\n\
+        front       : prints s-expression representation of the dappl AST.\n\
+        prop        : prints s-expression representation of the underlying Boolean formulae.\n\
+        round-trip  : prints the pretty-printed representation of the dappl AST.\n\
+        all         : prints all representations.\n\n\
         This command does NOT run MEU. It is simply to debug the parser and the AST.\n
       ")
      (let%map_open.Command
@@ -35,11 +36,12 @@ let print_sexp =
           let expr = (Core_grammar.sexp_of_expr (Core_grammar.from_external_expr parsed.body)) in
           let prop = Bc.bc (Core_grammar.from_external_expr parsed.body) in
           match verbosity with
-          | "front" ->  Format.printf "%s\n" (Sexplib0__Sexp.to_string_hum ~indent:2 expr)
-          | "prop"  ->  _print_sexp_prop prop
-          | "all"   ->  Format.printf "AST : \n%s\n" (Sexplib0__Sexp.to_string_hum ~indent:2 expr);
-                        _print_sexp_prop prop
-          | _       -> failwith "invalid debug!"
+          | "front"       ->  Format.printf "%s\n" (Sexplib0__Sexp.to_string_hum ~indent:2 expr)
+          | "prop"        ->  _print_sexp_prop prop
+          | "round-trip"  ->  Pp.to_stdout (Core_grammar.from_external_expr parsed.body)
+          | "all"         ->  Format.printf "AST : \n%s\n" (Sexplib0__Sexp.to_string_hum ~indent:2 expr);
+                              _print_sexp_prop prop
+          | _             -> failwith "invalid debug!"
     )
 
 let run =
@@ -47,19 +49,13 @@ let run =
     ~summary:"dappl's meu solver."
     ~readme:(fun () ->
       "
-       \tdappl run [--cache true|false] [--debug 0 | 1 | 2] $FILE \n\n\
-      \
-      true  : runs with caching on upper-bounds. \n\
-      false : runs without caching on upper-bounds.\n\
-      0     : turn off debug mode (default).\n\
-      1     : debug mode: emits AST.\n\
-      2     : debug mode 2: emits AST and weight maps.\n
+       \tdappl run [--cache true|false] [--debug 0 | 1 | 2] $FILE \n\n
       ")
      (let%map_open.Command
         with_cache = flag "--cache" (optional bool)
-         ~doc:"run with or without caching. caching is on by default."
+         ~doc:"bool toggles caching in ub calculation.\n true (default) : enables caching\n false : disables caching.\n"
         and debug_level = flag "--debug" (optional int)
-         ~doc:"run in debug mode.\n 0 (default) : no debug\n1 : emits AST\n2 : emits AST and weight maps\n"
+         ~doc:"int run in debug mode.\n 0 (default) : no debug\n1 : emits AST\n2 : emits AST and weight maps\n"
         and filename = anon ("filename" %: string) in
         fun () ->
           let parsed = parse_from_file filename in

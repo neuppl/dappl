@@ -3,7 +3,8 @@
  (name main)
  (preprocess (pps ppx_jane))
  (libraries
-   dappl
-   ; experiments
-   core bignum sexplib core_unix.command_unix
+    dappl
+    experiments
+    core bignum sexplib core_unix.command_unix
+    smart-print
  ))
