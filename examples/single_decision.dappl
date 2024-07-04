@@ -1,0 +1,2 @@
+x <- [test] ;
+if x then (reward 3; return tt) else (reward 2 ; return tt)

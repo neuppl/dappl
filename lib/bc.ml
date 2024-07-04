@@ -145,7 +145,10 @@ fun e' wts ids  -> match e' with
 | False             ->  (FF, TT, wts, [])
 | Ident s           ->  (match Map.find ids s with
                         | Some b  -> (b, TT, wts, [])
-                        | None    -> raise UnboundVariableError)
+                        | None    ->
+                          (match Map.find wts s with
+                          | Some _  -> (Id s, TT, wts, [])
+                          | None    -> raise UnboundVariableError))
 | Flip f            ->  let new_var = "flip_"^(fresh ()) in
                         let wt      = prob_to_expect f in
                         let s'      = Map.add_exn wts ~key:new_var ~data:wt in
@@ -177,8 +180,8 @@ fun e' wts ids  -> match e' with
                         | Ident s ->
                           let (unn_t, acc_t, tbl_t, l_t)  = build_h thn wts ids in
                           let (unn_e, acc_e, tbl_e, l_e)  = build_h els tbl_t ids in
-                          let unn_t'                      = conj (conj unn_t l_t false) l_e true in
-                          let unn_e'                      = conj (conj unn_e l_e false) l_t true in
+                          let unn_t'                      = conj (conj unn_t l_t true) l_e false in
+                          let unn_e'                      = conj (conj unn_e l_e true) l_t false in
                           let poss                        = Map.find ids s in
                           (match poss with
                           | Some v ->
@@ -304,7 +307,9 @@ let empty_decisions : decision_list = Map.empty (module String)
 
 let rec translate (prop : propexpr) : cf * rsdd_tbl =
   let builder                   = mk_bdd_builder_default_order 0L in
+  Format.printf "Printing unn\n";
   let (ptr_unn, wt_map', sv, d) = _translate prop.unn prop.wtmap empty_tbl empty_seen_vars empty_decisions builder in
+  Format.printf "Printing acc\n";
   let (ptr_acc, wt_map'', _, _) = _translate prop.acc prop.wtmap wt_map' sv d builder in
   let wt_map_list               = Map.to_alist ~key_order:`Increasing wt_map'' in
   let wmcparams                 = new_wmc_params_eu (List.map wt_map_list ~f:snd) in

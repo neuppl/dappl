@@ -48,3 +48,5 @@ and pp_discrete (l : (string * float) list) : SmartPrint.t =
 
 let to_stdout (dappl : expr) : unit =
   to_stdout 100 2 (pp dappl ^^ newline)
+let to_channel c dappl : unit =
+  to_out_channel 100 2 c (pp dappl)

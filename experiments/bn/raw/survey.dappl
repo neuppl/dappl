@@ -12,7 +12,7 @@ h3 <- (if (young && m) then flip 0.75 else false);
 h4 <- (if (young && f) then flip 0.64 else false);
 h5 <- (if (old && m) then flip 0.88 else false);
 h6 <- (if (old && f) then flip 0.9 else false);
-high <- (h1 || h2 || h3 || h4 || h5 || h6); 
+high <- (h1 || h2 || h3 || h4 || h5 || h6);
 uni <- (!high);
 emp <- (if high then flip 0.96 else flip 0.92);
 self <- (!emp);

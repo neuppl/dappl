@@ -1,0 +1,7 @@
+x <- flip 0.5 ;
+y <- if x then discrete[a : 0.5 , b : 0.5] else discrete[a2 : 0.9 , a3: 0.1 ];
+choose y with
+| a -> (reward 1; return tt)
+| b -> return tt
+| a2 -> (reward 1 ; return tt)
+| a3 -> return tt

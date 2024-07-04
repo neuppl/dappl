@@ -1,0 +1,5 @@
+x <- discrete[m : 0.5 , f : 0.5] ;
+y <- (choose x with
+     | m -> flip 0.5
+     | f -> return ff) ;
+if y then (reward 1 ;  return tt) else (reward 0 ; return tt)
