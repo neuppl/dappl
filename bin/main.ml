@@ -18,7 +18,15 @@ let  _print_sexp_prop (prop : Bc.propexpr) : unit =
 let print_sexp =
   Command.basic
     ~summary:"dappl debugging tool."
-    ~readme:(fun () -> "put in a .dappl file to see the parser output!")
+    ~readme:(fun () ->
+      "
+          \tdappl ast [front | prop | all] $FILE \n\n\
+        \
+        front : prints s-expression representation of the dappl AST.\n\
+        prop  : prints s-expression representation of the underlying Boolean formulae.\n\
+        all   : prints both representations.\n\n\
+        This command does NOT run MEU. It is simply to debug the parser and the AST.\n
+      ")
      (let%map_open.Command
         verbosity = anon ("verbosity" %: string)
         and filename = anon ("filename" %: string) in
@@ -36,8 +44,17 @@ let print_sexp =
 
 let run =
   Command.basic
-    ~summary:"dappl solver."
-    ~readme:(fun () -> "dappl run ?with-cache ?debug $FILE ")
+    ~summary:"dappl's meu solver."
+    ~readme:(fun () ->
+      "
+       \tdappl run $FILE debug [true|false] [0 | 1 | 2]\n\n\
+      \
+      true  : runs with caching on upper-bounds. \n\
+      false : runs without caching on upper-bounds.\n\
+      0     : turn off debug mode (default).\n\
+      1     : debug mode: emits AST.\n\
+      2     : debug mode 2: emits AST and weight maps.\n
+      ")
      (let%map_open.Command
         filename = anon ("filename" %: string)
         and with_cache = anon ("with-cache?" %: bool)
