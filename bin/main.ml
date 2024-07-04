@@ -47,7 +47,7 @@ let run =
     ~summary:"dappl's meu solver."
     ~readme:(fun () ->
       "
-       \tdappl run $FILE debug [true|false] [0 | 1 | 2]\n\n\
+       \tdappl run [--cache true|false] [--debug 0 | 1 | 2] $FILE \n\n\
       \
       true  : runs with caching on upper-bounds. \n\
       false : runs without caching on upper-bounds.\n\
@@ -56,14 +56,19 @@ let run =
       2     : debug mode 2: emits AST and weight maps.\n
       ")
      (let%map_open.Command
-        filename = anon ("filename" %: string)
-        and with_cache = anon ("with-cache?" %: bool)
-        and debug_level = anon ("debug-level?" %: int) in
+        with_cache = flag "--cache" (optional bool)
+         ~doc:"run with or without caching. caching is on by default."
+        and debug_level = flag "--debug" (optional int)
+         ~doc:"run in debug mode.\n 0 (default) : no debug\n1 : emits AST\n2 : emits AST and weight maps\n"
+        and filename = anon ("filename" %: string) in
         fun () ->
           let parsed = parse_from_file filename in
           let internal = (Core_grammar.from_external_program parsed).body in
           let t = Core_unix.gettimeofday() in
-          let ((_, meu),size) = Bc.infer internal with_cache debug_level in
+          let debug = (match debug_level with | Some i -> i | None -> 0) in
+          let ((_, meu),size) = (match with_cache with
+          | Some b  -> Bc.infer internal b debug
+          | None    -> Bc.infer internal true debug) in
           let t' = Core_unix.gettimeofday() in
           Format.printf  "MEU is %F\nTime elapsed: %F\n" meu (t' -. t);
           Format.printf  "size is %n\n" size
