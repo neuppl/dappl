@@ -240,7 +240,10 @@ fun e' wts ids  -> match e' with
 and unroll : int -> expr -> expr =
 fun n e ->
   let list_of_names = List.init n ~f:(fun i -> "LOOP_VAR_"^(Int.to_string i)) in
-  List.fold_right list_of_names ~f:(fun x y -> Bind(x, e, y)) ~init:(Return(True))
+  let rt            = Return(List.fold list_of_names ~init:True ~f:(fun e s -> And(e, Ident s))) in
+  let v = List.fold_right list_of_names ~f:(fun x y -> Bind(x, e, y)) ~init:rt in
+  Format.printf "unrolled: %s\n" (Sexplib0__Sexp.to_string_hum (Core_grammar.sexp_of_expr v));
+  v
 
 (* -------------------------------------
   Compiling PropExpr to CF
