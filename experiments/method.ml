@@ -113,5 +113,5 @@ and generate_clause (nodes : string list) : expr =
     let fd  = List.fold y ~init:True ~f:(fun a b -> And(a,b)) in
     final := fd :: !final
   done;
-  List.fold !final ~init:False ~f:(fun x y -> Or(x,y))
+  List.fold !final ~init:True ~f:(fun x y -> And(x,y))
 

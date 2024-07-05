@@ -33,7 +33,7 @@ and pp (dappl : expr) : SmartPrint.t =
   | Observe (e , e')    ->  !^"observe" ^^ parens(pp e) ^^ !^";" ^^ newline ^^ pp e'
   | Ident x             ->  !^x
   | Return x            ->  !^"return" ^^ parens (pp x)
-  | Bind(s, e, e')      ->  !^s ^^ !^"<-" ^^ parens(pp e) ^^ !^";" ^^ newline ^^ (pp e')
+  | Bind(s, e, e')      ->  !^s ^^ !^"<-" ^^ parens(indent (pp e)) ^^ !^";" ^^ newline ^^ (pp e')
   | Discrete l          ->  !^"discrete" ^-^ brakets(pp_discrete l)
   | Loop (n, e)         ->  !^"loop" ^^ OCaml.int n ^^ braces(
                               newline ^-^ indent(pp e) ^-^ newline)

@@ -159,7 +159,7 @@ let mk_survey_vars () : (expr -> expr) * (string list) =
   let binds = ref [] in
   let vars  = ref [] in
   (* Create age variable *)
-  let f_age   = mk_bind "age" (mk_discrete [("A" , 0.5) ; ("Y" , 0.3) ; ("O", 0.2)]) in
+  let f_age   = mk_bind "age" (mk_disc_or_dec [("A" , 0.5) ; ("Y" , 0.3) ; ("O", 0.2)]) in
   binds := f_age :: !binds; vars := "age" :: !vars;
   (* Create sex variable *)
   let f_sex   = mk_bind "sex" (mk_disc_or_dec [("M" , 0.6) ; ("F" , 0.4)]) in
@@ -179,48 +179,42 @@ let mk_survey_vars () : (expr -> expr) * (string list) =
   let f_uni = mk_bind "uni" (Not(Ident "high")) in
   binds := f_uni :: !binds; vars := "uni" :: !vars;
   (* Creates emp, self variables *)
-  let f_emp   = mk_bind "emp" (mk_ite "high" (Flip 0.96) (Flip 0.92)) in
-  let f_self  = mk_bind "self" (Not(Ident "emp")) in
+  let f_emp   = bind_rand_new_dec "emp" (mk_ite "high" (Flip 0.96) (Flip 0.92)) 0.5 in
+  let f_self  = bind_rand_new_dec "self" (Not(Ident "emp")) 0.5 in
   binds := f_self :: f_emp :: !binds; vars := "self" :: "emp" :: !vars;
   (* Creates small, big variables *)
-  let f_sml   = mk_bind "small" (mk_ite "high" (Flip 0.25) (Flip 0.2)) in
-  let f_big   = mk_bind "big" (Not(Ident "small")) in
+  let f_sml   = bind_rand_new_dec "small" (mk_ite "high" (Flip 0.25) (Flip 0.2)) 0.5 in
+  let f_big   = bind_rand_new_dec "big" (Not(Ident "small")) 0.5 in
   binds := f_big :: f_sml :: !binds; vars := "big" :: "small" :: !vars;
   (* Creates intermediate variables for car, train, other *)
   let f_tt    = mk_bind "TT" (And(Ident "emp", Ident "small")) in
   let f_tf    = mk_bind "TF" (And(Ident "emp", Ident "big")) in
-  let f_ft    = mk_bind "FF" (And(Ident "self", Ident "small")) in
+  let f_ft    = mk_bind "FT" (And(Ident "self", Ident "small")) in
   let f_ff    = mk_bind "FF" (And(Ident "self", Ident "big")) in
   binds := f_ff :: f_ft :: f_tf :: f_tt :: !binds;
   (* Create car *)
-  let f_car   = mk_bind "car"
+  let f_car   = bind_rand_new_dec "car"
                 (mk_ite "TT" (Flip 0.48)
                   (mk_ite "TF" (Flip 0.58)
                     (mk_ite "FT" (Flip 0.56)
-                      (mk_ite "FF" (Flip 0.7) (Return False))))) in
-  binds := f_car :: !binds; vars := "car" :: !vars;
-  (* Create car *)
-  let f_car   = mk_bind "car"
-                (mk_ite "TT" (Flip 0.48)
-                  (mk_ite "TF" (Flip 0.58)
-                    (mk_ite "FT" (Flip 0.56)
-                      (mk_ite "FF" (Flip 0.7) (Return False))))) in
+                      (mk_ite "FF" (Flip 0.7) (Return False))))) 0.5 in
   binds := f_car :: !binds; vars := "car" :: !vars;
   (* Create train *)
-  let f_tra   = mk_bind "train"
+  let f_tra   = bind_rand_new_dec "train"
                 (mk_ite "TT" (Flip 0.42)
                   (mk_ite "TF" (Flip 0.36)
                     (mk_ite "FT" (Flip 0.24)
-                      (mk_ite "FF" (Flip 0.21) (Return False))))) in
+                      (mk_ite "FF" (Flip 0.21) (Return False))))) 0.5 in
   binds := f_tra :: !binds; vars := "train" :: !vars;
   (* Create other *)
-  let f_oth   = mk_bind "other"
+  let f_oth   = bind_rand_new_dec "other"
                 (mk_ite "TT" (Flip 0.10)
                   (mk_ite "TF" (Flip 0.08)
                     (mk_ite "FT" (Flip 0.18)
-                      (mk_ite "FF" (Flip 0.09) (Return False))))) in
+                      (mk_ite "FF" (Flip 0.09) (Return False))))) 0.5 in
   binds := f_oth :: !binds; vars := "train" :: !vars;
   (* Create output *)
+  Format.printf "LENGTH %i\n" (List.length !binds);
   let prog  = bind_fold !binds in
   (prog, List.rev !vars)
 
@@ -230,8 +224,8 @@ let rec mk_survey (m :methodology) =
   | Select  -> postprocess (prog (method_1 bv))
   | New     ->  postprocess (prog (method_2 bv))
 and postprocess : expr -> expr = fun e -> match e with
-| Bind(_, _, e')  -> postprocess e'
-| x               -> And(x, And(
+| Bind(s, e, e')  -> Bind(s, e, postprocess e')
+| _               -> And(e, And(
                               Or(Ident "train", Or(Ident "car", Ident "other")),
                               Not(And(Ident "train", And(Ident "car", Ident "other")))))
 
