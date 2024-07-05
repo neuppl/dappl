@@ -18,7 +18,7 @@ let mk_reward_ret_rand (b : bool) =
 (* Produces flips and discretes *)
 let mk_flip (f : float) = Flip f
 
-let mk_flip_rand (_ : unit) = Flip (Random.float_range (Float.neg 100.0) 100.0)
+let mk_flip_rand (_ : unit) = Flip (Random.float 1.)
 
 let mk_discrete (l :(string * float) list) = Discrete l
 
@@ -30,6 +30,8 @@ let mk_discrete_rand (l : string list) =
 
 (* Produces decisions *)
 let mk_dec (l : string list) = Decision(l)
+let mk_dec_int (s : string) (i : int) =
+  Decision(List.init i ~f:(fun x -> s^(Int.to_string x)))
 
 (* Produces a choosewith *)
 let mk_choosewith (s : string) (l : string list) (b : expr list) =
@@ -54,6 +56,8 @@ let mk_bind_disc_rand (s : string) (l : string list) (e' : expr) = mk_bind s (mk
 let mk_bind_flip (s : string) (f : float) (e' : expr) = mk_bind s (mk_flip f) e'
 
 let mk_bind_flip_rand (s : string) (_ : unit) (e' : expr) = mk_bind s (mk_flip_rand ()) e'
+
+let dec_to_list (e : expr) = match e with Decision l -> l | _ -> failwith "invalid dec_to_list"
 
 (* Produces loops *)
 let mk_loop (n : int) (e : expr) = Loop(n, e)

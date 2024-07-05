@@ -1,23 +1,15 @@
-(* This file defines generators of dappl programs for benchmarks.
+(* This file defines generators of dappl programs for benchmarks. *)
 
-open Dappl
+open Dappl.Core_grammar
 open Core
 open Mk_expr_dt
 
-(* Essentially the main function but for strings. *)
-let kc_program (s : string) =
-  let parsed = Util.parse_program s in
-  let internal = Core_grammar.from_external_program parsed in
-  let t = Core_unix.gettimeofday() in
-  let ((_, b),p) = Bc.infer internal in
-  let t' = Core_unix.gettimeofday() in
-  Printf.printf "MEU is: %F\n" b;
-  Printf.printf  "Time elapsed: %F\n" (t' -. t);
-  Printf.printf "Times pruned: %n\n" (Int64.to_int_exn p);
-  ()
+(* Turns a list of bindings into a single program *)
+let bind_fold (l : (expr -> expr) list) : expr -> expr = fun e ->
+  List.fold l ~init:e ~f:(fun x f -> f x)
 
 (*
-  Benchmark 1: Finite-horizon MDP. We describe MDPs of this form:
+  Benchmark 1: Diminished return (DR) benchmarks are graphs of type
   F -> F -> ... -> F -> R
   |    |           |
   v    v           v
@@ -30,24 +22,24 @@ let kc_program (s : string) =
 
 (* This generates the dappl code. *)
 
-let mk_column (e : string) =
-  let (sf, f) = Mk_expr.mk_flip() in
-  let i = (Random.int 4) + 2 in
-  let (sd, d, l) = Mk_expr.mk_dec i in
-  let rews = List.init i ~f:(fun _ -> Mk_expr.mk_reward ()) in
-  let dec = Mk_expr.mk_choosewith d l rews in
-  let ite = Mk_expr.mk_ite f [dec;e] in
-  String.concat ~sep:"\n" [sf; sd; ite]
-
-let _mk_column_print (e : string) =
-  Printf.printf "%s\n" (mk_column e)
+let mk_column (i : int) : (expr -> expr)  =
+  let i         = Int.to_string i in
+  (* Make the flip *)
+  let f_flip    = Mk_expr.mk_bind ("f_"^i) (Mk_expr.mk_flip_rand ()) in
+  (* Make the decision *)
+  let j         = (Random.int 4) + 2 in
+  let dec_list  = List.init j ~f:(fun x -> "d_"^i^(Int.to_string x)) in
+  let f_dec     = Mk_expr.mk_bind ("d_"^i) (Mk_expr.mk_dec dec_list) in
+  (* Make the rewards *)
+  let rw_list   = List.init j ~f:(fun  _ -> Mk_expr.mk_reward_ret_rand true) in
+  let cw        = Mk_expr.mk_choosewith ("d_"^i) dec_list rw_list in
+  let ite       = fun e -> Mk_expr.mk_ite ("f_"^i) cw e in
+  fun e -> f_flip (f_dec (ite e))
 
 let gen_mdp (cols : int) =
-  let _ : unit = Random.init 234 in
-  let l = List.init cols ~f:(fun i -> i) in
-  let rw = Mk_expr.mk_reward () in
-  let fold_fn = fun _ -> fun b -> mk_column b in
-  List.fold_right l ~f:fold_fn ~init:rw
+  let l = List.init cols ~f:(fun i -> mk_column i) in
+  let rw = Mk_expr.mk_reward_ret_rand true in
+  List.fold_right l ~f:(fun f x -> f x) ~init:rw
 
 (* This generates the Problog code. *)
 
@@ -71,7 +63,7 @@ let to_file_mdp (cols : int) =
   let program = gen_mdp cols in
   let filename = "experiments/mdp/mdp" ^(Int.to_string cols) ^ ".dappl" in
   let oc = Out_channel.create filename in
-  Printf.fprintf oc "%s\n" program; Out_channel.close oc;
+  Pp.to_channel oc program; Out_channel.close oc;
   Printf.printf "Generated MDP benchmark with %n columns at %s, run\ndappl run %s to see MEU\n" cols filename filename;
   let dt_program = Mk_expr_dt.print_program (gen_mdp_dt cols) in
   let filename = "experiments/mdp/mdp" ^(Int.to_string cols) ^ ".pl" in
@@ -104,70 +96,94 @@ let rec remove (l : 'a list) (elt : 'a) (eq: 'a -> 'a -> bool): 'a list =
   | x :: xs -> if eq x elt then remove xs elt eq else x :: remove xs elt eq
 
 (* This function, given two varnames, creates a new ladder column. *)
-let mk_column_network (o1 : varname) (o2 : varname) =
-  let (f, fv) = Mk_expr.mk_flip_det 0.5 in
-  let ite1 = Mk_expr.mk_ite o2 [fv; "false"] in
-  let ite2 = Mk_expr.mk_ite "flip 0.001" ["false" ; fv] in
-  let (ite3, v1) = Mk_expr.mk_bind (Mk_expr.mk_ite o1 [ite2; ite1]) in
-  let ite1' = Mk_expr.mk_ite o2 ["!" ^ fv; "false"] in
-  let ite2' = Mk_expr.mk_ite "flip 0.001" ["false" ; "!" ^ fv] in
-  let (ite3', v2) = Mk_expr.mk_bind (Mk_expr.mk_ite o1 [ite2'; ite1']) in
-  let final_string = String.concat ~sep:"\n" [f ; ite3 ; ite3'] in
-  (final_string, v1, v2)
+let mk_column_network (i : int) (o1 : string) (o2 : string) =
+  let i             = Int.to_string i in
+  let flip1, flip2  = "f_"^i , "f2_"^i in
+  let f             = Mk_expr.mk_bind flip1
+                        (Mk_expr.mk_flip 0.5) in
+  let f2            = Mk_expr.mk_bind flip2
+                        (Mk_expr.mk_flip 0.001) in
+  let ite1          = Mk_expr.mk_ite o2 (Ident flip1) (Return False) in
+  let ite2          = Mk_expr.mk_ite flip2
+                        (Return False) (Ident flip2) in
+  let ite3          = Mk_expr.mk_ite o1 ite1 ite2 in
+  let ite1'         = Mk_expr.mk_ite o2 (Not(Ident flip1)) (Return False) in
+  let ite2'         = Mk_expr.mk_ite flip2
+                        (Return False) (Not(Ident flip2)) in
+  let ite3'         = Mk_expr.mk_ite o1 ite1' ite2' in
+  let node1, node2  = "node1_"^i, "node2_"^i in
+  let b1            = Mk_expr.mk_bind node1 ite3 in
+  let b2            = Mk_expr.mk_bind node2 ite3' in
+  ((fun e -> f(f2(b1(b2(e))))), node1, node2)
+
 (* This function creates the ladder. *)
 let mk_ladder_h (n : int) =
   if n = 0 then failwith "invalid number of columns; make sure it's >=1.";
-  let list_of_vars : varname list ref = ref [] in
-  let (init1, v1) = Mk_expr.mk_bind "true" in
-  let (init2, v2) = Mk_expr.mk_bind "false" in
-  let fold_fn = fun (s, v, v') _ ->
-                  let (fs, w, w') = mk_column_network v v' in
-                  let _ : unit = list_of_vars := List.append !list_of_vars [w; w'] in
-                  (String.concat ~sep:"\n" [s; fs], w, w') in
-  let l = List.init n ~f:(fun _ -> ()) in
-  let init = (String.concat ~sep:"\n" [init1; init2], v1, v2) in
-  let (program, v1, v2) = List.fold l ~init:init ~f:fold_fn in
-  let nodes = !list_of_vars in
-  (program, v1, v2, nodes)
+  let t_node      = Mk_expr.mk_bind "t_node" (Return True) in
+  let f_node      = Mk_expr.mk_bind "f_node" (Return False) in
+  let l           = List.init n ~f:(fun x -> x) in
+  let binds, vars = ref [f_node ; t_node] , ref [] in
+  let (l1, l2)    = List.fold l
+                      ~init:("t_node", "f_node")
+                      ~f:(fun (s, t) i ->
+                            let (f, node1, node2) = mk_column_network i s t in
+                            binds := f :: !binds ; vars := node2 :: node1 :: !vars ;
+                            (node1, node2)) in
+  (!binds, l1, l2, !vars)
 
-(* This function creates depth many nested decisions.
-   depth : specifies the decision nesting depth
-   nodes : the 2n nodes of the graph
-   cache : a list of nodes we've seen. the corresponding decisions allocated will be false.
+(*
+  This function creates depth many nested decisions.
+    depth : specifies the decision nesting depth
+    nodes : the 2n nodes of the graph
+    cache : a list of nodes we've seen. the corresponding decisions allocated will be false.
 *)
-let rec mk_depth_h (depth : int) (nodes : varname list) (cache: varname list): string list =
+let rec mk_depth_h (depth : int) (nodes : varname list) (cache: varname list): expr list =
   if depth < 1 then failwith "unsupported depth; is it >=1?" ;
-  let node_fn = fun a x -> Mk_expr.mk_ite ("!" ^ x) [Mk_expr.mk_reward () ; a] in
+  let node_fn = fun a x ->
+                  Mk_expr.mk_bind ("not_"^x) (Not(Ident x))
+                    (Mk_expr.mk_ite ("not_"^x) (Mk_expr.mk_reward_ret_rand true) a) in
   match depth with
   (* If depth is 1 then just do `if var then reward x else reward y` *)
   | 1 ->  let fn =
             fun x -> match (List.find cache ~f:(fun y -> String.equal x y)) with
-            | Some(_) -> None
-            | _ -> Some(node_fn (Mk_expr.mk_reward()) x) in
+            | Some(_) ->  None
+            | _       ->  Some(node_fn (Mk_expr.mk_reward_ret_rand true) x) in
           extract (List.map nodes ~f:fn)
   (* If depth is not 1 then recurse *)
   | _ ->  let fn =
             fun x ->  match (List.find cache ~f:(fun y -> String.equal x y)) with
                       | Some(_) ->  None
-                      | None    ->  let nodes' = remove nodes x String.equal in
-                                    let len = List.length nodes' in
-                                    let l = mk_depth_h (depth-1) nodes' (x :: cache) in
-                                    let (dec, decvar, choices) = Mk_expr.mk_dec len in
-                                    let e = String.concat ~sep:"\n"
-                                            [dec; Mk_expr.mk_choosewith decvar choices l] in
-                                    Some (node_fn e x) in
+                      | None    ->  let nodes'  = remove nodes x String.equal in
+                                    let len     = List.length nodes' in
+                                    let l       = mk_depth_h (depth-1) nodes' (x :: cache) in
+                                    let new_dec = Mk_expr.mk_dec_int ("diag_"^(Int.to_string len)) len in
+                                    let bnd     = Mk_expr.mk_bind ("dec_"^(Int.to_string len)) new_dec in
+                                    let cw      = Mk_expr.mk_choosewith
+                                                    ("dec_"^(Int.to_string len))
+                                                    (Mk_expr.dec_to_list new_dec)
+                                                    l
+                                                  in
+                                    Some (node_fn (bnd(cw)) x) in
           extract (List.map nodes ~f:fn)
 
 (* This function creates the actual decision problem. *)
 let mk_ladder (cols : int) (depth : int) =
   if cols < 2 then failwith "Make sure cols >= 2!";
   if depth > cols then failwith "Make sure depth <= cols!";
-  let (program, v1, v2, nodes) = mk_ladder_h cols in
-  let obs = Mk_expr.mk_observe ("!" ^ v1 ^ " && " ^ "!" ^ v2) in
-  let (dec, decvar, choices) = Mk_expr.mk_dec (List.length nodes) in
-  let map = mk_depth_h depth nodes [] in
-  let rws = Mk_expr.mk_choosewith decvar choices map in
-  String.concat ~sep:"\n" [program ; obs ; dec ; rws]
+  let (program, v1, v2, nodes)  = mk_ladder_h cols in
+  let event                     = Mk_expr.mk_bind "failure"
+                                    (And(Not(Ident v1), Not(Ident v2))) in
+  let obs                       = Mk_expr.mk_observe (Ident "failure") in
+  let program                   = obs :: event :: program in
+  let dec_init                  = Mk_expr.mk_dec_int "diag_INIT_" (List.length nodes) in
+  let dec_bind                  = Mk_expr.mk_bind "dec_INIT" dec_init in
+  let program                   = dec_bind :: program in
+  let map                       = mk_depth_h depth nodes [] in
+  let rws                       = Mk_expr.mk_choosewith
+                                    "dec_INIT"
+                                    (Mk_expr.dec_to_list dec_init)
+                                    map in
+  bind_fold program rws
 
 (* Now for DTProblog stuff. *)
 let mk_column_network_dt (o1 : literal) (o2 : literal) =
@@ -246,10 +262,10 @@ let to_file_ladder (cols : int) (depth : int)=
   let program = mk_ladder cols depth in
   let filename = "experiments/ladder/ladder" ^ col_str ^ "_" ^ depth_str ^ ".dappl" in
   let oc = Out_channel.create filename in
-  Printf.fprintf oc "%s\n" program; Out_channel.close oc;
+  Pp.to_channel oc program; Out_channel.close oc;
   Printf.printf "Generated MDP benchmark with %n columns at %s, run\ndappl run %s to see MEU\n" cols filename filename;
   let program = mk_ladder_dt cols depth in
   let filename = "experiments/ladder/ladder" ^ col_str ^ "_" ^ depth_str ^ ".pl" in
   let oc = Out_channel.create filename in
   Printf.fprintf oc "%s\n" (print_program program); Out_channel.close oc;
-  Printf.printf "Generated MDP benchmark with %n columns at %s, run\ndappl run %s to see MEU\n" cols filename filename *)
+  Printf.printf "Generated MDP benchmark with %n columns at %s, run\ndappl run %s to see MEU\n" cols filename filename

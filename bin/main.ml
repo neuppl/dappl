@@ -70,7 +70,7 @@ let run =
           Format.printf  "size is %n\n" size
      )
 
-(* let gen_tests =
+let gen_tests =
   Command.basic
     ~summary:"dappl test suite."
     ~readme:(fun () -> "TEST = mdp, n = an integer.")
@@ -89,13 +89,11 @@ let run =
       | "bn"          ->  Gen.mk_earthquake_to_file n ;
                           Gen.mk_asia_to_file n;
                           Gen.mk_survey_to_file n ;
-                          Gen.mk_insurance_to_file n;
-                          Gen.mk_sachs_to_file n;
-      | _             ->  failwith "invalid test!") *)
+      | _             ->  failwith "invalid test!")
 
 let command =
   Command.group
     ~summary:"Only the best for the people!"
-    [ "run", run; "ast", print_sexp ]
+    [ "run", run; "ast", print_sexp ; "test" , gen_tests]
 
 let () = Command_unix.run ~version:"0.1" command
