@@ -31,7 +31,7 @@ let mk_discrete_rand (l : string list) =
 (* Produces decisions *)
 let mk_dec (l : string list) = Decision(l)
 let mk_dec_int (s : string) (i : int) =
-  Decision(List.init i ~f:(fun x -> s^(Int.to_string x)))
+  Decision(List.init i ~f:(fun x -> s^"_"^(Int.to_string x)))
 
 (* Produces a choosewith *)
 let mk_choosewith (s : string) (l : string list) (b : expr list) =

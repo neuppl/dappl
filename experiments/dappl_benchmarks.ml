@@ -150,18 +150,20 @@ let rec mk_depth_h (depth : int) (nodes : varname list) (cache: varname list): e
             | _       ->  Some(node_fn (Mk_expr.mk_reward_ret_rand true) x) in
           extract (List.map nodes ~f:fn)
   (* If depth is not 1 then recurse *)
-  | _ ->  let fn =
+  | _ ->  let fn  =
             fun x ->  match (List.find cache ~f:(fun y -> String.equal x y)) with
                       | Some(_) ->  None
-                      | None    ->  let nodes'  = remove nodes x String.equal in
+                      | None    ->  let cache'  = x :: cache in
+                                    let add = String.concat ~sep:"_" (List.rev cache') in
+                                    let nodes'  = remove nodes x String.equal in
                                     let len     = List.length nodes' in
-                                    let l       = mk_depth_h (depth-1) nodes' (x :: cache) in
-                                    let new_dec = Mk_expr.mk_dec_int ("diag_"^(Int.to_string len)) len in
-                                    let bnd     = Mk_expr.mk_bind ("dec_"^(Int.to_string len)) new_dec in
+                                    let l'      = mk_depth_h (depth-1) nodes' cache' in
+                                    let new_dec = Mk_expr.mk_dec_int ("diag_"^add) len in
+                                    let bnd     = Mk_expr.mk_bind ("dec_"^add) new_dec in
                                     let cw      = Mk_expr.mk_choosewith
-                                                    ("dec_"^(Int.to_string len))
+                                                    ("dec_"^add)
                                                     (Mk_expr.dec_to_list new_dec)
-                                                    l
+                                                    l'
                                                   in
                                     Some (node_fn (bnd(cw)) x) in
           extract (List.map nodes ~f:fn)
@@ -171,17 +173,19 @@ let mk_ladder (cols : int) (depth : int) =
   if cols < 2 then failwith "Make sure cols >= 2!";
   if depth > cols then failwith "Make sure depth <= cols!";
   let (program, v1, v2, nodes)  = mk_ladder_h cols in
+  let l                         = List.length nodes in
   let event                     = Mk_expr.mk_bind "failure"
                                     (And(Not(Ident v1), Not(Ident v2))) in
   let obs                       = Mk_expr.mk_observe (Ident "failure") in
   let program                   = obs :: event :: program in
-  let dec_init                  = Mk_expr.mk_dec_int "diag_INIT_" (List.length nodes) in
+  let dec_init                  = Mk_expr.mk_dec_int "diag_INIT_" l in
+  let dec_init_list             = Mk_expr.dec_to_list dec_init in
   let dec_bind                  = Mk_expr.mk_bind "dec_INIT" dec_init in
   let program                   = dec_bind :: program in
   let map                       = mk_depth_h depth nodes [] in
   let rws                       = Mk_expr.mk_choosewith
                                     "dec_INIT"
-                                    (Mk_expr.dec_to_list dec_init)
+                                    dec_init_list
                                     map in
   bind_fold program rws
 
