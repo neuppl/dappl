@@ -61,12 +61,12 @@ let gen_mdp_dt (cols : int) =
 
 let to_file_mdp (cols : int) =
   let program = gen_mdp cols in
-  let filename = "experiments/mdp/mdp" ^(Int.to_string cols) ^ ".dappl" in
+  let filename = "testgen/mdp/mdp" ^(Int.to_string cols) ^ ".dappl" in
   let oc = Out_channel.create filename in
   Pp.to_channel oc program; Out_channel.close oc;
   Printf.printf "Generated MDP benchmark with %n columns at %s, run\ndappl run %s to see MEU\n" cols filename filename;
   let dt_program = Mk_expr_dt.print_program (gen_mdp_dt cols) in
-  let filename = "experiments/mdp/mdp" ^(Int.to_string cols) ^ ".pl" in
+  let filename = "testgen/mdp/mdp" ^(Int.to_string cols) ^ ".pl" in
   let oc = Out_channel.create filename in
   Printf.fprintf oc "%s\n" dt_program; Out_channel.close oc;
   Printf.printf "Generated DTProblog benchmark with %n columns at %s, run\ndappl run %s to see MEU\n" cols filename filename
@@ -264,12 +264,12 @@ let mk_ladder_dt (cols : int) (depth : int) =
 let to_file_ladder (cols : int) (depth : int)=
   let col_str, depth_str = Int.to_string cols, Int.to_string depth in
   let program = mk_ladder cols depth in
-  let filename = "experiments/ladder/ladder" ^ col_str ^ "_" ^ depth_str ^ ".dappl" in
+  let filename = "testgen/ladder/ladder" ^ col_str ^ "_" ^ depth_str ^ ".dappl" in
   let oc = Out_channel.create filename in
   Pp.to_channel oc program; Out_channel.close oc;
   Printf.printf "Generated MDP benchmark with %n columns at %s, run\ndappl run %s to see MEU\n" cols filename filename;
   let program = mk_ladder_dt cols depth in
-  let filename = "experiments/ladder/ladder" ^ col_str ^ "_" ^ depth_str ^ ".pl" in
+  let filename = "testgen/ladder/ladder" ^ col_str ^ "_" ^ depth_str ^ ".pl" in
   let oc = Out_channel.create filename in
   Printf.fprintf oc "%s\n" (print_program program); Out_channel.close oc;
   Printf.printf "Generated MDP benchmark with %n columns at %s, run\ndappl run %s to see MEU\n" cols filename filename

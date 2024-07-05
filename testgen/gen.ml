@@ -14,7 +14,7 @@ Two methods to add utilities:
 - Make 5 new variables, with a positive and negative utility.
   Then assign them an arbitrary rule R such that R -> v.
 
-Related helper functions are defined in experiments/util.ml.
+Related helper functions are defined in testgen/util.ml.
 *)
 
 open Mk_expr
@@ -66,11 +66,11 @@ let mk_earthquake (m :methodology) =
 let mk_earthquake_to_file (j  : int) : unit =
   let _ : unit = Format.printf "Generating %i many earthquake files\n" j in
   for i = 0 to j do
-    let filename = "experiments/bn/processed/earthquake_" ^(Int.to_string i) ^ "_method_1" ^".dappl" in
+    let filename = "testgen/bn/processed/earthquake_" ^(Int.to_string i) ^ "_method1" ^".dappl" in
     let oc = Out_channel.create filename in
     let earthquake = mk_earthquake (Select) in
     to_channel oc earthquake; Out_channel.close oc;
-    let filename = "experiments/bn/processed/earthquake_" ^(Int.to_string i) ^ "_method_2" ^".dappl" in
+    let filename = "testgen/bn/processed/earthquake_" ^(Int.to_string i) ^ "_method2" ^".dappl" in
     let oc = Out_channel.create filename in
     let earthquake = mk_earthquake (New) in
     to_channel oc earthquake; Out_channel.close oc;
@@ -140,11 +140,11 @@ let mk_asia (m :methodology) =
 let mk_asia_to_file (j  : int) : unit =
   let _ : unit = Printf.printf "Generating %i many asia files\n" j in
   for i = 0 to j do
-    let filename = "experiments/bn/processed/asia_" ^(Int.to_string i) ^ "_method_1" ^".dappl" in
+    let filename = "testgen/bn/processed/asia_" ^(Int.to_string i) ^ "_method1" ^".dappl" in
     let oc = Out_channel.create filename in
     let asia = mk_asia (Select) in
     to_channel oc asia; Out_channel.close oc;
-    let filename = "experiments/bn/processed/asia_" ^(Int.to_string i) ^ "_method_2" ^".dappl" in
+    let filename = "testgen/bn/processed/asia_" ^(Int.to_string i) ^ "_method2" ^".dappl" in
     let oc = Out_channel.create filename in
     let asia = mk_asia (New) in
     to_channel oc asia; Out_channel.close oc;
@@ -233,11 +233,11 @@ and postprocess : expr -> expr = fun e -> match e with
 let mk_survey_to_file (j  : int) : unit =
   let _ : unit = Printf.printf "Generating %i many survey files\n" j in
   for i = 0 to j do
-    let filename = "experiments/bn/processed/survey_" ^(Int.to_string i) ^ "_method1" ^".dappl" in
+    let filename = "testgen/bn/processed/survey_" ^(Int.to_string i) ^ "_method1" ^".dappl" in
     let oc = Out_channel.create filename in
     let survey = mk_survey (Select) in
     to_channel oc survey; Out_channel.close oc;
-    let filename = "experiments/bn/processed/survey_" ^(Int.to_string i) ^ "_method2" ^".dappl" in
+    let filename = "testgen/bn/processed/survey_" ^(Int.to_string i) ^ "_method2" ^".dappl" in
     let oc = Out_channel.create filename in
     let survey = mk_survey (New) in
     to_channel oc survey; Out_channel.close oc;

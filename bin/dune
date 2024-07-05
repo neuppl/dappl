@@ -4,7 +4,7 @@
  (preprocess (pps ppx_jane))
  (libraries
     dappl
-    experiments
+    testgen
     core bignum sexplib core_unix.command_unix
     smart-print
  ))

@@ -1,8 +1,12 @@
-from run_experiments_bn import bn 
-from run_experiments_other import hmm, ladder_long, ladder
+from experiments.bn import bn
+from experiments.dr import dr
+from experiments.ladder import ladder_long, ladder
 
-# bn(10)
-# hmm()
-ladder_long(10)
-ladder(3)
-ladder(4)
+# Bayesian network experiments
+bn(5)
+# Diminishing returns experiments
+dr(5)
+# One-shot ladder experiments
+ladder_long(4)
+# k-Shot ladder experiments
+ladder(2)
