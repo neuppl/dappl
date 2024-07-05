@@ -1,0 +1,14 @@
+f_0 <- (flip 0.579901559369) ;
+d_0 <- ([d_00 , d_01 , d_02 , d_03]) ;
+if f_0 then
+  (choose d_0 with 
+  | d_00 ->
+    (reward -25.9285696657; return (tt))
+  | d_01 ->
+    (reward 47.1407233837; return (tt))
+  | d_02 ->
+    (reward -77.000838532; return (tt))
+  | d_03 ->
+    (reward -10.4772754471; return (tt)))
+else
+  (reward 22.9076696407; return (tt))
