@@ -32,7 +32,3 @@ _opam/
 
 # other stuff
 __pycache__/
-
-!testgen/mdp
-!testgen/ladder
-!testgen/bn/processed
