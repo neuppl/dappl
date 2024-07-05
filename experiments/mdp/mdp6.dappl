@@ -1,0 +1,73 @@
+f_0 <- (flip 0.236954881455) ;
+d_0 <- ([d_00 , d_01]) ;
+if f_0 then
+  (choose d_0 with 
+  | d_00 ->
+    (reward 79.3700949624; return (tt))
+  | d_01 ->
+    (reward 24.6862963434; return (tt)))
+else
+  (f_1 <- (flip 0.538606224047) ;
+  d_1 <- ([d_10 , d_11 , d_12]) ;
+  if f_1 then
+    (choose d_1 with 
+    | d_10 ->
+      (reward 92.908360036; return (tt))
+    | d_11 ->
+      (reward -67.3068113733; return (tt))
+    | d_12 ->
+      (reward -51.4897485707; return (tt)))
+  else
+    (f_2 <- (flip 0.338453056378) ;
+    d_2 <- ([d_20 , d_21 , d_22]) ;
+    if f_2 then
+      (choose d_2 with 
+      | d_20 ->
+        (reward -91.6647790251; return (tt))
+      | d_21 ->
+        (reward -7.24197759019; return (tt))
+      | d_22 ->
+        (reward -92.8524307495; return (tt)))
+    else
+      (f_3 <- (flip 0.493489421824) ;
+      d_3 <- ([d_30 , d_31 , d_32 , d_33 , d_34]) ;
+      if f_3 then
+        (choose d_3 with 
+        | d_30 ->
+          (reward -98.6272138683; return (tt))
+        | d_31 ->
+          (reward -54.5042536024; return (tt))
+        | d_32 ->
+          (reward -45.8644649955; return (tt))
+        | d_33 ->
+          (reward 4.83563966327; return (tt))
+        | d_34 ->
+          (reward -9.00712138605; return (tt)))
+      else
+        (f_4 <- (flip 0.256770217722) ;
+        d_4 <- ([d_40 , d_41 , d_42 , d_43]) ;
+        if f_4 then
+          (choose d_4 with 
+          | d_40 ->
+            (reward -2.33985685702; return (tt))
+          | d_41 ->
+            (reward -60.1134903884; return (tt))
+          | d_42 ->
+            (reward -71.3032380318; return (tt))
+          | d_43 ->
+            (reward 67.3527260211; return (tt)))
+        else
+          (f_5 <- (flip 0.0482152570398) ;
+          d_5 <- ([d_50 , d_51 , d_52 , d_53]) ;
+          if f_5 then
+            (choose d_5 with 
+            | d_50 ->
+              (reward 56.0606224726; return (tt))
+            | d_51 ->
+              (reward -18.4028333748; return (tt))
+            | d_52 ->
+              (reward 3.65903179971; return (tt))
+            | d_53 ->
+              (reward -25.4655432107; return (tt)))
+          else
+            (reward 57.794563824; return (tt)))))))

@@ -307,16 +307,19 @@ let empty_decisions : decision_list = Map.empty (module String)
 
 let rec translate (prop : propexpr) : cf * rsdd_tbl =
   let builder                   = mk_bdd_builder_default_order 0L in
-  Format.printf "Printing unn\n";
+  (* Format.printf "Printing unn\n"; *)
   let (ptr_unn, wt_map', sv, d) = _translate prop.unn prop.wtmap empty_tbl empty_seen_vars empty_decisions builder in
-  Format.printf "Printing acc\n";
+  (* Format.printf "Printing acc\n"; *)
   let (ptr_acc, wt_map'', _, _) = _translate prop.acc prop.wtmap wt_map' sv d builder in
   let wt_map_list               = Map.to_alist ~key_order:`Increasing wt_map'' in
-  let wmcparams                 = new_wmc_params_eu (List.map wt_map_list ~f:snd) in
+  let wmcparams                 = new_wmc_params_eu (
+                                    List.map
+                                      wt_map_list
+                                      ~f:snd) in
   let (n, _)                    = bdd_new_var builder true in
   ({ unn           = bdd_and builder ptr_unn ptr_acc ;
     acc           = ptr_acc ;
-    decision_vars = (List.map !dlist ~f:snd) ;
+    decision_vars = (List.map (List.rev !dlist) ~f:snd) ;
     num_vars      = n ;
     fn            = wmcparams }, wt_map'')
 and _translate
@@ -365,16 +368,15 @@ match exp with
 
 (* MEU. If cache is true, it is performed with caching, if not, it is just with pruning. *)
 let perform_meu (c : cf) (cache : bool) =
-  let num = Int64.of_int (List.length c.decision_vars) in
   if cache then
-      let (meu, _, size) = bdd_meu c.unn c.acc c.decision_vars num c.fn in
-      (extract meu, size)
+      let (meu, _, size) = bdd_meu c.unn c.acc c.decision_vars c.num_vars c.fn in
+      (extract meu, (Int64.to_int_exn size))
   else
-      let (meu, _, size) = bdd_meu_without_cache c.unn c.acc c.decision_vars num c.fn in
-      (extract meu, size)
+      let (meu, _, size) = bdd_meu_without_cache c.unn c.acc c.decision_vars c.num_vars c.fn in
+      (extract meu, (Int64.to_int_exn size))
 
 (* The entire pipeline *)
-let infer (e : expr) (cache : bool) (debug_level : int) =
+let rec infer (e : expr) (cache : bool) (debug_level : int) =
   let pe = bc e in
   let (cf, wt_map) = translate pe in
   if debug_level >= 1 then(
@@ -384,6 +386,15 @@ let infer (e : expr) (cache : bool) (debug_level : int) =
     if debug_level > 1 then (
       print_wtmap(pe.wtmap);
       print_rsdd_tbl(wt_map);
-      Format.printf "\nSIZE : %i\n\n" (Int64.to_int_exn cf.num_vars))
+      if debug_level >2 then (
+        Format.printf "\nNUMBER OF VARS : %i\n\n" (Int64.to_int_exn cf.num_vars);
+        get_varlabels(cf.decision_vars)
+
+      )
+    )
   );
   perform_meu cf cache
+and get_varlabels (l : rsdd_var_label list) : unit =
+  Format.printf("LIST OF DECISION VARLABELS:\n");
+  List.iter l ~f:(fun x -> Format.printf "%i \t " (Int64.to_int_exn (extract_varlabel x)));
+  Format.printf "\n"

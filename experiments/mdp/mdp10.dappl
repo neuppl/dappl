@@ -1,55 +1,125 @@
-f50 <- ( flip 0.035884070055686917 );
-d53 <- [ c52, c51 ];
-if ( f50 ) then ( choose d53 with
-| c52 -> ( reward 57 )
-| c51 -> ( reward 11 ) ) else ( f44 <- ( flip 0.87093078758423481 );
-d49 <- [ c48, c47, c46, c45 ];
-if ( f44 ) then ( choose d49 with
-| c48 -> ( reward 55 )
-| c47 -> ( reward 12 )
-| c46 -> ( reward 49 )
-| c45 -> ( reward 70 ) ) else ( f37 <- ( flip 0.76317234441615656 );
-d43 <- [ c42, c41, c40, c39, c38 ];
-if ( f37 ) then ( choose d43 with
-| c42 -> ( reward 0 )
-| c41 -> ( reward 3 )
-| c40 -> ( reward 96 )
-| c39 -> ( reward 44 )
-| c38 -> ( reward 23 ) ) else ( f31 <- ( flip 0.62925143901961378 );
-d36 <- [ c35, c34, c33, c32 ];
-if ( f31 ) then ( choose d36 with
-| c35 -> ( reward 23 )
-| c34 -> ( reward 14 )
-| c33 -> ( reward 93 )
-| c32 -> ( reward 89 ) ) else ( f24 <- ( flip 0.35179904572186588 );
-d30 <- [ c29, c28, c27, c26, c25 ];
-if ( f24 ) then ( choose d30 with
-| c29 -> ( reward 69 )
-| c28 -> ( reward 28 )
-| c27 -> ( reward 6 )
-| c26 -> ( reward 1 )
-| c25 -> ( reward 12 ) ) else ( f20 <- ( flip 0.91051862764638747 );
-d23 <- [ c22, c21 ];
-if ( f20 ) then ( choose d23 with
-| c22 -> ( reward 15 )
-| c21 -> ( reward 78 ) ) else ( f13 <- ( flip 0.67399547680489058 );
-d19 <- [ c18, c17, c16, c15, c14 ];
-if ( f13 ) then ( choose d19 with
-| c18 -> ( reward 49 )
-| c17 -> ( reward 85 )
-| c16 -> ( reward 17 )
-| c15 -> ( reward 70 )
-| c14 -> ( reward 21 ) ) else ( f9 <- ( flip 0.78435865007230765 );
-d12 <- [ c11, c10 ];
-if ( f9 ) then ( choose d12 with
-| c11 -> ( reward 20 )
-| c10 -> ( reward 4 ) ) else ( f5 <- ( flip 0.66507712584402734 );
-d8 <- [ c7, c6 ];
-if ( f5 ) then ( choose d8 with
-| c7 -> ( reward 0 )
-| c6 -> ( reward 39 ) ) else ( f0 <- ( flip 0.32172344106784706 );
-d4 <- [ c3, c2, c1 ];
-if ( f0 ) then ( choose d4 with
-| c3 -> ( reward 41 )
-| c2 -> ( reward 82 )
-| c1 -> ( reward 85 ) ) else ( reward 44 ) ) ) ) ) ) ) ) ) )
+f_0 <- (flip 0.698931173984) ;
+d_0 <- ([d_00 , d_01]) ;
+if f_0 then
+  (choose d_0 with
+  | d_00 ->
+    (reward 58.3708778509; return (tt))
+  | d_01 ->
+    (reward 3.91580639523; return (tt)))
+else
+  (f_1 <- (flip 0.0135405916352) ;
+  d_1 <- ([d_10 , d_11 , d_12]) ;
+  if f_1 then
+    (choose d_1 with
+    | d_10 ->
+      (reward 77.3031380323; return (tt))
+    | d_11 ->
+      (reward 14.9976867353; return (tt))
+    | d_12 ->
+      (reward 55.4015565238; return (tt)))
+  else
+    (f_2 <- (flip 0.369533100402) ;
+    d_2 <- ([d_20 , d_21 , d_22 , d_23 , d_24]) ;
+    if f_2 then
+      (choose d_2 with
+      | d_20 ->
+        (reward 18.1255569238; return (tt))
+      | d_21 ->
+        (reward 78.1316485827; return (tt))
+      | d_22 ->
+        (reward -4.09419559357; return (tt))
+      | d_23 ->
+        (reward -43.4318078091; return (tt))
+      | d_24 ->
+        (reward 46.1723712452; return (tt)))
+    else
+      (f_3 <- (flip 0.997398570924) ;
+      d_3 <- ([d_30 , d_31 , d_32 , d_33]) ;
+      if f_3 then
+        (choose d_3 with
+        | d_30 ->
+          (reward 99.5209033056; return (tt))
+        | d_31 ->
+          (reward 59.2178311964; return (tt))
+        | d_32 ->
+          (reward -10.716712103; return (tt))
+        | d_33 ->
+          (reward 62.4092103063; return (tt)))
+      else
+        (f_4 <- (flip 0.841949640757) ;
+        d_4 <- ([d_40 , d_41 , d_42 , d_43 , d_44]) ;
+        if f_4 then
+          (choose d_4 with
+          | d_40 ->
+            (reward 86.5834890277; return (tt))
+          | d_41 ->
+            (reward -20.9864012068; return (tt))
+          | d_42 ->
+            (reward -85.0246861945; return (tt))
+          | d_43 ->
+            (reward -88.3383353624; return (tt))
+          | d_44 ->
+            (reward 68.9936761247; return (tt)))
+        else
+          (f_5 <- (flip 0.642071007165) ;
+          d_5 <- ([d_50 , d_51 , d_52 , d_53 , d_54]) ;
+          if f_5 then
+            (choose d_5 with
+            | d_50 ->
+              (reward 52.4582067527; return (tt))
+            | d_51 ->
+              (reward 99.1530429292; return (tt))
+            | d_52 ->
+              (reward -85.367480943; return (tt))
+            | d_53 ->
+              (reward -58.274185256; return (tt))
+            | d_54 ->
+              (reward -99.5016576929; return (tt)))
+          else
+            (f_6 <- (flip 0.520549942092) ;
+            d_6 <- ([d_60 , d_61 , d_62 , d_63 , d_64]) ;
+            if f_6 then
+              (choose d_6 with
+              | d_60 ->
+                (reward -23.6120415243; return (tt))
+              | d_61 ->
+                (reward 48.1243359318; return (tt))
+              | d_62 ->
+                (reward 0.424037742727; return (tt))
+              | d_63 ->
+                (reward 83.3775877315; return (tt))
+              | d_64 ->
+                (reward 19.0444571222; return (tt)))
+            else
+              (f_7 <- (flip 0.841927153249) ;
+              d_7 <- ([d_70 , d_71]) ;
+              if f_7 then
+                (choose d_7 with
+                | d_70 ->
+                  (reward 47.0193324138; return (tt))
+                | d_71 ->
+                  (reward 41.0488068796; return (tt)))
+              else
+                (f_8 <- (flip 0.636312807228) ;
+                d_8 <- ([d_80 , d_81 , d_82 , d_83]) ;
+                if f_8 then
+                  (choose d_8 with
+                  | d_80 ->
+                    (reward 81.3944133093; return (tt))
+                  | d_81 ->
+                    (reward 60.8690907482; return (tt))
+                  | d_82 ->
+                    (reward -13.9787476106; return (tt))
+                  | d_83 ->
+                    (reward 72.1027811591; return (tt)))
+                else
+                  (f_9 <- (flip 0.989008111982) ;
+                  d_9 <- ([d_90 , d_91]) ;
+                  if f_9 then
+                    (choose d_9 with
+                    | d_90 ->
+                      (reward 47.4303882289; return (tt))
+                    | d_91 ->
+                      (reward -12.5405643122; return (tt)))
+                  else
+                    (reward 51.9791085682; return (tt)))))))))))
