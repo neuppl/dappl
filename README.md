@@ -1,43 +1,58 @@
-```                             
-   ,--.                      ,--. 
- ,-|  | ,--,--. ,---.  ,---. |  |  
-' .-. |' ,-.  || .-. || .-. ||  | 
-\ `-' |\ '-'  || '-' '| '-' '|  | 
- `---'  `--`--'|  |-' |  |-' `--' 
-               `--'   `--'        
-```
+# dappl Artifact for OOPSLA 2024
 
-dappl is a tiny language to reason about bayesian maximum expected utility.
+## Introduction
 
-## Requirements
+This artifact provides the implementation of `dappl` and surrounding experiments.
 
-* OCaml >=4.14.0
-* Python 3.10.x, with `problog, pysdd, graphviz, numpy, matplotlib` and their dependencies.
+## Hardware Dependencies
 
-There is an issue where the latest version of `pysdd` does not compile properly; run `python -m pip install git+https://github.com/wannesm/PySDD.git#egg=PySDD` to install `pysdd` instead.
+These experiments require a working Docker installation.
+This artifact was tested by the authors on x86 Ubuntu 22.04 and ARM macOS.
+Instructions will assume a Linux-like shell environment for running command to set up the container.
 
-## Building 
+## Disclaimer
 
-To build, clone `rsdd-dappl` and `rsdd-ocaml-dappl` from Minsung's github and use those instead of the usual `rsdd` and `rsdd-ocaml`. Here are the relevant links:
+During preparation of the artifact there were bugs found in the implementation
+that, once fixed, impacted performance negatively. The experimental values in the paper
+do not accurately reflect the experiments in this image.
 
-* `rsdd-dappl`: https://github.com/minsungc/rsdd-dappl
-* `rsdd-ocaml-dappl`: https://github.com/minsungc/rsdd-ocaml-dappl
+## Getting started
 
-Follow the instructions laid out in these repositories, then run `opam install . --deps-only` and `dune build`.
+1. Get a working docker installation.
+2. Run the following command in a shell to pull the container from DockerHub:
 
-CLI interface:
-* `dappl run FILENAME.dappl` will compute MEU of the `FILENAME.dappl`.
-* `dappl test TEST N ?M` will generate dappl and DTProblog files on which you can replicate experiments. It will save it in the directory `experiments/TEST/`.
-  * `mdp N` will give you the MDP benchmark with `N` many columns.
-  * `ladder N M` will give you the network ladder benchmark with `i` many columns and `j` many tries.
-  * `bn N` will give you `N` many each of the Bayesian network (BN) benchmarks. You can call each BN generator individually by instead doing `survey N`, `asia N`, or `earthquake N`.
-  
-## Navigating the repository
+  ```
+    docker pull minsungc/dappl:oopsla-2024
+  ```
 
-* `bin/` contains the CLI.
-* `lib/` is the implementation of the language. The main MEU compilation algorithm is in `bc.ml`.
-* `examples/` contains small `.dappl` files to help your understanding of the language.
-* `experiments/` has utilities for the automatic generation of benchmarks, specifically in `dappl_benchmarks.ml`. This folder also houses generated test files via CLI.
-* `derkinderen/` contains Python files from the artifact of Derkinderen et al., to perform MEU.
-* `experiment.py` runs some experiments, and outputs results in the command line. Make sure you have Problog installed before attempting to run the experiment via `python`.
-* `numbers/` contains the output data from `experiment.py` as `.csv`s and also a Jupyter notebook for figures.
+  WARNING: the image is rather large in size and will take quite a while (~30min) to initialize.
+
+1. Run the following set of commands to create a directory for output to mount
+to the container, an input directory for writing your own programs, run the
+container with the mounted directories, and be dropped into the shell where
+you will run the rest of the experiments.
+
+    $ mkdir -p input output
+  $ docker run -it --rm -v $(PWD)/output:/output -v $(PWD)/input:/input gouwarj/pineappl-oopsla-2024:artifact
+
+## Running your own dappl programs
+
+Several example dappl programs are given in the `examples/` folder.
+To run your own `dappl` program, or one from the examples, type in the container
+
+  ```
+    dappl run $FILE
+  ```
+where $FILE is the path to the `.dappl` file.
+There are also optional debug and caching options available for toggle; type `dappl run -help` for details.
+
+## Recreating experiments
+
+To replicate experiments, type into the console
+
+  ```
+    ./experiment.sh
+  ```
+or, if you would like to see a specific experiment ran, comment out the other experiments in `experiment.py`.
+
+The resulting numbers are stored in a .csv file in the `numbers/` folder.
