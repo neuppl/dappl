@@ -88,5 +88,5 @@ RUN cd dappl && ls && eval $(opam config env) && eval $(opam env) && dune build
 RUN chmod +x dappl/experiment.sh
 
 # Make entrypoint and working dir
-# ENTRYPOINT ["bash", "-c", "cd dappl && eval $(opam env) && dune build && alias dappl='./dappl/_build/install/default/bin/dappl'"]
+# ENTRYPOINT ["bash", "-c", "cd dappl && eval $(opam env) && dune build && alias dappl='/dappl/_build/install/default/bin/dappl'"]
 
