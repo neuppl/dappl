@@ -1,4 +1,4 @@
-# dappl Artifact for OOPSLA 2024
+# dappl and pineappl Artifact for OOPSLA 2024
 
 ## Introduction
 
@@ -8,7 +8,7 @@ This artifact provides the implementation of `dappl` and surrounding experiments
 
 These experiments require a working Docker installation.
 This artifact was tested by the authors on x86 Ubuntu 22.04 and ARM macOS.
-Instructions will assume a Linux-like shell environment for running **command** to set up the container.
+Instructions will assume a Linux-like shell environment for running command to set up the container.
 
 ## Disclaimer
 
@@ -22,19 +22,13 @@ do not accurately reflect the experiments in this image.
 2. Run the following commands in a shell to pull the container from DockerHub:
 
   ```
-    docker pull minsungc/dappl:oopsla-2024
+    docker pull minsungc/dappl:oopsla_2024
     docker run -it --rm --platform linux/amd64 minsungc/dappl:oopsla_2024
   ```
 
-Then, once in the container, run the following sequence of commands to initialize the environment:
+3. Once in the container, `cd` in to the `dappl/` folder and run the command `dappl`. You should get the `dappl` help page. If not, run `alias dappl='./dappl/_build/install/default/bin/dappl'` and try again.
 
-  ```
-  cd dappl
-  eval $(opam env)
-  dune build
-  alias dappl='/dappl/_build/install/default/bin/dappl'
-  ```
-WARNING: the image is rather large in size and requires the linux/amd64 architechure.
+WARNING: the image is rather large in size and requires the linux/amd64 architecture.
 The build may fail if there is not enough disk space (~10gb) or if the architecture is unspecified.
 
 ## Running your own dappl programs
@@ -50,14 +44,29 @@ There are also optional debug and caching options available for toggle; type `da
 
 ## Recreating experiments
 
+Replicating the experiments is expensive, requiring ~512GB of RAM. A server or workstation is recommended.
+
 To replicate experiments, type into the console
 
   ```
     python3 experiment.py
   ```
-you may get an error message that package `x` is not installed, then `pip install x` and rerunning the script will suffice.
 
 If you would like to see a specific experiment ran, comment out the other experiments in `experiment.py`.
+
+The resulting numbers are stored in a .csv file in the `numbers/` folder.
+
+## "Kicking the tires"
+
+If replicating the experiments fully is infeasible,
+run the "kick the tires" scripts, which replicates a small fraction of the
+Bayesian network experiments in Section 6.1 of the paper. To do this, run
+
+  ```
+    ./kick_the_tires.sh
+  ```
+
+On an ARM Mac with no other processes, this took about 7 minutes to run.
 
 The resulting numbers are stored in a .csv file in the `numbers/` folder.
 

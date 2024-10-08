@@ -89,6 +89,12 @@ let gen_tests =
       | "bn"          ->  Gen.mk_earthquake_to_file n ;
                           Gen.mk_asia_to_file n;
                           Gen.mk_survey_to_file n ;
+      | "gridworld"   ->  (match d with
+                          | None -> failwith "No depth specified for gridworld!"
+                          | Some(x) ->
+                          (Create_grid.print_grid(
+                            Create_grid.mk_grid n x
+                          )))
       | _             ->  failwith "invalid test!")
 
 let command =

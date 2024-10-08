@@ -41,7 +41,8 @@ RUN python3 -m pip install \
     graphviz \
     numpy \
     problog \
-    setuptools
+    setuptools \
+    pandas
 RUN python3 -m pip install -vvv --upgrade --force-reinstall --no-deps --no-binary :all: pysdd
 
 # Get Rust
@@ -81,12 +82,18 @@ COPY experiments/ dappl/experiments/
 COPY lib/ dappl/lib/
 COPY numbers/ dappl/numbers/
 COPY testgen/ dappl/testgen/
+COPY kick_the_tires.py dappl/
+COPY kick_the_tires.sh dappl/
+COPY init.sh dappl/
 
 RUN cd dappl && ls && eval $(opam config env) && eval $(opam env) && dune build
 
 # Make experiment scripts runnable
 RUN chmod +x dappl/experiment.sh
+RUN chmod +x dappl/kick_the_tires.sh
+RUN chmod +x dappl/init.sh
 
 # Make entrypoint and working dir
+RUN echo "alias dappl='./dappl/_build/install/default/bin/dappl'" >> ~/.bashrc
 # ENTRYPOINT ["bash", "-c", "cd dappl && eval $(opam env) && dune build && alias dappl='/dappl/_build/install/default/bin/dappl'"]
 

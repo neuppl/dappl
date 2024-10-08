@@ -29,7 +29,7 @@ def ladder_long (cols : int) :
       print(f"Calculating numbers for {2*(i-1)} many decisions")
       filepath = "testgen/ladder/"
       file = f"ladder{i}_1.dappl" if (method == Method.dappl) else f"ladder{i}_1.pl"
-      s = run_n_times(method, filepath, file, 120, 1)
+      s = run_n_times(method, filepath, file, 300, 1)
       if avg_stdev(s) is not None :
         (a,b) = avg_stdev(s)
         df.loc[method.name, f"{i}_mean"] = a
@@ -60,7 +60,7 @@ def ladder (cols : int) :
       print(f"Calculating numbers for "+str(cols)+" many columns, depth " +str(i))
       filepath = "testgen/ladder/"
       file = f"ladder{cols}_{i}.dappl" if (method == Method.dappl) else f"ladder{cols}_{i}.pl"
-      s = run_n_times(method, filepath, file, 120, 1)
+      s = run_n_times(method, filepath, file, 300, 1)
       if avg_stdev(s) is not None :
         (a,b) = avg_stdev(s)
         df.loc[method.name, f"{i}_mean"] = a

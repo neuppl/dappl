@@ -64,7 +64,7 @@ def bn(n : int) :
             l = []
             for lbl in range(n) :
                 # print(f"Method : {method}, BN:{bn}, lbl :{lbl}, ty :{ty}")
-                l = l + run_bn(method, bn, lbl, ty, 120, 10)
+                l = l + run_bn(method, bn, lbl, ty, 120, 5)
             if avg_stdev(l) is not None :
               (a,b) = avg_stdev(l)
               avg_str = f"{bn.name}_{ty}_mean"

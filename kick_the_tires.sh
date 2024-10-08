@@ -1,0 +1,1 @@
+python3 kick_the_tires.py

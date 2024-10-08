@@ -8,7 +8,7 @@ from enum import Enum
 #######################
 
 class Method(Enum):
-  dappl = "./_build/install/default/bin/dappl run "
+  dappl = "./_build/install/default/bin/dappl run --cache false "
   problog = "problog dt -v "
   derk = "python3.11 derkinderen/maxeu.py "
 

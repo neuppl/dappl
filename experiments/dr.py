@@ -31,7 +31,7 @@ def dr (n) :
       print(f"Calculating numbers for "+str(i)+" many columns")
       filepath = "testgen/mdp/"
       file = "mdp" + str(i) + ".dappl" if (method == Method.dappl) else "mdp" + str(i) + ".pl"
-      s = run_n_times(method, filepath, file, 60, 5)
+      s = run_n_times(method, filepath, file, 120, 5)
       if avg_stdev(s) is not None :
         (a,b) = avg_stdev(s)
         df.loc[method.name, f"{i}_mean"] = a
