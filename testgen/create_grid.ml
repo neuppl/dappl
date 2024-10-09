@@ -1,10 +1,10 @@
 (* Creates an n x n grid, randomly generates start and end, *)
 (* then adds m (m < 1/2 n^2) obstacles. *)
+(* Also associated utilities *)
 
-(* open Mk_expr *)
+open Mk_expr
 open Core
-(* open Dappl.Core_grammar *)
-(* open Random *)
+open Dappl.Core_grammar
 
 type square = Start | End | Rock | Path
 [@@deriving eq]
@@ -119,4 +119,34 @@ let print_grid (res:grid):unit =
         else
           (i := v + 1; Printf.printf "%s|" (print_square sq))
   )
-;;
+
+(* Make a dappl program of a grid with length/width size
+  and rock number of rocks with some horizon. *)
+let rec mk_grid_dappl (size : int) (rocks : int) (horizon : int) =
+  let i  = ref 0 in
+  let g = mk_grid size rocks in
+  let s = find_start g in
+  mk_grid_dappl_h g s horizon i
+and mk_grid_dappl_h (g : grid) (vtx : int) (horizon : int) (i : int ref) =
+  let e = find_end g in
+  if vtx = e then mk_reward 1. (Return True) else
+  match horizon with
+  | 0 -> Return False
+  | _ -> (
+    let flip_string = (i := !i +1); "f"^(Int.to_string !i) in
+    let f = mk_flip 0.9 in
+    let vmoves = find_valid_moves vtx g in
+    if List.length vmoves = 0
+    then
+      Return False
+    else
+      let vmoves = List.map vmoves ~f:(fun (x,_)->x) in
+      let str_vmoves = List.map vmoves ~f:(fun j->(i := !i+1); "d"^(Int.to_string !i)^(Int.to_string j)) in
+      let dec = mk_dec str_vmoves in
+      let dec_string = (i := !i+1); "D"^(Int.to_string !i) in
+      let dec_expr = mk_bind dec_string dec in
+      let rst = List.map vmoves ~f:(fun vx -> mk_grid_dappl_h g vx (horizon-1) i) in
+      let choosewith = mk_choosewith dec_string str_vmoves rst in
+      mk_bind flip_string f (dec_expr choosewith)
+  )
+
