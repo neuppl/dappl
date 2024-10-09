@@ -1,4 +1,4 @@
 (library
- (preprocess (pps ppx_jane))
+ (preprocess (pps ppx_jane ppx_deriving.eq))
  (libraries dappl core bignum sexplib core_unix oUnit smart-print rsdd)
  (name testgen))

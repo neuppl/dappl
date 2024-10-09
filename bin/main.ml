@@ -91,10 +91,15 @@ let gen_tests =
                           Gen.mk_survey_to_file n ;
       | "gridworld"   ->  (match d with
                           | None -> failwith "No depth specified for gridworld!"
-                          | Some(x) ->
-                          (Create_grid.print_grid(
-                            Create_grid.mk_grid n x
-                          )))
+                          | Some(x) -> (
+                            let grid = Create_grid.mk_grid n x in
+                            Create_grid.print_grid grid;
+                            Create_grid.print_valid_moves (
+                              Create_grid.find_valid_moves (Create_grid.find_start grid) grid
+                              );
+                            Printf.printf "%b" (Create_grid.is_solvable grid)
+                            )
+                          )
       | _             ->  failwith "invalid test!")
 
 let command =

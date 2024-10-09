@@ -7,13 +7,61 @@ open Core
 (* open Random *)
 
 type square = Start | End | Rock | Path
+[@@deriving eq]
+
 type grid = (int, square) Hashtbl.t
+
+let find_dim (g : grid) = Float.to_int(sqrt (Int.to_float (Hashtbl.length g)))
+let find_start (g : grid) =
+  let (x,_) = List.find_exn (Hashtbl.to_alist g) ~f:(fun (_,y) -> equal_square y Start) in
+  x
+let find_end (g : grid) =
+  let (x,_) = List.find_exn (Hashtbl.to_alist g) ~f:(fun (_,y) -> equal_square y End) in
+  x
+
+type move = Left | Right | Up | Down
+type valid_moves = (int * move) list
+
+let is_valid_move (s : int) (f : int) (g : grid) : bool =
+  let n = find_dim g in
+  let in_bounds = s >= 0 && f >= 0 && s < n*n && f < n*n in
+  let up_or_down = (f-s = n) || (s-f = n) in
+  let left_or_right = Int.abs((f mod n) - (s mod n)) = 1 in
+  let is_rock =
+    let s_rock = Hashtbl.find g s in
+    let e_rock = Hashtbl.find g f in
+    match s_rock, e_rock with
+    | Some s', Some e' -> (equal_square s' Rock) || (equal_square e' Rock)
+    | _                -> false in
+  in_bounds && (up_or_down || left_or_right) && not(is_rock)
+
+let find_valid_moves (s : int) (g : grid) : valid_moves =
+  let n = find_dim g in
+  let moves = [(s-1, Left); (s+1, Right); (s+n, Down); (s-n, Up)] in
+  List.filter moves ~f:(fun (f, _) -> is_valid_move s f g)
+
+let rec is_solvable (g : grid) =
+  let s, f = find_start g, find_end g in
+  is_solvable_h [s] f g
+and is_solvable_h (l : int list) (f : int) (g : grid) =
+  let moves = List.map l ~f:(fun x -> find_valid_moves x g) in
+  let moves = List.map (List.concat moves) ~f:(fun (x,_)->x) in
+  let moves = List.append l moves in
+  let moves = List.dedup_and_sort moves ~compare:Int.compare in
+  if List.equal (=) moves l
+  then
+    false
+  else
+    match List.find moves ~f:(fun x -> x = f) with
+    | None -> is_solvable_h moves f g
+    | Some _ -> true
+
 let mk_grid (n:int) (m:int):grid =
   (* Make start and end decently far away *)
   (* let grid_min    = 0 in *)
   let grid_max    = n*n-1 in
-  let start_pos   = Random.int (grid_max/2) in
-  let end_pos     = Random.int (grid_max/2) + (grid_max/2) in
+  let start_pos   = Random.int (grid_max/4) in
+  let end_pos     = Random.int (grid_max/4) + (3*(grid_max/4)) in
   (* Create grid *)
   let res : grid = Hashtbl.create ~size:(grid_max+1) (module Int) in
   Hashtbl.add_exn res ~key:start_pos ~data:Start;
@@ -28,12 +76,11 @@ let mk_grid (n:int) (m:int):grid =
     | `Duplicate -> ()
   done;
   (* Populate rest with None *)
-  for i = 0  to grid_max do
-    let v = Hashtbl.add res ~key:i ~data:Path in
+  for j = 0  to grid_max do
+    let v = Hashtbl.add res ~key:j ~data:Path in
     match v with _ -> ()
   done;
   res
-;;
 
 let print_square (sq:square) =
   match sq with
@@ -42,9 +89,23 @@ let print_square (sq:square) =
   | Rock  -> "R"
   | Path  -> " "
 
+let print_move (m : move) =
+  match m with
+  | Left  -> "Left"
+  | Right -> "Right"
+  | Up    -> "Up"
+  | Down  -> "Down"
+let print_valid_moves (l : valid_moves) =
+  List.iter l ~f:(
+    fun (_,y) ->
+      Printf.printf "%s" (print_move y)
+  ); Printf.printf "\n"
+
 let print_grid (res:grid):unit =
-  let lst = Hashtbl.data res in
-  let ct  = Float.to_int(sqrt (Int.to_float (Hashtbl.length res))) in
+  let lst = Hashtbl.to_alist res in
+  let lst = List.sort lst ~compare:(fun (x,_) (u,_) -> Int.compare x u) in
+  let lst = List.map lst ~f:(fun (_,y) -> y) in
+  let ct  = find_dim res in
   let i = ref 1 in
   List.iter lst ~f:(
     fun sq->
