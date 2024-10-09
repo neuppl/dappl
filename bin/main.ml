@@ -92,7 +92,7 @@ let gen_tests =
                           Gen.mk_asia_to_file (List.nth_exn l 0);
                           Gen.mk_survey_to_file (List.nth_exn l 0);
       | "gridworld"   ->  (match l with
-                          | [n;x;y;t] -> Create_grid.mk_grid_dappl_to_file n x y t
+                          | [n;x;y;t] -> Create_grid.mk_grid_to_file n x y t
                           | _              -> failwith "Missing specs for gridworld!")
       | _             ->  failwith "invalid test!")
 

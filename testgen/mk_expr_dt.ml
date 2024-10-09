@@ -115,6 +115,10 @@ let mk_reward_det (i : int) : literal * problog_program =
   let v = mk_literal Reward true in
   (v, [Rule(v,[]) ; Utility(v, i)])
 
+let mk_reward_dep_on_rule i l : literal * problog_program =
+  let v = mk_literal Reward true in
+  (v, [Rule(v, l) ; Utility(v, i)])
+
 (* produces an expression f :: x; IS LAZY FOR A REASON!!! *)
 let mk_flip (_ : unit): literal * clause =
   let v = mk_literal Flip true in

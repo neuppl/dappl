@@ -6,6 +6,7 @@ open Mk_expr
 open Core
 open Dappl.Core_grammar
 open Pp
+open Mk_expr_dt
 
 type square = Start | End | Rock | Path
 [@@deriving eq]
@@ -133,12 +134,12 @@ let rec mk_grid_dappl (size : int) (rocks : int) (horizon : int)  =
   if equal_expr v (Return False) then mk_grid_dappl size rocks horizon else v
 and mk_grid_dappl_h (g : grid) (vtx : int) (horizon : int) (i : int ref) (seen : int list)=
   let e = find_end g in
-  if vtx = e then mk_reward 1. (Return True) else
+  if vtx = e then Mk_expr.mk_reward 1. (Return True) else
   match horizon with
   | 0 -> Return False
   | _ -> (
     let flip_string = (i := !i +1); "f"^(Int.to_string !i) in
-    let f = mk_flip 0.1 in
+    let f = Mk_expr.mk_flip 0.1 in
     let vmoves = find_valid_moves vtx g in
     (* Enforce no backtracking *)
     let vmoves = List.map vmoves ~f:(fun (x,_)->x) in
@@ -152,12 +153,12 @@ and mk_grid_dappl_h (g : grid) (vtx : int) (horizon : int) (i : int ref) (seen :
       let rand_move = List.nth_exn vmoves (Random.int (List.length vmoves)) in
       let rand_expr = mk_grid_dappl_h g rand_move (horizon-1) i seen in
       let str_vmoves = List.map vmoves ~f:(fun j->(i := !i+1); "d"^(Int.to_string !i)^(Int.to_string j)) in
-      let dec = mk_dec str_vmoves in
+      let dec = Mk_expr.mk_dec str_vmoves in
       let dec_string = (i := !i+1); "D"^(Int.to_string !i) in
       let dec_expr = mk_bind dec_string dec in
       let rst = List.map vmoves ~f:(fun vx -> mk_grid_dappl_h g vx (horizon-1) i seen) in
-      let choosewith = mk_choosewith dec_string str_vmoves rst in
-      mk_bind flip_string f (mk_ite flip_string rand_expr (dec_expr choosewith))
+      let choosewith = Mk_expr.mk_choosewith dec_string str_vmoves rst in
+      mk_bind flip_string f (Mk_expr.mk_ite flip_string rand_expr (dec_expr choosewith))
   )
 
 let mk_grid_dappl_to_file (size : int) (rocks : int) (horizon : int) (times : int) : unit =
@@ -169,4 +170,73 @@ let mk_grid_dappl_to_file (size : int) (rocks : int) (horizon : int) (times : in
     let oc = Out_channel.create filename in
     let gridworld = mk_grid_dappl size rocks horizon in
     to_channel oc gridworld; Out_channel.close oc;
+  done
+
+let rec mk_grid_problog (size : int) (rocks : int) (horizon : int) =
+  let g = mk_grid size rocks in
+  let s = find_start g in
+  mk_grid_problog_h g s horizon [s] []
+and mk_grid_problog_h g vtx horizon seen path =
+  let e = find_end g in
+  if vtx = e
+  then
+    reached_goal path
+  else
+    match horizon with
+    | 0 -> stop_here path
+    | _ -> (
+      (* Enforce no backtracking *)
+      let vmoves = find_valid_moves vtx g in
+      let vmoves = List.map vmoves ~f:(fun (x,_)->x) in
+      let vmoves = List.filter vmoves ~f:(fun x->not(List.exists seen ~f:((=) x))) in
+      let seen = List.append seen vmoves in
+      (* Create clause *)
+      if List.length vmoves = 0
+      then
+        stop_here path
+      else
+        let (f, v) = mk_flip_det 0.1 in
+        (* Make random move if flip is true *)
+        let rand_move = List.nth_exn vmoves (Random.int (List.length vmoves)) in
+        let new_path = List.append path [f] in
+        let rand_clause = mk_grid_problog_h g rand_move (horizon-1) seen new_path in
+        (* Make decisions *)
+        let path = List.append path [flip_lit f] in
+        let (decs, prog) = mk_dec (List.length vmoves) in
+        let new_paths = List.map decs ~f:(fun x -> List.append path [x]) in
+        let zipped = List.zip_exn vmoves new_paths in
+        let new_progs = List.map zipped ~f:(fun (x,y)->mk_grid_problog_h g x (horizon-1) seen y) in
+        List.append [v] (List.append rand_clause (List.append prog (List.concat new_progs)))
+    )
+and reached_goal path =
+  let (x,y) = mk_reward_dep_on_rule 1 path in
+  List.append y [Query(x)]
+and stop_here path =
+  let (x,y) = mk_reward_dep_on_rule 0 path in
+  List.append y [Query(x)]
+
+let mk_grid_problog_to_file (size : int) (rocks : int) (horizon : int) (times : int) : unit =
+  (* Printf.printf "Generating %i many grids\n" times; *)
+  for i = 1 to times do
+    let s, r, h = Int.to_string size, Int.to_string rocks, Int.to_string horizon in
+    let j = Int.to_string i in
+    let filename = "testgen/grid/grid_"^s^"_"^r^"_"^h^"_"^j^".pl" in
+    let oc = Out_channel.create filename in
+    let gridworld = print_program(mk_grid_problog size rocks horizon) in
+    Printf.fprintf oc "%s\n" gridworld; Out_channel.close oc;
+  done
+
+let mk_grid_to_file (size : int) (rocks : int) (horizon : int) (times : int) : unit =
+  Printf.printf "Generating %i many grids\n" times;
+  for i = 1 to times do
+    let s, r, h = Int.to_string size, Int.to_string rocks, Int.to_string horizon in
+    let j = Int.to_string i in
+    let filename_dappl = "testgen/grid/grid_"^s^"_"^r^"_"^h^"_"^j^".dappl" in
+    let filename_problog = "testgen/grid/grid_"^s^"_"^r^"_"^h^"_"^j^".pl" in
+    let oc = Out_channel.create filename_dappl in
+    let gridworld = mk_grid_dappl size rocks horizon in
+    to_channel oc gridworld; Out_channel.close oc;
+    let oc = Out_channel.create filename_problog in
+    let gridworld = print_program(mk_grid_problog size rocks horizon) in
+    Printf.fprintf oc "%s\n" gridworld; Out_channel.close oc;
   done
