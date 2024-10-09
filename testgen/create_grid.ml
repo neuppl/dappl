@@ -5,6 +5,7 @@
 open Mk_expr
 open Core
 open Dappl.Core_grammar
+open Pp
 
 type square = Start | End | Rock | Path
 [@@deriving eq]
@@ -56,7 +57,7 @@ and is_solvable_h (l : int list) (f : int) (g : grid) =
     | None -> is_solvable_h moves f g
     | Some _ -> true
 
-let mk_grid (n:int) (m:int):grid =
+let rec mk_grid (n:int) (m:int):grid =
   (* Make start and end decently far away *)
   (* let grid_min    = 0 in *)
   let grid_max    = n*n-1 in
@@ -80,7 +81,8 @@ let mk_grid (n:int) (m:int):grid =
     let v = Hashtbl.add res ~key:j ~data:Path in
     match v with _ -> ()
   done;
-  res
+  (* Check if grid is solvable; else do it again *)
+  if is_solvable res then res else mk_grid n m
 
 let print_square (sq:square) =
   match sq with
@@ -122,31 +124,49 @@ let print_grid (res:grid):unit =
 
 (* Make a dappl program of a grid with length/width size
   and rock number of rocks with some horizon. *)
-let rec mk_grid_dappl (size : int) (rocks : int) (horizon : int) =
+let rec mk_grid_dappl (size : int) (rocks : int) (horizon : int)  =
   let i  = ref 0 in
   let g = mk_grid size rocks in
+  print_grid g;
   let s = find_start g in
-  mk_grid_dappl_h g s horizon i
-and mk_grid_dappl_h (g : grid) (vtx : int) (horizon : int) (i : int ref) =
+  let v = mk_grid_dappl_h g s horizon i [s] in
+  if equal_expr v (Return False) then mk_grid_dappl size rocks horizon else v
+and mk_grid_dappl_h (g : grid) (vtx : int) (horizon : int) (i : int ref) (seen : int list)=
   let e = find_end g in
   if vtx = e then mk_reward 1. (Return True) else
   match horizon with
   | 0 -> Return False
   | _ -> (
     let flip_string = (i := !i +1); "f"^(Int.to_string !i) in
-    let f = mk_flip 0.9 in
+    let f = mk_flip 0.1 in
     let vmoves = find_valid_moves vtx g in
+    (* Enforce no backtracking *)
+    let vmoves = List.map vmoves ~f:(fun (x,_)->x) in
+    let vmoves = List.filter vmoves ~f:(fun x->not(List.exists seen ~f:((=) x))) in
+    let seen = List.append seen vmoves in
     if List.length vmoves = 0
     then
       Return False
     else
-      let vmoves = List.map vmoves ~f:(fun (x,_)->x) in
+      (* Make random move if flip is true *)
+      let rand_move = List.nth_exn vmoves (Random.int (List.length vmoves)) in
+      let rand_expr = mk_grid_dappl_h g rand_move (horizon-1) i seen in
       let str_vmoves = List.map vmoves ~f:(fun j->(i := !i+1); "d"^(Int.to_string !i)^(Int.to_string j)) in
       let dec = mk_dec str_vmoves in
       let dec_string = (i := !i+1); "D"^(Int.to_string !i) in
       let dec_expr = mk_bind dec_string dec in
-      let rst = List.map vmoves ~f:(fun vx -> mk_grid_dappl_h g vx (horizon-1) i) in
+      let rst = List.map vmoves ~f:(fun vx -> mk_grid_dappl_h g vx (horizon-1) i seen) in
       let choosewith = mk_choosewith dec_string str_vmoves rst in
-      mk_bind flip_string f (dec_expr choosewith)
+      mk_bind flip_string f (mk_ite flip_string rand_expr (dec_expr choosewith))
   )
 
+let mk_grid_dappl_to_file (size : int) (rocks : int) (horizon : int) (times : int) : unit =
+  Printf.printf "Generating %i many grids\n" times;
+  for i = 1 to times do
+    let s, r, h = Int.to_string size, Int.to_string rocks, Int.to_string horizon in
+    let j = Int.to_string i in
+    let filename = "testgen/grid/grid_"^s^"_"^r^"_"^h^"_"^j^".dappl" in
+    let oc = Out_channel.create filename in
+    let gridworld = mk_grid_dappl size rocks horizon in
+    to_channel oc gridworld; Out_channel.close oc;
+  done

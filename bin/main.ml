@@ -76,30 +76,24 @@ let gen_tests =
     ~readme:(fun () -> "TEST = mdp, n = an integer.")
      (let%map_open.Command
       test = anon ("test" %: string)
-      and n = anon ("n" %: int)
-      and d = anon (maybe ("d" %: int)) in
+      and l = anon (sequence ("params" %: int)) in
+      (* and n = anon ("n" %: int)
+      and d = anon (maybe ("d" %: int))
+      and h = anon (maybe ("h" %: int)) in *)
       fun () -> match test with
-      | "mdp"         ->  Dappl_benchmarks.to_file_mdp n
-      | "ladder"      ->  (match d with
-                          | None -> failwith "No depth specified for ladder!"
-                          | Some(x) -> Dappl_benchmarks.to_file_ladder n x)
-      | "earthquake"  ->  Gen.mk_earthquake_to_file n
-      | "asia"        ->  Gen.mk_asia_to_file n
-      | "survey"      ->  Gen.mk_survey_to_file n
-      | "bn"          ->  Gen.mk_earthquake_to_file n ;
-                          Gen.mk_asia_to_file n;
-                          Gen.mk_survey_to_file n ;
-      | "gridworld"   ->  (match d with
-                          | None -> failwith "No depth specified for gridworld!"
-                          | Some(x) -> (
-                            let grid = Create_grid.mk_grid n x in
-                            Create_grid.print_grid grid;
-                            Create_grid.print_valid_moves (
-                              Create_grid.find_valid_moves (Create_grid.find_start grid) grid
-                              );
-                            Printf.printf "%b" (Create_grid.is_solvable grid)
-                            )
-                          )
+      | "mdp"         ->  Dappl_benchmarks.to_file_mdp (List.nth_exn l 0)
+      | "ladder"      ->  (match l with
+                          | [n;x] -> Dappl_benchmarks.to_file_ladder n x
+                          | _ -> failwith "invalid params for ladder!")
+      | "earthquake"  ->  Gen.mk_earthquake_to_file (List.nth_exn l 0)
+      | "asia"        ->  Gen.mk_asia_to_file (List.nth_exn l 0)
+      | "survey"      ->  Gen.mk_survey_to_file (List.nth_exn l 0)
+      | "bn"          ->  Gen.mk_earthquake_to_file (List.nth_exn l 0) ;
+                          Gen.mk_asia_to_file (List.nth_exn l 0);
+                          Gen.mk_survey_to_file (List.nth_exn l 0);
+      | "gridworld"   ->  (match l with
+                          | [n;x;y;t] -> Create_grid.mk_grid_dappl_to_file n x y t
+                          | _              -> failwith "Missing specs for gridworld!")
       | _             ->  failwith "invalid test!")
 
 let command =

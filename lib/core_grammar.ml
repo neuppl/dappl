@@ -20,7 +20,7 @@ type expr =
   | Loop        of int * expr
   | True
   | False
-[@@deriving sexp_of]
+[@@deriving sexp_of, eq]
 
 (** top-level symbol *)
 type program = { body: expr }

@@ -4,6 +4,6 @@
 (ocamllex lexer)
 
 (library
- (preprocess (pps ppx_jane))
+ (preprocess (pps ppx_jane ppx_deriving.eq))
  (libraries core bignum sexplib core_unix.command_unix oUnit rsdd)
  (name dappl))
