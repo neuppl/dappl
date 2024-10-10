@@ -26,6 +26,7 @@ def run (method : Method, filepath : str, file : str, to : int) :
       meu = result.stdout.split("\n")[1]
       return float(meu.split(" ")[-1])
     case Method.problog :
+      # print(result.stdout)
       relevant = result.stdout.split('\n')[2:5]
       asdf = list(map(lambda x: x.split(" ")[-1], relevant))
       jkl = list(map(lambda x : float(x[:-1]), asdf))

@@ -37,7 +37,7 @@ def gridworld (states, rocks, horizon, times) :
         for (i,j,k,l) in cols :
             print(f"Calculating numbers for {i} row, {j} rocks, {k} horizon")
             filepath = "testgen/grid/"
-            file = f"grid_{i}_{j}_{k}_{l}.dappl" if (method == Method.dappl) else "grid_{i}_{j}_{k}_{l}.pl"
+            file = f"grid_{i}_{j}_{k}_{l}.dappl" if (method == Method.dappl) else f"grid_{i}_{j}_{k}_{l}.pl"
             s = run_n_times(method, filepath, file, 300, 5)
             if avg_stdev(s) is not None :
                 (a,b) = avg_stdev(s)
