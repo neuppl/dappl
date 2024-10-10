@@ -1,0 +1,160 @@
+age <- ([A , Y , O]) ;
+sex <- (discrete[M : 0.6 , F : 0.4]) ;
+high <-
+(choose age with 
+  | A ->
+    (choose sex with 
+    | M ->
+      (flip 0.72)
+    | F ->
+      (flip 0.7))
+  | Y ->
+    (choose sex with 
+    | M ->
+      (flip 0.75)
+    | F ->
+      (flip 0.64))
+  | O ->
+    (choose sex with 
+    | M ->
+      (flip 0.88)
+    | F ->
+      (flip 0.9))) ;
+uni <- ((! high)) ;
+emp <-
+(new_dec18 <- ([TMP_VAR18]) ;
+  bind_to18 <- (if high then
+      (flip 0.96)
+    else
+      (flip 0.92)) ;
+  ite_18 <- (if new_dec18 then
+      (flip 0.5)
+    else
+      (return (ff))) ;
+  return ((bind_to18 || ite_18))) ;
+self <-
+(new_dec17 <- ([TMP_VAR17]) ;
+  bind_to17 <- ((! emp)) ;
+  ite_17 <- (if new_dec17 then
+      (flip 0.5)
+    else
+      (return (ff))) ;
+  return ((bind_to17 || ite_17))) ;
+small <-
+(new_dec16 <- ([TMP_VAR16]) ;
+  bind_to16 <- (if high then
+      (flip 0.25)
+    else
+      (flip 0.2)) ;
+  ite_16 <- (if new_dec16 then
+      (flip 0.5)
+    else
+      (return (ff))) ;
+  return ((bind_to16 || ite_16))) ;
+big <-
+(new_dec15 <- ([TMP_VAR15]) ;
+  bind_to15 <- ((! small)) ;
+  ite_15 <- (if new_dec15 then
+      (flip 0.5)
+    else
+      (return (ff))) ;
+  return ((bind_to15 || ite_15))) ;
+TT <- ((emp && small)) ;
+TF <- ((emp && big)) ;
+FT <- ((self && small)) ;
+FF <- ((self && big)) ;
+car <-
+(if TT then
+    (flip 0.48)
+  else
+    (if TF then
+      (flip 0.58)
+    else
+      (if FT then
+        (flip 0.56)
+      else
+        (if FF then
+          (flip 0.7)
+        else
+          (return (ff)))))) ;
+train <-
+(if TT then
+    (flip 0.42)
+  else
+    (if TF then
+      (flip 0.36)
+    else
+      (if FT then
+        (flip 0.24)
+      else
+        (if FF then
+          (flip 0.21)
+        else
+          (return (ff)))))) ;
+other <-
+(if TT then
+    (flip 0.1)
+  else
+    (if TF then
+      (flip 0.08)
+    else
+      (if FT then
+        (flip 0.18)
+      else
+        (if FF then
+          (flip 0.09)
+        else
+          (return (ff)))))) ;
+method_1_var_0 <-
+(if age then
+    (reward 30.; return (tt))
+  else
+    (return (tt))) ;
+method_1_var_2 <-
+(if high then
+    (reward 28.; return (tt))
+  else
+    (return (tt))) ;
+method_1_var_3 <-
+(if uni then
+    (reward 6.; return (tt))
+  else
+    (reward 28.; return (tt))) ;
+method_1_var_4 <-
+(if emp then
+    (reward 30.; return (tt))
+  else
+    (return (tt))) ;
+method_1_var_5 <-
+(if self then
+    (reward 57.; return (tt))
+  else
+    (return (tt))) ;
+method_1_var_6 <-
+(if small then
+    (reward 36.; return (tt))
+  else
+    (return (tt))) ;
+method_1_var_7 <-
+(if big then
+    (reward 47.; return (tt))
+  else
+    (reward 7.; return (tt))) ;
+method_1_var_8 <-
+(if car then
+    (reward 68.; return (tt))
+  else
+    (return (tt))) ;
+method_1_var_9 <-
+(if train then
+    (reward 58.; return (tt))
+  else
+    (return (tt))) ;
+method_1_var_10 <-
+(if train then
+    (reward 48.; return (tt))
+  else
+    (return (tt))) ;
+((method_1_var_0 && (method_1_var_2 && (method_1_var_3 && (method_1_var_4 && (method_1_var_5 &&
+(method_1_var_6 && (method_1_var_7 && (method_1_var_8 && (method_1_var_9 && (method_1_var_10 &&
+tt)))))))))) && ((train || (car || other)) && (! (train && (car && other)))))

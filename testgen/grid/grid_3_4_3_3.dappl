@@ -2,21 +2,49 @@ f1 <- (flip 0.1) ;
 if f1 then
   (f2 <- (flip 0.1) ;
   if f2 then
-    (reward 1.; return (tt))
-  else
-    (D4 <- ([d36]) ;
-    choose D4 with 
-    | d36 ->
-      (reward 1.; return (tt))))
-else
-  (D6 <- ([d53]) ;
-  choose D6 with 
-  | d53 ->
-    (f7 <- (flip 0.1) ;
-    if f7 then
+    (f3 <- (flip 0.1) ;
+    if f3 then
       (reward 1.; return (tt))
     else
-      (D9 <- ([d86]) ;
-      choose D9 with 
-      | d86 ->
-        (reward 1.; return (tt)))))
+      (D5 <- ([d47]) ;
+      choose D5 with 
+      | d47 ->
+        (reward 1.; return (tt))))
+  else
+    (D7 <- ([d66]) ;
+    choose D7 with 
+    | d66 ->
+      (f8 <- (flip 0.1) ;
+      if f8 then
+        (reward 1.; return (tt))
+      else
+        (D10 <- ([d97]) ;
+        choose D10 with 
+        | d97 ->
+          (reward 1.; return (tt))))))
+else
+  (D12 <- ([d113]) ;
+  choose D12 with 
+  | d113 ->
+    (f13 <- (flip 0.1) ;
+    if f13 then
+      (f14 <- (flip 0.1) ;
+      if f14 then
+        (reward 1.; return (tt))
+      else
+        (D16 <- ([d157]) ;
+        choose D16 with 
+        | d157 ->
+          (reward 1.; return (tt))))
+    else
+      (D18 <- ([d176]) ;
+      choose D18 with 
+      | d176 ->
+        (f19 <- (flip 0.1) ;
+        if f19 then
+          (reward 1.; return (tt))
+        else
+          (D21 <- ([d207]) ;
+          choose D21 with 
+          | d207 ->
+            (reward 1.; return (tt)))))))

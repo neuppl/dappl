@@ -77,32 +77,30 @@ else
       if f34 then
         (return (ff))
       else
-        (D37 <- ([d3513 , d3619]) ;
-        choose D37 with 
+        (D36 <- ([d3513]) ;
+        choose D36 with 
         | d3513 ->
-          (return (ff))
-        | d3619 ->
           (return (ff))))
     else
-      (D40 <- ([d388 , d3914]) ;
-      choose D40 with 
-      | d388 ->
-        (f41 <- (flip 0.1) ;
-        if f41 then
+      (D39 <- ([d378 , d3814]) ;
+      choose D39 with 
+      | d378 ->
+        (f40 <- (flip 0.1) ;
+        if f40 then
           (return (ff))
         else
-          (D43 <- ([d4213]) ;
-          choose D43 with 
-          | d4213 ->
+          (D42 <- ([d4113]) ;
+          choose D42 with 
+          | d4113 ->
             (return (ff))))
-      | d3914 ->
-        (f44 <- (flip 0.1) ;
-        if f44 then
+      | d3814 ->
+        (f43 <- (flip 0.1) ;
+        if f43 then
           (return (ff))
         else
-          (D47 <- ([d4513 , d4619]) ;
-          choose D47 with 
-          | d4513 ->
+          (D46 <- ([d4413 , d4519]) ;
+          choose D46 with 
+          | d4413 ->
             (return (ff))
-          | d4619 ->
+          | d4519 ->
             (return (ff)))))))

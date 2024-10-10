@@ -1,0 +1,44 @@
+earthquake <- ([eq_dec]) ;
+burglary <- ([bg_dec]) ;
+alarm <-
+(if burglary then
+    (if earthquake then
+      (flip 0.95)
+    else
+      (flip 0.94))
+  else
+    (if earthquake then
+      (flip 0.29)
+    else
+      (flip 0.001))) ;
+maryCalls <-
+(if alarm then
+    (flip 0.7)
+  else
+    (flip 0.01)) ;
+johnCalls <-
+(if alarm then
+    (flip 0.7)
+  else
+    (flip 0.01)) ;
+method_1_var_0 <-
+(if earthquake then
+    (reward 68.; return (tt))
+  else
+    (reward 1.; return (tt))) ;
+method_1_var_1 <-
+(if burglary then
+    (reward 7.; return (tt))
+  else
+    (return (tt))) ;
+method_1_var_3 <-
+(if maryCalls then
+    (reward 50.; return (tt))
+  else
+    (return (tt))) ;
+method_1_var_4 <-
+(if johnCalls then
+    (reward 26.; return (tt))
+  else
+    (return (tt))) ;
+(method_1_var_0 && (method_1_var_1 && (method_1_var_3 && (method_1_var_4 && tt))))

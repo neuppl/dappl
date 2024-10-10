@@ -1,0 +1,95 @@
+f_0 <- (flip 0.438916473316) ;
+d_0 <- ([d_00 , d_01 , d_02 , d_03]) ;
+if f_0 then
+  (choose d_0 with 
+  | d_00 ->
+    (reward 9.84802184388; return (tt))
+  | d_01 ->
+    (reward 17.644052557; return (tt))
+  | d_02 ->
+    (reward 0.608316563665; return (tt))
+  | d_03 ->
+    (reward 79.567532956; return (tt)))
+else
+  (f_1 <- (flip 0.580393744327) ;
+  d_1 <- ([d_10 , d_11 , d_12]) ;
+  if f_1 then
+    (choose d_1 with 
+    | d_10 ->
+      (reward -29.0850421278; return (tt))
+    | d_11 ->
+      (reward -74.044747114; return (tt))
+    | d_12 ->
+      (reward -2.37139310506; return (tt)))
+  else
+    (f_2 <- (flip 0.297890410885) ;
+    d_2 <- ([d_20 , d_21 , d_22 , d_23 , d_24]) ;
+    if f_2 then
+      (choose d_2 with 
+      | d_20 ->
+        (reward 0.404138114256; return (tt))
+      | d_21 ->
+        (reward -87.8429424495; return (tt))
+      | d_22 ->
+        (reward -18.630656809; return (tt))
+      | d_23 ->
+        (reward -51.4570428294; return (tt))
+      | d_24 ->
+        (reward 77.0009827274; return (tt)))
+    else
+      (f_3 <- (flip 0.560210736514) ;
+      d_3 <- ([d_30 , d_31]) ;
+      if f_3 then
+        (choose d_3 with 
+        | d_30 ->
+          (reward -88.5454149815; return (tt))
+        | d_31 ->
+          (reward 6.19518692794; return (tt)))
+      else
+        (f_4 <- (flip 0.0873556017366) ;
+        d_4 <- ([d_40 , d_41 , d_42 , d_43 , d_44]) ;
+        if f_4 then
+          (choose d_4 with 
+          | d_40 ->
+            (reward 57.613637201; return (tt))
+          | d_41 ->
+            (reward -74.6641913941; return (tt))
+          | d_42 ->
+            (reward 0.959988214266; return (tt))
+          | d_43 ->
+            (reward -93.7024324708; return (tt))
+          | d_44 ->
+            (reward -4.23510836606; return (tt)))
+        else
+          (f_5 <- (flip 0.123079274443) ;
+          d_5 <- ([d_50 , d_51 , d_52]) ;
+          if f_5 then
+            (choose d_5 with 
+            | d_50 ->
+              (reward 26.0332776584; return (tt))
+            | d_51 ->
+              (reward -49.7300618233; return (tt))
+            | d_52 ->
+              (reward 6.18947051868; return (tt)))
+          else
+            (f_6 <- (flip 0.347643184126) ;
+            d_6 <- ([d_60 , d_61]) ;
+            if f_6 then
+              (choose d_6 with 
+              | d_60 ->
+                (reward -44.7246842984; return (tt))
+              | d_61 ->
+                (reward 30.169655227; return (tt)))
+            else
+              (f_7 <- (flip 0.834503874584) ;
+              d_7 <- ([d_70 , d_71 , d_72]) ;
+              if f_7 then
+                (choose d_7 with 
+                | d_70 ->
+                  (reward -19.9934651225; return (tt))
+                | d_71 ->
+                  (reward 96.375164397; return (tt))
+                | d_72 ->
+                  (reward -2.11324652542; return (tt)))
+              else
+                (reward 69.5622934966; return (tt)))))))))

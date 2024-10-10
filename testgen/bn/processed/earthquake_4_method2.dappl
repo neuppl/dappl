@@ -1,0 +1,73 @@
+earthquake <- ([eq_dec]) ;
+burglary <- ([bg_dec]) ;
+alarm <-
+(if burglary then
+    (if earthquake then
+      (flip 0.95)
+    else
+      (flip 0.94))
+  else
+    (if earthquake then
+      (flip 0.29)
+    else
+      (flip 0.001))) ;
+maryCalls <-
+(if alarm then
+    (flip 0.7)
+  else
+    (flip 0.01)) ;
+johnCalls <-
+(if alarm then
+    (flip 0.7)
+  else
+    (flip 0.01)) ;
+method_2_sample_0 <-
+(((((((tt && (((((tt && (! earthquake)) && burglary) && (! alarm)) && maryCalls) && (! johnCalls))) && (((((tt && earthquake) && (! burglary)) && alarm) && (! maryCalls)) && johnCalls)) && (((((tt && (! earthquake)) && burglary) && (! alarm)) && maryCalls) && johnCalls)) && (((((tt && earthquake) && (! burglary)) && (! alarm)) && (! maryCalls)) && (! johnCalls))) && (((((tt && (! earthquake)) && (! burglary)) && alarm) && maryCalls) && johnCalls)) && (((((tt && (! earthquake)) && (! burglary)) && alarm) && (! maryCalls)) && johnCalls)))
+;
+method_2_rew_0 <-
+(if method_2_sample_0 then
+    (reward 10.9931607094; return (tt))
+  else
+    (reward 52.8704314874; return (tt))) ;
+method_2_sample_1 <-
+(((((((tt && (((((tt && earthquake) && burglary) && (! alarm)) && maryCalls) && (! johnCalls))) && (((((tt && (! earthquake)) && burglary) && (! alarm)) && (! maryCalls)) && johnCalls)) && (((((tt && (! earthquake)) && (! burglary)) && alarm) && maryCalls) && johnCalls)) && (((((tt && earthquake) && burglary) && alarm) && maryCalls) && johnCalls)) && (((((tt && earthquake) && (! burglary)) && (! alarm)) && (! maryCalls)) && johnCalls)) && (((((tt && (! earthquake)) && (! burglary)) && alarm) && maryCalls) && (! johnCalls))))
+;
+method_2_rew_1 <-
+(if method_2_sample_1 then
+    (reward 68.0773923399; return (tt))
+  else
+    (reward -13.354683524; return (tt))) ;
+method_2_sample_2 <-
+(((((((tt && (((((tt && earthquake) && (! burglary)) && (! alarm)) && (! maryCalls)) && (! johnCalls))) && (((((tt && earthquake) && (! burglary)) && (! alarm)) && maryCalls) && (! johnCalls))) && (((((tt && (! earthquake)) && (! burglary)) && alarm) && (! maryCalls)) && johnCalls)) && (((((tt && earthquake) && burglary) && (! alarm)) && maryCalls) && johnCalls)) && (((((tt && earthquake) && (! burglary)) && alarm) && maryCalls) && johnCalls)) && (((((tt && (! earthquake)) && burglary) && alarm) && maryCalls) && (! johnCalls))))
+;
+method_2_rew_2 <-
+(if method_2_sample_2 then
+    (reward -13.4812354768; return (tt))
+  else
+    (reward -14.8003661357; return (tt))) ;
+method_2_sample_3 <-
+(((((((tt && (((((tt && earthquake) && (! burglary)) && (! alarm)) && (! maryCalls)) && (! johnCalls))) && (((((tt && (! earthquake)) && (! burglary)) && alarm) && maryCalls) && (! johnCalls))) && (((((tt && (! earthquake)) && (! burglary)) && alarm) && maryCalls) && (! johnCalls))) && (((((tt && (! earthquake)) && burglary) && (! alarm)) && maryCalls) && (! johnCalls))) && (((((tt && (! earthquake)) && (! burglary)) && (! alarm)) && maryCalls) && johnCalls)) && (((((tt && (! earthquake)) && burglary) && (! alarm)) && (! maryCalls)) && (! johnCalls))))
+;
+method_2_rew_3 <-
+(if method_2_sample_3 then
+    (reward -19.0001983292; return (tt))
+  else
+    (reward 11.2257523833; return (tt))) ;
+method_2_sample_4 <-
+(((((((tt && (((((tt && earthquake) && (! burglary)) && (! alarm)) && (! maryCalls)) && johnCalls)) && (((((tt && (! earthquake)) && (! burglary)) && alarm) && (! maryCalls)) && (! johnCalls))) && (((((tt && (! earthquake)) && (! burglary)) && (! alarm)) && (! maryCalls)) && johnCalls)) && (((((tt && earthquake) && (! burglary)) && alarm) && maryCalls) && johnCalls)) && (((((tt && (! earthquake)) && (! burglary)) && (! alarm)) && (! maryCalls)) && johnCalls)) && (((((tt && (! earthquake)) && (! burglary)) && (! alarm)) && maryCalls) && johnCalls)))
+;
+method_2_rew_4 <-
+(if method_2_sample_4 then
+    (reward -82.0826401806; return (tt))
+  else
+    (reward -18.8505002911; return (tt))) ;
+method_2_sample_5 <-
+(((((((tt && (((((tt && (! earthquake)) && burglary) && alarm) && (! maryCalls)) && (! johnCalls))) && (((((tt && earthquake) && (! burglary)) && alarm) && (! maryCalls)) && (! johnCalls))) && (((((tt && earthquake) && (! burglary)) && (! alarm)) && (! maryCalls)) && johnCalls)) && (((((tt && earthquake) && burglary) && (! alarm)) && (! maryCalls)) && (! johnCalls))) && (((((tt && (! earthquake)) && burglary) && alarm) && maryCalls) && johnCalls)) && (((((tt && (! earthquake)) && burglary) && (! alarm)) && maryCalls) && (! johnCalls))))
+;
+method_2_rew_5 <-
+(if method_2_sample_5 then
+    (reward -24.2682537245; return (tt))
+  else
+    (reward -59.9332010452; return (tt))) ;
+((((((ff || method_2_rew_0) || method_2_rew_1) || method_2_rew_2) || method_2_rew_3) ||
+method_2_rew_4) || method_2_rew_5)

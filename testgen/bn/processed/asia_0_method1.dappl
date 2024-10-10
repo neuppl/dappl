@@ -1,0 +1,95 @@
+asia <- ([asia_dec]) ;
+smoke <- ([smk_dec]) ;
+lung <-
+(if smoke then
+    (flip 0.1)
+  else
+    (flip 0.01)) ;
+tub <-
+(if asia then
+    (flip 0.05)
+  else
+    (flip 0.01)) ;
+bronc <-
+(if smoke then
+    (flip 0.6)
+  else
+    (flip 0.3)) ;
+either <-
+(new_dec2 <- ([TMP_VAR2]) ;
+  bind_to2 <- ((lung || tub)) ;
+  ite_2 <- (if new_dec2 then
+      (flip 0.5)
+    else
+      (return (ff))) ;
+  return ((bind_to2 || ite_2))) ;
+xray <-
+(new_dec1 <- ([TMP_VAR1]) ;
+  bind_to1 <- (if either then
+      (flip 0.98)
+    else
+      (flip 0.98)) ;
+  ite_1 <- (if new_dec1 then
+      (flip 0.98)
+    else
+      (return (ff))) ;
+  return ((bind_to1 || ite_1))) ;
+dysp <-
+(new_dec0 <- ([TMP_VAR0]) ;
+  bind_to0 <- (if bronc then
+      (if either then
+        (flip 0.9)
+      else
+        (flip 0.8))
+    else
+      (if either then
+        (flip 0.7)
+      else
+        (flip 0.1))) ;
+  ite_0 <- (if new_dec0 then
+      (flip 0.9)
+    else
+      (return (ff))) ;
+  return ((bind_to0 || ite_0))) ;
+method_1_var_0 <-
+(if asia then
+    (reward 10.; return (tt))
+  else
+    (return (tt))) ;
+method_1_var_1 <-
+(if smoke then
+    (reward 73.; return (tt))
+  else
+    (return (tt))) ;
+method_1_var_2 <-
+(if lung then
+    (reward 23.; return (tt))
+  else
+    (reward 22.; return (tt))) ;
+method_1_var_3 <-
+(if tub then
+    (reward 2.; return (tt))
+  else
+    (return (tt))) ;
+method_1_var_4 <-
+(if bronc then
+    (reward 28.; return (tt))
+  else
+    (reward 2.; return (tt))) ;
+method_1_var_5 <-
+(if either then
+    (return (tt))
+  else
+    (reward 19.; return (tt))) ;
+method_1_var_6 <-
+(if xray then
+    (reward 4.; return (tt))
+  else
+    (return (tt))) ;
+method_1_var_7 <-
+(if dysp then
+    (reward 8.; return (tt))
+  else
+    (return (tt))) ;
+(method_1_var_0 && (method_1_var_1 && (method_1_var_2 && (method_1_var_3 && (method_1_var_4 &&
+(method_1_var_5 && (method_1_var_6 && (method_1_var_7 && tt))))))))

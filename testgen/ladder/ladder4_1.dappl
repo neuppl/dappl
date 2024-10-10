@@ -1,0 +1,152 @@
+t_node <- (return (tt)) ;
+f_node <- (return (ff)) ;
+f_0 <- (flip 0.5) ;
+f2_0 <- (flip 0.001) ;
+node1_0 <-
+(if t_node then
+    (if f_node then
+      (f_0)
+    else
+      (return (ff)))
+  else
+    (if f2_0 then
+      (return (ff))
+    else
+      (f2_0))) ;
+node2_0 <-
+(if t_node then
+    (if f_node then
+      ((! f_0))
+    else
+      (return (ff)))
+  else
+    (if f2_0 then
+      (return (ff))
+    else
+      ((! f2_0)))) ;
+f_1 <- (flip 0.5) ;
+f2_1 <- (flip 0.001) ;
+node1_1 <-
+(if node1_0 then
+    (if node2_0 then
+      (f_1)
+    else
+      (return (ff)))
+  else
+    (if f2_1 then
+      (return (ff))
+    else
+      (f2_1))) ;
+node2_1 <-
+(if node1_0 then
+    (if node2_0 then
+      ((! f_1))
+    else
+      (return (ff)))
+  else
+    (if f2_1 then
+      (return (ff))
+    else
+      ((! f2_1)))) ;
+f_2 <- (flip 0.5) ;
+f2_2 <- (flip 0.001) ;
+node1_2 <-
+(if node1_1 then
+    (if node2_1 then
+      (f_2)
+    else
+      (return (ff)))
+  else
+    (if f2_2 then
+      (return (ff))
+    else
+      (f2_2))) ;
+node2_2 <-
+(if node1_1 then
+    (if node2_1 then
+      ((! f_2))
+    else
+      (return (ff)))
+  else
+    (if f2_2 then
+      (return (ff))
+    else
+      ((! f2_2)))) ;
+f_3 <- (flip 0.5) ;
+f2_3 <- (flip 0.001) ;
+node1_3 <-
+(if node1_2 then
+    (if node2_2 then
+      (f_3)
+    else
+      (return (ff)))
+  else
+    (if f2_3 then
+      (return (ff))
+    else
+      (f2_3))) ;
+node2_3 <-
+(if node1_2 then
+    (if node2_2 then
+      ((! f_3))
+    else
+      (return (ff)))
+  else
+    (if f2_3 then
+      (return (ff))
+    else
+      ((! f2_3)))) ;
+failure <- (((! node1_3) && (! node2_3))) ;
+observe (failure) ;
+dec_INIT <-
+([diag_INIT__0 , diag_INIT__1 , diag_INIT__2 , diag_INIT__3 , diag_INIT__4 , diag_INIT__5 , diag_INIT__6 , diag_INIT__7])
+;
+choose dec_INIT with 
+| diag_INIT__0 ->
+  (not_node2_3 <- ((! node2_3)) ;
+  if not_node2_3 then
+    (reward -31.2509333903; return (tt))
+  else
+    (reward -82.6175503515; return (tt)))
+| diag_INIT__1 ->
+  (not_node1_3 <- ((! node1_3)) ;
+  if not_node1_3 then
+    (reward 85.3775943835; return (tt))
+  else
+    (reward 25.5068083001; return (tt)))
+| diag_INIT__2 ->
+  (not_node2_2 <- ((! node2_2)) ;
+  if not_node2_2 then
+    (reward 44.9995410805; return (tt))
+  else
+    (reward 8.74652705441; return (tt)))
+| diag_INIT__3 ->
+  (not_node1_2 <- ((! node1_2)) ;
+  if not_node1_2 then
+    (reward -90.9531944471; return (tt))
+  else
+    (reward -0.619349136508; return (tt)))
+| diag_INIT__4 ->
+  (not_node2_1 <- ((! node2_1)) ;
+  if not_node2_1 then
+    (reward 8.40790006537; return (tt))
+  else
+    (reward -48.714891185; return (tt)))
+| diag_INIT__5 ->
+  (not_node1_1 <- ((! node1_1)) ;
+  if not_node1_1 then
+    (reward 68.5642339314; return (tt))
+  else
+    (reward 94.7332271313; return (tt)))
+| diag_INIT__6 ->
+  (not_node2_0 <- ((! node2_0)) ;
+  if not_node2_0 then
+    (reward 89.6116261812; return (tt))
+  else
+    (reward -55.2936350257; return (tt)))
+| diag_INIT__7 ->
+  (not_node1_0 <- ((! node1_0)) ;
+  if not_node1_0 then
+    (reward -1.0847424656; return (tt))
+  else
+    (reward 8.70009897702; return (tt)))

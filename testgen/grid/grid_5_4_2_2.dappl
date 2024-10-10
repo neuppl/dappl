@@ -4,27 +4,30 @@ if f1 then
   if f2 then
     (return (ff))
   else
-    (D6 <- ([d36 , d48 , d512]) ;
-    choose D6 with 
+    (D4 <- ([d36]) ;
+    choose D4 with 
     | d36 ->
-      (return (ff))
-    | d48 ->
-      (return (ff))
-    | d512 ->
       (return (ff))))
 else
-  (D8 <- ([d77]) ;
-  choose D8 with 
-  | d77 ->
-    (f9 <- (flip 0.1) ;
-    if f9 then
+  (D7 <- ([d51 , d65]) ;
+  choose D7 with 
+  | d51 ->
+    (f8 <- (flip 0.1) ;
+    if f8 then
       (return (ff))
     else
-      (D13 <- ([d106 , d118 , d1212]) ;
-      choose D13 with 
+      (D11 <- ([d92 , d106]) ;
+      choose D11 with 
+      | d92 ->
+        (return (ff))
       | d106 ->
-        (return (ff))
-      | d118 ->
-        (return (ff))
-      | d1212 ->
+        (return (ff))))
+  | d65 ->
+    (f12 <- (flip 0.1) ;
+    if f12 then
+      (return (ff))
+    else
+      (D14 <- ([d136]) ;
+      choose D14 with 
+      | d136 ->
         (return (ff)))))

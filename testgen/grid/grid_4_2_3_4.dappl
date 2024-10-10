@@ -1,0 +1,115 @@
+f1 <- (flip 0.1) ;
+if f1 then
+  (f2 <- (flip 0.1) ;
+  if f2 then
+    (f3 <- (flip 0.1) ;
+    if f3 then
+      (reward 1.; return (tt))
+    else
+      (D5 <- ([d410]) ;
+      choose D5 with 
+      | d410 ->
+        (reward 1.; return (tt))))
+  else
+    (D8 <- ([d63 , d76]) ;
+    choose D8 with 
+    | d63 ->
+      (return (ff))
+    | d76 ->
+      (f10 <- (flip 0.1) ;
+      if f10 then
+        (reward 1.; return (tt))
+      else
+        (D12 <- ([d1110]) ;
+        choose D12 with 
+        | d1110 ->
+          (reward 1.; return (tt))))))
+else
+  (D16 <- ([d130 , d142 , d155]) ;
+  choose D16 with 
+  | d130 ->
+    (f17 <- (flip 0.1) ;
+    if f17 then
+      (f18 <- (flip 0.1) ;
+      if f18 then
+        (return (ff))
+      else
+        (D20 <- ([d198]) ;
+        choose D20 with 
+        | d198 ->
+          (return (ff))))
+    else
+      (D22 <- ([d214]) ;
+      choose D22 with 
+      | d214 ->
+        (f23 <- (flip 0.1) ;
+        if f23 then
+          (return (ff))
+        else
+          (D25 <- ([d248]) ;
+          choose D25 with 
+          | d248 ->
+            (return (ff))))))
+  | d142 ->
+    (f26 <- (flip 0.1) ;
+    if f26 then
+      (return (ff))
+    else
+      (D30 <- ([d283 , d296]) ;
+      choose D30 with 
+      | d283 ->
+        (return (ff))
+      | d296 ->
+        (f32 <- (flip 0.1) ;
+        if f32 then
+          (reward 1.; return (tt))
+        else
+          (D34 <- ([d3310]) ;
+          choose D34 with 
+          | d3310 ->
+            (reward 1.; return (tt))))))
+  | d155 ->
+    (f35 <- (flip 0.1) ;
+    if f35 then
+      (f36 <- (flip 0.1) ;
+      if f36 then
+        (return (ff))
+      else
+        (D38 <- ([d378]) ;
+        choose D38 with 
+        | d378 ->
+          (return (ff))))
+    else
+      (D42 <- ([d394 , d406 , d419]) ;
+      choose D42 with 
+      | d394 ->
+        (f43 <- (flip 0.1) ;
+        if f43 then
+          (return (ff))
+        else
+          (D45 <- ([d448]) ;
+          choose D45 with 
+          | d448 ->
+            (return (ff))))
+      | d406 ->
+        (f46 <- (flip 0.1) ;
+        if f46 then
+          (reward 1.; return (tt))
+        else
+          (D48 <- ([d4710]) ;
+          choose D48 with 
+          | d4710 ->
+            (reward 1.; return (tt))))
+      | d419 ->
+        (f49 <- (flip 0.1) ;
+        if f49 then
+          (return (ff))
+        else
+          (D53 <- ([d508 , d5110 , d5213]) ;
+          choose D53 with 
+          | d508 ->
+            (return (ff))
+          | d5110 ->
+            (reward 1.; return (tt))
+          | d5213 ->
+            (return (ff)))))))

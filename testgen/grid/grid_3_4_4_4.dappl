@@ -11,9 +11,9 @@ if f1 then
       | d47 ->
         (reward 1.; return (tt))))
   else
-    (D7 <- ([d66]) ;
+    (D7 <- ([d64]) ;
     choose D7 with 
-    | d66 ->
+    | d64 ->
       (f8 <- (flip 0.1) ;
       if f8 then
         (reward 1.; return (tt))
@@ -23,9 +23,9 @@ if f1 then
         | d97 ->
           (reward 1.; return (tt))))))
 else
-  (D12 <- ([d113]) ;
+  (D12 <- ([d111]) ;
   choose D12 with 
-  | d113 ->
+  | d111 ->
     (f13 <- (flip 0.1) ;
     if f13 then
       (f14 <- (flip 0.1) ;
@@ -37,9 +37,9 @@ else
         | d157 ->
           (reward 1.; return (tt))))
     else
-      (D18 <- ([d176]) ;
+      (D18 <- ([d174]) ;
       choose D18 with 
-      | d176 ->
+      | d174 ->
         (f19 <- (flip 0.1) ;
         if f19 then
           (reward 1.; return (tt))

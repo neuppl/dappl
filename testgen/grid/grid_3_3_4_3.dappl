@@ -6,68 +6,68 @@ if f1 then
     if f3 then
       (reward 1.; return (tt))
     else
-      (D5 <- ([d47]) ;
+      (D5 <- ([d46]) ;
       choose D5 with 
-      | d47 ->
+      | d46 ->
         (reward 1.; return (tt))))
   else
-    (D7 <- ([d64]) ;
+    (D7 <- ([d63]) ;
     choose D7 with 
-    | d64 ->
+    | d63 ->
       (f8 <- (flip 0.1) ;
       if f8 then
         (reward 1.; return (tt))
       else
-        (D10 <- ([d97]) ;
+        (D10 <- ([d96]) ;
         choose D10 with 
-        | d97 ->
+        | d96 ->
           (reward 1.; return (tt))))))
 else
-  (D13 <- ([d111 , d123]) ;
+  (D13 <- ([d110 , d124]) ;
   choose D13 with 
-  | d111 ->
+  | d110 ->
     (f14 <- (flip 0.1) ;
     if f14 then
       (f15 <- (flip 0.1) ;
       if f15 then
         (reward 1.; return (tt))
       else
-        (D17 <- ([d167]) ;
+        (D17 <- ([d166]) ;
         choose D17 with 
-        | d167 ->
+        | d166 ->
           (reward 1.; return (tt))))
     else
-      (D19 <- ([d184]) ;
+      (D19 <- ([d183]) ;
       choose D19 with 
-      | d184 ->
+      | d183 ->
         (f20 <- (flip 0.1) ;
         if f20 then
           (reward 1.; return (tt))
         else
-          (D22 <- ([d217]) ;
+          (D22 <- ([d216]) ;
           choose D22 with 
-          | d217 ->
+          | d216 ->
             (reward 1.; return (tt))))))
-  | d123 ->
+  | d124 ->
     (f23 <- (flip 0.1) ;
     if f23 then
       (f24 <- (flip 0.1) ;
       if f24 then
         (reward 1.; return (tt))
       else
-        (D26 <- ([d257]) ;
+        (D26 <- ([d256]) ;
         choose D26 with 
-        | d257 ->
+        | d256 ->
           (reward 1.; return (tt))))
     else
-      (D28 <- ([d274]) ;
+      (D28 <- ([d273]) ;
       choose D28 with 
-      | d274 ->
+      | d273 ->
         (f29 <- (flip 0.1) ;
         if f29 then
           (reward 1.; return (tt))
         else
-          (D31 <- ([d307]) ;
+          (D31 <- ([d306]) ;
           choose D31 with 
-          | d307 ->
+          | d306 ->
             (reward 1.; return (tt)))))))

@@ -2,57 +2,46 @@ f1 <- (flip 0.1) ;
 if f1 then
   (f2 <- (flip 0.1) ;
   if f2 then
-    (f3 <- (flip 0.1) ;
-    if f3 then
-      (reward 1.; return (tt))
-    else
-      (D6 <- ([d45 , d57]) ;
-      choose D6 with 
-      | d45 ->
-        (return (ff))
-      | d57 ->
-        (reward 1.; return (tt))))
+    (reward 1.; return (tt))
   else
-    (D8 <- ([d74]) ;
-    choose D8 with 
-    | d74 ->
-      (f9 <- (flip 0.1) ;
-      if f9 then
+    (D5 <- ([d35 , d47]) ;
+    choose D5 with 
+    | d35 ->
+      (f6 <- (flip 0.1) ;
+      if f6 then
         (return (ff))
       else
-        (D12 <- ([d105 , d117]) ;
-        choose D12 with 
-        | d105 ->
-          (return (ff))
-        | d117 ->
-          (reward 1.; return (tt))))))
+        (D8 <- ([d78]) ;
+        choose D8 with 
+        | d78 ->
+          (return (ff))))
+    | d47 ->
+      (reward 1.; return (tt))))
 else
-  (D14 <- ([d133]) ;
-  choose D14 with 
-  | d133 ->
-    (f15 <- (flip 0.1) ;
-    if f15 then
-      (f16 <- (flip 0.1) ;
-      if f16 then
-        (reward 1.; return (tt))
+  (D10 <- ([d94]) ;
+  choose D10 with 
+  | d94 ->
+    (f11 <- (flip 0.1) ;
+    if f11 then
+      (f12 <- (flip 0.1) ;
+      if f12 then
+        (return (ff))
       else
-        (D19 <- ([d175 , d187]) ;
-        choose D19 with 
-        | d175 ->
-          (return (ff))
-        | d187 ->
-          (reward 1.; return (tt))))
+        (D14 <- ([d138]) ;
+        choose D14 with 
+        | d138 ->
+          (return (ff))))
     else
-      (D21 <- ([d204]) ;
-      choose D21 with 
-      | d204 ->
-        (f22 <- (flip 0.1) ;
-        if f22 then
+      (D17 <- ([d155 , d167]) ;
+      choose D17 with 
+      | d155 ->
+        (f18 <- (flip 0.1) ;
+        if f18 then
           (return (ff))
         else
-          (D25 <- ([d235 , d247]) ;
-          choose D25 with 
-          | d235 ->
-            (return (ff))
-          | d247 ->
-            (reward 1.; return (tt)))))))
+          (D20 <- ([d198]) ;
+          choose D20 with 
+          | d198 ->
+            (return (ff))))
+      | d167 ->
+        (reward 1.; return (tt)))))
