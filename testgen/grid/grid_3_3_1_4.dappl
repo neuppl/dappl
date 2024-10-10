@@ -1,0 +1,8 @@
+f1 <- (flip 0.1) ;
+if f1 then
+  (return (ff))
+else
+  (D3 <- ([d20]) ;
+  choose D3 with 
+  | d20 ->
+    (return (ff)))

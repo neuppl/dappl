@@ -1,0 +1,31 @@
+f1 <- (flip 0.1) ;
+if f1 then
+  (f2 <- (flip 0.1) ;
+  if f2 then
+    (return (ff))
+  else
+    (D4 <- ([d33]) ;
+    choose D4 with 
+    | d33 ->
+      (return (ff))))
+else
+  (D7 <- ([d50 , d64]) ;
+  choose D7 with 
+  | d50 ->
+    (f8 <- (flip 0.1) ;
+    if f8 then
+      (return (ff))
+    else
+      (D10 <- ([d93]) ;
+      choose D10 with 
+      | d93 ->
+        (return (ff))))
+  | d64 ->
+    (f11 <- (flip 0.1) ;
+    if f11 then
+      (return (ff))
+    else
+      (D13 <- ([d123]) ;
+      choose D13 with 
+      | d123 ->
+        (return (ff)))))

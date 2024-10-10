@@ -19,7 +19,7 @@ class BN(Enum):
 directory_path = "testgen/bn/problog"
 problog_filenames = os.listdir(directory_path)
 
-print(problog_filenames)
+# print(problog_filenames)
 
 def run_bn (method : Method, b : BN, \
             lbl : int, d : int, \
@@ -64,7 +64,7 @@ def bn(n : int) :
             l = []
             for lbl in range(n) :
                 # print(f"Method : {method}, BN:{bn}, lbl :{lbl}, ty :{ty}")
-                l = l + run_bn(method, bn, lbl, ty, 120, 5)
+                l = l + run_bn(method, bn, lbl, ty, 300, 5)
             if avg_stdev(l) is not None :
               (a,b) = avg_stdev(l)
               avg_str = f"{bn.name}_{ty}_mean"

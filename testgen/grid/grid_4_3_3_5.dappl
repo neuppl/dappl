@@ -1,0 +1,93 @@
+f1 <- (flip 0.1) ;
+if f1 then
+  (f2 <- (flip 0.1) ;
+  if f2 then
+    (f3 <- (flip 0.1) ;
+    if f3 then
+      (return (ff))
+    else
+      (D5 <- ([d411]) ;
+      choose D5 with 
+      | d411 ->
+        (return (ff))))
+  else
+    (D7 <- ([d67]) ;
+    choose D7 with 
+    | d67 ->
+      (f8 <- (flip 0.1) ;
+      if f8 then
+        (return (ff))
+      else
+        (D10 <- ([d911]) ;
+        choose D10 with 
+        | d911 ->
+          (return (ff))))))
+else
+  (D13 <- ([d113 , d126]) ;
+  choose D13 with 
+  | d113 ->
+    (f14 <- (flip 0.1) ;
+    if f14 then
+      (f15 <- (flip 0.1) ;
+      if f15 then
+        (return (ff))
+      else
+        (D17 <- ([d1611]) ;
+        choose D17 with 
+        | d1611 ->
+          (return (ff))))
+    else
+      (D19 <- ([d187]) ;
+      choose D19 with 
+      | d187 ->
+        (f20 <- (flip 0.1) ;
+        if f20 then
+          (return (ff))
+        else
+          (D22 <- ([d2111]) ;
+          choose D22 with 
+          | d2111 ->
+            (return (ff))))))
+  | d126 ->
+    (f23 <- (flip 0.1) ;
+    if f23 then
+      (f24 <- (flip 0.1) ;
+      if f24 then
+        (reward 1.; return (tt))
+      else
+        (D26 <- ([d259]) ;
+        choose D26 with 
+        | d259 ->
+          (reward 1.; return (tt))))
+    else
+      (D30 <- ([d275 , d287 , d2910]) ;
+      choose D30 with 
+      | d275 ->
+        (f31 <- (flip 0.1) ;
+        if f31 then
+          (reward 1.; return (tt))
+        else
+          (D33 <- ([d329]) ;
+          choose D33 with 
+          | d329 ->
+            (reward 1.; return (tt))))
+      | d287 ->
+        (f34 <- (flip 0.1) ;
+        if f34 then
+          (return (ff))
+        else
+          (D36 <- ([d3511]) ;
+          choose D36 with 
+          | d3511 ->
+            (return (ff))))
+      | d2910 ->
+        (f37 <- (flip 0.1) ;
+        if f37 then
+          (return (ff))
+        else
+          (D40 <- ([d389 , d3911]) ;
+          choose D40 with 
+          | d389 ->
+            (reward 1.; return (tt))
+          | d3911 ->
+            (return (ff)))))))

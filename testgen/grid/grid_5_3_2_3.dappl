@@ -1,0 +1,48 @@
+f1 <- (flip 0.1) ;
+if f1 then
+  (f2 <- (flip 0.1) ;
+  if f2 then
+    (return (ff))
+  else
+    (D5 <- ([d31 , d47]) ;
+    choose D5 with 
+    | d31 ->
+      (return (ff))
+    | d47 ->
+      (return (ff))))
+else
+  (D9 <- ([d62 , d74 , d88]) ;
+  choose D9 with 
+  | d62 ->
+    (f10 <- (flip 0.1) ;
+    if f10 then
+      (return (ff))
+    else
+      (D13 <- ([d111 , d127]) ;
+      choose D13 with 
+      | d111 ->
+        (return (ff))
+      | d127 ->
+        (return (ff))))
+  | d74 ->
+    (f14 <- (flip 0.1) ;
+    if f14 then
+      (return (ff))
+    else
+      (D16 <- ([d159]) ;
+      choose D16 with 
+      | d159 ->
+        (return (ff))))
+  | d88 ->
+    (f17 <- (flip 0.1) ;
+    if f17 then
+      (return (ff))
+    else
+      (D21 <- ([d187 , d199 , d2013]) ;
+      choose D21 with 
+      | d187 ->
+        (return (ff))
+      | d199 ->
+        (return (ff))
+      | d2013 ->
+        (return (ff)))))
