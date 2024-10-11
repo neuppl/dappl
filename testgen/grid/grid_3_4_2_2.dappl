@@ -4,19 +4,19 @@ if f1 then
   if f2 then
     (return (ff))
   else
-    (D4 <- ([d36]) ;
+    (D4 <- ([d33]) ;
     choose D4 with 
-    | d36 ->
+    | d33 ->
       (return (ff))))
 else
-  (D6 <- ([d53]) ;
+  (D6 <- ([d50]) ;
   choose D6 with 
-  | d53 ->
+  | d50 ->
     (f7 <- (flip 0.1) ;
     if f7 then
       (return (ff))
     else
-      (D9 <- ([d86]) ;
+      (D9 <- ([d83]) ;
       choose D9 with 
-      | d86 ->
+      | d83 ->
         (return (ff)))))

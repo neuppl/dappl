@@ -1,0 +1,95 @@
+f1 <- (flip 0.1) ;
+if f1 then
+  (f2 <- (flip 0.1) ;
+  if f2 then
+    (f3 <- (flip 0.1) ;
+    if f3 then
+      (return (ff))
+    else
+      (D5 <- ([d416]) ;
+      choose D5 with 
+      | d416 ->
+        (return (ff))))
+  else
+    (D8 <- ([d611 , d715]) ;
+    choose D8 with 
+    | d611 ->
+      (f9 <- (flip 0.1) ;
+      if f9 then
+        (return (ff))
+      else
+        (D11 <- ([d1016]) ;
+        choose D11 with 
+        | d1016 ->
+          (return (ff))))
+    | d715 ->
+      (f12 <- (flip 0.1) ;
+      if f12 then
+        (return (ff))
+      else
+        (D15 <- ([d1316 , d1420]) ;
+        choose D15 with 
+        | d1316 ->
+          (return (ff))
+        | d1420 ->
+          (return (ff))))))
+else
+  (D18 <- ([d1610 , d170]) ;
+  choose D18 with 
+  | d1610 ->
+    (f19 <- (flip 0.1) ;
+    if f19 then
+      (f20 <- (flip 0.1) ;
+      if f20 then
+        (return (ff))
+      else
+        (D22 <- ([d2116]) ;
+        choose D22 with 
+        | d2116 ->
+          (return (ff))))
+    else
+      (D25 <- ([d2311 , d2415]) ;
+      choose D25 with 
+      | d2311 ->
+        (f26 <- (flip 0.1) ;
+        if f26 then
+          (return (ff))
+        else
+          (D28 <- ([d2716]) ;
+          choose D28 with 
+          | d2716 ->
+            (return (ff))))
+      | d2415 ->
+        (f29 <- (flip 0.1) ;
+        if f29 then
+          (return (ff))
+        else
+          (D32 <- ([d3016 , d3120]) ;
+          choose D32 with 
+          | d3016 ->
+            (return (ff))
+          | d3120 ->
+            (return (ff))))))
+  | d170 ->
+    (f33 <- (flip 0.1) ;
+    if f33 then
+      (f34 <- (flip 0.1) ;
+      if f34 then
+        (return (ff))
+      else
+        (D36 <- ([d352]) ;
+        choose D36 with 
+        | d352 ->
+          (return (ff))))
+    else
+      (D38 <- ([d371]) ;
+      choose D38 with 
+      | d371 ->
+        (f39 <- (flip 0.1) ;
+        if f39 then
+          (return (ff))
+        else
+          (D41 <- ([d402]) ;
+          choose D41 with 
+          | d402 ->
+            (return (ff)))))))

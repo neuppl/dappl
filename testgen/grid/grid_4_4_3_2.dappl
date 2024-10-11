@@ -2,71 +2,32 @@ f1 <- (flip 0.1) ;
 if f1 then
   (f2 <- (flip 0.1) ;
   if f2 then
-    (f3 <- (flip 0.1) ;
-    if f3 then
+    (reward 1.; return (tt))
+  else
+    (D4 <- ([d39]) ;
+    choose D4 with 
+    | d39 ->
+      (reward 1.; return (tt))))
+else
+  (D8 <- ([d50 , d62 , d75]) ;
+  choose D8 with 
+  | d50 ->
+    (return (ff))
+  | d62 ->
+    (f10 <- (flip 0.1) ;
+    if f10 then
       (return (ff))
     else
-      (D5 <- ([d49]) ;
-      choose D5 with 
-      | d49 ->
+      (D13 <- ([d123]) ;
+      choose D13 with 
+      | d123 ->
         (return (ff))))
-  else
-    (D8 <- ([d65 , d78]) ;
-    choose D8 with 
-    | d65 ->
-      (f9 <- (flip 0.1) ;
-      if f9 then
-        (return (ff))
-      else
-        (D12 <- ([d106 , d119]) ;
-        choose D12 with 
-        | d106 ->
-          (return (ff))
-        | d119 ->
-          (return (ff))))
-    | d78 ->
-      (f13 <- (flip 0.1) ;
-      if f13 then
-        (return (ff))
-      else
-        (D15 <- ([d149]) ;
-        choose D15 with 
-        | d149 ->
-          (return (ff))))))
-else
-  (D17 <- ([d164]) ;
-  choose D17 with 
-  | d164 ->
-    (f18 <- (flip 0.1) ;
-    if f18 then
-      (f19 <- (flip 0.1) ;
-      if f19 then
-        (return (ff))
-      else
-        (D21 <- ([d209]) ;
-        choose D21 with 
-        | d209 ->
-          (return (ff))))
+  | d75 ->
+    (f15 <- (flip 0.1) ;
+    if f15 then
+      (reward 1.; return (tt))
     else
-      (D24 <- ([d225 , d238]) ;
-      choose D24 with 
-      | d225 ->
-        (f25 <- (flip 0.1) ;
-        if f25 then
-          (return (ff))
-        else
-          (D28 <- ([d266 , d279]) ;
-          choose D28 with 
-          | d266 ->
-            (return (ff))
-          | d279 ->
-            (return (ff))))
-      | d238 ->
-        (f29 <- (flip 0.1) ;
-        if f29 then
-          (return (ff))
-        else
-          (D31 <- ([d309]) ;
-          choose D31 with 
-          | d309 ->
-            (return (ff)))))))
+      (D17 <- ([d169]) ;
+      choose D17 with 
+      | d169 ->
+        (reward 1.; return (tt)))))

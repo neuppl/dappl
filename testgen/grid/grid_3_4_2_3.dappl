@@ -4,21 +4,21 @@ if f1 then
   if f2 then
     (reward 1.; return (tt))
   else
-    (D4 <- ([d37]) ;
+    (D4 <- ([d36]) ;
     choose D4 with 
-    | d37 ->
+    | d36 ->
       (reward 1.; return (tt))))
 else
-  (D7 <- ([d52 , d64]) ;
+  (D7 <- ([d51 , d63]) ;
   choose D7 with 
-  | d52 ->
+  | d51 ->
     (return (ff))
-  | d64 ->
+  | d63 ->
     (f9 <- (flip 0.1) ;
     if f9 then
       (reward 1.; return (tt))
     else
-      (D11 <- ([d107]) ;
+      (D11 <- ([d106]) ;
       choose D11 with 
-      | d107 ->
+      | d106 ->
         (reward 1.; return (tt)))))

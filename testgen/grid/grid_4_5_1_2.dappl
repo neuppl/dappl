@@ -1,0 +1,10 @@
+f1 <- (flip 0.1) ;
+if f1 then
+  (return (ff))
+else
+  (D4 <- ([d23 , d36]) ;
+  choose D4 with 
+  | d23 ->
+    (return (ff))
+  | d36 ->
+    (return (ff)))

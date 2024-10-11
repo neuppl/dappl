@@ -6,45 +6,45 @@ if f1 then
     if f3 then
       (reward 1.; return (tt))
     else
-      (D5 <- ([d46]) ;
+      (D5 <- ([d47]) ;
       choose D5 with 
-      | d46 ->
+      | d47 ->
         (reward 1.; return (tt))))
   else
-    (D7 <- ([d63]) ;
+    (D7 <- ([d64]) ;
     choose D7 with 
-    | d63 ->
+    | d64 ->
       (f8 <- (flip 0.1) ;
       if f8 then
         (reward 1.; return (tt))
       else
-        (D10 <- ([d96]) ;
+        (D10 <- ([d97]) ;
         choose D10 with 
-        | d96 ->
+        | d97 ->
           (reward 1.; return (tt))))))
 else
-  (D12 <- ([d110]) ;
+  (D12 <- ([d113]) ;
   choose D12 with 
-  | d110 ->
+  | d113 ->
     (f13 <- (flip 0.1) ;
     if f13 then
       (f14 <- (flip 0.1) ;
       if f14 then
         (reward 1.; return (tt))
       else
-        (D16 <- ([d156]) ;
+        (D16 <- ([d157]) ;
         choose D16 with 
-        | d156 ->
+        | d157 ->
           (reward 1.; return (tt))))
     else
-      (D18 <- ([d173]) ;
+      (D18 <- ([d174]) ;
       choose D18 with 
-      | d173 ->
+      | d174 ->
         (f19 <- (flip 0.1) ;
         if f19 then
           (reward 1.; return (tt))
         else
-          (D21 <- ([d206]) ;
+          (D21 <- ([d207]) ;
           choose D21 with 
-          | d206 ->
+          | d207 ->
             (reward 1.; return (tt)))))))

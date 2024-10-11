@@ -4,9 +4,9 @@ if f1 then
   if f2 then
     (return (ff))
   else
-    (D5 <- ([d33 , d47]) ;
+    (D5 <- ([d35 , d47]) ;
     choose D5 with 
-    | d33 ->
+    | d35 ->
       (return (ff))
     | d47 ->
       (reward 1.; return (tt))))
@@ -18,9 +18,9 @@ else
     if f8 then
       (return (ff))
     else
-      (D11 <- ([d93 , d107]) ;
+      (D11 <- ([d95 , d107]) ;
       choose D11 with 
-      | d93 ->
+      | d95 ->
         (return (ff))
       | d107 ->
         (reward 1.; return (tt)))))
