@@ -32,3 +32,13 @@ _opam/
 
 # other stuff
 __pycache__/
+
+# generated files
+testgen/grid/*.pl
+testgen/grid/*.dappl
+testgen/ladder/*.pl
+testgen/ladder/*.dappl
+testgen/mdp/*.pl
+testgen/mdp/*.dappl
+testgen/bn/problog/*
+testgen/bn/processed/*
