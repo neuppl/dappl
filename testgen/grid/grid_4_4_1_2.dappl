@@ -1,8 +1,0 @@
-f1 <- (flip 0.1) ;
-if f1 then
-  (return (ff))
-else
-  (D3 <- ([d21]) ;
-  choose D3 with 
-  | d21 ->
-    (return (ff)))
