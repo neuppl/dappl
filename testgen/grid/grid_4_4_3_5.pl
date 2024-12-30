@@ -1,41 +1,54 @@
-0.1 :: f153 .
-0.1 :: f154 .
-r155 :- f153, f154 .
-utility( r155 , 0 ).
-query( r155 ).
-? :: c157 .
-? :: c156 .
-0.1 :: f158 .
-r159 :- f153, not(f154), c157, f158 .
-utility( r159 , 0 ).
-query( r159 ).
-? :: c160 .
-r161 :- f153, not(f154), c157, not(f158), c160 .
-utility( r161 , 0 ).
-query( r161 ).
-r162 :- f153, not(f154), c156 .
-utility( r162 , 0 ).
-query( r162 ).
-? :: c163 .
-0.1 :: f164 .
-0.1 :: f165 .
-r166 :- not(f153), c163, f164, f165 .
-utility( r166 , 0 ).
-query( r166 ).
-? :: c167 .
-r168 :- not(f153), c163, f164, not(f165), c167 .
-utility( r168 , 0 ).
-query( r168 ).
-? :: c170 .
-? :: c169 .
-0.1 :: f171 .
-r172 :- not(f153), c163, not(f164), c170, f171 .
-utility( r172 , 0 ).
-query( r172 ).
-? :: c173 .
-r174 :- not(f153), c163, not(f164), c170, not(f171), c173 .
-utility( r174 , 0 ).
-query( r174 ).
-r175 :- not(f153), c163, not(f164), c169 .
-utility( r175 , 0 ).
-query( r175 ).
+0.1 :: f191 .
+0.1 :: f192 .
+0.1 :: f193 .
+r194 :- f191, f192, f193 .
+utility( r194 , 1 ).
+query( r194 ).
+? :: c196 .
+? :: c195 .
+r197 :- f191, f192, not(f193), c196 .
+utility( r197 , 0 ).
+query( r197 ).
+r198 :- f191, f192, not(f193), c195 .
+utility( r198 , 1 ).
+query( r198 ).
+? :: c199 .
+0.1 :: f200 .
+r201 :- f191, not(f192), c199, f200 .
+utility( r201 , 0 ).
+query( r201 ).
+? :: c203 .
+? :: c202 .
+r204 :- f191, not(f192), c199, not(f200), c203 .
+utility( r204 , 0 ).
+query( r204 ).
+r205 :- f191, not(f192), c199, not(f200), c202 .
+utility( r205 , 1 ).
+query( r205 ).
+? :: c206 .
+0.1 :: f207 .
+0.1 :: f208 .
+r209 :- not(f191), c206, f207, f208 .
+utility( r209 , 0 ).
+query( r209 ).
+? :: c211 .
+? :: c210 .
+r212 :- not(f191), c206, f207, not(f208), c211 .
+utility( r212 , 0 ).
+query( r212 ).
+r213 :- not(f191), c206, f207, not(f208), c210 .
+utility( r213 , 1 ).
+query( r213 ).
+? :: c214 .
+0.1 :: f215 .
+r216 :- not(f191), c206, not(f207), c214, f215 .
+utility( r216 , 0 ).
+query( r216 ).
+? :: c218 .
+? :: c217 .
+r219 :- not(f191), c206, not(f207), c214, not(f215), c218 .
+utility( r219 , 0 ).
+query( r219 ).
+r220 :- not(f191), c206, not(f207), c214, not(f215), c217 .
+utility( r220 , 1 ).
+query( r220 ).

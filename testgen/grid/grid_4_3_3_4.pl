@@ -1,112 +1,91 @@
-0.1 :: f167 .
-0.1 :: f168 .
-0.1 :: f169 .
-r170 :- f167, f168, f169 .
-utility( r170 , 0 ).
-query( r170 ).
+0.1 :: f137 .
+0.1 :: f138 .
+0.1 :: f139 .
+r140 :- f137, f138, f139 .
+utility( r140 , 0 ).
+query( r140 ).
+? :: c141 .
+r142 :- f137, f138, not(f139), c141 .
+utility( r142 , 0 ).
+query( r142 ).
+? :: c143 .
+0.1 :: f144 .
+r145 :- f137, not(f138), c143, f144 .
+utility( r145 , 0 ).
+query( r145 ).
+? :: c146 .
+r147 :- f137, not(f138), c143, not(f144), c146 .
+utility( r147 , 0 ).
+query( r147 ).
+? :: c149 .
+? :: c148 .
+0.1 :: f150 .
+0.1 :: f151 .
+r152 :- not(f137), c149, f150, f151 .
+utility( r152 , 0 ).
+query( r152 ).
+? :: c153 .
+r154 :- not(f137), c149, f150, not(f151), c153 .
+utility( r154 , 0 ).
+query( r154 ).
+? :: c155 .
+0.1 :: f156 .
+r157 :- not(f137), c149, not(f150), c155, f156 .
+utility( r157 , 0 ).
+query( r157 ).
+? :: c158 .
+r159 :- not(f137), c149, not(f150), c155, not(f156), c158 .
+utility( r159 , 0 ).
+query( r159 ).
+0.1 :: f160 .
+0.1 :: f161 .
+r162 :- not(f137), c148, f160, f161 .
+utility( r162 , 0 ).
+query( r162 ).
+? :: c164 .
+? :: c163 .
+r165 :- not(f137), c148, f160, not(f161), c164 .
+utility( r165 , 0 ).
+query( r165 ).
+r166 :- not(f137), c148, f160, not(f161), c163 .
+utility( r166 , 1 ).
+query( r166 ).
+? :: c169 .
+? :: c168 .
+? :: c167 .
+0.1 :: f170 .
+r171 :- not(f137), c148, not(f160), c169, f170 .
+utility( r171 , 1 ).
+query( r171 ).
+? :: c173 .
 ? :: c172 .
-? :: c171 .
-r173 :- f167, f168, not(f169), c172 .
-utility( r173 , 0 ).
-query( r173 ).
-r174 :- f167, f168, not(f169), c171 .
+r174 :- not(f137), c148, not(f160), c169, not(f170), c173 .
 utility( r174 , 0 ).
 query( r174 ).
-? :: c176 .
-? :: c175 .
-0.1 :: f177 .
-r178 :- f167, not(f168), c176, f177 .
-utility( r178 , 0 ).
-query( r178 ).
-? :: c180 .
-? :: c179 .
-r181 :- f167, not(f168), c176, not(f177), c180 .
+r175 :- not(f137), c148, not(f160), c169, not(f170), c172 .
+utility( r175 , 1 ).
+query( r175 ).
+0.1 :: f176 .
+r177 :- not(f137), c148, not(f160), c168, f176 .
+utility( r177 , 0 ).
+query( r177 ).
+? :: c178 .
+r179 :- not(f137), c148, not(f160), c168, not(f176), c178 .
+utility( r179 , 0 ).
+query( r179 ).
+0.1 :: f180 .
+r181 :- not(f137), c148, not(f160), c167, f180 .
 utility( r181 , 0 ).
 query( r181 ).
-r182 :- f167, not(f168), c176, not(f177), c179 .
-utility( r182 , 0 ).
-query( r182 ).
-0.1 :: f183 .
-r184 :- f167, not(f168), c175, f183 .
-utility( r184 , 0 ).
-query( r184 ).
-? :: c186 .
-? :: c185 .
-r187 :- f167, not(f168), c175, not(f183), c186 .
+? :: c184 .
+? :: c183 .
+? :: c182 .
+r185 :- not(f137), c148, not(f160), c167, not(f180), c184 .
+utility( r185 , 1 ).
+query( r185 ).
+r186 :- not(f137), c148, not(f160), c167, not(f180), c183 .
+utility( r186 , 0 ).
+query( r186 ).
+r187 :- not(f137), c148, not(f160), c167, not(f180), c182 .
 utility( r187 , 0 ).
 query( r187 ).
-r188 :- f167, not(f168), c175, not(f183), c185 .
-utility( r188 , 0 ).
-query( r188 ).
-? :: c190 .
-? :: c189 .
-0.1 :: f191 .
-0.1 :: f192 .
-r193 :- not(f167), c190, f191, f192 .
-utility( r193 , 0 ).
-query( r193 ).
-? :: c195 .
-? :: c194 .
-r196 :- not(f167), c190, f191, not(f192), c195 .
-utility( r196 , 0 ).
-query( r196 ).
-r197 :- not(f167), c190, f191, not(f192), c194 .
-utility( r197 , 0 ).
-query( r197 ).
-? :: c199 .
-? :: c198 .
-0.1 :: f200 .
-r201 :- not(f167), c190, not(f191), c199, f200 .
-utility( r201 , 0 ).
-query( r201 ).
-? :: c203 .
-? :: c202 .
-r204 :- not(f167), c190, not(f191), c199, not(f200), c203 .
-utility( r204 , 0 ).
-query( r204 ).
-r205 :- not(f167), c190, not(f191), c199, not(f200), c202 .
-utility( r205 , 0 ).
-query( r205 ).
-0.1 :: f206 .
-r207 :- not(f167), c190, not(f191), c198, f206 .
-utility( r207 , 0 ).
-query( r207 ).
-? :: c209 .
-? :: c208 .
-r210 :- not(f167), c190, not(f191), c198, not(f206), c209 .
-utility( r210 , 0 ).
-query( r210 ).
-r211 :- not(f167), c190, not(f191), c198, not(f206), c208 .
-utility( r211 , 0 ).
-query( r211 ).
-0.1 :: f212 .
-0.1 :: f213 .
-r214 :- not(f167), c189, f212, f213 .
-utility( r214 , 0 ).
-query( r214 ).
-? :: c215 .
-r216 :- not(f167), c189, f212, not(f213), c215 .
-utility( r216 , 0 ).
-query( r216 ).
-? :: c218 .
-? :: c217 .
-0.1 :: f219 .
-r220 :- not(f167), c189, not(f212), c218, f219 .
-utility( r220 , 0 ).
-query( r220 ).
-? :: c222 .
-? :: c221 .
-r223 :- not(f167), c189, not(f212), c218, not(f219), c222 .
-utility( r223 , 0 ).
-query( r223 ).
-r224 :- not(f167), c189, not(f212), c218, not(f219), c221 .
-utility( r224 , 0 ).
-query( r224 ).
-0.1 :: f225 .
-r226 :- not(f167), c189, not(f212), c217, f225 .
-utility( r226 , 0 ).
-query( r226 ).
-? :: c227 .
-r228 :- not(f167), c189, not(f212), c217, not(f225), c227 .
-utility( r228 , 0 ).
-query( r228 ).

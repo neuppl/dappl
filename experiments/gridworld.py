@@ -31,10 +31,13 @@ def gridworld (states, rocks, horizon, times) :
                             stderr=subprocess.PIPE, \
                             text=True)
     for method in Method :
+        if method != Method.dappl : continue
         print(f"+++++++++++++++++++++++++++++++++++++")
         print(f"Doing Gridworld benchmark on Method " + method.name)
         print(f"+++++++++++++++++++++++++++++++++++++\n\n")
         for (i,j,k,l) in cols :
+            if i != 5 : continue
+            if j < 3 : continue
             print(f"Calculating numbers for {i} row, {j} rocks, {k} horizon")
             filepath = "testgen/grid/"
             file = f"grid_{i}_{j}_{k}_{l}.dappl" if (method == Method.dappl) else f"grid_{i}_{j}_{k}_{l}.pl"
@@ -45,7 +48,7 @@ def gridworld (states, rocks, horizon, times) :
                 df.loc[method.name, f"{i}_{j}_{k}_{l}_stdev"] = b
             else : continue
             print("\n\n")
-    df.to_csv('numbers/grid.csv', index=True)
+    df.to_csv('numbers/grid_dappl.csv', index=True)
     return
 
 

@@ -2,9 +2,9 @@ f1 <- (flip 0.1) ;
 if f1 then
   (return (ff))
 else
-  (D4 <- ([d20 , d36]) ;
+  (D4 <- ([d22 , d36]) ;
   choose D4 with 
-  | d20 ->
+  | d22 ->
     (return (ff))
   | d36 ->
     (return (ff)))

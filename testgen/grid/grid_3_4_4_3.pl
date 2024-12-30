@@ -1,18 +1,18 @@
+0.1 :: f32 .
 0.1 :: f33 .
-0.1 :: f34 .
-r35 :- f33, f34 .
-utility( r35 , 1 ).
-query( r35 ).
-? :: c36 .
-r37 :- f33, not(f34), c36 .
-utility( r37 , 1 ).
-query( r37 ).
-? :: c38 .
-0.1 :: f39 .
-r40 :- not(f33), c38, f39 .
-utility( r40 , 1 ).
-query( r40 ).
-? :: c41 .
-r42 :- not(f33), c38, not(f39), c41 .
-utility( r42 , 1 ).
-query( r42 ).
+r34 :- f32, f33 .
+utility( r34 , 1 ).
+query( r34 ).
+? :: c35 .
+r36 :- f32, not(f33), c35 .
+utility( r36 , 1 ).
+query( r36 ).
+? :: c37 .
+0.1 :: f38 .
+r39 :- not(f32), c37, f38 .
+utility( r39 , 1 ).
+query( r39 ).
+? :: c40 .
+r41 :- not(f32), c37, not(f38), c40 .
+utility( r41 , 1 ).
+query( r41 ).

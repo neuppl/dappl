@@ -2,9 +2,7 @@ from itertools import chain
 
 import pandas as pd
 from experiments.bn import BN, bn, bn_gen, run_bn
-from experiments.dr import dr
 from experiments.framework import Method, avg_stdev
-from experiments.ladder import ladder_long, ladder
 
 # Bayesian network experiments
 def kick_tire(n : int) :

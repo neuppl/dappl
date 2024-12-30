@@ -2,62 +2,295 @@ f1 <- (flip 0.1) ;
 if f1 then
   (f2 <- (flip 0.1) ;
   if f2 then
-    (return (ff))
-  else
-    (D5 <- ([d45]) ;
-    choose D5 with 
-    | d45 ->
-      (return (ff))))
-else
-  (D10 <- ([d71 , d83 , d96]) ;
-  choose D10 with 
-  | d71 ->
-    (f11 <- (flip 0.1) ;
-    if f11 then
-      (return (ff))
-    else
-      (D14 <- ([d135]) ;
-      choose D14 with 
-      | d135 ->
-        (return (ff))))
-  | d83 ->
-    (f16 <- (flip 0.1) ;
-    if f16 then
-      (f17 <- (flip 0.1) ;
-      if f17 then
-        (reward 1.; return (tt))
-      else
-        (D19 <- ([d1811]) ;
-        choose D19 with 
-        | d1811 ->
-          (reward 1.; return (tt))))
-    else
-      (D21 <- ([d207]) ;
-      choose D21 with 
-      | d207 ->
-        (f22 <- (flip 0.1) ;
-        if f22 then
-          (reward 1.; return (tt))
-        else
-          (D24 <- ([d2311]) ;
-          choose D24 with 
-          | d2311 ->
-            (reward 1.; return (tt))))))
-  | d96 ->
-    (f25 <- (flip 0.1) ;
-    if f25 then
-      (return (ff))
-    else
-      (D29 <- ([d275 , d287]) ;
-      choose D29 with 
-      | d275 ->
+    (f3 <- (flip 0.1) ;
+    if f3 then
+      (f4 <- (flip 0.1) ;
+      if f4 then
         (return (ff))
-      | d287 ->
-        (f31 <- (flip 0.1) ;
-        if f31 then
-          (reward 1.; return (tt))
+      else
+        (D6 <- ([d58]) ;
+        choose D6 with 
+        | d58 ->
+          (return (ff))))
+    else
+      (D9 <- ([d74 , d89]) ;
+      choose D9 with 
+      | d74 ->
+        (f10 <- (flip 0.1) ;
+        if f10 then
+          (return (ff))
         else
-          (D33 <- ([d3211]) ;
-          choose D33 with 
-          | d3211 ->
+          (D12 <- ([d118]) ;
+          choose D12 with 
+          | d118 ->
+            (return (ff))))
+      | d89 ->
+        (f13 <- (flip 0.1) ;
+        if f13 then
+          (return (ff))
+        else
+          (D16 <- ([d148 , d1510]) ;
+          choose D16 with 
+          | d148 ->
+            (return (ff))
+          | d1510 ->
+            (return (ff))))))
+  else
+    (D19 <- ([d170 , d185]) ;
+    choose D19 with 
+    | d170 ->
+      (f20 <- (flip 0.1) ;
+      if f20 then
+        (f21 <- (flip 0.1) ;
+        if f21 then
+          (return (ff))
+        else
+          (D23 <- ([d228]) ;
+          choose D23 with 
+          | d228 ->
+            (return (ff))))
+      else
+        (D25 <- ([d244]) ;
+        choose D25 with 
+        | d244 ->
+          (f26 <- (flip 0.1) ;
+          if f26 then
+            (return (ff))
+          else
+            (D28 <- ([d278]) ;
+            choose D28 with 
+            | d278 ->
+              (return (ff))))))
+    | d185 ->
+      (f29 <- (flip 0.1) ;
+      if f29 then
+        (f30 <- (flip 0.1) ;
+        if f30 then
+          (return (ff))
+        else
+          (D32 <- ([d318]) ;
+          choose D32 with 
+          | d318 ->
+            (return (ff))))
+      else
+        (D35 <- ([d334 , d349]) ;
+        choose D35 with 
+        | d334 ->
+          (f36 <- (flip 0.1) ;
+          if f36 then
+            (return (ff))
+          else
+            (D38 <- ([d378]) ;
+            choose D38 with 
+            | d378 ->
+              (return (ff))))
+        | d349 ->
+          (f39 <- (flip 0.1) ;
+          if f39 then
+            (return (ff))
+          else
+            (D42 <- ([d408 , d4110]) ;
+            choose D42 with 
+            | d408 ->
+              (return (ff))
+            | d4110 ->
+              (return (ff))))))))
+else
+  (D45 <- ([d431 , d446]) ;
+  choose D45 with 
+  | d431 ->
+    (f46 <- (flip 0.1) ;
+    if f46 then
+      (f47 <- (flip 0.1) ;
+      if f47 then
+        (f48 <- (flip 0.1) ;
+        if f48 then
+          (return (ff))
+        else
+          (D50 <- ([d498]) ;
+          choose D50 with 
+          | d498 ->
+            (return (ff))))
+      else
+        (D53 <- ([d514 , d529]) ;
+        choose D53 with 
+        | d514 ->
+          (f54 <- (flip 0.1) ;
+          if f54 then
+            (return (ff))
+          else
+            (D56 <- ([d558]) ;
+            choose D56 with 
+            | d558 ->
+              (return (ff))))
+        | d529 ->
+          (f57 <- (flip 0.1) ;
+          if f57 then
+            (return (ff))
+          else
+            (D60 <- ([d588 , d5910]) ;
+            choose D60 with 
+            | d588 ->
+              (return (ff))
+            | d5910 ->
+              (return (ff))))))
+    else
+      (D63 <- ([d610 , d625]) ;
+      choose D63 with 
+      | d610 ->
+        (f64 <- (flip 0.1) ;
+        if f64 then
+          (f65 <- (flip 0.1) ;
+          if f65 then
+            (return (ff))
+          else
+            (D67 <- ([d668]) ;
+            choose D67 with 
+            | d668 ->
+              (return (ff))))
+        else
+          (D69 <- ([d684]) ;
+          choose D69 with 
+          | d684 ->
+            (f70 <- (flip 0.1) ;
+            if f70 then
+              (return (ff))
+            else
+              (D72 <- ([d718]) ;
+              choose D72 with 
+              | d718 ->
+                (return (ff))))))
+      | d625 ->
+        (f73 <- (flip 0.1) ;
+        if f73 then
+          (f74 <- (flip 0.1) ;
+          if f74 then
+            (return (ff))
+          else
+            (D76 <- ([d758]) ;
+            choose D76 with 
+            | d758 ->
+              (return (ff))))
+        else
+          (D79 <- ([d774 , d789]) ;
+          choose D79 with 
+          | d774 ->
+            (f80 <- (flip 0.1) ;
+            if f80 then
+              (return (ff))
+            else
+              (D82 <- ([d818]) ;
+              choose D82 with 
+              | d818 ->
+                (return (ff))))
+          | d789 ->
+            (f83 <- (flip 0.1) ;
+            if f83 then
+              (return (ff))
+            else
+              (D86 <- ([d848 , d8510]) ;
+              choose D86 with 
+              | d848 ->
+                (return (ff))
+              | d8510 ->
+                (return (ff))))))))
+  | d446 ->
+    (f87 <- (flip 0.1) ;
+    if f87 then
+      (f88 <- (flip 0.1) ;
+      if f88 then
+        (f89 <- (flip 0.1) ;
+        if f89 then
+          (return (ff))
+        else
+          (D91 <- ([d908]) ;
+          choose D91 with 
+          | d908 ->
+            (return (ff))))
+      else
+        (D94 <- ([d924 , d939]) ;
+        choose D94 with 
+        | d924 ->
+          (f95 <- (flip 0.1) ;
+          if f95 then
+            (return (ff))
+          else
+            (D98 <- ([d968 , d970]) ;
+            choose D98 with 
+            | d968 ->
+              (return (ff))
+            | d970 ->
+              (return (ff))))
+        | d939 ->
+          (f99 <- (flip 0.1) ;
+          if f99 then
+            (return (ff))
+          else
+            (D101 <- ([d1008]) ;
+            choose D101 with 
+            | d1008 ->
+              (return (ff))))))
+    else
+      (D104 <- ([d1025 , d10310]) ;
+      choose D104 with 
+      | d1025 ->
+        (f105 <- (flip 0.1) ;
+        if f105 then
+          (f106 <- (flip 0.1) ;
+          if f106 then
+            (return (ff))
+          else
+            (D109 <- ([d1078 , d1080]) ;
+            choose D109 with 
+            | d1078 ->
+              (return (ff))
+            | d1080 ->
+              (return (ff))))
+        else
+          (D112 <- ([d1104 , d1119]) ;
+          choose D112 with 
+          | d1104 ->
+            (f113 <- (flip 0.1) ;
+            if f113 then
+              (return (ff))
+            else
+              (D116 <- ([d1148 , d1150]) ;
+              choose D116 with 
+              | d1148 ->
+                (return (ff))
+              | d1150 ->
+                (return (ff))))
+          | d1119 ->
+            (f117 <- (flip 0.1) ;
+            if f117 then
+              (return (ff))
+            else
+              (D119 <- ([d1188]) ;
+              choose D119 with 
+              | d1188 ->
+                (return (ff))))))
+      | d10310 ->
+        (f120 <- (flip 0.1) ;
+        if f120 then
+          (f121 <- (flip 0.1) ;
+          if f121 then
+            (return (ff))
+          else
+            (D123 <- ([d1228]) ;
+            choose D123 with 
+            | d1228 ->
+              (return (ff))))
+        else
+          (D126 <- ([d1249 , d12511]) ;
+          choose D126 with 
+          | d1249 ->
+            (f127 <- (flip 0.1) ;
+            if f127 then
+              (return (ff))
+            else
+              (D129 <- ([d1288]) ;
+              choose D129 with 
+              | d1288 ->
+                (return (ff))))
+          | d12511 ->
             (reward 1.; return (tt)))))))

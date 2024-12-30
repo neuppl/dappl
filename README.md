@@ -1,4 +1,4 @@
-# dappl and pineappl Artifact for OOPSLA 2024
+# dappl and pineappl Artifact for OOPSLA 2025
 
 ## Introduction
 
@@ -10,11 +10,7 @@ These experiments require a working Docker installation.
 This artifact was tested by the authors on x86 Ubuntu 22.04 and ARM macOS.
 Instructions will assume a Linux-like shell environment for running command to set up the container.
 
-## Disclaimer
-
-During preparation of the artifact there were bugs found in the implementation
-that, once fixed, impacted performance negatively. The experimental values in the paper
-do not accurately reflect the experiments in this image.
+To run full experiments, expect a server with >=512GB of RAM to take about 12 hours.
 
 ## Getting started
 
@@ -22,8 +18,8 @@ do not accurately reflect the experiments in this image.
 2. Run the following commands in a shell to pull the container from DockerHub:
 
   ```
-    docker pull minsungc/dappl:oopsla_2024
-    docker run -it --rm --platform linux/amd64 minsungc/dappl:oopsla_2024
+    docker pull minsungc/dappl:oopsla_2025
+    docker run -it --rm --platform linux/amd64 minsungc/dappl:oopsla_2025
   ```
 
 3. Once in the container, `cd` in to the `dappl/` folder and run the command `dappl`. You should get the `dappl` help page. If not, run `alias dappl='./dappl/_build/install/default/bin/dappl'` and try again.
@@ -44,7 +40,8 @@ There are also optional debug and caching options available for toggle; type `da
 
 ## Recreating experiments
 
-Replicating the experiments is expensive, requiring ~512GB of RAM. A server or workstation is recommended.
+Replicating the experiments is expensive, requiring about 12 wall clock hours on
+~512GB of RAM and an AMD EPYC CPU. A server or workstation is recommended.
 
 To replicate experiments, type into the console
 
@@ -58,8 +55,7 @@ The resulting numbers are stored in a .csv file in the `numbers/` folder.
 
 ## "Kicking the tires"
 
-If replicating the experiments fully is infeasible,
-run the "kick the tires" scripts, which replicates a small fraction of the
+The "kick the tires" scripts replicates a small fraction of the
 Bayesian network experiments in Section 6.1 of the paper. To do this, run
 
   ```
@@ -72,12 +68,14 @@ The resulting numbers are stored in a .csv file in the `numbers/` folder.
 
 ## Navigating the source repository
 
-* `bin/`: command line tooling.
+* `bin/`: **command** line tooling.
 * `derkinderen/`: scripts from Derkinderen et al, ECAI 2020.
 * `examples/`: examples of dappl programs.
-* `experiments/`: python files for automated experimentation and result output
-* `lib/`: the lexer, parser, and compiler
+* `experiments/`: Python files for automated experimentation and result output
+* `lib/`: the lexer, parser, and interpreter
 * `testgen/`: the main test generation tool. within:
   * `bn/` houses different bayesian networks that can be generated
   * `mdp/` houses the DR benchmark
   * `ladder` houses the network ladder diagnosis benchmarks
+  * `grid/` houses the gridworld benchmarks
+

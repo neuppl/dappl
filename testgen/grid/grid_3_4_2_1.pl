@@ -1,18 +1,17 @@
 0.1 :: f1 .
-0.1 :: f2 .
-r3 :- f1, f2 .
-utility( r3 , 0 ).
-query( r3 ).
+r2 :- f1 .
+utility( r2 , 0 ).
+query( r2 ).
 ? :: c4 .
-r5 :- f1, not(f2), c4 .
+? :: c3 .
+r5 :- not(f1), c4 .
 utility( r5 , 0 ).
 query( r5 ).
-? :: c6 .
-0.1 :: f7 .
-r8 :- not(f1), c6, f7 .
-utility( r8 , 0 ).
-query( r8 ).
-? :: c9 .
-r10 :- not(f1), c6, not(f7), c9 .
-utility( r10 , 0 ).
-query( r10 ).
+0.1 :: f6 .
+r7 :- not(f1), c3, f6 .
+utility( r7 , 1 ).
+query( r7 ).
+? :: c8 .
+r9 :- not(f1), c3, not(f6), c8 .
+utility( r9 , 1 ).
+query( r9 ).

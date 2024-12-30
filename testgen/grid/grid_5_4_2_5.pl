@@ -1,31 +1,35 @@
-0.1 :: f64 .
-0.1 :: f65 .
-r66 :- f64, f65 .
-utility( r66 , 0 ).
-query( r66 ).
-? :: c67 .
-r68 :- f64, not(f65), c67 .
-utility( r68 , 0 ).
-query( r68 ).
-? :: c70 .
-? :: c69 .
-0.1 :: f71 .
-r72 :- not(f64), c70, f71 .
-utility( r72 , 0 ).
-query( r72 ).
-? :: c73 .
-r74 :- not(f64), c70, not(f71), c73 .
-utility( r74 , 0 ).
-query( r74 ).
-0.1 :: f75 .
-r76 :- not(f64), c69, f75 .
-utility( r76 , 0 ).
-query( r76 ).
-? :: c78 .
-? :: c77 .
-r79 :- not(f64), c69, not(f75), c78 .
-utility( r79 , 0 ).
-query( r79 ).
-r80 :- not(f64), c69, not(f75), c77 .
-utility( r80 , 0 ).
-query( r80 ).
+0.1 :: f81 .
+0.1 :: f82 .
+r83 :- f81, f82 .
+utility( r83 , 0 ).
+query( r83 ).
+? :: c85 .
+? :: c84 .
+r86 :- f81, not(f82), c85 .
+utility( r86 , 0 ).
+query( r86 ).
+r87 :- f81, not(f82), c84 .
+utility( r87 , 0 ).
+query( r87 ).
+? :: c89 .
+? :: c88 .
+0.1 :: f90 .
+r91 :- not(f81), c89, f90 .
+utility( r91 , 0 ).
+query( r91 ).
+? :: c92 .
+r93 :- not(f81), c89, not(f90), c92 .
+utility( r93 , 0 ).
+query( r93 ).
+0.1 :: f94 .
+r95 :- not(f81), c88, f94 .
+utility( r95 , 0 ).
+query( r95 ).
+? :: c97 .
+? :: c96 .
+r98 :- not(f81), c88, not(f94), c97 .
+utility( r98 , 0 ).
+query( r98 ).
+r99 :- not(f81), c88, not(f94), c96 .
+utility( r99 , 0 ).
+query( r99 ).

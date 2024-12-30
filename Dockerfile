@@ -43,7 +43,7 @@ RUN python3 -m pip install \
     problog \
     setuptools \
     pandas
-RUN python3 -m pip install -vvv --upgrade --force-reinstall --no-deps --no-binary :all: pysdd
+RUN python3 -m pip install pysdd
 
 # Get Rust
 RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
@@ -66,7 +66,7 @@ RUN cd ..
 RUN eval $(opam env)
 RUN apt update && apt install -y rustc
 run apt-get install -y cargo
-RUN opam install -y conf-rust-2021
+RUN opam install -y conf-rust-2021 ppx_deriving
 RUN opam pin -y rsdd rsdd-ocaml-dappl/
 
 # Copy things over

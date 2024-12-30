@@ -23,9 +23,9 @@ if f1 then
         | d97 ->
           (reward 1.; return (tt))))))
 else
-  (D12 <- ([d111]) ;
+  (D12 <- ([d113]) ;
   choose D12 with 
-  | d111 ->
+  | d113 ->
     (f13 <- (flip 0.1) ;
     if f13 then
       (f14 <- (flip 0.1) ;

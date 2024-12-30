@@ -1,44 +1,27 @@
-0.1 :: f43 .
-0.1 :: f44 .
-r45 :- f43, f44 .
+0.1 :: f31 .
+0.1 :: f32 .
+r33 :- f31, f32 .
+utility( r33 , 0 ).
+query( r33 ).
+? :: c34 .
+r35 :- f31, not(f32), c34 .
+utility( r35 , 0 ).
+query( r35 ).
+? :: c37 .
+? :: c36 .
+0.1 :: f38 .
+r39 :- not(f31), c37, f38 .
+utility( r39 , 0 ).
+query( r39 ).
+? :: c40 .
+r41 :- not(f31), c37, not(f38), c40 .
+utility( r41 , 0 ).
+query( r41 ).
+0.1 :: f42 .
+r43 :- not(f31), c36, f42 .
+utility( r43 , 0 ).
+query( r43 ).
+? :: c44 .
+r45 :- not(f31), c36, not(f42), c44 .
 utility( r45 , 0 ).
 query( r45 ).
-? :: c46 .
-r47 :- f43, not(f44), c46 .
-utility( r47 , 0 ).
-query( r47 ).
-? :: c50 .
-? :: c49 .
-? :: c48 .
-0.1 :: f51 .
-r52 :- not(f43), c50, f51 .
-utility( r52 , 0 ).
-query( r52 ).
-? :: c53 .
-r54 :- not(f43), c50, not(f51), c53 .
-utility( r54 , 0 ).
-query( r54 ).
-0.1 :: f55 .
-r56 :- not(f43), c49, f55 .
-utility( r56 , 0 ).
-query( r56 ).
-? :: c57 .
-r58 :- not(f43), c49, not(f55), c57 .
-utility( r58 , 0 ).
-query( r58 ).
-0.1 :: f59 .
-r60 :- not(f43), c48, f59 .
-utility( r60 , 0 ).
-query( r60 ).
-? :: c63 .
-? :: c62 .
-? :: c61 .
-r64 :- not(f43), c48, not(f59), c63 .
-utility( r64 , 0 ).
-query( r64 ).
-r65 :- not(f43), c48, not(f59), c62 .
-utility( r65 , 0 ).
-query( r65 ).
-r66 :- not(f43), c48, not(f59), c61 .
-utility( r66 , 0 ).
-query( r66 ).

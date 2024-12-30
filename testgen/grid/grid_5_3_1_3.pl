@@ -1,12 +1,12 @@
-0.1 :: f11 .
-r12 :- f11 .
-utility( r12 , 0 ).
-query( r12 ).
-? :: c14 .
-? :: c13 .
-r15 :- not(f11), c14 .
-utility( r15 , 0 ).
-query( r15 ).
-r16 :- not(f11), c13 .
+0.1 :: f15 .
+r16 :- f15 .
 utility( r16 , 0 ).
 query( r16 ).
+? :: c18 .
+? :: c17 .
+r19 :- not(f15), c18 .
+utility( r19 , 0 ).
+query( r19 ).
+r20 :- not(f15), c17 .
+utility( r20 , 0 ).
+query( r20 ).

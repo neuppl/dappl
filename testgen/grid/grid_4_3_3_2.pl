@@ -4,114 +4,90 @@
 r49 :- f46, f47, f48 .
 utility( r49 , 0 ).
 query( r49 ).
-? :: c51 .
 ? :: c50 .
-r52 :- f46, f47, not(f48), c51 .
-utility( r52 , 0 ).
-query( r52 ).
-r53 :- f46, f47, not(f48), c50 .
-utility( r53 , 1 ).
-query( r53 ).
-? :: c55 .
-? :: c54 .
-0.1 :: f56 .
-r57 :- f46, not(f47), c55, f56 .
+r51 :- f46, f47, not(f48), c50 .
+utility( r51 , 0 ).
+query( r51 ).
+? :: c53 .
+? :: c52 .
+0.1 :: f54 .
+r55 :- f46, not(f47), c53, f54 .
+utility( r55 , 0 ).
+query( r55 ).
+? :: c56 .
+r57 :- f46, not(f47), c53, not(f54), c56 .
 utility( r57 , 0 ).
 query( r57 ).
-? :: c58 .
-r59 :- f46, not(f47), c55, not(f56), c58 .
-utility( r59 , 0 ).
+0.1 :: f58 .
+r59 :- f46, not(f47), c52, f58 .
+utility( r59 , 1 ).
 query( r59 ).
-0.1 :: f60 .
-r61 :- f46, not(f47), c54, f60 .
+? :: c60 .
+r61 :- f46, not(f47), c52, not(f58), c60 .
 utility( r61 , 1 ).
 query( r61 ).
+? :: c64 .
 ? :: c63 .
 ? :: c62 .
-r64 :- f46, not(f47), c54, not(f60), c63 .
-utility( r64 , 0 ).
-query( r64 ).
-r65 :- f46, not(f47), c54, not(f60), c62 .
-utility( r65 , 1 ).
-query( r65 ).
-? :: c67 .
-? :: c66 .
-0.1 :: f68 .
-0.1 :: f69 .
-r70 :- not(f46), c67, f68, f69 .
-utility( r70 , 0 ).
-query( r70 ).
-? :: c71 .
-r72 :- not(f46), c67, f68, not(f69), c71 .
+0.1 :: f65 .
+0.1 :: f66 .
+r67 :- not(f46), c64, f65, f66 .
+utility( r67 , 0 ).
+query( r67 ).
+? :: c68 .
+r69 :- not(f46), c64, f65, not(f66), c68 .
+utility( r69 , 0 ).
+query( r69 ).
+? :: c70 .
+0.1 :: f71 .
+r72 :- not(f46), c64, not(f65), c70, f71 .
 utility( r72 , 0 ).
 query( r72 ).
-? :: c74 .
 ? :: c73 .
+r74 :- not(f46), c64, not(f65), c70, not(f71), c73 .
+utility( r74 , 0 ).
+query( r74 ).
 0.1 :: f75 .
-r76 :- not(f46), c67, not(f68), c74, f75 .
+r76 :- not(f46), c63, f75 .
 utility( r76 , 0 ).
 query( r76 ).
+? :: c78 .
 ? :: c77 .
-r78 :- not(f46), c67, not(f68), c74, not(f75), c77 .
-utility( r78 , 0 ).
-query( r78 ).
-0.1 :: f79 .
-r80 :- not(f46), c67, not(f68), c73, f79 .
-utility( r80 , 1 ).
-query( r80 ).
+r79 :- not(f46), c63, not(f75), c78 .
+utility( r79 , 0 ).
+query( r79 ).
+0.1 :: f80 .
+r81 :- not(f46), c63, not(f75), c77, f80 .
+utility( r81 , 1 ).
+query( r81 ).
 ? :: c82 .
-? :: c81 .
-r83 :- not(f46), c67, not(f68), c73, not(f79), c82 .
-utility( r83 , 0 ).
+r83 :- not(f46), c63, not(f75), c77, not(f80), c82 .
+utility( r83 , 1 ).
 query( r83 ).
-r84 :- not(f46), c67, not(f68), c73, not(f79), c81 .
-utility( r84 , 1 ).
-query( r84 ).
+0.1 :: f84 .
 0.1 :: f85 .
-0.1 :: f86 .
-r87 :- not(f46), c66, f85, f86 .
-utility( r87 , 0 ).
-query( r87 ).
-? :: c88 .
-r89 :- not(f46), c66, f85, not(f86), c88 .
-utility( r89 , 0 ).
-query( r89 ).
-? :: c92 .
-? :: c91 .
+r86 :- not(f46), c62, f84, f85 .
+utility( r86 , 0 ).
+query( r86 ).
+? :: c87 .
+r88 :- not(f46), c62, f84, not(f85), c87 .
+utility( r88 , 0 ).
+query( r88 ).
 ? :: c90 .
-0.1 :: f93 .
-r94 :- not(f46), c66, not(f85), c92, f93 .
-utility( r94 , 1 ).
+? :: c89 .
+0.1 :: f91 .
+r92 :- not(f46), c62, not(f84), c90, f91 .
+utility( r92 , 0 ).
+query( r92 ).
+? :: c93 .
+r94 :- not(f46), c62, not(f84), c90, not(f91), c93 .
+utility( r94 , 0 ).
 query( r94 ).
-? :: c96 .
-? :: c95 .
-r97 :- not(f46), c66, not(f85), c92, not(f93), c96 .
-utility( r97 , 0 ).
-query( r97 ).
-r98 :- not(f46), c66, not(f85), c92, not(f93), c95 .
+0.1 :: f95 .
+r96 :- not(f46), c62, not(f84), c89, f95 .
+utility( r96 , 1 ).
+query( r96 ).
+? :: c97 .
+r98 :- not(f46), c62, not(f84), c89, not(f95), c97 .
 utility( r98 , 1 ).
 query( r98 ).
-0.1 :: f99 .
-r100 :- not(f46), c66, not(f85), c91, f99 .
-utility( r100 , 0 ).
-query( r100 ).
-? :: c101 .
-r102 :- not(f46), c66, not(f85), c91, not(f99), c101 .
-utility( r102 , 0 ).
-query( r102 ).
-0.1 :: f103 .
-r104 :- not(f46), c66, not(f85), c90, f103 .
-utility( r104 , 1 ).
-query( r104 ).
-? :: c107 .
-? :: c106 .
-? :: c105 .
-r108 :- not(f46), c66, not(f85), c90, not(f103), c107 .
-utility( r108 , 1 ).
-query( r108 ).
-r109 :- not(f46), c66, not(f85), c90, not(f103), c106 .
-utility( r109 , 0 ).
-query( r109 ).
-r110 :- not(f46), c66, not(f85), c90, not(f103), c105 .
-utility( r110 , 0 ).
-query( r110 ).

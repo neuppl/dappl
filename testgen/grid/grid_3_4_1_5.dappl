@@ -2,7 +2,7 @@ f1 <- (flip 0.1) ;
 if f1 then
   (return (ff))
 else
-  (D3 <- ([d24]) ;
+  (D3 <- ([d23]) ;
   choose D3 with 
-  | d24 ->
+  | d23 ->
     (return (ff)))

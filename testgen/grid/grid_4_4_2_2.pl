@@ -1,18 +1,31 @@
-0.1 :: f11 .
-0.1 :: f12 .
-r13 :- f11, f12 .
-utility( r13 , 0 ).
-query( r13 ).
-? :: c14 .
-r15 :- f11, not(f12), c14 .
-utility( r15 , 0 ).
-query( r15 ).
-? :: c16 .
 0.1 :: f17 .
-r18 :- not(f11), c16, f17 .
-utility( r18 , 0 ).
-query( r18 ).
-? :: c19 .
-r20 :- not(f11), c16, not(f17), c19 .
-utility( r20 , 0 ).
-query( r20 ).
+0.1 :: f18 .
+r19 :- f17, f18 .
+utility( r19 , 0 ).
+query( r19 ).
+? :: c20 .
+r21 :- f17, not(f18), c20 .
+utility( r21 , 0 ).
+query( r21 ).
+? :: c23 .
+? :: c22 .
+0.1 :: f24 .
+r25 :- not(f17), c23, f24 .
+utility( r25 , 0 ).
+query( r25 ).
+? :: c26 .
+r27 :- not(f17), c23, not(f24), c26 .
+utility( r27 , 0 ).
+query( r27 ).
+0.1 :: f28 .
+r29 :- not(f17), c22, f28 .
+utility( r29 , 0 ).
+query( r29 ).
+? :: c31 .
+? :: c30 .
+r32 :- not(f17), c22, not(f28), c31 .
+utility( r32 , 0 ).
+query( r32 ).
+r33 :- not(f17), c22, not(f28), c30 .
+utility( r33 , 0 ).
+query( r33 ).
