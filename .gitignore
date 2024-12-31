@@ -40,5 +40,4 @@ testgen/ladder/*.pl
 testgen/ladder/*.dappl
 testgen/mdp/*.pl
 testgen/mdp/*.dappl
-testgen/bn/problog/*
 testgen/bn/processed/*

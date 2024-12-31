@@ -65,11 +65,12 @@ RUN cd rsdd-ocaml-dappl && cargo vendor && cargo build
 RUN cd ..
 RUN eval $(opam env)
 RUN apt update && apt install -y rustc
-run apt-get install -y cargo
+RUN apt-get install -y cargo
 RUN opam install -y conf-rust-2021 ppx_deriving
 RUN opam pin -y rsdd rsdd-ocaml-dappl/
 
 # Copy things over
+RUN cd
 COPY dune-project dappl/
 COPY dappl.opam dappl/
 COPY experiment.py dappl/
@@ -94,7 +95,7 @@ RUN chmod +x dappl/kick_the_tires.sh
 RUN chmod +x dappl/init.sh
 
 # Make entrypoint and working dir
-RUN echo "alias dappl='./dappl/_build/install/default/bin/dappl'" >> ~/.bashrc
+RUN echo "alias dappl='~/../dappl/_build/install/default/bin/dappl'" >> ~/.bashrc
 
 RUN apt-get install -y nano \
                         vim
