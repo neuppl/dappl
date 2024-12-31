@@ -95,5 +95,8 @@ RUN chmod +x dappl/init.sh
 
 # Make entrypoint and working dir
 RUN echo "alias dappl='./dappl/_build/install/default/bin/dappl'" >> ~/.bashrc
+
+RUN apt-get install -y nano \
+                        vim
 # ENTRYPOINT ["bash", "-c", "cd dappl && eval $(opam env) && dune build && alias dappl='/dappl/_build/install/default/bin/dappl'"]
 
